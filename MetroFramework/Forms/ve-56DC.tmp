@@ -1,0 +1,126 @@
+﻿using System;
+using System.Drawing;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+using MetroFramework.Animation;
+using MetroFramework.Components;
+using MetroFramework.Controls;
+using MetroFramework.Drawing;
+using MetroFramework.Interfaces;
+using MetroFramework.Native;
+
+namespace MetroFramework.Forms
+{
+    public class MetroTaskWindow : MetroForm
+    {
+        private static MetroTaskWindow singletonWindow;
+        public static void ShowTaskWindow(IWin32Window parent, string title, int secToClose)
+        {
+            if (singletonWindow != null)
+            {
+                singletonWindow.Close();
+                singletonWindow.Dispose();
+                singletonWindow = null;
+            }
+
+            singletonWindow = new MetroTaskWindow(secToClose);
+            singletonWindow.Text = title;
+
+            if (parent != null && parent is IMetroForm)
+            {
+                singletonWindow.Theme = ((IMetroForm)parent).Theme;
+                singletonWindow.Style = ((IMetroForm)parent).Style;
+                singletonWindow.StyleManager = ((IMetroForm)parent).StyleManager.Clone() as MetroStyleManager;
+                singletonWindow.StyleManager.OwnerForm = singletonWindow;
+            }
+
+            singletonWindow.Show(parent);
+        }
+
+        public static void ShowTaskWindow(IWin32Window parent, string text)
+        {
+            ShowTaskWindow(parent, text, 0);
+        }
+
+        public static void ShowTaskWindow(string text, int secToClose)
+        {
+            ShowTaskWindow(null, text, secToClose);
+        }
+
+        public static void ShowTaskWindow(string text)
+        {
+            ShowTaskWindow(null, text);
+        }
+
+        private int closeTime = 0;
+        private int elapsedTime = 0;
+        private int progressWidth = 0;
+        private DelayedCall timer;
+
+        private MetroPanel controlContainer;
+
+        public MetroTaskWindow()
+        {
+            controlContainer = new MetroPanel();
+            Controls.Add(controlContainer);
+        }
+
+        public MetroTaskWindow(int duration) : this()
+        {
+            closeTime = duration * 500;
+
+            if (closeTime > 0)
+                timer = DelayedCall.Start(UpdateProgress, 5);
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Movable = false;
+
+            TopMost = true;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+
+            Size = new Size(400, 200);
+            Taskbar myTaskbar = new Taskbar();
+            Location = new Point(myTaskbar.Bounds.Width - Width - 5, myTaskbar.Bounds.Y - Height - 5);
+
+            StyleManager.UpdateOwnerForm();
+
+            base.OnActivated(e);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            using (SolidBrush b = new SolidBrush(MetroPaint.BackColor.Form(Theme)))
+            {
+                e.Graphics.FillRectangle(b, new Rectangle(Width - progressWidth, 0, progressWidth, 5));
+            }
+        }
+
+        private void UpdateProgress()
+        {
+            if (elapsedTime == closeTime)
+            {
+                timer.Dispose();
+                timer = null;
+                Close();
+                return;
+            }
+
+            elapsedTime += 5;
+
+            double perc = (double)elapsedTime / ((double)closeTime / 100);
+            progressWidth = (int)((double)Width * (perc / 100));
+            Invalidate(new Rectangle(0,0,Width,5));
+
+            timer.Reset();
+        }
+    }
+}

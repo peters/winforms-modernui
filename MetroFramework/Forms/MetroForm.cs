@@ -383,20 +383,52 @@ namespace MetroFramework.Forms
 
         private void UpdateWindowButtonPosition()
         {
-            foreach (KeyValuePair<WindowButtons, MetroFormButton> val in windowButtonList)
+
+            // Button drawing priority.
+            var priorityOrder = new Dictionary<int, WindowButtons>(3)
+                                {
+                                    {0, WindowButtons.Close},
+                                    {1, WindowButtons.Maximize},
+                                    {2, WindowButtons.Minimize}
+                                };
+
+            // Position of the first button drawn
+            var firstButtonLocation = new Point(Width - 40, 8);
+
+            // Number of buttons drawn in total
+            var lastDrawedButtonPosition = firstButtonLocation.X - 20;
+
+            // Object representation of the first button drawn
+            MetroFormButton firstButton = null;
+
+            // Only one button to draw.
+            if (windowButtonList.Count == 1)
             {
-                if (val.Key == WindowButtons.Close)
+                foreach (var button in windowButtonList)
                 {
-                    val.Value.Location = new Point(Width - 40, 8);
+                    button.Value.Location = firstButtonLocation;
+                    break;
                 }
-                else if (val.Key == WindowButtons.Minimize)
+                return;
+            }
+            
+            // Draw buttons in priority order
+            foreach (var button in priorityOrder)
+            {
+
+                var buttonExists = windowButtonList.ContainsKey(button.Value);
+
+                if (firstButton == null && buttonExists)
                 {
-                    val.Value.Location = new Point(Width - 80, 8);
+                    firstButton = windowButtonList[button.Value];
+                    firstButton.Location = firstButtonLocation;
+                    continue;
                 }
-                else if (val.Key == WindowButtons.Maximize)
-                {
-                    val.Value.Location = new Point(Width - 60, 8);
-                }
+
+                if (firstButton == null || !buttonExists) continue;
+
+                windowButtonList[button.Value].Location = new Point(lastDrawedButtonPosition, 8);
+                lastDrawedButtonPosition = lastDrawedButtonPosition - 20;
             }
 
             Refresh();

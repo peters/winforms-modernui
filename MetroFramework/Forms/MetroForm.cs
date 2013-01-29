@@ -122,6 +122,9 @@ namespace MetroFramework.Forms
                      ControlStyles.UserPaint, true);
 
             Padding = new Padding(20, 60, 20, 20);
+            
+            Application.AddMessageFilter(this);
+
         }
 
         #endregion

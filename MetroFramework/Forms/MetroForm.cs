@@ -244,7 +244,8 @@ namespace MetroFramework.Forms
         private IntPtr HitTestNCA(IntPtr hwnd, IntPtr wparam, IntPtr lparam)
         {
             Rectangle testRect = Rectangle.Empty;
-            Point p = new Point(WinApi.LoWord((int)lparam), WinApi.HiWord((int)lparam));
+
+            Point p = new Point((Int16)lparam, (Int16)((int)lparam >> 16));
 
             testRect = RectangleToScreen(new Rectangle(0, 0, dwmMargins.cxLeftWidth, dwmMargins.cxLeftWidth));
             if (testRect.Contains(p))

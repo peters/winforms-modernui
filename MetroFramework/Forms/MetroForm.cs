@@ -14,7 +14,7 @@ using MetroFramework.Native;
 
 namespace MetroFramework.Forms
 {
-    public class MetroForm : Form, IMetroForm
+    public class MetroForm : Form, IMetroForm, IMessageFilter
     {
         #region Interface
 
@@ -538,5 +538,40 @@ namespace MetroFramework.Forms
         }
 
         #endregion
+        
+        #region IMessageFilter
+        public bool PreFilterMessage(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                // Double clicking in the top area should result in either form maximize or 
+                // returning back to normal size.
+                case (int)WinApi.Messages.WM_LBUTTONDBLCLK:
+
+                    // Get handle for current control clicked.
+                    Control target = FromHandle(m.HWnd);
+
+                    // Only valid when target is main form itself.
+                    if (target != null && target.Handle != Handle)
+                    {
+                        return false;
+                    }
+
+                    // Mouse x/y coords.
+                    var click = new Point((Int16)m.LParam, (Int16)((int)m.LParam >> 16));
+
+                    // Handle window state change if within bounds of click,
+                    // which is a hardcoded limit of 50 pixels top down.
+                    if (click.Y <= 50)
+                    {
+                        WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+                    }
+
+                    break;
+            }
+            return false;
+        }
+        #endregion
+
     }
 }

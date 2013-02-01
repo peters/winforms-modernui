@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -12,11 +13,14 @@ using MetroFramework.Native;
 
 namespace MetroFramework.Forms
 {
-    public class MetroForm : Form, IMetroForm, IMessageFilter
+    public class MetroForm : Form, IMetroForm
     {
 
         #region Variables
-        private bool isInitialized = false;
+        private const int FirstButtonSpacerWidth = 40;
+        private const int TopBottomMinMaximizeHitboxRange = 50;
+        private bool _isMouseXyWithinTopHeaderArea;
+        private bool _isInitialized;
         private readonly bool _isVistaOrHigher = IsWinVistaOrHigher();
         #endregion
 
@@ -127,8 +131,6 @@ namespace MetroFramework.Forms
 
             Padding = new Padding(20, 60, 20, 20);
 
-            Application.AddMessageFilter(this);
-
             if (!_isVistaOrHigher)
             {
                 RemoveCloseButton(this);
@@ -164,7 +166,7 @@ namespace MetroFramework.Forms
         protected override void OnDeactivate(EventArgs e)
         {
             base.OnDeactivate(e);
-            if (!_isVistaOrHigher && isInitialized)
+            if (!_isVistaOrHigher && _isInitialized)
             {
                 Refresh();
             }
@@ -175,12 +177,11 @@ namespace MetroFramework.Forms
             return WinApi.SetForegroundWindow(Handle);
         }
 
-
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
 
-            if (!isInitialized)
+            if (!_isInitialized)
             {
                 if (ControlBox)
                 {
@@ -195,7 +196,7 @@ namespace MetroFramework.Forms
                     UpdateWindowButtonPosition();
                 }
 
-                isInitialized = true;
+                _isInitialized = true;
             }
 
             if (DesignMode) return;
@@ -268,6 +269,15 @@ namespace MetroFramework.Forms
                     Marshal.StructureToPtr(nccsp, m.LParam, false);
 
                     m.Result = IntPtr.Zero;
+                } else if (m.Msg == (int) WinApi.Messages.WM_LBUTTONDBLCLK)
+                {
+                    // Alow the form to be normalized / maximized when
+                    // clicked inside our top header area rectangle.
+                    if (_isMouseXyWithinTopHeaderArea)
+                    {
+                        WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+                        _isMouseXyWithinTopHeaderArea = false;
+                    }
                 }
                 else if (m.Msg == (int)WinApi.Messages.WM_NCHITTEST && (int)m.Result == 0)
                 {
@@ -290,6 +300,12 @@ namespace MetroFramework.Forms
 
             Point p = new Point((Int16)lparam, (Int16)((int)lparam >> 16));
 
+
+            // Determine if mouse xy is within our range of the "top header" area 
+            // which allows for double clicking for either minimize/maximizing form.
+            testRect = RectangleToScreen(new Rectangle(0, 0, Width - FirstButtonSpacerWidth, TopBottomMinMaximizeHitboxRange));
+            _isMouseXyWithinTopHeaderArea = testRect.Contains(p);
+            
             testRect = RectangleToScreen(new Rectangle(0, 0, dwmMargins.cxLeftWidth, dwmMargins.cxLeftWidth));
             if (testRect.Contains(p))
                 return new IntPtr((int)WinApi.HitTest.HTTOPLEFT);
@@ -436,7 +452,7 @@ namespace MetroFramework.Forms
                                 };
 
             // Position of the first button drawn
-            var firstButtonLocation = new Point(Width - 40, 8);
+            var firstButtonLocation = new Point(Width - FirstButtonSpacerWidth, 8);
 
             // Number of buttons drawn in total
             var lastDrawedButtonPosition = firstButtonLocation.X - 20;
@@ -639,40 +655,6 @@ namespace MetroFramework.Forms
             WinApi.DrawMenuBar(frm.Handle);
         }
 
-        #endregion
-
-        #region IMessageFilter
-        public bool PreFilterMessage(ref Message m)
-        {
-            switch (m.Msg)
-            {
-                // Double clicking in the top area should result in either form maximize or 
-                // returning back to normal size.
-                case (int)WinApi.Messages.WM_LBUTTONDBLCLK:
-
-                    // Get handle for current control clicked.
-                    Control target = FromHandle(m.HWnd);
-
-                    // Only valid when target is main form itself.
-                    if (target != null && target.Handle != Handle)
-                    {
-                        return false;
-                    }
-
-                    // Mouse x/y coords.
-                    var click = new Point((Int16)m.LParam, (Int16)((int)m.LParam >> 16));
-
-                    // Handle window state change if within bounds of click,
-                    // which is a hardcoded limit of 50 pixels top down.
-                    if (click.Y <= 50)
-                    {
-                        WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
-                    }
-
-                    break;
-            }
-            return false;
-        }
         #endregion
 
     }

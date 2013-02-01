@@ -1,4 +1,4 @@
-MetroFramework - WinForms on steriods.
+MetroFramework - WinForms on steroids.
 --------------------------------------
 
 Brings the new Modern UI alias Metro UI of Windows 8 to .NET Windows Forms applications. 

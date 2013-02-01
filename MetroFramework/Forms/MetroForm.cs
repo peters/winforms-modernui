@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -13,8 +12,19 @@ using MetroFramework.Native;
 
 namespace MetroFramework.Forms
 {
+
+    #region Enums
+    public enum TextAlign
+    {
+        Left,
+        Center,
+        Right
+    }
+    #endregion
+   
     public class MetroForm : Form, IMetroForm
     {
+
 
         #region Variables
         private const int FirstButtonSpacerWidth = 40;
@@ -66,6 +76,16 @@ namespace MetroFramework.Forms
         #endregion
 
         #region Fields
+
+        private TextAlign _textAlign = TextAlign.Left;
+
+        [Browsable(true)]
+        [Category("Appearance")]
+        public TextAlign TextAlign
+        {
+            get { return _textAlign; }
+            set { _textAlign = value; }
+        }
 
         [Browsable(false)]
         public override Color BackColor
@@ -142,7 +162,6 @@ namespace MetroFramework.Forms
         #endregion
 
         #region Paint Methods
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Color backColor = MetroPaint.BackColor.Form(Theme);
@@ -156,7 +175,22 @@ namespace MetroFramework.Forms
                 e.Graphics.FillRectangle(b, topRect);
             }
 
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(20, 20), foreColor);
+            switch (TextAlign)
+            {
+                case TextAlign.Left:                    
+                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(20, 20), foreColor);
+                    break;
+                case TextAlign.Center:
+                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width, 20), foreColor, 
+                        TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter);
+                    break;
+                case TextAlign.Right:
+                    var actualSize = MeasureText(e.Graphics, ClientRectangle, MetroFonts.Title, Text,
+                                                 TextFormatFlags.RightToLeft);
+                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width - actualSize.Width, 20), foreColor,
+                        TextFormatFlags.RightToLeft);
+                    break;
+            }
         }
 
         #endregion
@@ -412,10 +446,10 @@ namespace MetroFramework.Forms
 
         private void WindowButton_Click(object sender, EventArgs e)
         {
-            MetroFormButton btn = sender as MetroFormButton;
+            var btn = sender as MetroFormButton;
             if (btn != null)
             {
-                WindowButtons btnFlag = (WindowButtons)btn.Tag;
+                var btnFlag = (WindowButtons)btn.Tag;
                 if (btnFlag == WindowButtons.Close)
                 {
                     Close();
@@ -442,6 +476,13 @@ namespace MetroFramework.Forms
 
         private void UpdateWindowButtonPosition()
         {
+
+            // Do not update when controlbox, since there are
+            // no buttons to display.
+            if (!ControlBox)
+            {
+                return;
+            }
 
             // Button drawing priority.
             var priorityOrder = new Dictionary<int, WindowButtons>(3)
@@ -631,13 +672,20 @@ namespace MetroFramework.Forms
 
         #endregion
 
-        #region Windows XP
+        #region Helper methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private static bool IsWinVistaOrHigher()
         {
             var os = Environment.OSVersion;
             return (os.Platform == PlatformID.Win32NT) && (os.Version.Major >= 6);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="frm"></param>
         public static void RemoveCloseButton(Form frm)
         {
             IntPtr hMenu = WinApi.GetSystemMenu(frm.Handle, false);
@@ -655,6 +703,21 @@ namespace MetroFramework.Forms
             WinApi.DrawMenuBar(frm.Handle);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="graphics"></param>
+        /// <param name="clientRectangle"></param>
+        /// <param name="font"></param>
+        /// <param name="text"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        private static Rectangle MeasureText(Graphics graphics, Rectangle clientRectangle, Font font, string text, TextFormatFlags flags)
+        {
+            var proposedSize = new Size(int.MaxValue, int.MinValue);
+            var actualSize = TextRenderer.MeasureText(graphics, text, font, proposedSize, flags);
+            return new Rectangle(clientRectangle.X, clientRectangle.Y, actualSize.Width, actualSize.Height);
+        }
         #endregion
 
     }

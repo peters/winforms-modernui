@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-
 using MetroFramework.Components;
 using MetroFramework.Design;
 using MetroFramework.Drawing;
@@ -15,7 +14,7 @@ namespace MetroFramework.Controls
     {
         #region Interface
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
+        private MetroColorStyle _metroStyle = MetroColorStyle.Blue;
         [Category("Metro Appearance")]
         public MetroColorStyle Style
         {
@@ -24,12 +23,12 @@ namespace MetroFramework.Controls
                 if (StyleManager != null)
                     return StyleManager.Style;
 
-                return metroStyle;
+                return _metroStyle;
             }
-            set { metroStyle = value; }
+            set { _metroStyle = value; }
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
+        private MetroThemeStyle _metroTheme = MetroThemeStyle.Light;
         [Category("Metro Appearance")]
         public MetroThemeStyle Theme
         {
@@ -38,9 +37,9 @@ namespace MetroFramework.Controls
                 if (StyleManager != null)
                     return StyleManager.Theme;
 
-                return metroTheme;
+                return _metroTheme;
             }
-            set { metroTheme = value; }
+            set { _metroTheme = value; }
         }
 
         private MetroStyleManager metroStyleManager = null;
@@ -97,14 +96,20 @@ namespace MetroFramework.Controls
             set { baseTextBox.Text = value; }
         }
 
+        [Browsable(false)]
+        public string SelectedText
+        {
+            get { return baseTextBox.SelectedText;  }
+            set { baseTextBox.Text = value; }
+        }
+
         #endregion
 
         #region Constructor
 
         public MetroTextBox()
         {
-            DoubleBuffered = true;
-
+            SetStyle(ControlStyles.DoubleBuffer, true);
             CreateBaseTextBox();
             UpdateBaseTextBox();
             AddEventHandler();       
@@ -112,10 +117,12 @@ namespace MetroFramework.Controls
 
         private void CreateBaseTextBox()
         {
-            baseTextBox = new TextBox();
-            baseTextBox.BorderStyle = BorderStyle.None;
-            baseTextBox.Font = MetroFonts.Default(12f);
-            baseTextBox.Location = new Point(3, 3);
+            baseTextBox = new TextBox
+                          {
+                              BorderStyle = BorderStyle.None,
+                              Font = MetroFonts.Default(12f),
+                              Location = new Point(3, 3)
+                          };
 
             Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
             Controls.Add(baseTextBox);
@@ -123,30 +130,25 @@ namespace MetroFramework.Controls
 
         private void AddEventHandler()
         {
-            baseTextBox.AcceptsTabChanged += new EventHandler(baseTextBox_AcceptsTabChanged);
+            baseTextBox.AcceptsTabChanged += BaseTextBoxAcceptsTabChanged;
 
-            baseTextBox.CausesValidationChanged += new EventHandler(baseTextBox_CausesValidationChanged);
-            baseTextBox.ChangeUICues += new UICuesEventHandler(baseTextBox_ChangeUICues);
-            baseTextBox.Click += new EventHandler(baseTextBox_Click);
-            baseTextBox.ClientSizeChanged += new EventHandler(baseTextBox_ClientSizeChanged);
-            baseTextBox.ContextMenuChanged += new EventHandler(baseTextBox_ContextMenuChanged);
-            baseTextBox.ContextMenuStripChanged += new EventHandler(baseTextBox_ContextMenuStripChanged);
-            baseTextBox.CursorChanged += new EventHandler(baseTextBox_CursorChanged);
+            baseTextBox.CausesValidationChanged += BaseTextBoxCausesValidationChanged;
+            baseTextBox.ChangeUICues += BaseTextBoxChangeUiCues;
+            baseTextBox.Click += BaseTextBoxClick;
+            baseTextBox.ClientSizeChanged += BaseTextBoxClientSizeChanged;
+            baseTextBox.ContextMenuChanged += BaseTextBoxContextMenuChanged;
+            baseTextBox.ContextMenuStripChanged += BaseTextBoxContextMenuStripChanged;
+            baseTextBox.CursorChanged += BaseTextBoxCursorChanged;
 
-            baseTextBox.EnabledChanged += new EventHandler(baseTextBox_EnabledChanged);
+            baseTextBox.EnabledChanged += BaseTextBoxEnabledChanged;
 
-            baseTextBox.KeyDown += new KeyEventHandler(baseTextBox_KeyDown);
-            baseTextBox.KeyPress += new KeyPressEventHandler(baseTextBox_KeyPress);
-            baseTextBox.KeyUp += new KeyEventHandler(baseTextBox_KeyUp);
+            baseTextBox.KeyDown += BaseTextBoxKeyDown;
+            baseTextBox.KeyPress += BaseTextBoxKeyPress;
+            baseTextBox.KeyUp += BaseTextBoxKeyUp;
 
-            baseTextBox.SizeChanged += new EventHandler(baseTextBox_SizeChanged);
+            baseTextBox.SizeChanged += BaseTextBoxSizeChanged;
 
-            baseTextBox.TextChanged += new EventHandler(baseTextBox_TextChanged);
-        }
-
-        private void RemoveEventHandler()
-        {
-
+            baseTextBox.TextChanged += BaseTextBoxTextChanged;
         }
 
         #endregion
@@ -154,75 +156,85 @@ namespace MetroFramework.Controls
         #region Routing Methods
 
         public event EventHandler AcceptsTabChanged;
-        private void baseTextBox_AcceptsTabChanged(object sender, EventArgs e)
+        private void BaseTextBoxAcceptsTabChanged(object sender, EventArgs e)
         {
             if (AcceptsTabChanged != null)
                 AcceptsTabChanged(this, e);
         }
 
-        private void baseTextBox_EnabledChanged(object sender, EventArgs e)
+        private void BaseTextBoxEnabledChanged(object sender, EventArgs e)
         {
             base.OnEnabledChanged(e);
         }
         
-        private void baseTextBox_SizeChanged(object sender, EventArgs e)
+        private void BaseTextBoxSizeChanged(object sender, EventArgs e)
         {
             base.OnSizeChanged(e);
         }
 
-        private void baseTextBox_CursorChanged(object sender, EventArgs e)
+        private void BaseTextBoxCursorChanged(object sender, EventArgs e)
         {
             base.OnCursorChanged(e);
         }
 
-        private void baseTextBox_ContextMenuStripChanged(object sender, EventArgs e)
+        private void BaseTextBoxContextMenuStripChanged(object sender, EventArgs e)
         {
             base.OnContextMenuStripChanged(e);
         }
 
-        private void baseTextBox_ContextMenuChanged(object sender, EventArgs e)
+        private void BaseTextBoxContextMenuChanged(object sender, EventArgs e)
         {
             base.OnContextMenuChanged(e);
         }
 
-        private void baseTextBox_ClientSizeChanged(object sender, EventArgs e)
+        private void BaseTextBoxClientSizeChanged(object sender, EventArgs e)
         {
             base.OnClientSizeChanged(e);
         }
 
-        private void baseTextBox_Click(object sender, EventArgs e)
+        private void BaseTextBoxClick(object sender, EventArgs e)
         {
             base.OnClick(e);
         }
 
-        private void baseTextBox_ChangeUICues(object sender, UICuesEventArgs e)
+        private void BaseTextBoxChangeUiCues(object sender, UICuesEventArgs e)
         {
             base.OnChangeUICues(e);
         }
 
-        private void baseTextBox_CausesValidationChanged(object sender, EventArgs e)
+        private void BaseTextBoxCausesValidationChanged(object sender, EventArgs e)
         {
             base.OnCausesValidationChanged(e);
         }
 
-        private void baseTextBox_KeyUp(object sender, KeyEventArgs e)
+        private void BaseTextBoxKeyUp(object sender, KeyEventArgs e)
         {
             base.OnKeyUp(e);
         }
 
-        private void baseTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void BaseTextBoxKeyPress(object sender, KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
         }
 
-        private void baseTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void BaseTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             base.OnKeyDown(e);
         }
 
-        private void baseTextBox_TextChanged(object sender, EventArgs e)
+        private void BaseTextBoxTextChanged(object sender, EventArgs e)
         {
             base.OnTextChanged(e);
+        }
+
+        public void Select(int start, int length)
+        {
+            baseTextBox.Select(start, length);
+        }
+
+        public void SelectAll()
+        {
+            baseTextBox.SelectAll();
         }
 
         #endregion
@@ -234,7 +246,7 @@ namespace MetroFramework.Controls
             e.Graphics.Clear(MetroPaint.BackColor.Button.Normal(Theme));
             baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
 
-            using (Pen p = new Pen(MetroPaint.BorderColor.Button.Normal(Theme), 2f))
+            using (var p = new Pen(MetroPaint.BorderColor.Button.Normal(Theme), 2f))
             {
                 e.Graphics.DrawRectangle(p, new Rectangle(1, 1, Width - 2, Height - 2));
             }
@@ -255,5 +267,6 @@ namespace MetroFramework.Controls
 
             Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
         }
+
     }
 }

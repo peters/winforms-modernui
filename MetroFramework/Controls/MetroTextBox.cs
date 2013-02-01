@@ -1,17 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using MetroFramework.Components;
 using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
-using MetroFramework.Native;
 
 namespace MetroFramework.Controls
 {

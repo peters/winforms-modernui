@@ -2,8 +2,6 @@
 using System.Drawing;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -16,6 +14,12 @@ namespace MetroFramework.Forms
 {
     public class MetroForm : Form, IMetroForm, IMessageFilter
     {
+
+        #region Variables
+        private bool isInitialized = false;
+        private readonly bool _isVistaOrHigher = IsWinVistaOrHigher();
+        #endregion
+
         #region Interface
 
         private MetroColorStyle metroStyle = MetroColorStyle.Blue;
@@ -33,7 +37,7 @@ namespace MetroFramework.Forms
         }
 
         private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-    
+
         [Category("Metro Appearance")]
         public MetroThemeStyle Theme
         {
@@ -71,7 +75,7 @@ namespace MetroFramework.Forms
         [Browsable(false)]
         public new FormBorderStyle FormBorderStyle
         {
-            get 
+            get
             {
                 if (DesignMode)
                 {
@@ -101,7 +105,7 @@ namespace MetroFramework.Forms
 
         private DwmApi.MARGINS dwmMargins;
         private bool isMarginOk;
-        
+
         private bool isAeroEnabled;
         public bool AeroEnabled
         {
@@ -122,8 +126,14 @@ namespace MetroFramework.Forms
                      ControlStyles.UserPaint, true);
 
             Padding = new Padding(20, 60, 20, 20);
-            
+
             Application.AddMessageFilter(this);
+
+            if (!_isVistaOrHigher)
+            {
+                RemoveCloseButton(this);
+                FormBorderStyle = FormBorderStyle.None;
+            }
 
         }
 
@@ -151,12 +161,20 @@ namespace MetroFramework.Forms
 
         #region Management Methods
 
+        protected override void OnDeactivate(EventArgs e)
+        {
+            base.OnDeactivate(e);
+            if (!_isVistaOrHigher && isInitialized)
+            {
+                Refresh();
+            }
+        }
+
         public bool FocusMe()
         {
             return WinApi.SetForegroundWindow(Handle);
         }
 
-        private bool isInitialized = false;
 
         protected override void OnActivated(EventArgs e)
         {
@@ -180,8 +198,17 @@ namespace MetroFramework.Forms
                 isInitialized = true;
             }
 
-            if (!DesignMode)
+            if (DesignMode) return;
+
+            if (_isVistaOrHigher)
+            {
                 DwmApi.DwmExtendFrameIntoClientArea(Handle, ref dwmMargins);
+            }
+            else
+            {
+                Refresh();
+            }
+
         }
 
         protected override void OnResizeEnd(EventArgs e)
@@ -200,11 +227,24 @@ namespace MetroFramework.Forms
             {
                 IntPtr result = default(IntPtr);
 
-                int dwmHandled = DwmApi.DwmDefWindowProc(m.HWnd, m.Msg, m.WParam, m.LParam, ref result);
-                if (dwmHandled == 1)
+                if (_isVistaOrHigher)
                 {
-                    m.Result = result;
-                    return;
+                    int dwmHandled = DwmApi.DwmDefWindowProc(m.HWnd, m.Msg, m.WParam, m.LParam, ref result);
+                    if (dwmHandled == 1)
+                    {
+                        m.Result = result;
+                        return;
+                    }
+                }
+                else if (m.Msg == (int)WinApi.Messages.WM_NCPAINT || m.Msg == (int)WinApi.Messages.WM_SIZING || m.Msg == (int)WinApi.Messages.WM_NCACTIVATE)
+                {
+                    using (var graphics = Graphics.FromHwnd(m.HWnd))
+                    {
+                        using (SolidBrush b = MetroPaint.GetStyleBrush(Style))
+                        {
+                            graphics.FillRectangle(b, new Rectangle(0, 0, Width, 5));
+                        }
+                    }
                 }
 
                 if (m.Msg == (int)WinApi.Messages.WM_NCCALCSIZE && (int)m.WParam == 1)
@@ -293,7 +333,7 @@ namespace MetroFramework.Forms
         {
             base.OnMouseDown(e);
 
-            if (e.Button == System.Windows.Forms.MouseButtons.Left && Movable)
+            if (e.Button == MouseButtons.Left && Movable)
             {
                 if (this.Width - borderWidth > e.Location.X && e.Location.X > borderWidth && e.Location.Y > borderWidth)
                     MoveControl(Handle);
@@ -414,7 +454,7 @@ namespace MetroFramework.Forms
                 }
                 return;
             }
-            
+
             // Draw buttons in priority order
             foreach (var button in priorityOrder)
             {
@@ -574,7 +614,33 @@ namespace MetroFramework.Forms
         }
 
         #endregion
-        
+
+        #region Windows XP
+        private static bool IsWinVistaOrHigher()
+        {
+            var os = Environment.OSVersion;
+            return (os.Platform == PlatformID.Win32NT) && (os.Version.Major >= 6);
+        }
+
+        public static void RemoveCloseButton(Form frm)
+        {
+            IntPtr hMenu = WinApi.GetSystemMenu(frm.Handle, false);
+            if (hMenu == IntPtr.Zero)
+            {
+                return;
+            }
+            int n = WinApi.GetMenuItemCount(hMenu);
+            if (n <= 0)
+            {
+                return;
+            }
+            WinApi.RemoveMenu(hMenu, (uint)(n - 1), WinApi.MfByposition | WinApi.MfRemove);
+            WinApi.RemoveMenu(hMenu, (uint)(n - 2), WinApi.MfByposition | WinApi.MfRemove);
+            WinApi.DrawMenuBar(frm.Handle);
+        }
+
+        #endregion
+
         #region IMessageFilter
         public bool PreFilterMessage(ref Message m)
         {

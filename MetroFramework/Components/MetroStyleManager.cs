@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Windows.Forms;
-
-using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 
 namespace MetroFramework.Components

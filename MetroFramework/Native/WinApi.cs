@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace MetroFramework.Native
@@ -322,9 +318,22 @@ namespace MetroFramework.Native
         public const int Autohide = 0x0000001;
         public const int AlwaysOnTop = 0x0000002;
 
+        public const Int32 MfByposition = 0x400;
+        public const Int32 MfRemove = 0x1000;
         #endregion
 
         #region API Calls
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+        [DllImport("user32.dll")]
+        public static extern int GetMenuItemCount(IntPtr hMenu);
+
+        [DllImport("user32.dll")]
+        public static extern bool DrawMenuBar(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
 
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();

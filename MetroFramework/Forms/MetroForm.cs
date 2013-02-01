@@ -653,8 +653,8 @@ namespace MetroFramework.Forms
                     // Get handle for current control clicked.
                     Control target = FromHandle(m.HWnd);
 
-                    // Only valid when target is main form itself.
-                    if (target != null && target.Handle != Handle)
+                    // Check if target is null, or disposed.
+                    if (target == null || target.IsDisposed)
                     {
                         return false;
                     }

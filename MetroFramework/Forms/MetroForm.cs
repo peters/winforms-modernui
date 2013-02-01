@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace MetroFramework.Forms
     {
 
         #region Variables
-        private bool isInitialized = false;
+        private int _topBottomMinMaximizeHitboxRange = 50;
+        private bool _isInitialized;
         private readonly bool _isVistaOrHigher = IsWinVistaOrHigher();
         #endregion
 
@@ -164,7 +166,7 @@ namespace MetroFramework.Forms
         protected override void OnDeactivate(EventArgs e)
         {
             base.OnDeactivate(e);
-            if (!_isVistaOrHigher && isInitialized)
+            if (!_isVistaOrHigher && _isInitialized)
             {
                 Refresh();
             }
@@ -180,7 +182,7 @@ namespace MetroFramework.Forms
         {
             base.OnActivated(e);
 
-            if (!isInitialized)
+            if (!_isInitialized)
             {
                 if (ControlBox)
                 {
@@ -195,7 +197,7 @@ namespace MetroFramework.Forms
                     UpdateWindowButtonPosition();
                 }
 
-                isInitialized = true;
+                _isInitialized = true;
             }
 
             if (DesignMode) return;
@@ -651,22 +653,30 @@ namespace MetroFramework.Forms
                 case (int)WinApi.Messages.WM_LBUTTONDBLCLK:
 
                     // Get handle for current control clicked.
-                    Control target = FromHandle(m.HWnd);
+                    var target = FromHandle(m.HWnd) as MetroForm;
 
-                    // Check if target is null, or disposed.
-                    if (target == null || target.IsDisposed)
+                    // Tight check to make sure we are not handling a disposed object.
+                    if (target == null || target.IsDisposed || !target.IsHandleCreated)
+                    {
+                        return false;
+                    }
+
+                    // Only allow this to happen on a main form.
+                    if (target.GetType().BaseType != typeof(MetroForm) || 
+                        target is MetroTaskWindow ||
+                        target is MetroMessageBox)
                     {
                         return false;
                     }
 
                     // Mouse x/y coords.
-                    var click = new Point((Int16)m.LParam, (Int16)((int)m.LParam >> 16));
+                    var hitCoords = new Point((Int16)m.LParam, (Int16)((int)m.LParam >> 16));
 
                     // Handle window state change if within bounds of click,
                     // which is a hardcoded limit of 50 pixels top down.
-                    if (click.Y <= 50)
+                    if (hitCoords.Y <= _topBottomMinMaximizeHitboxRange)
                     {
-                        WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+                        target.WindowState = target.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
                     }
 
                     break;

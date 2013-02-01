@@ -35,8 +35,10 @@ Controls supported
 
 Screenshot
 ----------
+*Windows 7*
 ![MetroFramework](http://i.imgur.com/RBukk78.png)
-
+*Windows XP*
+![MetroFramework](http://i.imgur.com/0hlnU2w.jpg)
 Preamble
 --------
 

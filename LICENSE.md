@@ -12,20 +12,20 @@ The main points subject to the terms of the License are:
 -   Source Code and Executable Files can be redistributed; and
 -   Source Code can be modified to create derivative works.
 -   No claim of suitability, guarantee, or any warranty whatsoever is
-    provided. The software is provided “as-is”.
+    provided. The software is provided "as-is".
 -   The Article accompanying the Work may not be distributed or
-    republished without the Author’s consent
+    republished without the Author's consent
 
 This License is entered between You, the individual or other entity
 reading or otherwise making use of the Work licensed pursuant to this
 License and the individual or other entity which offers the Work under
-the terms of this License (“Author”).
+the terms of this License ("Author").
 
 License
 -------
 
 THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CODE
-PROJECT OPEN LICENSE (“LICENSE”). THE WORK IS PROTECTED BY COPYRIGHT
+PROJECT OPEN LICENSE ("LICENSE"). THE WORK IS PROTECTED BY COPYRIGHT
 AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
 AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
 
@@ -39,26 +39,26 @@ TERMS OF THIS LICENSE, YOU CANNOT MAKE ANY USE OF THE WORK.
 <li>
 **Definitions.**
 
-1.  **“Articles”** means, collectively, all articles written by Author
+1.  **"Articles"** means, collectively, all articles written by Author
     which describes how the Source Code and Executable Files for the
     Work may be used by a user.
-2.  **“Author”** means the individual or entity that offers the Work
+2.  **"Author"** means the individual or entity that offers the Work
     under the terms of this License.****
-3.  **“Derivative Work”** means a work based upon the Work or upon the
+3.  **"Derivative Work"** means a work based upon the Work or upon the
     Work and other pre-existing works.
-4.  **“Executable Files”** refer to the executables, binary files,
+4.  **"Executable Files"** refer to the executables, binary files,
     configuration and any required data files included in the Work.
 5.  "**Publisher**" means the provider of the website, magazine, CD-ROM,
     DVD or other medium from or by which the Work is obtained by You.
-6.  **“Source Code”** refers to the collection of source code and
+6.  **"Source Code"** refers to the collection of source code and
     configuration files used to create the Executable Files.
-7.  **“Standard Version”** refers to such a Work if it has not been
+7.  **"Standard Version"** refers to such a Work if it has not been
     modified, or has been modified in accordance with the consent of the
     Author, such consent being in the full discretion of the Author.
-8.  **“Work”** refers to the collection of files distributed by the
+8.  **"Work"** refers to the collection of files distributed by the
     Publisher, including the Source Code, Executable Files, binaries,
     data files, documentation, whitepapers and the Articles.
-9.  **“You”** is you, an individual or entity wishing to use the Work
+9.  **"You"** is you, an individual or entity wishing to use the Work
     and exercise your rights under this License.
 
 </li>

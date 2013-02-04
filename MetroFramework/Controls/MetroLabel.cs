@@ -114,30 +114,27 @@ namespace MetroFramework.Controls
             {
                 foreColor = !useStyleColors ? MetroPaint.ForeColor.Label.Normal(Theme) : MetroPaint.GetStyleColor(Style);
             }
-
-            var actualRectangle = ClientRectangle;
-            var flags = MetroPaint.GetTextFormatFlags(TextAlign);
-            var font = MetroFonts.Label(metroLabelSize, metroLabelWeight);
-
-            // Handle resizing when autosizing is enabled.
-            if (AutoSize)
-            {
-                var proposedSize = new Size(int.MaxValue, int.MinValue);
-                var actualSize = TextRenderer.MeasureText(e.Graphics, Text, font, proposedSize, flags);
-                actualRectangle = new Rectangle(ClientRectangle.X, ClientRectangle.Y, actualSize.Width, actualSize.Height);
-                Size = actualSize;
-            }
-           
+        
             e.Graphics.Clear(backColor);
-            TextRenderer.DrawText(e.Graphics, Text, font, actualRectangle, foreColor, backColor, flags);
-
-          
-
+            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), ClientRectangle, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
         }
 
         #endregion
 
         #region Overridden Methods
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            Size preferredSize = base.GetPreferredSize(proposedSize);
+
+            using (Graphics g = CreateGraphics())
+            {
+                proposedSize = new Size(int.MaxValue, int.MaxValue);
+                preferredSize = TextRenderer.MeasureText(g, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), proposedSize, MetroPaint.GetTextFormatFlags(TextAlign));
+            }
+
+            return preferredSize;
+        }
 
         protected override void OnEnabledChanged(EventArgs e)
         {

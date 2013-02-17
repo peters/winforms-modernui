@@ -209,9 +209,11 @@ namespace MetroFramework.Controls
                 ReadOnly = true,
                 BackColor =  Parent != null ? Parent.BackColor : MetroPaint.BackColor.Form(Theme),
                 ForeColor = !_useStyleColors ? MetroPaint.ForeColor.Label.Normal(Theme) : MetroPaint.GetStyleColor(Style),
-                Size = GetPreferredSize(Size.Empty)
+                Size = GetPreferredSize(Size.Empty),
+                Multiline = true
             };
             _baseTextBox.DoubleClick += BaseTextBoxOnDoubleClick;
+            _baseTextBox.Click += BaseTextBoxOnClick;
             Controls.Add(_baseTextBox);
         }
 
@@ -223,6 +225,7 @@ namespace MetroFramework.Controls
             if (_baseTextBox == null) return;
             Controls.Remove(_baseTextBox);
             _baseTextBox.DoubleClick -= BaseTextBoxOnDoubleClick;
+            _baseTextBox.Click -= BaseTextBoxOnClick;
             _baseTextBox.Dispose();
             _baseTextBox = null;
         }
@@ -244,9 +247,19 @@ namespace MetroFramework.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
+        private void BaseTextBoxOnClick(object sender, EventArgs eventArgs)
+        {
+            Native.WinCaret.HideCaret(_baseTextBox.Handle);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         private void BaseTextBoxOnDoubleClick(object sender, EventArgs eventArgs)
         {
             _baseTextBox.SelectAll();
+            Native.WinCaret.HideCaret(_baseTextBox.Handle);
         }
         #endregion
     }

@@ -33,14 +33,14 @@ namespace MetroFramework.Controls
 
         protected override Type CreateCollectionItemType()
         {
-            return typeof (MetroTabPage);
+            return typeof (TabPage);
         }
 
         protected override Type[] CreateNewItemTypes()
         {
             return new[]
             {
-                typeof (MetroTabPage)
+                typeof (TabPage)
             };
         }
     }
@@ -49,6 +49,7 @@ namespace MetroFramework.Controls
 
     #region MetroTabPage
 
+    [ToolboxItem(false)]
     class TabPageScrollBar : MetroScrollBar
     {
         protected override void OnMouseWheel(MouseEventArgs e)
@@ -59,10 +60,10 @@ namespace MetroFramework.Controls
         }
     }
 
-    [ToolboxItem(false)]
-    public class MetroTabPage : TabPage, IMetroControl
+    [Designer(typeof (ScrollableControlDesigner))]
+    public class TabPage : System.Windows.Forms.TabPage, IMetroControl
     {
-
+        
         #region Variables
         /// <summary>
         /// 
@@ -81,40 +82,16 @@ namespace MetroFramework.Controls
             Orientation = ScrollBarOrientation.Horizontal,
             Height = 6
         };
+
         #endregion
 
         #region Fields
 
-        private bool _horizontalScrollBarVisible = true;
-        
         [Category("Metro Appearance"), Browsable(true), Description("Shode / hide horizontal scrollbar.")]
-        public bool HorizontalScrollBarVisible
-        {
-            get
-            {
-                return _horizontalScrollBarVisible;
-            }
-            set
-            {
-                _horizontalScrollBarVisible = value;
-                UpdateScrollBarPositions();
-            }
-        }
+        public bool HorizontalScrollBarShow { get; set; }
 
-        private bool _verticalScrollBarVisible = true;
         [Category("Metro Appearance"), Browsable(true), Description("Shode / hide vertical scrollbar.")]
-        public bool VerticalScrollBarVisible
-        {
-            get
-            {
-                return _verticalScrollBarVisible;
-            }
-            set
-            {
-                _verticalScrollBarVisible = value;
-                UpdateScrollBarPositions();
-            }
-        }
+        public bool VerticalScrollBarShow { get; set; }
 
         [Category("Metro Appearance"), Browsable(true), Description("Allow TabPage to be scrolled.")]
         public new bool AutoScroll
@@ -125,8 +102,12 @@ namespace MetroFramework.Controls
             }
             set
             {
+                if (value)
+                {
+                    HorizontalScrollBarShow = true;
+                    VerticalScrollBarShow = true;
+                }
                 base.AutoScroll = value;
-                UpdateScrollBarPositions();
             }
         }
         #endregion
@@ -151,7 +132,7 @@ namespace MetroFramework.Controls
         /// http://www.codeproject.com/Articles/226381/Scrolling-Panel
         /// http://cyotek.com/blog/tag/scrollablecontroldesigner
         /// </summary>
-        public MetroTabPage()
+        public TabPage()
         {
             SetStyle(ControlStyles.UserPaint |
              ControlStyles.AllPaintingInWmPaint |
@@ -203,16 +184,22 @@ namespace MetroFramework.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             
+            // Do nothing while in design mode.
+            if (DesignMode)
+            {
+                return;
+            }
+
             // Only attempt to set visibility if configured
             // to be visible in the designer.
-            if (_horizontalScrollBarVisible)
+            if (HorizontalScrollBarShow)
             {
                 _horizontalScrollbar.Visible = HorizontalScroll.Visible;                
             }
 
             // Only attempt to set visibility if configured
             // to be visible in the designer.
-            if (_verticalScrollBarVisible)
+            if (VerticalScrollBarShow)
             {
                 _verticalScrollbar.Visible = VerticalScroll.Visible;                
             }
@@ -247,7 +234,10 @@ namespace MetroFramework.Controls
             switch (m.Msg)
             {
                 default:
-                    WinApi.ShowScrollBar(Handle, (int) WinApi.ScrollBar.SB_BOTH, 0);
+                    if (!DesignMode)
+                    {
+                        WinApi.ShowScrollBar(Handle, (int)WinApi.ScrollBar.SB_BOTH, 0);                        
+                    }
                     base.WndProc(ref m);
                     break;
             }
@@ -294,13 +284,17 @@ namespace MetroFramework.Controls
         /// </summary>
         private void UpdateScrollBarPositions()
         {
+            if (DesignMode)
+            {
+                return;
+            }
             if (!AutoScroll)
             {
                 _verticalScrollbar.Visible = false;
                 _horizontalScrollbar.Visible = false;
                 return;
             }
-            if (_verticalScrollBarVisible)
+            if (VerticalScrollBarShow)
             {
                 if (VerticalScroll.Visible || DesignMode)
                 {
@@ -312,7 +306,7 @@ namespace MetroFramework.Controls
             {
                 _verticalScrollbar.Visible = false;
             }
-            if (_horizontalScrollBarVisible)
+            if (HorizontalScrollBarShow)
             {
                 if (HorizontalScroll.Visible || DesignMode)
                 {
@@ -337,7 +331,10 @@ namespace MetroFramework.Controls
                     switch (eventArgs.Type)
                     {
                         default:
-                            _horizontalScrollbar.Location = new Point(ClientRectangle.X, Height - _horizontalScrollbar.Height);
+                            if (HorizontalScrollBarShow)
+                            {
+                                _horizontalScrollbar.Location = new Point(ClientRectangle.X, Height - _horizontalScrollbar.Height);                                
+                            }
                             break;
                     }
                     break;
@@ -345,18 +342,16 @@ namespace MetroFramework.Controls
                     switch (eventArgs.Type)
                     {
                         default:
-                            _verticalScrollbar.Location = new Point(ClientRectangle.X + ClientRectangle.Width - _verticalScrollbar.Width, ClientRectangle.Top);
+                            if (VerticalScrollBarShow)
+                            {
+                                _verticalScrollbar.Location = new Point(ClientRectangle.X + ClientRectangle.Width - _verticalScrollbar.Width, ClientRectangle.Top);                                
+                            }
                             break;
                     }
                     break;
             }
         }
         #endregion
-    }
-
-    [Designer(typeof (ScrollableControlDesigner))]
-    public class TabPage : System.Windows.Forms.TabPage
-    {
     }
     #endregion
 
@@ -483,38 +478,6 @@ namespace MetroFramework.Controls
             set
             {
                 _textAlign = value;
-            }
-        }
-
-        private bool _scrollbarHorizontalVisible = true;
-
-        [Category("Metro Appearance"), Description("Show horizontal scrollbar")]
-        public bool ScrollBarHorizontalVisible
-        {
-            get
-            {
-                return _scrollbarHorizontalVisible;
-            }
-            set
-            {
-                _scrollbarHorizontalVisible = value;
-                Invalidate();
-            }
-        }
-
-        private bool _scrollbarVerticalVisible = true;
-
-        [Category("Metro Appearance"), Description("Show vertical scrollbar")]
-        public bool ScrollBarVerticalVisible
-        {
-            get
-            {
-                return _scrollbarVerticalVisible;
-            }
-            set
-            {
-                _scrollbarVerticalVisible = value;
-                Invalidate();
             }
         }
 

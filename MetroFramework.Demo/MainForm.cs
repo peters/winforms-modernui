@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 using MetroFramework.Forms;
@@ -13,97 +14,107 @@ namespace MetroFramework.Demo
             InitializeComponent();
         }
 
-        private void metroButton1_Click(object sender, EventArgs e)
+        private void MetroButton1Click(object sender, EventArgs e)
         {
-            if (Theme == MetroThemeStyle.Dark)
-                StyleManager.Theme = MetroThemeStyle.Light;
-            else
-                StyleManager.Theme = MetroThemeStyle.Dark;
+            StyleManager.Theme = Theme == MetroThemeStyle.Dark ? MetroThemeStyle.Light : MetroThemeStyle.Dark;
         }
 
-        private void metroButton3_Click(object sender, EventArgs e)
+        private void MetroButton3Click(object sender, EventArgs e)
         {
-            Random m = new Random();
+            var m = new Random();
             int next = m.Next(0, 13);
             StyleManager.Style = (MetroColorStyle)next;
         }
 
-        private void metroTile1_Click(object sender, EventArgs e)
+        private void MetroTile1Click(object sender, EventArgs e)
         {
             StyleManager.Style = MetroColorStyle.Red;
         }
 
-        private void metroTile2_Click(object sender, EventArgs e)
+        private void MetroTile2Click(object sender, EventArgs e)
         {
             StyleManager.Style = MetroColorStyle.Green;
         }
 
-        private void metroLink1_Click(object sender, EventArgs e)
+        private void MetroLink1Click(object sender, EventArgs e)
         {
             StyleManager.Style = MetroColorStyle.Lime;
         }
 
-        private void metroLink3_Click(object sender, EventArgs e)
+        private void MetroLink3Click(object sender, EventArgs e)
         {
             StyleManager.Style = MetroColorStyle.Silver;
         }
 
-        private void metroTile3_Click(object sender, EventArgs e)
+        private void MetroTile3Click(object sender, EventArgs e)
         {
-            MetroTaskWindow.ShowTaskWindow(this, "metro task dialog", new MetroFramework.Controls.MetroTile(), 3);
+            MetroTaskWindow.ShowTaskWindow(this, "metro task dialog", new Controls.MetroTile(), 3);
         }
 
-        private int steps = 0;
-        private void metroButton4_Click(object sender, EventArgs e)
+        private int _steps;
+        private void MetroButton4Click(object sender, EventArgs e)
         {
             Color target = Color.Purple;
 
-            if (steps == 1)
+            if (_steps == 1)
                 target = Color.RoyalBlue;
-            if (steps == 2)
+            if (_steps == 2)
             {
                 target = Color.YellowGreen;
-                steps = -1;
+                _steps = -1;
             }
 
-            steps++;
+            _steps++;
 
-            MetroFramework.Animation.ColorBlendAnimation myColorAnim = new MetroFramework.Animation.ColorBlendAnimation();
+            var myColorAnim = new Animation.ColorBlendAnimation();
             myColorAnim.Start(panel1, "BackColor", target, 1);
-            myColorAnim.AnimationCompleted += new EventHandler(myColorAnim_AnimationCompleted);
+            myColorAnim.AnimationCompleted += MyColorAnimAnimationCompleted;
 
             metroButton4.Enabled = false;
         }
 
-        void myColorAnim_AnimationCompleted(object sender, EventArgs e)
+        void MyColorAnimAnimationCompleted(object sender, EventArgs e)
         {
             metroButton4.Enabled = true;
         }
 
-        private void metroLink4_Click(object sender, EventArgs e)
+        private void MetroLink4Click(object sender, EventArgs e)
         {
             MetroTaskWindow.CancelAutoClose();
         }
 
-        private void metroTrackBar1_Scroll(object sender, ScrollEventArgs e)
+        private void MetroTrackBar1Scroll(object sender, ScrollEventArgs e)
         {
-            metroLabel5.Text = metroTrackBar1.Value.ToString();
+            metroLabel5.Text = metroTrackBar1.Value.ToString(CultureInfo.InvariantCulture);
         }
 
-        private void metroLabel4_Click(object sender, EventArgs e)
-        {
-            
-        }
 
-        private void metroLink2_Click(object sender, EventArgs e)
-        {
-            
-
-        }
-
-        private void metroTextBox1_TextChanged(object sender, EventArgs e)
+        private void MetroTextBox1TextChanged(object sender, EventArgs e)
         {
             metroLabel6.Text = metroTextBox1.Text;
+        }
+
+        private void MainFormLoad(object sender, EventArgs e)
+        {
+            var animateProgressbar = new Timer();
+            animateProgressbar.Tick += (o, args) =>
+                {
+                    metroProgressBar1.Value += 1;
+                    if (metroProgressBar1.Value >= 100)
+                    {
+                        animateProgressbar.Dispose();
+                    }
+                };
+            animateProgressbar.Interval = 200;
+            animateProgressbar.Start();
+        }
+
+        private void MetroButton5Click(object sender, EventArgs e)
+        {
+            using (var tcd = new TabControlDemo())
+            {
+                tcd.ShowDialog(this);
+            }
         }
     }
 }

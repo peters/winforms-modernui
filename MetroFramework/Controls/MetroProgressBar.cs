@@ -95,10 +95,7 @@ namespace MetroFramework.Controls
         {
             get
             {
-                if (_progressBarStyle != ProgressBarStyle.Continuous)
-                {
-                    throw new NotImplementedException();
-                }
+                _progressBarStyle = ProgressBarStyle.Continuous;
                 Invalidate();
                 return _progressBarStyle;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace MetroFramework.Native
@@ -6,6 +7,12 @@ namespace MetroFramework.Native
     internal class WinApi
     {
         #region Structs
+        [StructLayout(LayoutKind.Sequential)]
+        public struct TCHITTESTINFO
+        {
+            public Point pt;
+            public uint flags;
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
@@ -63,6 +70,14 @@ namespace MetroFramework.Native
             Bottom = 3
         }
 
+        public enum ScrollBar
+        {
+            SB_HORZ = 0,
+            SB_VERT = 1,
+            SB_CTL = 2,
+            SB_BOTH = 3,
+        }
+
         public enum HitTest
         {
             HTNOWHERE = 0,
@@ -83,7 +98,13 @@ namespace MetroFramework.Native
             HTREDUCE = HTMINBUTTON,
             HTZOOM = HTMAXBUTTON,
             HTSIZEFIRST = HTLEFT,
-            HTSIZELAST = HTBOTTOMRIGHT
+            HTSIZELAST = HTBOTTOMRIGHT,
+            HTTRANSPARENT = -1
+        }
+
+        public enum TabControlHitTest
+        {
+            TCHT_NOWHERE = 1,
         }
 
         public enum Messages : uint
@@ -320,6 +341,9 @@ namespace MetroFramework.Native
 
         public const Int32 MfByposition = 0x400;
         public const Int32 MfRemove = 0x1000;
+
+        public const int TCM_HITTEST = 0x1313;
+
         #endregion
 
         #region API Calls
@@ -357,7 +381,10 @@ namespace MetroFramework.Native
         public static extern IntPtr GetDCEx(IntPtr hwnd, IntPtr hrgnclip, uint fdwOptions);
 
         [DllImport("user32.dll")]
-        public static extern int ReleaseDC(IntPtr hwnd, IntPtr hDC);
+        public static extern int ReleaseDC(IntPtr hwnd, IntPtr hDc);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowScrollBar(IntPtr hWnd, int bar, int cmd);
 
         #endregion
 

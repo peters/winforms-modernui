@@ -25,7 +25,6 @@ namespace MetroFramework.Forms
     public class MetroForm : Form, IMetroForm
     {
 
-
         #region Variables
         private const int FirstButtonSpacerWidth = 40;
         private const int TopBottomMinMaximizeHitboxRange = 50;
@@ -385,8 +384,11 @@ namespace MetroFramework.Forms
 
             if (e.Button == MouseButtons.Left && Movable)
             {
-                if (this.Width - borderWidth > e.Location.X && e.Location.X > borderWidth && e.Location.Y > borderWidth)
-                    MoveControl(Handle);
+                if (WindowState == FormWindowState.Maximized) return;
+                if (Width - borderWidth > e.Location.X && e.Location.X > borderWidth && e.Location.Y > borderWidth)
+                {
+                    MoveControl(Handle);                    
+                }
             }
         }
 
@@ -394,6 +396,12 @@ namespace MetroFramework.Forms
         {
             WinApi.ReleaseCapture();
             WinApi.SendMessage(hWnd, (int)WinApi.Messages.WM_NCLBUTTONDOWN, (int)WinApi.HitTest.HTCAPTION, 0);
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            Invalidate();
         }
 
         #endregion

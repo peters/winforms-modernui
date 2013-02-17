@@ -59,6 +59,9 @@
             this.metroScrollBar2 = new MetroFramework.Controls.MetroScrollBar();
             this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.metroProgressBar1 = new MetroFramework.Controls.MetroProgressBar();
+            this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
+            this.metroButton5 = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // metroButton1
@@ -72,7 +75,7 @@
             this.metroButton1.TabIndex = 0;
             this.metroButton1.Text = "SWITCH THEME";
             this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+            this.metroButton1.Click += new System.EventHandler(this.MetroButton1Click);
             // 
             // metroStyleManager
             // 
@@ -104,7 +107,7 @@
             this.metroButton3.TabIndex = 2;
             this.metroButton3.Text = "SWITCH STYLE";
             this.metroButton3.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroButton3.Click += new System.EventHandler(this.metroButton3_Click);
+            this.metroButton3.Click += new System.EventHandler(this.MetroButton3Click);
             // 
             // metroTile1
             // 
@@ -117,7 +120,7 @@
             this.metroTile1.Text = "Red";
             this.metroTile1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTile1.TileCount = 3;
-            this.metroTile1.Click += new System.EventHandler(this.metroTile1_Click);
+            this.metroTile1.Click += new System.EventHandler(this.MetroTile1Click);
             // 
             // metroTile2
             // 
@@ -130,7 +133,7 @@
             this.metroTile2.Text = "Green";
             this.metroTile2.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTile2.TileCount = 0;
-            this.metroTile2.Click += new System.EventHandler(this.metroTile2_Click);
+            this.metroTile2.Click += new System.EventHandler(this.MetroTile2Click);
             // 
             // metroTile3
             // 
@@ -143,7 +146,7 @@
             this.metroTile3.Text = "Settings";
             this.metroTile3.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTile3.TileCount = 0;
-            this.metroTile3.Click += new System.EventHandler(this.metroTile3_Click);
+            this.metroTile3.Click += new System.EventHandler(this.MetroTile3Click);
             // 
             // metroLink1
             // 
@@ -158,7 +161,7 @@
             this.metroLink1.Text = "Lime";
             this.metroLink1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroLink1.UseStyleColors = false;
-            this.metroLink1.Click += new System.EventHandler(this.metroLink1_Click);
+            this.metroLink1.Click += new System.EventHandler(this.MetroLink1Click);
             // 
             // metroLink2
             // 
@@ -174,7 +177,6 @@
             this.metroLink2.Text = "metroLink2";
             this.metroLink2.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroLink2.UseStyleColors = false;
-            this.metroLink2.Click += new System.EventHandler(this.metroLink2_Click);
             // 
             // metroLink3
             // 
@@ -189,7 +191,7 @@
             this.metroLink3.Text = "Silver";
             this.metroLink3.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroLink3.UseStyleColors = false;
-            this.metroLink3.Click += new System.EventHandler(this.metroLink3_Click);
+            this.metroLink3.Click += new System.EventHandler(this.MetroLink3Click);
             // 
             // panel1
             // 
@@ -210,7 +212,7 @@
             this.metroButton4.TabIndex = 11;
             this.metroButton4.Text = "BLEND COLOR";
             this.metroButton4.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroButton4.Click += new System.EventHandler(this.metroButton4_Click);
+            this.metroButton4.Click += new System.EventHandler(this.MetroButton4Click);
             // 
             // metroLabel1
             // 
@@ -223,7 +225,7 @@
             this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroLabel1.StyleManager = this.metroStyleManager;
             this.metroLabel1.TabIndex = 12;
-            this.metroLabel1.Text = "Color&BlejndAnimation Demo";
+            this.metroLabel1.Text = "Color&BlendAnimation Demo";
             this.metroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroLabel1.UseStyleColors = false;
@@ -260,7 +262,7 @@
             // 
             this.metroLabel4.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel4.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel4.Location = new System.Drawing.Point(23, 272);
+            this.metroLabel4.Location = new System.Drawing.Point(23, 260);
             this.metroLabel4.Name = "metroLabel4";
             this.metroLabel4.Size = new System.Drawing.Size(149, 37);
             this.metroLabel4.Style = MetroFramework.MetroColorStyle.Blue;
@@ -269,7 +271,6 @@
             this.metroLabel4.Text = "metroLabel4";
             this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroLabel4.UseStyleColors = false;
-            this.metroLabel4.Click += new System.EventHandler(this.metroLabel4_Click);
             // 
             // metroLink4
             // 
@@ -284,13 +285,13 @@
             this.metroLink4.Text = "metroLink4";
             this.metroLink4.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroLink4.UseStyleColors = true;
-            this.metroLink4.Click += new System.EventHandler(this.metroLink4_Click);
+            this.metroLink4.Click += new System.EventHandler(this.MetroLink4Click);
             // 
             // metroTrackBar1
             // 
             this.metroTrackBar1.BackColor = System.Drawing.Color.Transparent;
             this.metroTrackBar1.LargeChange = ((uint)(5u));
-            this.metroTrackBar1.Location = new System.Drawing.Point(453, 278);
+            this.metroTrackBar1.Location = new System.Drawing.Point(453, 236);
             this.metroTrackBar1.Maximum = 100;
             this.metroTrackBar1.Minimum = 0;
             this.metroTrackBar1.MouseWheelBarPartitions = 10;
@@ -303,14 +304,14 @@
             this.metroTrackBar1.Text = "metroTrackBar1";
             this.metroTrackBar1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTrackBar1.Value = 50;
-            this.metroTrackBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.metroTrackBar1_Scroll);
+            this.metroTrackBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.MetroTrackBar1Scroll);
             // 
             // metroTrackBar2
             // 
             this.metroTrackBar2.BackColor = System.Drawing.Color.Transparent;
             this.metroTrackBar2.Enabled = false;
             this.metroTrackBar2.LargeChange = ((uint)(5u));
-            this.metroTrackBar2.Location = new System.Drawing.Point(453, 315);
+            this.metroTrackBar2.Location = new System.Drawing.Point(453, 273);
             this.metroTrackBar2.Maximum = 100;
             this.metroTrackBar2.Minimum = 0;
             this.metroTrackBar2.MouseWheelBarPartitions = 10;
@@ -328,7 +329,7 @@
             // 
             this.metroLabel5.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel5.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel5.Location = new System.Drawing.Point(453, 353);
+            this.metroLabel5.Location = new System.Drawing.Point(453, 311);
             this.metroLabel5.Name = "metroLabel5";
             this.metroLabel5.Size = new System.Drawing.Size(100, 23);
             this.metroLabel5.Style = MetroFramework.MetroColorStyle.Blue;
@@ -450,8 +451,8 @@
             // 
             // metroScrollBar1
             // 
-            this.metroScrollBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroScrollBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.metroScrollBar1.LargeChange = 5;
             this.metroScrollBar1.Location = new System.Drawing.Point(23, 547);
             this.metroScrollBar1.Maximum = 10;
@@ -470,8 +471,8 @@
             // 
             // metroScrollBar2
             // 
-            this.metroScrollBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroScrollBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.metroScrollBar2.LargeChange = 5;
             this.metroScrollBar2.Location = new System.Drawing.Point(853, 63);
             this.metroScrollBar2.Maximum = 10;
@@ -492,7 +493,7 @@
             // 
             this.metroLabel6.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel6.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel6.Location = new System.Drawing.Point(491, 498);
+            this.metroLabel6.Location = new System.Drawing.Point(664, 283);
             this.metroLabel6.Name = "metroLabel6";
             this.metroLabel6.Size = new System.Drawing.Size(164, 23);
             this.metroLabel6.Style = MetroFramework.MetroColorStyle.Blue;
@@ -506,9 +507,10 @@
             // 
             this.metroTextBox1.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.metroTextBox1.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
-            this.metroTextBox1.Location = new System.Drawing.Point(491, 473);
+            this.metroTextBox1.Location = new System.Drawing.Point(664, 258);
             this.metroTextBox1.Multiline = false;
             this.metroTextBox1.Name = "metroTextBox1";
+            this.metroTextBox1.SelectedText = "";
             this.metroTextBox1.Size = new System.Drawing.Size(164, 22);
             this.metroTextBox1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTextBox1.StyleManager = this.metroStyleManager;
@@ -516,13 +518,59 @@
             this.metroTextBox1.Text = "metroTextBox1";
             this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTextBox1.UseStyleColors = false;
-            this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
+            this.metroTextBox1.TextChanged += new System.EventHandler(this.MetroTextBox1TextChanged);
+            // 
+            // metroProgressBar1
+            // 
+            this.metroProgressBar1.FontSize = MetroFramework.MetroLabelSize.Medium;
+            this.metroProgressBar1.FontWeight = MetroFramework.MetroLabelWeight.Light;
+            this.metroProgressBar1.Location = new System.Drawing.Point(23, 325);
+            this.metroProgressBar1.Name = "metroProgressBar1";
+            this.metroProgressBar1.ProgressBarStyle = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.metroProgressBar1.Size = new System.Drawing.Size(178, 23);
+            this.metroProgressBar1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroProgressBar1.StyleManager = this.metroStyleManager;
+            this.metroProgressBar1.TabIndex = 34;
+            this.metroProgressBar1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.metroProgressBar1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroProgressBar1.UseStyleColors = false;
+            // 
+            // metroLabel10
+            // 
+            this.metroLabel10.AutoSize = true;
+            this.metroLabel10.FontSize = MetroFramework.MetroLabelSize.Medium;
+            this.metroLabel10.FontWeight = MetroFramework.MetroLabelWeight.Light;
+            this.metroLabel10.Location = new System.Drawing.Point(23, 300);
+            this.metroLabel10.Name = "metroLabel10";
+            this.metroLabel10.Size = new System.Drawing.Size(83, 19);
+            this.metroLabel10.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroLabel10.StyleManager = this.metroStyleManager;
+            this.metroLabel10.TabIndex = 35;
+            this.metroLabel10.Text = "Progressbar:";
+            this.metroLabel10.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroLabel10.UseStyleColors = false;
+            // 
+            // metroButton5
+            // 
+            this.metroButton5.Highlight = false;
+            this.metroButton5.Location = new System.Drawing.Point(592, 395);
+            this.metroButton5.Name = "metroButton5";
+            this.metroButton5.Size = new System.Drawing.Size(129, 27);
+            this.metroButton5.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroButton5.StyleManager = this.metroStyleManager;
+            this.metroButton5.TabIndex = 36;
+            this.metroButton5.Text = "TabControlDemo";
+            this.metroButton5.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroButton5.Click += new System.EventHandler(this.MetroButton5Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(871, 566);
+            this.Controls.Add(this.metroButton5);
+            this.Controls.Add(this.metroLabel10);
+            this.Controls.Add(this.metroProgressBar1);
             this.Controls.Add(this.metroTextBox1);
             this.Controls.Add(this.metroLabel6);
             this.Controls.Add(this.metroScrollBar2);
@@ -554,8 +602,10 @@
             this.Controls.Add(this.metroButton2);
             this.Controls.Add(this.metroButton1);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StyleManager = this.metroStyleManager;
             this.Text = "metro framework";
+            this.Load += new System.EventHandler(this.MainFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -594,6 +644,9 @@
         private MetroFramework.Controls.MetroScrollBar metroScrollBar2;
         private MetroFramework.Controls.MetroLabel metroLabel6;
         private MetroFramework.Controls.MetroTextBox metroTextBox1;
+        private Controls.MetroProgressBar metroProgressBar1;
+        private Controls.MetroLabel metroLabel10;
+        private Controls.MetroButton metroButton5;
     }
 }
 

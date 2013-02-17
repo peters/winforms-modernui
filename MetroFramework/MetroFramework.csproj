@@ -89,13 +89,21 @@
     <Compile Include="Controls\MetroPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MetroProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MetroProgressBar.Designer.cs">
+      <DependentUpon>MetroProgressBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MetroRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MetroScrollBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MetroTabControl.cs" />
+    <Compile Include="Controls\MetroTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MetroTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -108,10 +116,12 @@
     <Compile Include="Controls\MetroUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Design\MetroProgressBarDesigner.cs" />
     <Compile Include="Design\MetroButtonDesigner.cs" />
     <Compile Include="Design\MetroLabelDesigner.cs" />
     <Compile Include="Design\MetroLinkDesigner.cs" />
     <Compile Include="Design\MetroScrollBarDesigner.cs" />
+    <Compile Include="Design\MetroTabControlDesigner.cs" />
     <Compile Include="Design\MetroTextBoxDesigner.cs" />
     <Compile Include="Design\MetroTileDesigner.cs" />
     <Compile Include="Drawing\MetroPaint.cs" />
@@ -152,6 +162,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\Downloads\customscrollbar_src %281%29\TestApp\CustomControls\CustomControls.csproj">
+      <Project>{5b85e2d7-2005-4496-b5d7-59c68a1ec91d}</Project>
+      <Name>CustomControls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

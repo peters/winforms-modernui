@@ -25,7 +25,6 @@ namespace MetroFramework.Forms
     public class MetroForm : Form, IMetroForm
     {
 
-
         #region Variables
         private const int FirstButtonSpacerWidth = 40;
         private const int TopBottomMinMaximizeHitboxRange = 50;
@@ -394,6 +393,12 @@ namespace MetroFramework.Forms
         {
             WinApi.ReleaseCapture();
             WinApi.SendMessage(hWnd, (int)WinApi.Messages.WM_NCLBUTTONDOWN, (int)WinApi.HitTest.HTCAPTION, 0);
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            Invalidate();
         }
 
         #endregion

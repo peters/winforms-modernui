@@ -6,6 +6,8 @@ using MetroFramework.Controls;
 
 namespace MetroFramework.Design
 {
+
+    [Designer(typeof(ScrollableControlDesigner), typeof(ParentControlDesigner))]
     internal class MetroScrollBarDesigner : ControlDesigner
     {
         public override SelectionRules SelectionRules

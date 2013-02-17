@@ -384,8 +384,11 @@ namespace MetroFramework.Forms
 
             if (e.Button == MouseButtons.Left && Movable)
             {
-                if (this.Width - borderWidth > e.Location.X && e.Location.X > borderWidth && e.Location.Y > borderWidth)
-                    MoveControl(Handle);
+                if (WindowState == FormWindowState.Maximized) return;
+                if (Width - borderWidth > e.Location.X && e.Location.X > borderWidth && e.Location.Y > borderWidth)
+                {
+                    MoveControl(Handle);                    
+                }
             }
         }
 

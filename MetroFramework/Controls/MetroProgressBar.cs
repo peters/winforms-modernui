@@ -283,8 +283,9 @@ namespace MetroFramework.Controls
         public override Size GetPreferredSize(Size proposedSize)
         {
             Size preferredSize;
+            base.GetPreferredSize(proposedSize);
 
-            using (Graphics g = CreateGraphics())
+            using (var g = CreateGraphics())
             {
                 proposedSize = new Size(int.MaxValue, int.MaxValue);
                 preferredSize = TextRenderer.MeasureText(g, ProgressPercentText, MetroFonts.Label(_metroLabelSize, _metroLabelWeight), proposedSize, MetroPaint.GetTextFormatFlags(TextAlign));

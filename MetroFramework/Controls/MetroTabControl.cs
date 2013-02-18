@@ -251,15 +251,6 @@ namespace MetroFramework.Controls
             base.OnMouseWheel(e);
             _verticalScrollbar.Value = VerticalScroll.Value;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            base.OnMouseEnter(e);
-            _verticalScrollbar.Focus();
-        }
         #endregion
 
         #region Private methods
@@ -696,6 +687,18 @@ namespace MetroFramework.Controls
         {
             base.OnResize(e);
             Invalidate();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            if (!TabPages[TabIndex].Focused)
+            {
+                TabPages[TabIndex].Focus();                
+            } 
+            base.OnMouseWheel(e);
         }
         #endregion
 

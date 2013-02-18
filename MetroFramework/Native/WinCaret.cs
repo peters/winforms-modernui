@@ -18,7 +18,7 @@ namespace MetroFramework.Native
         private static extern bool ShowCaret(IntPtr hWnd);
 
         [DllImport("User32.dll")]
-        private static extern bool HideCaret(IntPtr hWnd);
+        public static extern bool HideCaret(IntPtr hWnd);
 
         private IntPtr controlHandle;
 

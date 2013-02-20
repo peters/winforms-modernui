@@ -134,8 +134,8 @@ namespace MetroFramework.Controls
 
             TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Button, ClientRectangle, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
 
-            //if (isFocused)
-            //    ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
+            if (false && isFocused)
+                ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
         }
 
         #endregion

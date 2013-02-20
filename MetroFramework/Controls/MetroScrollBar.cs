@@ -10,49 +10,54 @@ using MetroFramework.Native;
 
 namespace MetroFramework.Controls
 {
-    public enum ScrollBarOrientation
+    public enum MetroScrollOrientation
     {
         Horizontal,
         Vertical
     }
 
-    [Designer(typeof (MetroScrollBarDesigner)), DefaultEvent("Scroll"), DefaultProperty("Value")]
+    [Designer(typeof (MetroScrollBarDesigner))]
+    [DefaultEvent("Scroll")]
+    [DefaultProperty("Value")]
     public class MetroScrollBar : Control, IMetroControl
     {
         #region Interface
 
-        private MetroColorStyle _metroStyle = MetroColorStyle.Blue;
-
+        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
         [Category("Metro Appearance")]
         public MetroColorStyle Style
         {
             get
             {
-                return StyleManager != null ? StyleManager.Style : _metroStyle;
+                if (StyleManager != null)
+                    return StyleManager.Style;
+
+                return metroStyle;
             }
-            set
-            {
-                _metroStyle = value;
-            }
+            set { metroStyle = value; }
         }
 
-        private MetroThemeStyle _metroTheme = MetroThemeStyle.Light;
-
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
         [Category("Metro Appearance")]
         public MetroThemeStyle Theme
         {
             get
             {
-                return StyleManager != null ? StyleManager.Theme : _metroTheme;
+                if (StyleManager != null)
+                    return StyleManager.Theme;
+
+                return metroTheme;
             }
-            set
-            {
-                _metroTheme = value;
-            }
+            set { metroTheme = value; }
         }
 
+        private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
-        public MetroStyleManager StyleManager { get; set; }
+        public MetroStyleManager StyleManager
+        {
+            get { return metroStyleManager; }
+            set { metroStyleManager = value; }
+        }
 
         #endregion
 
@@ -62,32 +67,31 @@ namespace MetroFramework.Controls
 
         private void OnScroll(ScrollEventType type, int oldValue, int newValue, ScrollOrientation orientation)
         {
-            if (Scroll == null)
+            if (Scroll == null) return;
+
+            if (orientation == ScrollOrientation.HorizontalScroll)
             {
-                return;
+                if (type != ScrollEventType.EndScroll && isFirstScrollEventHorizontal)
+                {
+                    type = ScrollEventType.First;
+                }
+                else if (!isFirstScrollEventHorizontal && type == ScrollEventType.EndScroll)
+                {
+                    isFirstScrollEventHorizontal = true;
+                }
             }
-            switch (orientation)
+            else
             {
-                case ScrollOrientation.HorizontalScroll:
-                    if (type != ScrollEventType.EndScroll && _isFirstScrollEventHorizontal)
-                    {
-                        type = ScrollEventType.First;
-                    } else if (!_isFirstScrollEventHorizontal && type == ScrollEventType.EndScroll)
-                    {
-                        _isFirstScrollEventHorizontal = true;
-                    }
-                    break;
-                case ScrollOrientation.VerticalScroll:
-                    if (type != ScrollEventType.EndScroll && _isFirstScrollEventVertical)
-                    {
-                        type = ScrollEventType.First;
-                    }
-                    else if (!_isFirstScrollEventHorizontal && type == ScrollEventType.EndScroll)
-                    {
-                        _isFirstScrollEventVertical = true;
-                    }
-                    break;
+                if (type != ScrollEventType.EndScroll && isFirstScrollEventVertical)
+                {
+                    type = ScrollEventType.First;
+                }
+                else if (!isFirstScrollEventHorizontal && type == ScrollEventType.EndScroll)
+                {
+                    isFirstScrollEventVertical = true;
+                }
             }
+
             Scroll(this, new ScrollEventArgs(type, oldValue, newValue, orientation));
         }
 
@@ -95,138 +99,120 @@ namespace MetroFramework.Controls
 
         #region Fields
 
-        private bool _isFirstScrollEventVertical = true;
-        private bool _isFirstScrollEventHorizontal = true;
+        private bool isFirstScrollEventVertical = true;
+        private bool isFirstScrollEventHorizontal = true;
 
-        private bool _inUpdate;
+        private bool inUpdate;
 
-        private ScrollBarOrientation _orientation = ScrollBarOrientation.Vertical;
-        private ScrollOrientation _scrollOrientation = ScrollOrientation.VerticalScroll;
+        private Rectangle clickedBarRectangle;
+        private Rectangle thumbRectangle;
 
-        private Rectangle _clickedBarRectangle;
-        private Rectangle _thumbRectangle;
+        private bool topBarClicked;
+        private bool bottomBarClicked;
+        private bool thumbClicked;
 
-        private bool _topBarClicked;
-        private bool _bottomBarClicked;
-        private bool _thumbClicked;
+        private int thumbWidth = 6;
+        private int thumbHeight;
 
-        private int _minimum;
-        private int _maximum = 100;
-        private int _smallChange = 1;
-        private int _largeChange = 10;
-        private int _value;
+        private int thumbBottomLimitBottom;
+        private int thumbBottomLimitTop;
+        private int thumbTopLimit;
+        private int thumbPosition;
 
-        private int _thumbWidth = 6;
-        private int _thumbHeight;
+        private int trackPosition;
 
-        private int _thumbBottomLimitBottom;
-        private int _thumbBottomLimitTop;
-        private int _thumbTopLimit;
-        private int _thumbPosition;
+        private readonly Timer progressTimer = new Timer();
 
-        private int _trackPosition;
-
-        private readonly Timer _progressTimer = new Timer();
-
-        private int _mouseWheelBarPartitions = 10;
+        private int mouseWheelBarPartitions = 10;
 
         public int MouseWheelBarPartitions
         {
-            get
-            {
-                return _mouseWheelBarPartitions;
-            }
+            get { return mouseWheelBarPartitions; }
             set
             {
                 if (value > 0)
                 {
-                    _mouseWheelBarPartitions = value;
+                    mouseWheelBarPartitions = value;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("value","MouseWheelBarPartitions has to be greather than zero");
+                    throw new ArgumentOutOfRangeException("value", "MouseWheelBarPartitions has to be greather than zero");
                 }
             }
         }
 
-        private bool _isHovered;
-        private bool _isPressed;
+        private bool isHovered;
+        private bool isPressed;
 
-        private bool _useBarColor;
+        private bool useBarColor = false;
 
         [Category("Metro Appearance")]
         public bool UseBarColor
         {
-            get
-            {
-                return _useBarColor;
-            }
-            set
-            {
-                _useBarColor = value;
-            }
+            get { return useBarColor; }
+            set { useBarColor = value; }
         }
 
-        #endregion
+        private MetroScrollOrientation metroOrientation = MetroScrollOrientation.Vertical;
+        private ScrollOrientation scrollOrientation = ScrollOrientation.VerticalScroll;
 
-        #region Properties
-
-        public ScrollBarOrientation Orientation
+        public MetroScrollOrientation Orientation
         {
-            get
-            {
-                return _orientation;
-            }
+            get { return metroOrientation; }
 
             set
             {
-                if (value == _orientation)
+                if (value == metroOrientation)
                 {
                     return;
                 }
 
-                _orientation = value;
+                metroOrientation = value;
 
-                _scrollOrientation = value == ScrollBarOrientation.Vertical ?
-                                         ScrollOrientation.VerticalScroll : ScrollOrientation.HorizontalScroll;
-
-                if (DesignMode)
+                if (value == MetroScrollOrientation.Vertical)
                 {
-                    Size = new Size(Height, Width);
+                    scrollOrientation = ScrollOrientation.VerticalScroll;
+                }
+                else
+                {
+                    scrollOrientation = ScrollOrientation.HorizontalScroll;
                 }
 
-                SetUpScrollBar();
+                Size = new Size(Height, Width);
+                SetupScrollBar();
             }
         }
+
+        private int minimum;
+        private int maximum = 100;
+        private int smallChange = 1;
+        private int largeChange = 10;
+        private int curValue;
 
         public int Minimum
         {
-            get
-            {
-                return _minimum;
-            }
-
+            get { return minimum; }
             set
             {
-                if (_minimum == value || value < 0 || value >= _maximum)
+                if (minimum == value || value < 0 || value >= maximum)
                 {
                     return;
                 }
 
-                _minimum = value;
-                if (_value < value)
+                minimum = value;
+                if (curValue < value)
                 {
-                    _value = value;
+                    curValue = value;
                 }
 
-                if (_largeChange > _maximum - _minimum)
+                if (largeChange > (maximum - minimum))
                 {
-                    _largeChange = _maximum - _minimum;
+                    largeChange = maximum - minimum;
                 }
 
-                SetUpScrollBar();
+                SetupScrollBar();
 
-                if (_value < value)
+                if (curValue < value)
                 {
                     Value = value;
                 }
@@ -240,35 +226,29 @@ namespace MetroFramework.Controls
 
         public int Maximum
         {
-            get
-            {
-                return _maximum;
-            }
-
+            get { return maximum; }
             set
             {
-                if (value == _maximum || value < 1 || value <= _minimum)
+                if (value == maximum || value < 1 || value <= minimum)
                 {
                     return;
                 }
 
-                _maximum = value;
-
-                if (_largeChange > _maximum - _minimum)
+                maximum = value;
+                if (largeChange > (maximum - minimum))
                 {
-                    _largeChange = _maximum - _minimum;
+                    largeChange = maximum - minimum;
                 }
 
-                SetUpScrollBar();
+                SetupScrollBar();
 
-                if (_value > value)
+                if (curValue > value)
                 {
-                    Value = _maximum;
+                    Value = maximum;
                 }
                 else
                 {
                     ChangeThumbPosition(GetThumbPosition());
-
                     Refresh();
                 }
             }
@@ -276,70 +256,58 @@ namespace MetroFramework.Controls
 
         public int SmallChange
         {
-            get
-            {
-                return _smallChange;
-            }
-
+            get { return smallChange; }
             set
             {
-                if (value == _smallChange || value < 1 || value >= _largeChange)
+                if (value == smallChange || value < 1 || value >= largeChange)
                 {
                     return;
                 }
 
-                _smallChange = value;
-
-                SetUpScrollBar();
+                smallChange = value;
+                SetupScrollBar();
             }
         }
 
         public int LargeChange
         {
-            get
-            {
-                return _largeChange;
-            }
-
+            get { return largeChange; }
             set
             {
-                if (value == _largeChange || value < _smallChange || value < 2)
+                if (value == largeChange || value < smallChange || value < 2)
                 {
                     return;
                 }
 
-                if (value > _maximum - _minimum)
+                if (value > (maximum - minimum))
                 {
-                    _largeChange = _maximum - _minimum;
+                    largeChange = maximum - minimum;
                 }
                 else
                 {
-                    _largeChange = value;
+                    largeChange = value;
                 }
 
-                SetUpScrollBar();
+                SetupScrollBar();
             }
         }
 
         public int Value
         {
-            get
-            {
-                return _value;
-            }
+            get { return curValue; }
 
             set
             {
-                if (_value == value || value < _minimum || value > _maximum)
+                if (curValue == value || value < minimum || value > maximum)
                 {
                     return;
                 }
 
-                _value = value;
+                curValue = value;
 
                 ChangeThumbPosition(GetThumbPosition());
 
-                OnScroll(ScrollEventType.ThumbPosition, -1, _value, _scrollOrientation);
+                OnScroll(ScrollEventType.ThumbPosition, -1, value, scrollOrientation);
 
                 Refresh();
             }
@@ -360,15 +328,27 @@ namespace MetroFramework.Controls
             Width = 6;
             Height = 200;
 
-            SetUpScrollBar();
+            SetupScrollBar();
 
-            _progressTimer.Interval = 20;
-            _progressTimer.Tick += ProgressTimerTick;
+            progressTimer.Interval = 20;
+            progressTimer.Tick += ProgressTimerTick;
+        }
+
+        public MetroScrollBar(MetroScrollOrientation orientation)
+            : this()
+        {
+            Orientation = orientation;
+        }
+
+        public MetroScrollBar(MetroScrollOrientation orientation, int width)
+            : this(orientation)
+        {
+            Width = width;
         }
 
         public bool HitTest(Point point)
         {
-            return _thumbRectangle.Contains(point);
+            return thumbRectangle.Contains(point);
         }
 
         #endregion
@@ -378,14 +358,14 @@ namespace MetroFramework.Controls
         public void BeginUpdate()
         {
             WinApi.SendMessage(Handle, (int) WinApi.Messages.WM_SETREDRAW, false, 0);
-            _inUpdate = true;
+            inUpdate = true;
         }
 
         public void EndUpdate()
         {
             WinApi.SendMessage(Handle, (int)WinApi.Messages.WM_SETREDRAW, true, 0);
-            _inUpdate = false;
-            SetUpScrollBar();
+            inUpdate = false;
+            SetupScrollBar();
             Refresh();
         }
 
@@ -400,16 +380,30 @@ namespace MetroFramework.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Color thumbColor, barColor;
+            Color backColor, thumbColor, barColor;
 
-            Color backColor = Parent != null ? Parent.BackColor : MetroPaint.BackColor.Form(Theme);
+            if (Parent != null)
+            {
+                if (Parent is IMetroControl)
+                {
+                    backColor = MetroPaint.BackColor.Form(Theme);
+                }
+                else
+                {
+                    backColor = Parent.BackColor;
+                }
+            }
+            else
+            {
+                backColor = MetroPaint.BackColor.Form(Theme);
+            }
 
-            if (_isHovered && !_isPressed && Enabled)
+            if (isHovered && !isPressed && Enabled)
             {
                 thumbColor = MetroPaint.BackColor.ScrollBar.Thumb.Hover(Theme);
                 barColor = MetroPaint.BackColor.ScrollBar.Bar.Hover(Theme);
             }
-            else if (_isHovered && _isPressed && Enabled)
+            else if (isHovered && isPressed && Enabled)
             {
                 thumbColor = MetroPaint.BackColor.ScrollBar.Thumb.Press(Theme);
                 barColor = MetroPaint.BackColor.ScrollBar.Bar.Press(Theme);
@@ -431,7 +425,7 @@ namespace MetroFramework.Controls
 
         private void DrawScrollBar(Graphics g, Color backColor, Color thumbColor, Color barColor)
         {
-            if (_useBarColor)
+            if (useBarColor)
             {
                 using (var b = new SolidBrush(barColor))
                 {
@@ -441,13 +435,13 @@ namespace MetroFramework.Controls
 
             using (var b = new SolidBrush(backColor))
             {
-                var thumbRect = new Rectangle(_thumbRectangle.X - 1, _thumbRectangle.Y - 1, _thumbRectangle.Width + 2, _thumbRectangle.Height + 2);
+                var thumbRect = new Rectangle(thumbRectangle.X - 1, thumbRectangle.Y - 1, thumbRectangle.Width + 2, thumbRectangle.Height + 2);
                 g.FillRectangle(b, thumbRect);
             }
 
             using (var b = new SolidBrush(thumbColor))
             {
-                g.FillRectangle(b, _thumbRectangle);
+                g.FillRectangle(b, thumbRectangle);
             }
         }
 
@@ -464,8 +458,8 @@ namespace MetroFramework.Controls
 
         protected override void OnLostFocus(EventArgs e)
         {
-            _isHovered = false;
-            _isPressed = false;
+            isHovered = false;
+            isPressed = false;
             Invalidate();
 
             base.OnLostFocus(e);
@@ -480,8 +474,8 @@ namespace MetroFramework.Controls
 
         protected override void OnLeave(EventArgs e)
         {
-            _isHovered = false;
-            _isPressed = false;
+            isHovered = false;
+            isPressed = false;
             Invalidate();
 
             base.OnLeave(e);
@@ -494,9 +488,10 @@ namespace MetroFramework.Controls
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
-            int v = e.Delta/120*(_maximum - _minimum)/_mouseWheelBarPartitions;
 
-            if (_orientation == ScrollBarOrientation.Vertical)
+            int v = e.Delta / 120 * (maximum - minimum) / mouseWheelBarPartitions;
+
+            if (Orientation == MetroScrollOrientation.Vertical)
             {
                 Value -= v;
             }
@@ -510,7 +505,7 @@ namespace MetroFramework.Controls
         {
             if (e.Button == MouseButtons.Left)
             {
-                _isPressed = true;
+                isPressed = true;
                 Invalidate();
             }
 
@@ -518,85 +513,70 @@ namespace MetroFramework.Controls
 
             Focus();
 
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
+            if (e.Button== MouseButtons.Left) {
+
+                var mouseLocation = e.Location;
+
+                if (thumbRectangle.Contains(mouseLocation))
                 {
-                    var mouseLocation = e.Location;
+                    thumbClicked = true;
+                    thumbPosition = metroOrientation == MetroScrollOrientation.Vertical ? mouseLocation.Y - thumbRectangle.Y : mouseLocation.X - thumbRectangle.X;
 
-                    if (_thumbRectangle.Contains(mouseLocation))
+                    Invalidate(thumbRectangle);
+                }
+                else
+                {
+                    trackPosition = metroOrientation == MetroScrollOrientation.Vertical ? mouseLocation.Y : mouseLocation.X;
+
+                    if (trackPosition < (metroOrientation == MetroScrollOrientation.Vertical ? thumbRectangle.Y : thumbRectangle.X))
                     {
-                        _thumbClicked = true;
-                        _thumbPosition = _orientation == ScrollBarOrientation.Vertical ? mouseLocation.Y - _thumbRectangle.Y : mouseLocation.X - _thumbRectangle.X;
-
-                        Invalidate(_thumbRectangle);
+                        topBarClicked = true;
                     }
                     else
                     {
-                        _trackPosition =
-                            _orientation == ScrollBarOrientation.Vertical ?
-                                mouseLocation.Y : mouseLocation.X;
-
-                        if (_trackPosition <
-                            (_orientation == ScrollBarOrientation.Vertical ?
-                                 _thumbRectangle.Y : _thumbRectangle.X))
-                        {
-                            _topBarClicked = true;
-                        }
-                        else
-                        {
-                            _bottomBarClicked = true;
-                        }
-
-                        ProgressThumb(true);
+                        bottomBarClicked = true;
                     }
+
+                    ProgressThumb(true);
                 }
-                    break;
-                case MouseButtons.Right:
-                    _trackPosition =
-                        _orientation == ScrollBarOrientation.Vertical ? e.Y : e.X;
-                    break;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                trackPosition = metroOrientation == MetroScrollOrientation.Vertical ? e.Y : e.X;
             }
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            _isPressed = false;
+            isPressed = false;
 
             base.OnMouseUp(e);
 
-            switch (e.Button)
+            if (e.Button == MouseButtons.Left)
             {
-                case MouseButtons.Left:
-                    if (_thumbClicked)
-                    {
-                        _thumbClicked = false;
+                if (thumbClicked)
+                {
+                    thumbClicked = false;
+                    OnScroll(ScrollEventType.EndScroll, -1, curValue, scrollOrientation);
+                }
+                else if (topBarClicked)
+                {
+                    topBarClicked = false;
+                    StopTimer();
+                }
+                else if (bottomBarClicked)
+                {
+                    bottomBarClicked = false;
+                    StopTimer();
+                }
 
-                        OnScroll(
-                            ScrollEventType.EndScroll,
-                            -1,
-                            _value,
-                            _scrollOrientation
-                            );
-                    }
-                    else if (_topBarClicked)
-                    {
-                        _topBarClicked = false;
-                        StopTimer();
-                    }
-                    else if (_bottomBarClicked)
-                    {
-                        _bottomBarClicked = false;
-                        StopTimer();
-                    }
-                    Invalidate();
-                    break;
+                Invalidate();
             }
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            _isHovered = true;
+            isHovered = true;
             Invalidate();
 
             base.OnMouseEnter(e);
@@ -604,7 +584,7 @@ namespace MetroFramework.Controls
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            _isHovered = false;
+            isHovered = false;
             Invalidate();
 
             base.OnMouseLeave(e);
@@ -616,71 +596,57 @@ namespace MetroFramework.Controls
         {
             base.OnMouseMove(e);
 
-            // moving and holding the left mouse button
             if (e.Button == MouseButtons.Left)
             {
-                // Update the thumb position, if the new location is within the bounds.
-                if (_thumbClicked)
+                if (thumbClicked)
                 {
-                    int oldScrollValue = _value;
+                    int oldScrollValue = curValue;
 
-                    int pos = _orientation == ScrollBarOrientation.Vertical ?
-                                  e.Location.Y : e.Location.X;
+                    int pos = metroOrientation == MetroScrollOrientation.Vertical ? e.Location.Y : e.Location.X;
+                    int thumbSize = metroOrientation == MetroScrollOrientation.Vertical ? (pos / Height) / thumbHeight : (pos / Width) / thumbWidth;
 
-                    // The thumb is all the way to the top
-                    if (pos <= (_thumbTopLimit + _thumbPosition))
+                    if (pos <= (thumbTopLimit + thumbPosition))
                     {
-                        ChangeThumbPosition(_thumbTopLimit);
-
-                        _value = _minimum;
+                        ChangeThumbPosition(thumbTopLimit);
+                        curValue = minimum;
                         Invalidate();
                     }
-                    else if (pos >= (_thumbBottomLimitTop + _thumbPosition))
+                    else if (pos >= (thumbBottomLimitTop + thumbPosition))
                     {
-                        // The thumb is all the way to the bottom
-                        ChangeThumbPosition(_thumbBottomLimitTop);
-
-                        _value = _maximum;
+                        ChangeThumbPosition(thumbBottomLimitTop);
+                        curValue = maximum;
                         Invalidate();
                     }
                     else
                     {
-                        // The thumb is between the ends of the track.
-                        ChangeThumbPosition(pos - _thumbPosition);
+                        ChangeThumbPosition(pos - thumbPosition);
 
                         int pixelRange, thumbPos;
 
-                        // calculate the value - first some helper variables
-                        // dependent on the current orientation
-                        if (_orientation == ScrollBarOrientation.Vertical)
+                        if (Orientation == MetroScrollOrientation.Vertical)
                         {
-                            pixelRange = Height - _thumbHeight;
-                            thumbPos = _thumbRectangle.Y;
+                            pixelRange = Height - thumbSize;
+                            thumbPos = thumbRectangle.Y;
                         }
                         else
                         {
-                            pixelRange = Width - _thumbWidth;
-                            thumbPos = _thumbRectangle.X;
+                            pixelRange = Width - thumbSize;
+                            thumbPos = thumbRectangle.X;
                         }
 
                         float perc = 0f;
 
                         if (pixelRange != 0)
                         {
-                            // percent of the new position
                             perc = (thumbPos)/(float) pixelRange;
                         }
 
-                        // the new value is somewhere between max and min, starting
-                        // at min position
-                        _value = Convert.ToInt32((perc*(_maximum - _minimum)) + _minimum);
+                        curValue = Convert.ToInt32((perc * (maximum - minimum)) + minimum);
                     }
 
-                    // raise scroll event if new value different
-                    if (oldScrollValue != _value)
+                    if (oldScrollValue != curValue)
                     {
-                        OnScroll(ScrollEventType.ThumbTrack, oldScrollValue, _value, _scrollOrientation);
-
+                        OnScroll(ScrollEventType.ThumbTrack, oldScrollValue, curValue, scrollOrientation);
                         Refresh();
                     }
                 }
@@ -689,11 +655,11 @@ namespace MetroFramework.Controls
             {
                 ResetScrollStatus();
             }
-            else if (e.Button == MouseButtons.None) // only moving the mouse
+            else if (e.Button == MouseButtons.None)
             {
-                if (_thumbRectangle.Contains(e.Location))
+                if (thumbRectangle.Contains(e.Location))
                 {
-                    Invalidate(_thumbRectangle);
+                    Invalidate(thumbRectangle);
                 }
                 else if (ClientRectangle.Contains(e.Location))
                 {
@@ -708,8 +674,8 @@ namespace MetroFramework.Controls
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            _isHovered = true;
-            _isPressed = true;
+            isHovered = true;
+            isPressed = true;
             Invalidate();
 
             base.OnKeyDown(e);
@@ -717,8 +683,8 @@ namespace MetroFramework.Controls
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            _isHovered = false;
-            _isPressed = false;
+            isHovered = false;
+            isPressed = false;
             Invalidate();
 
             base.OnKeyUp(e);
@@ -732,7 +698,7 @@ namespace MetroFramework.Controls
         {
             if (DesignMode)
             {
-                if (_orientation == ScrollBarOrientation.Vertical)
+                if (Orientation == MetroScrollOrientation.Vertical)
                 {
                     if (height < 10)
                     {
@@ -756,14 +722,14 @@ namespace MetroFramework.Controls
 
             if (DesignMode)
             {
-                SetUpScrollBar();
+                SetupScrollBar();
             }
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            SetUpScrollBar();
+            SetupScrollBar();
         }
 
         protected override bool ProcessDialogKey(Keys keyData)
@@ -771,7 +737,7 @@ namespace MetroFramework.Controls
             var keyUp = Keys.Up;
             var keyDown = Keys.Down;
 
-            if (_orientation == ScrollBarOrientation.Horizontal)
+            if (Orientation == MetroScrollOrientation.Horizontal)
             {
                 keyUp = Keys.Left;
                 keyDown = Keys.Right;
@@ -779,14 +745,14 @@ namespace MetroFramework.Controls
 
             if (keyData == keyUp)
             {
-                Value -= _smallChange;
+                Value -= smallChange;
 
                 return true;
             }
 
             if (keyData == keyDown)
             {
-                Value += _smallChange;
+                Value += smallChange;
 
                 return true;
             }
@@ -800,13 +766,13 @@ namespace MetroFramework.Controls
 
             if (keyData == Keys.PageDown)
             {
-                if (_value + _largeChange > _maximum)
+                if (curValue + largeChange > maximum)
                 {
-                    Value = _maximum;
+                    Value = maximum;
                 }
                 else
                 {
-                    Value += _largeChange;
+                    Value += largeChange;
                 }
 
                 return true;
@@ -814,14 +780,14 @@ namespace MetroFramework.Controls
 
             if (keyData == Keys.Home)
             {
-                Value = _minimum;
+                Value = minimum;
 
                 return true;
             }
 
             if (keyData == Keys.End)
             {
-                Value = _maximum;
+                Value = maximum;
 
                 return true;
             }
@@ -835,52 +801,39 @@ namespace MetroFramework.Controls
             Invalidate();
         }
 
-        private void SetUpScrollBar()
+        private void SetupScrollBar()
         {
-            if (_inUpdate)
+            if (inUpdate) return;
+
+            if (Orientation == MetroScrollOrientation.Vertical)
             {
-                return;
-            }
+                thumbWidth = Width > 0 ? Width : 6;
+                thumbHeight = GetThumbSize();
 
-            if (_orientation == ScrollBarOrientation.Vertical)
-            {
-                _thumbWidth = Width > 0 ? Width : 6;
-                _thumbHeight = GetThumbSize();
+                clickedBarRectangle = ClientRectangle;
+                clickedBarRectangle.Inflate(-1, -1);
 
-                _clickedBarRectangle = ClientRectangle;
-                _clickedBarRectangle.Inflate(-1, -1);
+                thumbRectangle = new Rectangle(ClientRectangle.X, ClientRectangle.Y, thumbWidth, thumbHeight);
 
-                _thumbRectangle = new Rectangle(
-                    ClientRectangle.X,
-                    ClientRectangle.Y,
-                    _thumbWidth,
-                    _thumbHeight
-                    );
-
-                _thumbPosition = _thumbRectangle.Height/2;
-                _thumbBottomLimitBottom = ClientRectangle.Bottom;
-                _thumbBottomLimitTop = _thumbBottomLimitBottom - _thumbRectangle.Height;
-                _thumbTopLimit = ClientRectangle.Y;
+                thumbPosition = thumbRectangle.Height/2;
+                thumbBottomLimitBottom = ClientRectangle.Bottom;
+                thumbBottomLimitTop = thumbBottomLimitBottom - thumbRectangle.Height;
+                thumbTopLimit = ClientRectangle.Y;
             }
             else
             {
-                _thumbHeight = 6;
-                _thumbWidth = GetThumbSize();
+                thumbHeight = 6;
+                thumbWidth = GetThumbSize();
 
-                _clickedBarRectangle = ClientRectangle;
-                _clickedBarRectangle.Inflate(-1, -1);
+                clickedBarRectangle = ClientRectangle;
+                clickedBarRectangle.Inflate(-1, -1);
 
-                _thumbRectangle = new Rectangle(
-                    ClientRectangle.X,
-                    ClientRectangle.Y,
-                    _thumbWidth,
-                    _thumbHeight
-                    );
+                thumbRectangle = new Rectangle(ClientRectangle.X, ClientRectangle.Y, thumbWidth, thumbHeight);
 
-                _thumbPosition = _thumbRectangle.Width/2;
-                _thumbBottomLimitBottom = ClientRectangle.Right;
-                _thumbBottomLimitTop = _thumbBottomLimitBottom - _thumbRectangle.Width;
-                _thumbTopLimit = ClientRectangle.X;
+                thumbPosition = thumbRectangle.Width/2;
+                thumbBottomLimitBottom = ClientRectangle.Right;
+                thumbBottomLimitTop = thumbBottomLimitBottom - thumbRectangle.Width;
+                thumbTopLimit = ClientRectangle.X;
             }
 
             ChangeThumbPosition(GetThumbPosition());
@@ -890,7 +843,7 @@ namespace MetroFramework.Controls
 
         private void ResetScrollStatus()
         {
-            _bottomBarClicked = _topBarClicked = false;
+            bottomBarClicked = topBarClicked = false;
 
             StopTimer();
             Refresh();
@@ -907,20 +860,20 @@ namespace MetroFramework.Controls
 
             if (up)
             {
-                newValue = _value - (smallIncrement ? _smallChange : _largeChange);
+                newValue = curValue - (smallIncrement ? smallChange : largeChange);
 
-                if (newValue < _minimum)
+                if (newValue < minimum)
                 {
-                    newValue = _minimum;
+                    newValue = minimum;
                 }
             }
             else
             {
-                newValue = _value + (smallIncrement ? _smallChange : _largeChange);
+                newValue = curValue + (smallIncrement ? smallChange : largeChange);
 
-                if (newValue > _maximum)
+                if (newValue > maximum)
                 {
-                    newValue = _maximum;
+                    newValue = maximum;
                 }
             }
 
@@ -931,127 +884,134 @@ namespace MetroFramework.Controls
         {
             int pixelRange;
 
-            if (_orientation == ScrollBarOrientation.Vertical)
+            if (thumbHeight == 0 || thumbWidth == 0)
             {
-                pixelRange = Height - _thumbHeight;
+                return 0;
+            }
+
+            int thumbSize = metroOrientation == MetroScrollOrientation.Vertical ? (thumbPosition / Height) / thumbHeight : (thumbPosition / Width) / thumbWidth;
+
+            if (Orientation == MetroScrollOrientation.Vertical)
+            {
+                pixelRange = Height - thumbSize;
             }
             else
             {
-                pixelRange = Width - _thumbWidth;
+                pixelRange = Width - thumbSize;
             }
 
-            int realRange = _maximum - _minimum;
+            int realRange = maximum - minimum;
             float perc = 0f;
 
             if (realRange != 0)
             {
-                perc = (_value - (float) _minimum)/realRange;
+                perc = (curValue - (float) minimum) / realRange;
             }
 
-            return Math.Max(_thumbTopLimit, Math.Min(_thumbBottomLimitTop, Convert.ToInt32((perc*pixelRange))));
+            return Math.Max(thumbTopLimit, Math.Min(thumbBottomLimitTop, Convert.ToInt32((perc*pixelRange))));
         }
 
         private int GetThumbSize()
         {
             int trackSize =
-                _orientation == ScrollBarOrientation.Vertical ?
+                metroOrientation == MetroScrollOrientation.Vertical ?
                     Height : Width;
 
-            if (_maximum == 0 || _largeChange == 0)
+            if (maximum == 0 || largeChange == 0)
             {
                 return trackSize;
             }
 
-            float newThumbSize = (_largeChange*(float) trackSize)/_maximum;
+            float newThumbSize = (largeChange * (float) trackSize) / maximum;
 
             return Convert.ToInt32(Math.Min(trackSize, Math.Max(newThumbSize, 10f)));
         }
 
         private void EnableTimer()
         {
-            if (!_progressTimer.Enabled)
+            if (!progressTimer.Enabled)
             {
-                _progressTimer.Interval = 600;
-                _progressTimer.Start();
+                progressTimer.Interval = 600;
+                progressTimer.Start();
             }
             else
             {
-                _progressTimer.Interval = 10;
+                progressTimer.Interval = 10;
             }
         }
 
         private void StopTimer()
         {
-            _progressTimer.Stop();
+            progressTimer.Stop();
         }
 
         private void ChangeThumbPosition(int position)
         {
-            if (_orientation == ScrollBarOrientation.Vertical)
+            if (Orientation == MetroScrollOrientation.Vertical)
             {
-                _thumbRectangle.Y = position;
+                thumbRectangle.Y = position;
             }
             else
             {
-                _thumbRectangle.X = position;
+                thumbRectangle.X = position;
             }
         }
 
         private void ProgressThumb(bool enableTimer)
         {
-            int scrollOldValue = _value;
+            int scrollOldValue = curValue;
             var type = ScrollEventType.First;
             int thumbSize, thumbPos;
 
-            if (_orientation == ScrollBarOrientation.Vertical)
+            if (Orientation == MetroScrollOrientation.Vertical)
             {
-                thumbPos = _thumbRectangle.Y;
-                thumbSize = _thumbRectangle.Height;
+                thumbPos = thumbRectangle.Y;
+                thumbSize = thumbRectangle.Height;
             }
             else
             {
-                thumbPos = _thumbRectangle.X;
-                thumbSize = _thumbRectangle.Width;
+                thumbPos = thumbRectangle.X;
+                thumbSize = thumbRectangle.Width;
             }
 
-            if ((_bottomBarClicked && (thumbPos + thumbSize) < _trackPosition))
+            if ((bottomBarClicked && (thumbPos + thumbSize) < trackPosition))
             {
                 type = ScrollEventType.LargeIncrement;
 
-                _value = GetValue(false, false);
+                curValue = GetValue(false, false);
 
-                if (_value == _maximum)
+                if (curValue == maximum)
                 {
-                    ChangeThumbPosition(_thumbBottomLimitTop);
+                    ChangeThumbPosition(thumbBottomLimitTop);
 
                     type = ScrollEventType.Last;
                 }
                 else
                 {
-                    ChangeThumbPosition(Math.Min(_thumbBottomLimitTop, GetThumbPosition()));
+                    ChangeThumbPosition(Math.Min(thumbBottomLimitTop, GetThumbPosition()));
                 }
             }
-            else if ((_topBarClicked && thumbPos > _trackPosition))
+            else if ((topBarClicked && thumbPos > trackPosition))
             {
                 type = ScrollEventType.LargeDecrement;
 
-                _value = GetValue(false, true);
+                curValue = GetValue(false, true);
 
-                if (_value == _minimum)
+                if (curValue == minimum)
                 {
-                    ChangeThumbPosition(_thumbTopLimit);
+                    ChangeThumbPosition(thumbTopLimit);
 
                     type = ScrollEventType.First;
                 }
                 else
                 {
-                    ChangeThumbPosition(Math.Max(_thumbTopLimit, GetThumbPosition()));
+                    ChangeThumbPosition(Math.Max(thumbTopLimit, GetThumbPosition()));
                 }
             }
 
-            if (scrollOldValue != _value)
+            if (scrollOldValue != curValue)
             {
-                OnScroll(type, scrollOldValue, _value, _scrollOrientation);
+                OnScroll(type, scrollOldValue, curValue, scrollOrientation);
 
                 Invalidate();
 

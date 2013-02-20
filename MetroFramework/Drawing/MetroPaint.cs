@@ -76,6 +76,111 @@ namespace MetroFramework.Drawing
                     return Color.FromArgb(204, 204, 204);
                 }
             }
+
+            public static class ComboBox
+            {
+                public static Color Normal(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(153, 153, 153);
+
+                    return Color.FromArgb(153, 153, 153);
+                }
+
+                public static Color Hover(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(204, 204, 204);
+
+                    return Color.FromArgb(51, 51, 51);
+                }
+
+                public static Color Press(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(153, 153, 153);
+
+                    return Color.FromArgb(153, 153, 153);
+                }
+
+                public static Color Disabled(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(85, 85, 85);
+
+                    return Color.FromArgb(204, 204, 204);
+                }
+            }
+
+            public static class ProgressBar
+            {
+                public static Color Normal(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(68, 68, 68);
+
+                    return Color.FromArgb(204, 204, 204);
+                }
+
+                public static Color Hover(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(68, 68, 68);
+
+                    return Color.FromArgb(204, 204, 204);
+                }
+
+                public static Color Press(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(68, 68, 68);
+
+                    return Color.FromArgb(204, 204, 204);
+                }
+
+                public static Color Disabled(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(109, 109, 109);
+
+                    return Color.FromArgb(155, 155, 155);
+                }
+            }
+
+            public static class TabControl
+            {
+                public static Color Normal(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(68, 68, 68);
+
+                    return Color.FromArgb(204, 204, 204);
+                }
+
+                public static Color Hover(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(68, 68, 68);
+
+                    return Color.FromArgb(204, 204, 204);
+                }
+
+                public static Color Press(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(68, 68, 68);
+
+                    return Color.FromArgb(204, 204, 204);
+                }
+
+                public static Color Disabled(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(109, 109, 109);
+
+                    return Color.FromArgb(155, 155, 155);
+                }
+            }
         }
 
         public sealed class BackColor
@@ -233,6 +338,44 @@ namespace MetroFramework.Drawing
                     }
                 }
 
+                public sealed class Bar
+                {
+                    public static Color Normal(MetroThemeStyle theme)
+                    {
+                        if (theme == MetroThemeStyle.Dark)
+                            return Color.FromArgb(38, 38, 38);
+
+                        return Color.FromArgb(234, 234, 234);
+                    }
+
+                    public static Color Hover(MetroThemeStyle theme)
+                    {
+                        if (theme == MetroThemeStyle.Dark)
+                            return Color.FromArgb(38, 38, 38);
+
+                        return Color.FromArgb(234, 234, 234);
+                    }
+
+                    public static Color Press(MetroThemeStyle theme)
+                    {
+                        if (theme == MetroThemeStyle.Dark)
+                            return Color.FromArgb(38, 38, 38);
+
+                        return Color.FromArgb(234, 234, 234);
+                    }
+
+                    public static Color Disabled(MetroThemeStyle theme)
+                    {
+                        if (theme == MetroThemeStyle.Dark)
+                            return Color.FromArgb(38, 38, 38);
+
+                        return Color.FromArgb(234, 234, 234);
+                    }
+                }
+            }
+
+            public sealed class ProgressBar
+            {
                 public sealed class Bar
                 {
                     public static Color Normal(MetroThemeStyle theme)
@@ -436,6 +579,79 @@ namespace MetroFramework.Drawing
                         return Color.FromArgb(93, 93, 93);
 
                     return Color.FromArgb(136, 136, 136);
+                }
+            }
+
+            public sealed class ComboBox
+            {
+                public static Color Normal(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(153, 153, 153);
+
+                    return Color.FromArgb(153, 153, 153);
+                }
+
+                public static Color Hover(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(170, 170, 170);
+
+                    return Color.FromArgb(17, 17, 17);
+                }
+
+                public static Color Press(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(153, 153, 153);
+
+                    return Color.FromArgb(153, 153, 153);
+                }
+
+                public static Color Disabled(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(93, 93, 93);
+
+                    return Color.FromArgb(136, 136, 136);
+                }
+            }
+
+            public sealed class ProgressBar
+            {
+                public static Color Normal(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(170, 170, 170);
+
+                    return Color.FromArgb(0, 0, 0);
+                }
+
+                public static Color Disabled(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(51, 51, 51);
+
+                    return Color.FromArgb(209, 209, 209);
+                }
+            }
+
+            public sealed class TabControl
+            {
+                public static Color Normal(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(170, 170, 170);
+
+                    return Color.FromArgb(0, 0, 0);
+                }
+
+                public static Color Disabled(MetroThemeStyle theme)
+                {
+                    if (theme == MetroThemeStyle.Dark)
+                        return Color.FromArgb(51, 51, 51);
+
+                    return Color.FromArgb(209, 209, 209);
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -25,7 +26,9 @@ namespace MetroFramework.Forms
 
             singletonWindow = new MetroTaskWindow(secToClose, userControl);
             singletonWindow.Text = title;
-
+            singletonWindow.Resizable = false;
+            singletonWindow.StartPosition = FormStartPosition.Manual;
+            
             if (parent != null && parent is IMetroForm)
             {
                 singletonWindow.Theme = ((IMetroForm)parent).Theme;
@@ -37,6 +40,11 @@ namespace MetroFramework.Forms
             }
 
             singletonWindow.Show(parent);
+        }
+
+        public static bool IsVisible()
+        {
+            return (singletonWindow != null && singletonWindow.Visible);
         }
 
         public static void ShowTaskWindow(IWin32Window parent, string text, Control userControl)
@@ -58,6 +66,17 @@ namespace MetroFramework.Forms
         {
             if (singletonWindow != null)
                 singletonWindow.CancelTimer = true;
+        }
+
+        public static void ForceClose()
+        {
+            if (singletonWindow != null)
+            {
+                CancelAutoClose();
+                singletonWindow.Close();
+                singletonWindow.Dispose();
+                singletonWindow = null;
+            }
         }
 
         private bool cancelTimer = false;

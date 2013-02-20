@@ -7,6 +7,7 @@ namespace MetroFramework.Native
     internal class WinApi
     {
         #region Structs
+
         [StructLayout(LayoutKind.Sequential)]
         public struct TCHITTESTINFO
         {
@@ -41,6 +42,18 @@ namespace MetroFramework.Native
             public ABE uEdge;
             public RECT rc;
             public int lParam;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct WindowPos
+        {
+            public int hwnd;
+            public int hWndInsertAfter;
+            public int x;
+            public int y;
+            public int cx;
+            public int cy;
+            public int flags;
         }
 
         #endregion
@@ -361,6 +374,9 @@ namespace MetroFramework.Native
 
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetCapture(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);

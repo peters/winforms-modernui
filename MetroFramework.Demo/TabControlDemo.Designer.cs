@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
-            this.tabPage1 = new MetroFramework.Controls.TabPage();
+            this.tabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager();
             this.metroTabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -38,12 +38,12 @@
             // 
             this.metroTabControl1.Controls.Add(this.tabPage1);
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroTabControl1.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroTabControl1.FontWeight = MetroFramework.MetroLabelWeight.Light;
+            this.metroTabControl1.FontSize = MetroFramework.MetroTabControlSize.Medium;
+            this.metroTabControl1.FontWeight = MetroFramework.MetroTabControlWeight.Light;
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Name = "metroTabControl1";
             this.metroTabControl1.SelectedIndex = 0;
-            this.metroTabControl1.Size = new System.Drawing.Size(663, 165);
+            this.metroTabControl1.Size = new System.Drawing.Size(674, 196);
             this.metroTabControl1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabControl1.StyleManager = this.metroStyleManager1;
             this.metroTabControl1.TabIndex = 37;
@@ -56,18 +56,18 @@
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tabPage1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.tabPage1.HorizontalScrollBarShow = false;
+            this.tabPage1.HorizontalScrollbar = true;
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(655, 136);
+            this.tabPage1.Size = new System.Drawing.Size(666, 167);
             this.tabPage1.Style = MetroFramework.MetroColorStyle.Blue;
             this.tabPage1.StyleManager = this.metroStyleManager1;
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Scrollable tabcontrol";
             this.tabPage1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tabPage1.VerticalScrollBarShow = true;
+            this.tabPage1.VerticalScrollbar = true;
             // 
             // metroStyleManager1
             // 
@@ -77,8 +77,9 @@
             // 
             // TabControlDemo
             // 
-            this.ClientSize = new System.Drawing.Size(703, 245);
+            this.ClientSize = new System.Drawing.Size(714, 276);
             this.Controls.Add(this.metroTabControl1);
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "TabControlDemo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.StyleManager = this.metroStyleManager1;
@@ -91,7 +92,7 @@
         #endregion
 
         private Controls.MetroTabControl metroTabControl1;
-        private Controls.TabPage tabPage1;
+        private Controls.MetroTabPage tabPage1;
         private Components.MetroStyleManager metroStyleManager1;
 
     }

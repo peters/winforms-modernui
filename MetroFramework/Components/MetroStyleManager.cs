@@ -84,6 +84,13 @@ namespace MetroFramework.Components
             if (ownerForm.Controls.Count > 0)
                 UpdateControlCollection(ownerForm.Controls);
 
+            if (ownerForm.ContextMenuStrip != null && ownerForm.ContextMenuStrip is IMetroComponent)
+            {
+                ((IMetroComponent)ownerForm.ContextMenuStrip).Style = Style;
+                ((IMetroComponent)ownerForm.ContextMenuStrip).Theme = Theme;
+                ((IMetroComponent)ownerForm.ContextMenuStrip).StyleManager = this;
+            }
+
             ownerForm.Refresh();
         }
 
@@ -98,6 +105,28 @@ namespace MetroFramework.Components
                     ((IMetroControl)c).StyleManager = this;
                 }
 
+                if (c.ContextMenuStrip != null && c.ContextMenuStrip is IMetroComponent)
+                {
+                    ((IMetroComponent)c.ContextMenuStrip).Style = Style;
+                    ((IMetroComponent)c.ContextMenuStrip).Theme = Theme;
+                    ((IMetroComponent)c.ContextMenuStrip).StyleManager = this;
+                }
+
+                if (c is TabControl)
+                {
+                    foreach (TabPage tp in ((TabControl)c).TabPages)
+                    {
+                        if (tp is IMetroControl)
+                        {
+                            ((IMetroControl)c).Style = Style;
+                            ((IMetroControl)c).Theme = Theme;
+                            ((IMetroControl)c).StyleManager = this;
+                        }
+
+                        if (tp.Controls.Count > 0)
+                            UpdateControlCollection(tp.Controls);
+                    }
+                }
                 if (c is Panel || c is GroupBox || c is ContainerControl)
                 {
                     UpdateControlCollection(c.Controls);

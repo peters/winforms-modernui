@@ -6,6 +6,7 @@ using System.Drawing.Design;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+
 using MetroFramework.Components;
 using MetroFramework.Design;
 using MetroFramework.Drawing;
@@ -14,12 +15,11 @@ using MetroFramework.Native;
 
 namespace MetroFramework.Controls
 {
-
     #region MetroTabPageCollectionEditor
+
     internal class MetroTabPageCollectionEditor : CollectionEditor
     {
-        protected override CollectionForm
-            CreateCollectionForm()
+        protected override CollectionForm CreateCollectionForm()
         {
             var baseForm = base.CreateCollectionForm();
             baseForm.Text = "MetroTabPage Collection Editor";
@@ -28,8 +28,7 @@ namespace MetroFramework.Controls
 
         public MetroTabPageCollectionEditor(Type type)
             : base(type)
-        {
-        }
+        { }
 
         protected override Type CreateCollectionItemType()
         {
@@ -38,437 +37,110 @@ namespace MetroFramework.Controls
 
         protected override Type[] CreateNewItemTypes()
         {
-            return new[]
-            {
-                typeof (TabPage)
-            };
+            return new[] { typeof (TabPage) };
         }
     }
 
-    #endregion
-
-    #region MetroTabPage
-
-    [ToolboxItem(false)]
-    class TabPageScrollBar : MetroScrollBar
-    {
-        protected override void OnMouseWheel(MouseEventArgs e)
-        {
-            // Use native one instead
-            // Todo: Sven, could you investigate how to emulate
-            // the default mouse wheel scroll behavior?
-        }
-    }
-
-    [Designer(typeof (ScrollableControlDesigner))]
-    public class TabPage : System.Windows.Forms.TabPage, IMetroControl
-    {
-        
-        #region Variables
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly TabPageScrollBar _verticalScrollbar = new TabPageScrollBar
-        {
-            Orientation = ScrollBarOrientation.Vertical,
-            Width = 10
-        };
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly TabPageScrollBar _horizontalScrollbar = new TabPageScrollBar
-        {
-            Orientation = ScrollBarOrientation.Horizontal,
-            Height = 6
-        };
-
-        #endregion
-
-        #region Fields
-
-        [Category("Metro Appearance"), Browsable(true), Description("Shode / hide horizontal scrollbar.")]
-        public bool HorizontalScrollBarShow { get; set; }
-
-        [Category("Metro Appearance"), Browsable(true), Description("Shode / hide vertical scrollbar.")]
-        public bool VerticalScrollBarShow { get; set; }
-
-        [Category("Metro Appearance"), Browsable(true), Description("Allow TabPage to be scrolled.")]
-        public new bool AutoScroll
-        {
-            get
-            {
-                return base.AutoScroll;
-            }
-            set
-            {
-                if (value)
-                {
-                    HorizontalScrollBarShow = true;
-                    VerticalScrollBarShow = true;
-                }
-                base.AutoScroll = value;
-            }
-        }
-        #endregion
-
-        #region IMetroControl
-        /// <summary>
-        /// 
-        /// </summary>
-        public MetroColorStyle Style { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public MetroThemeStyle Theme { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public MetroStyleManager StyleManager { get; set; }
-        #endregion
-
-        #region Constructor
-        /// <summary>
-        /// http://www.codeproject.com/Articles/226381/Scrolling-Panel
-        /// http://cyotek.com/blog/tag/scrollablecontroldesigner
-        /// </summary>
-        public TabPage()
-        {
-            SetStyle(ControlStyles.UserPaint |
-             ControlStyles.AllPaintingInWmPaint |
-             ControlStyles.ResizeRedraw |
-             ControlStyles.OptimizedDoubleBuffer |
-             ControlStyles.SupportsTransparentBackColor, true);
-            InitializeComponent();
-        }
-        #endregion
-
-        #region Scroll events
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HorizontalScrollbarScroll(object sender, ScrollEventArgs e)
-        {
-            UpdateScrollBarsPositionWhileScrolling(e);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void VerticalScrollbarScroll(object sender, ScrollEventArgs e)
-        {
-            AutoScrollPosition = new Point(0, e.NewValue);
-            _verticalScrollbar.Top = ClientRectangle.Top;
-            UpdateScrollBarsPositionWhileScrolling(e);
-        }
-        #endregion
-
-        #region Overrides
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventargs"></param>
-        protected override void OnSizeChanged(EventArgs eventargs)
-        {
-            UpdateScrollBarPositions();
-            base.OnSizeChanged(eventargs);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            
-            // Do nothing while in design mode.
-            if (DesignMode)
-            {
-                return;
-            }
-
-            // Only attempt to set visibility if configured
-            // to be visible in the designer.
-            if (HorizontalScrollBarShow)
-            {
-                _horizontalScrollbar.Visible = HorizontalScroll.Visible;                
-            }
-
-            // Only attempt to set visibility if configured
-            // to be visible in the designer.
-            if (VerticalScrollBarShow)
-            {
-                _verticalScrollbar.Visible = VerticalScroll.Visible;                
-            }
-
-            // Update vertical scroll
-            if (VerticalScroll.Visible)
-            {
-                _verticalScrollbar.Minimum = VerticalScroll.Minimum;
-                _verticalScrollbar.Maximum = VerticalScroll.Maximum;
-                _verticalScrollbar.SmallChange = VerticalScroll.SmallChange;
-                _verticalScrollbar.LargeChange = VerticalScroll.LargeChange;
-            }
-
-            // Update horizontal scroll
-            if (HorizontalScroll.Visible)
-            {
-                _horizontalScrollbar.Minimum = HorizontalScroll.Minimum;
-                _horizontalScrollbar.Maximum = HorizontalScroll.Maximum;
-                _horizontalScrollbar.SmallChange = HorizontalScroll.SmallChange;
-                _horizontalScrollbar.LargeChange = HorizontalScroll.LargeChange;
-            }
-
-            base.OnPaint(e);
-       
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="m"></param>
-        protected override void WndProc(ref Message m)
-        {
-            switch (m.Msg)
-            {
-                default:
-                    if (!DesignMode)
-                    {
-                        WinApi.ShowScrollBar(Handle, (int)WinApi.ScrollBar.SB_BOTH, 0);                        
-                    }
-                    base.WndProc(ref m);
-                    break;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseWheel(MouseEventArgs e)
-        {
-            base.OnMouseWheel(e);
-            _verticalScrollbar.Value = VerticalScroll.Value;
-        }
-        #endregion
-
-        #region Private methods
-        /// <summary>
-        /// 
-        /// </summary>
-        private void InitializeComponent()
-        {
-            // Add scrollbars
-            Controls.Add(_verticalScrollbar);
-            Controls.Add(_horizontalScrollbar);
-
-            // Scroll events
-            _verticalScrollbar.Scroll += VerticalScrollbarScroll;
-            _horizontalScrollbar.Scroll += HorizontalScrollbarScroll;
-
-            // Paint scrollbars
-            UpdateScrollBarPositions();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        private void UpdateScrollBarPositions()
-        {
-            if (DesignMode)
-            {
-                return;
-            }
-            if (!AutoScroll)
-            {
-                _verticalScrollbar.Visible = false;
-                _horizontalScrollbar.Visible = false;
-                return;
-            }
-            if (VerticalScrollBarShow)
-            {
-                if (VerticalScroll.Visible || DesignMode)
-                {
-                    _verticalScrollbar.Location = new Point(ClientRectangle.X + ClientRectangle.Width - _verticalScrollbar.Width, ClientRectangle.Top);
-                    _verticalScrollbar.Height = Height;
-                }
-            }
-            else
-            {
-                _verticalScrollbar.Visible = false;
-            }
-            if (HorizontalScrollBarShow)
-            {
-                if (HorizontalScroll.Visible || DesignMode)
-                {
-                    _horizontalScrollbar.Location = new Point(ClientRectangle.X, ClientRectangle.Top + (Height - _horizontalScrollbar.Height));
-                    _horizontalScrollbar.Width = Width;
-                }
-            }
-            else
-            {
-                _horizontalScrollbar.Visible = false;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        private void UpdateScrollBarsPositionWhileScrolling(ScrollEventArgs eventArgs)
-        {
-            switch (eventArgs.ScrollOrientation)
-            {
-                case ScrollOrientation.VerticalScroll:
-                    switch (eventArgs.Type)
-                    {
-                        default:
-                            if (HorizontalScrollBarShow)
-                            {
-                                _horizontalScrollbar.Location = new Point(ClientRectangle.X, Height - _horizontalScrollbar.Height);                                
-                            }
-                            break;
-                    }
-                    break;
-                case ScrollOrientation.HorizontalScroll:
-                    switch (eventArgs.Type)
-                    {
-                        default:
-                            if (VerticalScrollBarShow)
-                            {
-                                _verticalScrollbar.Location = new Point(ClientRectangle.X + ClientRectangle.Width - _verticalScrollbar.Width, ClientRectangle.Top);                                
-                            }
-                            break;
-                    }
-                    break;
-            }
-        }
-        #endregion
-    }
     #endregion
 
     #region MetroTabPageCollection
 
-    [ToolboxItem(false), Editor(typeof (MetroTabPageCollectionEditor), typeof (UITypeEditor))]
+    [ToolboxItem(false)]
+    [Editor(typeof(MetroTabPageCollectionEditor), typeof(UITypeEditor))]
     public class MetroTabPageCollection : TabControl.TabPageCollection
     {
-        public MetroTabPageCollection(TabControl owner) : base(owner)
-        {
-        }
+        public MetroTabPageCollection(MetroTabControl owner) : base(owner)
+        { }
     }
+
     #endregion
 
-    /// <summary>
-    /// References:
-    /// http://bytes.com/topic/c-sharp/answers/576709-adding-custom-tabpages-design-time
-    /// http://dotnetrix.co.uk/tabcontrol.htm
-    /// </summary>
     [Designer(typeof (MetroTabControlDesigner))]
     public class MetroTabControl : TabControl, IMetroControl
     {
-        #region Variables
+        #region Interface
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private const int TabBottomBorderHeight = 3;
-        #endregion
-
-        #region IMetroControl
-
-        private MetroColorStyle _metroStyle = MetroColorStyle.Blue;
-
+        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
         [Category("Metro Appearance")]
         public MetroColorStyle Style
         {
             get
             {
-                return StyleManager != null ? StyleManager.Style : _metroStyle;
+                if (StyleManager != null)
+                    return StyleManager.Style;
+
+                return metroStyle;
             }
-            set
-            {
-                _metroStyle = value;
-            }
+            set { metroStyle = value; }
         }
 
-        private MetroThemeStyle _metroTheme = MetroThemeStyle.Light;
-
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
         [Category("Metro Appearance")]
         public MetroThemeStyle Theme
         {
             get
             {
-                return StyleManager != null ? StyleManager.Theme : _metroTheme;
+                if (StyleManager != null)
+                    return StyleManager.Theme;
+
+                return metroTheme;
             }
-            set
-            {
-                _metroTheme = value;
-            }
+            set { metroTheme = value; }
         }
 
+        private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
-        public MetroStyleManager StyleManager { get; set; }
+        public MetroStyleManager StyleManager
+        {
+            get { return metroStyleManager; }
+            set { metroStyleManager = value; }
+        }
 
         #endregion
 
         #region Fields
+
+        private const int TabBottomBorderHeight = 3;
  
-        private bool _useStyleColors;
+        private bool useStyleColors = false;
 
         [Category("Metro Appearance")]
         public bool UseStyleColors
         {
-            get
-            {
-                return _useStyleColors;
-            }
-            set
-            {
-                _useStyleColors = value;
-            }
+            get { return useStyleColors; }
+            set { useStyleColors = value; }
         }
 
-        private MetroLabelSize _metroLabelSize = MetroLabelSize.Medium;
+        private MetroTabControlSize metroLabelSize = MetroTabControlSize.Medium;
 
         [Category("Metro Appearance")]
-        public MetroLabelSize FontSize
+        public MetroTabControlSize FontSize
         {
-            get
-            {
-                return _metroLabelSize;
-            }
-            set
-            {
-                _metroLabelSize = value;
-            }
+            get { return metroLabelSize; }
+            set { metroLabelSize = value; }
         }
 
-        private MetroLabelWeight _metroLabelWeight = MetroLabelWeight.Light;
+        private MetroTabControlWeight metroLabelWeight = MetroTabControlWeight.Light;
 
         [Category("Metro Appearance")]
-        public MetroLabelWeight FontWeight
+        public MetroTabControlWeight FontWeight
         {
-            get
-            {
-                return _metroLabelWeight;
-            }
-            set
-            {
-                _metroLabelWeight = value;
-            }
+            get { return metroLabelWeight; }
+            set { metroLabelWeight = value; }
         }
 
-        private ContentAlignment _textAlign = ContentAlignment.MiddleLeft;
+        private ContentAlignment textAlign = ContentAlignment.MiddleLeft;
 
         [Category("Metro Appearance")]
         public ContentAlignment TextAlign
         {
             get
             {
-                return _textAlign;
+                return textAlign;
             }
             set
             {
-                _textAlign = value;
+                textAlign = value;
             }
         }
 
@@ -481,13 +153,32 @@ namespace MetroFramework.Controls
             }
         }
 
+
+        private bool isMirrored;
+
+        [Category("Metro Appearance")]
+        [DefaultValue(false)]
+        public new bool IsMirrored
+        {
+            get
+            {
+                return isMirrored;
+            }
+            set
+            {
+                if (isMirrored == value)
+                {
+                    return;
+                }
+                isMirrored = value;
+                UpdateStyles();
+            }
+        }
+
         #endregion
 
         #region Constructor
 
-        /// <summary>
-        /// 
-        /// </summary>
         public MetroTabControl()
         {
             SetStyle(ControlStyles.UserPaint |
@@ -495,108 +186,90 @@ namespace MetroFramework.Controls
                      ControlStyles.ResizeRedraw |
                      ControlStyles.OptimizedDoubleBuffer |
                      ControlStyles.SupportsTransparentBackColor, true);
+
+            Padding = new Point(6, 8);
         }
 
         #endregion
 
-        #region Fields
+        #region Paint Methods
 
-        private Color _backColor = Color.Empty;
-
-        [Browsable(false)]
-        public override Color BackColor
+        protected override void OnPaint(PaintEventArgs e)
         {
-            get
+            base.OnPaint(e);
+
+            Color backColor;
+
+            if (Parent != null)
             {
-                if (_backColor.Equals(Color.Empty))
+                if (Parent is MetroTile)
                 {
-                    return Parent == null ? DefaultBackColor : Parent.BackColor;
+                    backColor = MetroPaint.GetStyleColor(Style);
                 }
-                return _backColor;
+                else
+                {
+                    backColor = Parent.BackColor;
+                }
             }
-            set
+            else
             {
-                if (_backColor.Equals(value))
-                {
-                    return;
-                }
-                _backColor = value;
-                Invalidate();
-                base.OnBackColorChanged(EventArgs.Empty);
+                backColor = MetroPaint.BackColor.Form(Theme);
             }
+
+            BackColor = backColor;
+
+            e.Graphics.Clear(backColor);
+
+            for (var index = 0; index < TabPages.Count; index++)
+            {
+                if (index != SelectedIndex)
+                {
+                    DrawTab(index, e.Graphics);
+                }
+            }
+            if (SelectedIndex <= -1)
+            {
+                return;
+            }
+
+            DrawTabBottomBorder(SelectedIndex, e.Graphics);
+            DrawTab(SelectedIndex, e.Graphics);
+            DrawTabSelected(SelectedIndex, e.Graphics);
         }
 
-        private bool _mirror;
-
-        [Category("Metro Appearance"), Description("Draw tab pages right to left."), DefaultValue(false)]
-        public bool Mirror
-        {
-            get
-            {
-                return _mirror;
-            }
-            set
-            {
-                if (_mirror == value)
-                {
-                    return;
-                }
-                _mirror = value;
-                UpdateStyles();
-            }
-        }
-
-        #endregion
-
-        #region Private methods
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="graphics"></param>
         private void DrawTabBottomBorder(int index, Graphics graphics)
         {
-            using (var bgBrush = MetroPaint.GetStyleBrush(Style))
+            using (var bgBrush = new SolidBrush(MetroPaint.BorderColor.TabControl.Normal(Theme)))
             {
-                graphics.FillRectangle(bgBrush, -2 + GetTabRect(0).X + DisplayRectangle.X, GetTabRect(index).Bottom,
+                graphics.FillRectangle(bgBrush, -2 + GetTabRect(0).X + DisplayRectangle.X, GetTabRect(index).Bottom + 2 - TabBottomBorderHeight,
                                        Width - (Width - DisplayRectangle.Width + DisplayRectangle.X) + 4,
                                        TabBottomBorderHeight);
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="graphics"></param>
         private void DrawTabSelected(int index, Graphics graphics)
         {
-            using (var selectionBrush = new SolidBrush(MetroPaint.GetStyleColor(MetroColorStyle.Silver)))
+            using (var selectionBrush = new SolidBrush(MetroPaint.GetStyleColor(Style)))
             {
                 var selectedTabRect = GetTabRect(index);
                 var textAreaRect = MeasureText(TabPages[index].Text);
                 graphics.FillRectangle(selectionBrush, new Rectangle
                 {
                     X = -2 + selectedTabRect.X + DisplayRectangle.X,
-                    Y = selectedTabRect.Bottom,
-                    Width = textAreaRect.Width + (index == 0 ? DisplayRectangle.X : 0),
+                    Y = selectedTabRect.Bottom + 2 - TabBottomBorderHeight,
+                    Width = selectedTabRect.Width,
                     Height = TabBottomBorderHeight
                 });
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         private Size MeasureText(string text)
         {
             Size preferredSize;
             using (var g = CreateGraphics())
             {
                 var proposedSize = new Size(int.MaxValue, int.MaxValue);
-                preferredSize = TextRenderer.MeasureText(g, text, MetroFonts.Label(_metroLabelSize, _metroLabelWeight),
+                preferredSize = TextRenderer.MeasureText(g, text, MetroFonts.TabControl(metroLabelSize, metroLabelWeight),
                                                          proposedSize,
                                                          MetroPaint.GetTextFormatFlags(TextAlign) |
                                                          TextFormatFlags.NoPadding);
@@ -604,11 +277,6 @@ namespace MetroFramework.Controls
             return preferredSize;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="graphics"></param>
         private void DrawTab(int index, Graphics graphics)
         {
             Color foreColor;
@@ -622,7 +290,7 @@ namespace MetroFramework.Controls
             }
             else
             {
-                foreColor = !_useStyleColors ? MetroPaint.ForeColor.Label.Normal(Theme) : MetroPaint.GetStyleColor(Style);
+                foreColor = !useStyleColors ? MetroPaint.ForeColor.TabControl.Normal(Theme) : MetroPaint.GetStyleColor(Style);
             }
 
             if (index == 0)
@@ -630,99 +298,44 @@ namespace MetroFramework.Controls
                 tabRect.X = DisplayRectangle.X;
             }
 
-            TextRenderer.DrawText(graphics, tabPage.Text, MetroFonts.Label(_metroLabelSize, _metroLabelWeight),
+            tabRect.Width += 20;
+
+            TextRenderer.DrawText(graphics, tabPage.Text, MetroFonts.TabControl(metroLabelSize, metroLabelWeight),
                                   tabRect, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
         }
 
         #endregion
 
-        #region Paint methods
+        #region Overridden Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            e.Graphics.Clear(BackColor);
-            for (var index = 0; index < TabPages.Count; index++)
-            {
-                if (index != SelectedIndex)
-                {
-                    DrawTab(index, e.Graphics);
-                }
-            }
-            if (SelectedIndex <= -1)
-            {
-                return;
-            }
-            DrawTabBottomBorder(SelectedIndex, e.Graphics);
-            DrawTab(SelectedIndex, e.Graphics);
-            DrawTabSelected(SelectedIndex, e.Graphics);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnEnabledChanged(EventArgs e)
         {
             base.OnEnabledChanged(e);
             Invalidate();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
+
         protected override void OnParentBackColorChanged(EventArgs e)
         {
             base.OnParentBackColorChanged(e);
             Invalidate();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
             Invalidate();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseWheel(MouseEventArgs e)
-        {
-            if (!TabPages[TabIndex].Focused)
-            {
-                TabPages[TabIndex].Focus();                
-            } 
-            base.OnMouseWheel(e);
-        }
-        #endregion
 
-        #region Overrides
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="m"></param>
         protected override void WndProc(ref Message m)
         {
-            switch (m.Msg)
+            base.WndProc(ref m);
+
+            if (!DesignMode)
             {
-                    // Hide both scrollbars by default
-                default:
-                    WinApi.ShowScrollBar(Handle, (int) WinApi.ScrollBar.SB_BOTH, 0);
-                    base.WndProc(ref m);
-                    break;
+                WinApi.ShowScrollBar(Handle, (int)WinApi.ScrollBar.SB_BOTH, 0);
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         protected override CreateParams CreateParams
         {
             [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
@@ -731,7 +344,7 @@ namespace MetroFramework.Controls
                 const int WS_EX_LAYOUTRTL = 0x400000;
                 const int WS_EX_NOINHERITLAYOUT = 0x100000;
                 var cp = base.CreateParams;
-                if (_mirror) // RightToLeftLayout
+                if (isMirrored)
                 {
                     cp.ExStyle = cp.ExStyle | WS_EX_LAYOUTRTL | WS_EX_NOINHERITLAYOUT;
                 }
@@ -739,15 +352,29 @@ namespace MetroFramework.Controls
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
         private new Rectangle GetTabRect(int index)
         {
-            return (index < 0) ? new Rectangle() : base.GetTabRect(index);
+            if (index < 0)
+                return new Rectangle();
+
+            Rectangle baseRect = base.GetTabRect(index);
+            return baseRect;
         }
+
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            if (SelectedIndex != -1)
+            {
+                if (!TabPages[SelectedIndex].Focused)
+                {
+                    TabPages[SelectedIndex].Select();
+                    TabPages[SelectedIndex].Focus();
+                }
+            }
+            
+            base.OnMouseWheel(e);
+        }
+
         #endregion
     }
 }

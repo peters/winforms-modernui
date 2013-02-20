@@ -166,8 +166,6 @@ namespace MetroFramework.Controls
 
             e.Graphics.Clear(backColor);
 
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-
             using (Pen p = new Pen(borderColor))
             {
                 Rectangle boxRect = new Rectangle(0, Height / 2 - 6, 12, 12);
@@ -176,17 +174,21 @@ namespace MetroFramework.Controls
 
             if (Checked)
             {
-                using (SolidBrush b = new SolidBrush(borderColor))
+
+                Color fillColor = CheckState == CheckState.Indeterminate ? borderColor : MetroPaint.GetStyleColor(Style);
+
+                using (SolidBrush b = new SolidBrush(fillColor))
                 {
-                    Rectangle boxRect = new Rectangle(2, Height / 2 - 4, 8, 8);
+                    Rectangle boxRect = new Rectangle(2, Height / 2 - 4, 9, 9);
                     e.Graphics.FillRectangle(b, boxRect);
                 }
             }
 
-            e.Graphics.SmoothingMode = SmoothingMode.Default;
-
             Rectangle textRect = new Rectangle(16, 0, Width - 16, Height);
             TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
+
+            if (false && isFocused)
+                ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
         }
 
         #endregion
@@ -307,6 +309,20 @@ namespace MetroFramework.Controls
         {
             base.OnCheckedChanged(e);
             Invalidate();
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            Size preferredSize;
+            base.GetPreferredSize(proposedSize);
+
+            using (var g = CreateGraphics())
+            {
+                proposedSize = new Size(int.MaxValue, int.MaxValue);
+                preferredSize = TextRenderer.MeasureText(g, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), proposedSize, MetroPaint.GetTextFormatFlags(TextAlign));
+            }
+
+            return preferredSize;
         }
 
         #endregion

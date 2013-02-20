@@ -18,9 +18,9 @@ namespace MetroFramework.Design
 
                 if (propDescriptor != null)
                 {
-                    ScrollBarOrientation orientation = (ScrollBarOrientation)propDescriptor.GetValue(Component);
+                    MetroScrollOrientation orientation = (MetroScrollOrientation)propDescriptor.GetValue(Component);
 
-                    if (orientation == ScrollBarOrientation.Vertical)
+                    if (orientation == MetroScrollOrientation.Vertical)
                     {
                         return SelectionRules.Visible | SelectionRules.Moveable | SelectionRules.BottomSizeable | SelectionRules.TopSizeable;
                     }

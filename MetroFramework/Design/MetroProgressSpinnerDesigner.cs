@@ -1,10 +1,9 @@
 ﻿using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms.Design;
 
 namespace MetroFramework.Design
 {
-    internal class MetroTileDesigner : ParentControlDesigner
+    internal class MetroProgressSpinnerDesigner : ControlDesigner
     {
         public override SelectionRules SelectionRules
         {
@@ -14,11 +13,6 @@ namespace MetroFramework.Design
             }
         }
 
-        public override bool CanParent(System.Windows.Forms.Control control)
-        {
-            return (control is Controls.MetroLabel || control is Controls.MetroProgressSpinner);
-        }
-
         protected override void PreFilterProperties(IDictionary properties)
         {
             properties.Remove("ImeMode");
@@ -26,7 +20,7 @@ namespace MetroFramework.Design
             properties.Remove("FlatAppearance");
             properties.Remove("FlatStyle");
             properties.Remove("AutoEllipsis");
-            properties.Remove("UseCompatibleTextRendering");
+            properties.Remove("UseCompatibleTextRendering");            
 
             properties.Remove("Image");
             properties.Remove("ImageAlign");
@@ -34,7 +28,7 @@ namespace MetroFramework.Design
             properties.Remove("ImageKey");
             properties.Remove("ImageList");
             properties.Remove("TextImageRelation");
-
+            
             properties.Remove("BackColor");
             properties.Remove("BackgroundImage");
             properties.Remove("BackgroundImageLayout");
@@ -43,6 +37,7 @@ namespace MetroFramework.Design
             properties.Remove("Font");
             properties.Remove("ForeColor");
             properties.Remove("RightToLeft");
+            properties.Remove("Text");
 
             base.PreFilterProperties(properties);
         }

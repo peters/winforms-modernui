@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using MetroFramework.Components;
 using MetroFramework.Interfaces;
+using MetroFramework.Drawing;
 
 namespace MetroFramework.Controls
 {
@@ -51,7 +52,34 @@ namespace MetroFramework.Controls
 
         #endregion
 
+        #region Constructor
+
+        public MetroPanel()
+        {
+            SetStyle(ControlStyles.AllPaintingInWmPaint |
+                     ControlStyles.OptimizedDoubleBuffer |
+                     ControlStyles.ResizeRedraw |
+                     ControlStyles.UserPaint |
+                     ControlStyles.SupportsTransparentBackColor, true);
+        }
+
+        #endregion
+
         #region Overridden Methods
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Color backColor;
+
+            if (Parent != null)
+                backColor = Parent.BackColor;
+            else
+                backColor = MetroPaint.BackColor.Form(Theme);
+
+            BackColor = backColor;
+
+            e.Graphics.Clear(backColor);
+        }
 
         protected override void OnEnabledChanged(EventArgs e)
         {

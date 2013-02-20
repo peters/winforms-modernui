@@ -18,6 +18,8 @@ namespace MetroFramework.Demo
                 tabPage1.Controls.Add(label);
                 top += label.Height + 3;
             }
+
+            metroTabControl1.TabPages.Add("test");
         }
     }
 }

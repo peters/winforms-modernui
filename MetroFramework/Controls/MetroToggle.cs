@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using System.Windows.Forms;
 
 using MetroFramework.Components;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
+using MetroFramework.Localization;
 
 namespace MetroFramework.Controls
 {
-    [Designer(typeof(MetroLinkDesigner))]
-    [ToolboxBitmap(typeof(LinkLabel))]
-    [DefaultEvent("Click")]
-    public class MetroLink : Button, IMetroControl
+    [ToolboxBitmap(typeof(CheckBox))]
+    public class MetroToggle : CheckBox, IMetroControl
     {
         #region Interface
 
@@ -57,6 +56,8 @@ namespace MetroFramework.Controls
 
         #region Fields
 
+        private MetroLocalize metroLocalize = null;
+
         private bool useStyleColors = false;
         [Category("Metro Appearance")]
         public bool UseStyleColors
@@ -73,12 +74,20 @@ namespace MetroFramework.Controls
             set { metroLinkSize = value; }
         }
 
-        private MetroLinkWeight metroLinkWeight = MetroLinkWeight.Bold;
+        private MetroLinkWeight metroLinkWeight = MetroLinkWeight.Regular;
         [Category("Metro Appearance")]
         public MetroLinkWeight FontWeight
         {
             get { return metroLinkWeight; }
             set { metroLinkWeight = value; }
+        }
+
+        private bool displayStatus = true;
+        [Category("Metro Appearance")]
+        public bool DisplayStatus
+        {
+            get { return displayStatus; }
+            set { displayStatus = value; }
         }
 
         [Browsable(false)]
@@ -115,6 +124,20 @@ namespace MetroFramework.Controls
                 base.ForeColor = value;
             }
         }
+        
+        [Browsable(false)]
+        public override string Text
+        {
+            get
+            {
+                if (Checked)
+                {
+                    return metroLocalize.translate("StatusOn");
+                }
+
+                return metroLocalize.translate("StatusOff");
+            }
+        }
 
         private bool isHovered = false;
         private bool isPressed = false;
@@ -124,13 +147,15 @@ namespace MetroFramework.Controls
 
         #region Constructor
 
-        public MetroLink()
+        public MetroToggle()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint |
                      ControlStyles.OptimizedDoubleBuffer |
                      ControlStyles.ResizeRedraw |
-                     ControlStyles.UserPaint |
-                     ControlStyles.SupportsTransparentBackColor, true);
+                     ControlStyles.UserPaint, true);
+
+            Name = "MetroToggle";
+            metroLocalize = new MetroLocalize(this);
         }
 
         #endregion
@@ -139,7 +164,7 @@ namespace MetroFramework.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Color backColor, foreColor;
+            Color backColor, borderColor, foreColor;
 
             if (Parent != null)
                 backColor = Parent.BackColor;
@@ -148,23 +173,61 @@ namespace MetroFramework.Controls
 
             if (isHovered && !isPressed && Enabled)
             {
-                foreColor = MetroPaint.ForeColor.Link.Hover(Theme);
+                foreColor = MetroPaint.ForeColor.CheckBox.Hover(Theme);
+                borderColor = MetroPaint.BorderColor.CheckBox.Hover(Theme);
             }
             else if (isHovered && isPressed && Enabled)
             {
-                foreColor = MetroPaint.ForeColor.Link.Press(Theme);
+                foreColor = MetroPaint.ForeColor.CheckBox.Press(Theme);
+                borderColor = MetroPaint.BorderColor.CheckBox.Press(Theme);
             }
             else if (!Enabled)
             {
-                foreColor = MetroPaint.ForeColor.Link.Disabled(Theme);
+                foreColor = MetroPaint.ForeColor.CheckBox.Disabled(Theme);
+                borderColor = MetroPaint.BorderColor.CheckBox.Disabled(Theme);
             }
             else
             {
-                foreColor = !useStyleColors ? MetroPaint.ForeColor.Link.Normal(Theme) : MetroPaint.GetStyleColor(Style);
+                foreColor = !useStyleColors ? MetroPaint.ForeColor.CheckBox.Normal(Theme) : MetroPaint.GetStyleColor(Style);
+                borderColor = MetroPaint.BorderColor.CheckBox.Normal(Theme);
             }
 
             e.Graphics.Clear(backColor);
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), ClientRectangle, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
+
+            using (Pen p = new Pen(borderColor))
+            {
+                Rectangle boxRect = new Rectangle((DisplayStatus ? 30 : 0), 0, ClientRectangle.Width - (DisplayStatus ? 31 : 1), ClientRectangle.Height - 1);
+                e.Graphics.DrawRectangle(p, boxRect);
+            }
+
+            Color fillColor = Checked ? MetroPaint.GetStyleColor(Style) : MetroPaint.BorderColor.CheckBox.Normal(Theme);
+
+            using (SolidBrush b = new SolidBrush(fillColor))
+            {
+                Rectangle boxRect = new Rectangle(DisplayStatus ? 32 : 2, 2, ClientRectangle.Width - (DisplayStatus ? 34 : 4), ClientRectangle.Height - 4);
+                e.Graphics.FillRectangle(b, boxRect);
+            }
+
+            using (SolidBrush b = new SolidBrush(backColor))
+            {
+                int left = Checked ? Width - 11 : (DisplayStatus ? 30 : 0);
+
+                Rectangle boxRect = new Rectangle(left, 0, 11, ClientRectangle.Height);
+                e.Graphics.FillRectangle(b, boxRect);
+            }
+            using (SolidBrush b = new SolidBrush(MetroPaint.BorderColor.CheckBox.Hover(Theme)))
+            {
+                int left = Checked ? Width - 10 : (DisplayStatus ? 30 : 0);
+
+                Rectangle boxRect = new Rectangle(left, 0, 10, ClientRectangle.Height);
+                e.Graphics.FillRectangle(b, boxRect);
+            }
+
+            if (DisplayStatus)
+            {
+                Rectangle textRect = new Rectangle(0, 0, 30, ClientRectangle.Height);
+                TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
+            }
 
             if (false && isFocused)
                 ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
@@ -282,6 +345,19 @@ namespace MetroFramework.Controls
         {
             base.OnEnabledChanged(e);
             Invalidate();
+        }
+
+        protected override void OnCheckedChanged(EventArgs e)
+        {
+            base.OnCheckedChanged(e);
+            Invalidate();
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            Size preferredSize = base.GetPreferredSize(proposedSize);
+            preferredSize.Width = DisplayStatus ? 80 : 50;
+            return preferredSize;
         }
 
         #endregion

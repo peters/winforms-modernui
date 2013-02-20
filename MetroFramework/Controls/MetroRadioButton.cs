@@ -176,7 +176,9 @@ namespace MetroFramework.Controls
 
             if (Checked)
             {
-                using (SolidBrush b = new SolidBrush(borderColor))
+                Color fillColor = MetroPaint.GetStyleColor(Style);
+
+                using (SolidBrush b = new SolidBrush(fillColor))
                 {
                     Rectangle boxRect = new Rectangle(3, Height / 2 - 3, 6, 6);
                     e.Graphics.FillEllipse(b, boxRect);
@@ -187,6 +189,9 @@ namespace MetroFramework.Controls
 
             Rectangle textRect = new Rectangle(16, 0, Width - 16, Height);
             TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
+
+            if (false && isFocused)
+                ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
         }
 
         #endregion
@@ -307,6 +312,20 @@ namespace MetroFramework.Controls
         {
             base.OnCheckedChanged(e);
             Invalidate();
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            Size preferredSize;
+            base.GetPreferredSize(proposedSize);
+
+            using (var g = CreateGraphics())
+            {
+                proposedSize = new Size(int.MaxValue, int.MaxValue);
+                preferredSize = TextRenderer.MeasureText(g, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), proposedSize, MetroPaint.GetTextFormatFlags(TextAlign));
+            }
+
+            return preferredSize;
         }
 
         #endregion

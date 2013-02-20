@@ -23,15 +23,24 @@ Requirements
 Controls supported
 ------------------
 * Button
+* ComboBox
 * Checkbox
+* RadioButton
+* Toggle
 * Label
 * Link
 * Panel
-* RadioButton
 * ScrollBar
-* Metro Tiles
+* MetroTile
+* ProgressBar
+* ProgressSpinner
+* TabControl
 * TrackBar
 * Custom User Control
+
+Components supported
+------------------
+* StyleManager (Auto inherit a default style to all used controls)
 
 Screenshot
 ----------

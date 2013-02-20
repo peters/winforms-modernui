@@ -96,17 +96,7 @@ namespace MetroFramework.Demo
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            var animateProgressbar = new Timer();
-            animateProgressbar.Tick += (o, args) =>
-                {
-                    metroProgressBar1.Value += 1;
-                    if (metroProgressBar1.Value >= 100)
-                    {
-                        animateProgressbar.Dispose();
-                    }
-                };
-            animateProgressbar.Interval = 200;
-            animateProgressbar.Start();
+
         }
 
         private void MetroButton5Click(object sender, EventArgs e)
@@ -115,6 +105,11 @@ namespace MetroFramework.Demo
             {
                 tcd.ShowDialog(this);
             }
+        }
+
+        private void metroToggle2_CheckedChanged(object sender, EventArgs e)
+        {
+            metroComboBox3.Enabled = metroToggle2.Checked;
         }
     }
 }

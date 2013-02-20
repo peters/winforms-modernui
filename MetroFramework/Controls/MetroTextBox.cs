@@ -14,7 +14,7 @@ namespace MetroFramework.Controls
     {
         #region Interface
 
-        private MetroColorStyle _metroStyle = MetroColorStyle.Blue;
+        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
         [Category("Metro Appearance")]
         public MetroColorStyle Style
         {
@@ -23,12 +23,12 @@ namespace MetroFramework.Controls
                 if (StyleManager != null)
                     return StyleManager.Style;
 
-                return _metroStyle;
+                return metroStyle;
             }
-            set { _metroStyle = value; }
+            set { metroStyle = value; }
         }
 
-        private MetroThemeStyle _metroTheme = MetroThemeStyle.Light;
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
         [Category("Metro Appearance")]
         public MetroThemeStyle Theme
         {
@@ -37,9 +37,9 @@ namespace MetroFramework.Controls
                 if (StyleManager != null)
                     return StyleManager.Theme;
 
-                return _metroTheme;
+                return metroTheme;
             }
-            set { _metroTheme = value; }
+            set { metroTheme = value; }
         }
 
         private MetroStyleManager metroStyleManager = null;
@@ -113,42 +113,6 @@ namespace MetroFramework.Controls
             CreateBaseTextBox();
             UpdateBaseTextBox();
             AddEventHandler();       
-        }
-
-        private void CreateBaseTextBox()
-        {
-            baseTextBox = new TextBox
-                          {
-                              BorderStyle = BorderStyle.None,
-                              Font = MetroFonts.Default(12f),
-                              Location = new Point(3, 3)
-                          };
-
-            Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
-            Controls.Add(baseTextBox);
-        }
-
-        private void AddEventHandler()
-        {
-            baseTextBox.AcceptsTabChanged += BaseTextBoxAcceptsTabChanged;
-
-            baseTextBox.CausesValidationChanged += BaseTextBoxCausesValidationChanged;
-            baseTextBox.ChangeUICues += BaseTextBoxChangeUiCues;
-            baseTextBox.Click += BaseTextBoxClick;
-            baseTextBox.ClientSizeChanged += BaseTextBoxClientSizeChanged;
-            baseTextBox.ContextMenuChanged += BaseTextBoxContextMenuChanged;
-            baseTextBox.ContextMenuStripChanged += BaseTextBoxContextMenuStripChanged;
-            baseTextBox.CursorChanged += BaseTextBoxCursorChanged;
-
-            baseTextBox.EnabledChanged += BaseTextBoxEnabledChanged;
-
-            baseTextBox.KeyDown += BaseTextBoxKeyDown;
-            baseTextBox.KeyPress += BaseTextBoxKeyPress;
-            baseTextBox.KeyUp += BaseTextBoxKeyUp;
-
-            baseTextBox.SizeChanged += BaseTextBoxSizeChanged;
-
-            baseTextBox.TextChanged += BaseTextBoxTextChanged;
         }
 
         #endregion
@@ -239,6 +203,8 @@ namespace MetroFramework.Controls
 
         #endregion
 
+        #region Paint Methods
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -246,27 +212,80 @@ namespace MetroFramework.Controls
             e.Graphics.Clear(MetroPaint.BackColor.Button.Normal(Theme));
             baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
 
-            using (var p = new Pen(MetroPaint.BorderColor.Button.Normal(Theme), 2f))
+            using (Pen p = new Pen(MetroPaint.BorderColor.Button.Normal(Theme), 2f))
             {
                 e.Graphics.DrawRectangle(p, new Rectangle(1, 1, Width - 2, Height - 2));
             }
         }
 
+        #endregion
+
+        #region Overridden Methods
+
+        public override void Refresh()
+        {
+            base.Refresh();
+            UpdateBaseTextBox();
+        }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+            UpdateBaseTextBox();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void CreateBaseTextBox()
+        {
+            baseTextBox = new TextBox
+            {
+                BorderStyle = BorderStyle.None,
+                Font = MetroFonts.Default(12f),
+                Location = new Point(3, 3)
+            };
+
+            Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
+            Controls.Add(baseTextBox);
+        }
+
+        private void AddEventHandler()
+        {
+            baseTextBox.AcceptsTabChanged += BaseTextBoxAcceptsTabChanged;
+
+            baseTextBox.CausesValidationChanged += BaseTextBoxCausesValidationChanged;
+            baseTextBox.ChangeUICues += BaseTextBoxChangeUiCues;
+            baseTextBox.Click += BaseTextBoxClick;
+            baseTextBox.ClientSizeChanged += BaseTextBoxClientSizeChanged;
+            baseTextBox.ContextMenuChanged += BaseTextBoxContextMenuChanged;
+            baseTextBox.ContextMenuStripChanged += BaseTextBoxContextMenuStripChanged;
+            baseTextBox.CursorChanged += BaseTextBoxCursorChanged;
+
+            baseTextBox.EnabledChanged += BaseTextBoxEnabledChanged;
+
+            baseTextBox.KeyDown += BaseTextBoxKeyDown;
+            baseTextBox.KeyPress += BaseTextBoxKeyPress;
+            baseTextBox.KeyUp += BaseTextBoxKeyUp;
+
+            baseTextBox.SizeChanged += BaseTextBoxSizeChanged;
+
+            baseTextBox.TextChanged += BaseTextBoxTextChanged;
+        }
+
+        private void UpdateBaseTextBox()
+        {
+            if (baseTextBox == null) return;
+
+            baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
+            Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
 
             baseTextBox.Location = new Point(3, 3);
             baseTextBox.Width = Width - 6;
             Height = baseTextBox.Height + 6;
         }
 
-        private void UpdateBaseTextBox()
-        {
-            baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
-
-            Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
-        }
-
+        #endregion
     }
 }

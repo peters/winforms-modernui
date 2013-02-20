@@ -1,0 +1,21 @@
+Changelog File
+
+-----------------------------------------------------------------------------------
+SW 2013-02-20 - AssemblyVersion 1.1.0.0
+-----------------------------------------------------------------------------------
+
+* Changed AssemblyVersion
+* Refactored ProgressBar and TabControl to fit the default MetroDesign
+* Refactored all Controls to be more stable
+* Stripped out and cleaned up overall code structure
+* Removed DWM Glass Extend on Vista/7 because was to buggy
+* Implemented ShadowForm to create a custom shadow for all forms
+* Set FormBorderStyle=None as Default on all plattforms
+* Implemented new controls: MetroProgressSpinner, MetroComboBox
+* Currently under construction: MetroContextMenuStrip
+* Fixed Scrollbar Behaviour overall (Problem in TabControl occurs everywhere... The ScrollValue calculation has to be extended to use the ThumbSize also!)
+* Implemented translation class (MetroLocalize) to localize used texts in controls (at this moment only for MetroToggle)
+* Implemented GripSizeDisplay on MetroForm
+* Added support for window startup location
+
+-----------------------------------------------------------------------------------

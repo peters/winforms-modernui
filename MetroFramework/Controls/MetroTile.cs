@@ -12,7 +12,7 @@ namespace MetroFramework.Controls
 {
     [Designer(typeof(MetroTileDesigner))]
     [ToolboxBitmap(typeof(Button))]
-    public class MetroTile : Button, IMetroControl
+    public class MetroTile : Button, IContainerControl, IMetroControl
     {
         #region Interface
 
@@ -50,6 +50,26 @@ namespace MetroFramework.Controls
         {
             get { return metroStyleManager; }
             set { metroStyleManager = value; }
+        }
+
+        private Control activeControl = null;
+        [Browsable(false)]
+        public Control ActiveControl
+        {
+            get { return activeControl; }
+            set { activeControl = value; }
+        }
+
+        public bool ActivateControl(Control ctrl)
+        {
+            if (Controls.Contains(ctrl))
+            {
+                ctrl.Select();
+                activeControl = ctrl;
+                return true;
+            }
+
+            return false;
         }
 
         #endregion
@@ -137,14 +157,6 @@ namespace MetroFramework.Controls
             {
                 Size countSize = TextRenderer.MeasureText(TileCount.ToString(), MetroFonts.TileCount);
 
-                //using (SolidBrush b = MetroPaint.GetStyleBrush(Style))
-                //{
-                //    b.Color = ControlPaint.Dark(b.Color);
-
-                //    int ellSize = Math.Max(countSize.Width, countSize.Height);
-                //    e.Graphics.FillEllipse(b, new Rectangle(new Point(Width - ellSize - 5, 5), new Size(ellSize, ellSize)));
-                //}
-
                 e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                 TextRenderer.DrawText(e.Graphics, TileCount.ToString(), MetroFonts.TileCount, new Point(Width - countSize.Width, 0), foreColor);
                 e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
@@ -152,6 +164,10 @@ namespace MetroFramework.Controls
 
             Size textSize = TextRenderer.MeasureText(Text, MetroFonts.Tile);
             TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, Height-textSize.Height), foreColor);
+
+
+            if (false && isFocused)
+                ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
         }
 
         #endregion

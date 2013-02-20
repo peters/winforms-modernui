@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+
 using MetroFramework.Controls;
 using MetroFramework.Native;
-using TabPage = MetroFramework.Controls.TabPage;
 
 namespace MetroFramework.Design
 {
@@ -82,7 +82,7 @@ namespace MetroFramework.Design
 
             RaiseComponentChanging(TypeDescriptor.GetProperties(parentControl)["TabPages"]);
 
-            var p = (TabPage) (DesignerHost.CreateComponent(typeof (TabPage)));
+            var p = (MetroTabPage)(DesignerHost.CreateComponent(typeof(MetroTabPage)));
             p.Text = p.Name;
             parentControl.TabPages.Add(p);
 
@@ -183,9 +183,32 @@ namespace MetroFramework.Design
             return false;
         }
 
-        protected override void OnPaintAdornments(PaintEventArgs pe)
+        protected override void PreFilterProperties(IDictionary properties)
         {
+            properties.Remove("ImeMode");
+            properties.Remove("Padding");
+            properties.Remove("FlatAppearance");
+            properties.Remove("FlatStyle");
+            properties.Remove("AutoEllipsis");
+            properties.Remove("UseCompatibleTextRendering");
 
+            properties.Remove("Image");
+            properties.Remove("ImageAlign");
+            properties.Remove("ImageIndex");
+            properties.Remove("ImageKey");
+            properties.Remove("ImageList");
+            properties.Remove("TextImageRelation");
+
+            properties.Remove("BackColor");
+            properties.Remove("BackgroundImage");
+            properties.Remove("BackgroundImageLayout");
+            properties.Remove("UseVisualStyleBackColor");
+
+            properties.Remove("Font");
+            properties.Remove("ForeColor");
+            properties.Remove("RightToLeft");
+
+            base.PreFilterProperties(properties);
         }
         #endregion
     }

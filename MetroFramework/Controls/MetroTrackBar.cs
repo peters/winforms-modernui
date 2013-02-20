@@ -167,9 +167,12 @@ namespace MetroFramework.Controls
 
         public MetroTrackBar(int min, int max, int value)
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer |
-                     ControlStyles.ResizeRedraw | ControlStyles.Selectable |
-                     ControlStyles.SupportsTransparentBackColor | ControlStyles.UserMouse |
+            SetStyle(ControlStyles.AllPaintingInWmPaint | 
+                     ControlStyles.OptimizedDoubleBuffer |
+                     ControlStyles.ResizeRedraw | 
+                     ControlStyles.Selectable |
+                     ControlStyles.SupportsTransparentBackColor | 
+                     ControlStyles.UserMouse |
                      ControlStyles.UserPaint, true);
 
             BackColor = Color.Transparent;
@@ -217,6 +220,9 @@ namespace MetroFramework.Controls
 
             e.Graphics.Clear(backColor);
             DrawTrackBar(e.Graphics, thumbColor, barColor);
+
+            if (false && isFocused)
+                ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
         }
 
         private void DrawTrackBar(Graphics g, Color thumbColor, Color barColor)

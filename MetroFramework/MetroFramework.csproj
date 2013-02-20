@@ -71,6 +71,9 @@
     <Compile Include="Animation\ExpandAnimation.cs" />
     <Compile Include="Animation\MoveAnimation.cs" />
     <Compile Include="Animation\TransitionType.cs" />
+    <Compile Include="Components\MetroContextMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\MetroStyleManager.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -78,6 +81,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MetroCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MetroComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MetroLabel.cs">
@@ -92,8 +98,8 @@
     <Compile Include="Controls\MetroProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MetroProgressBar.Designer.cs">
-      <DependentUpon>MetroProgressBar.cs</DependentUpon>
+    <Compile Include="Controls\MetroProgressSpinner.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MetroRadioButton.cs">
       <SubType>Component</SubType>
@@ -104,10 +110,16 @@
     <Compile Include="Controls\MetroTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MetroTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MetroTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MetroTile.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MetroToggle.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MetroTrackBar.cs">
@@ -116,6 +128,8 @@
     <Compile Include="Controls\MetroUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Design\MetroTabPageDesigner.cs" />
+    <Compile Include="Design\MetroProgressSpinnerDesigner.cs" />
     <Compile Include="Design\MetroProgressBarDesigner.cs" />
     <Compile Include="Design\MetroButtonDesigner.cs" />
     <Compile Include="Design\MetroLabelDesigner.cs" />
@@ -136,6 +150,8 @@
     </Compile>
     <Compile Include="Interfaces\IMetroControl.cs" />
     <Compile Include="Interfaces\IMetroForm.cs" />
+    <Compile Include="Interfaces\IMetroComponent.cs" />
+    <Compile Include="Localization\MetroLocalize.cs" />
     <Compile Include="MetroBrushes.cs" />
     <Compile Include="MetroColors.cs" />
     <Compile Include="MetroColorStyle.cs" />
@@ -147,9 +163,23 @@
     <Compile Include="Native\WinApi.cs" />
     <Compile Include="Native\WinCaret.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MetroFramework.pfx" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -164,10 +194,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Downloads\customscrollbar_src %281%29\TestApp\CustomControls\CustomControls.csproj">
-      <Project>{5b85e2d7-2005-4496-b5d7-59c68a1ec91d}</Project>
-      <Name>CustomControls</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Localization\de\MetroToggle.xml" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\en\MetroToggle.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

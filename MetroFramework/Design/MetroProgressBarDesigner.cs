@@ -37,6 +37,7 @@ namespace MetroFramework.Design
             properties.Remove("Font");
             properties.Remove("ForeColor");
             properties.Remove("RightToLeft");
+            properties.Remove("Text");
 
             base.PreFilterProperties(properties);
         }

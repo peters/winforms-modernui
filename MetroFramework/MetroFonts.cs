@@ -44,6 +44,34 @@ namespace MetroFramework
         Bold
     }
 
+    public enum MetroProgressBarSize
+    {
+        Small,
+        Medium,
+        Tall
+    }
+
+    public enum MetroProgressBarWeight
+    {
+        Light,
+        Regular,
+        Bold
+    }
+
+    public enum MetroTabControlSize
+    {
+        Small,
+        Medium,
+        Tall
+    }
+
+    public enum MetroTabControlWeight
+    {
+        Light,
+        Regular,
+        Bold
+    }
+
     public sealed class MetroFonts
     {
         private static Font GetSaveFont(string key, FontStyle style, float size)
@@ -188,6 +216,72 @@ namespace MetroFramework
             }
 
             return Default(12f);
+        }
+
+        public static Font ProgressBar(MetroProgressBarSize labelSize, MetroProgressBarWeight labelWeight)
+        {
+            if (labelSize == MetroProgressBarSize.Small)
+            {
+                if (labelWeight == MetroProgressBarWeight.Light)
+                    return DefaultLight(12f);
+                if (labelWeight == MetroProgressBarWeight.Regular)
+                    return Default(12f);
+                if (labelWeight == MetroProgressBarWeight.Bold)
+                    return DefaultBold(12f);
+            }
+            else if (labelSize == MetroProgressBarSize.Medium)
+            {
+                if (labelWeight == MetroProgressBarWeight.Light)
+                    return DefaultLight(14f);
+                if (labelWeight == MetroProgressBarWeight.Regular)
+                    return Default(14f);
+                if (labelWeight == MetroProgressBarWeight.Bold)
+                    return DefaultBold(14f);
+            }
+            else if (labelSize == MetroProgressBarSize.Tall)
+            {
+                if (labelWeight == MetroProgressBarWeight.Light)
+                    return DefaultLight(18f);
+                if (labelWeight == MetroProgressBarWeight.Regular)
+                    return Default(18f);
+                if (labelWeight == MetroProgressBarWeight.Bold)
+                    return DefaultBold(18f);
+            }
+
+            return DefaultLight(14f);
+        }
+
+        public static Font TabControl(MetroTabControlSize labelSize, MetroTabControlWeight labelWeight)
+        {
+            if (labelSize == MetroTabControlSize.Small)
+            {
+                if (labelWeight == MetroTabControlWeight.Light)
+                    return DefaultLight(12f);
+                if (labelWeight == MetroTabControlWeight.Regular)
+                    return Default(12f);
+                if (labelWeight == MetroTabControlWeight.Bold)
+                    return DefaultBold(12f);
+            }
+            else if (labelSize == MetroTabControlSize.Medium)
+            {
+                if (labelWeight == MetroTabControlWeight.Light)
+                    return DefaultLight(14f);
+                if (labelWeight == MetroTabControlWeight.Regular)
+                    return Default(14f);
+                if (labelWeight == MetroTabControlWeight.Bold)
+                    return DefaultBold(14f);
+            }
+            else if (labelSize == MetroTabControlSize.Tall)
+            {
+                if (labelWeight == MetroTabControlWeight.Light)
+                    return DefaultLight(18f);
+                if (labelWeight == MetroTabControlWeight.Regular)
+                    return Default(18f);
+                if (labelWeight == MetroTabControlWeight.Bold)
+                    return DefaultBold(18f);
+            }
+
+            return DefaultLight(14f);
         }
     }
 }

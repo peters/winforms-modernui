@@ -168,7 +168,7 @@
             this.metroProgressSpinner2.Maximum = 100;
             this.metroProgressSpinner2.Name = "metroProgressSpinner2";
             this.metroProgressSpinner2.Size = new System.Drawing.Size(18, 18);
-            this.metroProgressSpinner2.Spinning = true;
+            this.metroProgressSpinner2.Spinning = false;
             this.metroProgressSpinner2.Style = MetroFramework.MetroColorStyle.Lime;
             this.metroProgressSpinner2.StyleManager = this.metroStyleManager;
             this.metroProgressSpinner2.TabIndex = 40;
@@ -408,7 +408,7 @@
             this.metroCheckBox3.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroCheckBox3.Location = new System.Drawing.Point(605, 109);
             this.metroCheckBox3.Name = "metroCheckBox3";
-            this.metroCheckBox3.Size = new System.Drawing.Size(180, 17);
+            this.metroCheckBox3.Size = new System.Drawing.Size(142, 17);
             this.metroCheckBox3.Style = MetroFramework.MetroColorStyle.Lime;
             this.metroCheckBox3.StyleManager = this.metroStyleManager;
             this.metroCheckBox3.TabIndex = 23;
@@ -486,12 +486,13 @@
             this.metroScrollBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroScrollBar1.LargeChange = 5;
-            this.metroScrollBar1.Location = new System.Drawing.Point(23, 547);
+            this.metroScrollBar1.Location = new System.Drawing.Point(23, 545);
             this.metroScrollBar1.Maximum = 10;
             this.metroScrollBar1.Minimum = 0;
             this.metroScrollBar1.MouseWheelBarPartitions = 10;
             this.metroScrollBar1.Name = "metroScrollBar1";
             this.metroScrollBar1.Orientation = MetroFramework.Controls.MetroScrollOrientation.Horizontal;
+            this.metroScrollBar1.ScrollbarSize = 6;
             this.metroScrollBar1.Size = new System.Drawing.Size(865, 6);
             this.metroScrollBar1.SmallChange = 1;
             this.metroScrollBar1.Style = MetroFramework.MetroColorStyle.Lime;
@@ -499,20 +500,21 @@
             this.metroScrollBar1.TabIndex = 28;
             this.metroScrollBar1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroScrollBar1.UseBarColor = true;
-            this.metroScrollBar1.Value = 10;
+            this.metroScrollBar1.Value = 6;
             // 
             // metroScrollBar2
             // 
             this.metroScrollBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroScrollBar2.LargeChange = 5;
-            this.metroScrollBar2.Location = new System.Drawing.Point(894, 63);
+            this.metroScrollBar2.Location = new System.Drawing.Point(892, 63);
             this.metroScrollBar2.Maximum = 10;
             this.metroScrollBar2.Minimum = 0;
             this.metroScrollBar2.MouseWheelBarPartitions = 10;
             this.metroScrollBar2.Name = "metroScrollBar2";
             this.metroScrollBar2.Orientation = MetroFramework.Controls.MetroScrollOrientation.Vertical;
-            this.metroScrollBar2.Size = new System.Drawing.Size(6, 480);
+            this.metroScrollBar2.ScrollbarSize = 10;
+            this.metroScrollBar2.Size = new System.Drawing.Size(10, 480);
             this.metroScrollBar2.SmallChange = 1;
             this.metroScrollBar2.Style = MetroFramework.MetroColorStyle.Lime;
             this.metroScrollBar2.StyleManager = this.metroStyleManager;
@@ -544,7 +546,7 @@
             this.metroTextBox1.Multiline = false;
             this.metroTextBox1.Name = "metroTextBox1";
             this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.Size = new System.Drawing.Size(106, 22);
+            this.metroTextBox1.Size = new System.Drawing.Size(121, 22);
             this.metroTextBox1.Style = MetroFramework.MetroColorStyle.Lime;
             this.metroTextBox1.StyleManager = this.metroStyleManager;
             this.metroTextBox1.TabIndex = 32;
@@ -636,7 +638,7 @@
             this.metroProgressSpinner1.Maximum = 100;
             this.metroProgressSpinner1.Name = "metroProgressSpinner1";
             this.metroProgressSpinner1.Size = new System.Drawing.Size(18, 18);
-            this.metroProgressSpinner1.Spinning = true;
+            this.metroProgressSpinner1.Spinning = false;
             this.metroProgressSpinner1.Style = MetroFramework.MetroColorStyle.Lime;
             this.metroProgressSpinner1.StyleManager = this.metroStyleManager;
             this.metroProgressSpinner1.TabIndex = 39;

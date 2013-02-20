@@ -153,6 +153,19 @@ namespace MetroFramework.Controls
             set { useBarColor = value; }
         }
 
+        [Category("Metro Appearance")]
+        public int ScrollbarSize
+        {
+            get { return Orientation == MetroScrollOrientation.Vertical ? Width : Height; }
+            set 
+            { 
+                if (Orientation == MetroScrollOrientation.Vertical)
+                    Width = value;
+                else
+                    Height = value; 
+            }
+        }
+
         private MetroScrollOrientation metroOrientation = MetroScrollOrientation.Vertical;
         private ScrollOrientation scrollOrientation = ScrollOrientation.VerticalScroll;
 
@@ -325,7 +338,7 @@ namespace MetroFramework.Controls
                      ControlStyles.AllPaintingInWmPaint |
                      ControlStyles.UserPaint, true);
 
-            Width = 6;
+            Width = 10;
             Height = 200;
 
             SetupScrollBar();
@@ -696,28 +709,6 @@ namespace MetroFramework.Controls
 
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
-            if (DesignMode)
-            {
-                if (Orientation == MetroScrollOrientation.Vertical)
-                {
-                    if (height < 10)
-                    {
-                        height = 10;
-                    }
-
-                    width = 6;
-                }
-                else
-                {
-                    if (width < 10)
-                    {
-                        width = 10;
-                    }
-
-                    height = 6;
-                }
-            }
-
             base.SetBoundsCore(x, y, width, height, specified);
 
             if (DesignMode)
@@ -807,7 +798,7 @@ namespace MetroFramework.Controls
 
             if (Orientation == MetroScrollOrientation.Vertical)
             {
-                thumbWidth = Width > 0 ? Width : 6;
+                thumbWidth = Width > 0 ? Width : 10;
                 thumbHeight = GetThumbSize();
 
                 clickedBarRectangle = ClientRectangle;
@@ -822,7 +813,7 @@ namespace MetroFramework.Controls
             }
             else
             {
-                thumbHeight = 6;
+                thumbHeight = Height > 0 ? Height : 10;
                 thumbWidth = GetThumbSize();
 
                 clickedBarRectangle = ClientRectangle;

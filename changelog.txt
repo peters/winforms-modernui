@@ -1,6 +1,17 @@
 Changelog File
 
 -----------------------------------------------------------------------------------
+SW 2013-02-20 17:03 - AssemblyVersion 1.1.0.0
+-----------------------------------------------------------------------------------
+
+* MetroForm has new Property DisableHeader to hide HeaderText
+* Scrollbar has new Property ScrollbarSize to manually define Scrollbar thickness
+* MetroLocalize now renders default language correctly if localization file could not be found
+* MetroTextbox is resizable again
+* ProgressSpinner does not spin in DesignMode and Spinning is changed to TRUE as default
+
+
+-----------------------------------------------------------------------------------
 SW 2013-02-20 - AssemblyVersion 1.1.0.0
 -----------------------------------------------------------------------------------
 

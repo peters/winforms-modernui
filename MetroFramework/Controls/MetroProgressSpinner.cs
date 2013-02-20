@@ -60,7 +60,7 @@ namespace MetroFramework.Controls
         private int progress;
         private float angle = 270;
 
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         [Category("Metro Behaviour")]
         public bool Spinning
         {
@@ -184,8 +184,11 @@ namespace MetroFramework.Controls
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            angle += 6f * speed * (backwards ? -1 : 1);
-            Refresh();
+            if (!DesignMode)
+            {
+                angle += 6f * speed * (backwards ? -1 : 1);
+                Refresh();
+            }
         }
 
         #endregion

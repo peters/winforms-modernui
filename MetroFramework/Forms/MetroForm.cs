@@ -106,6 +106,24 @@ namespace MetroFramework.Forms
             set { isMovable = value; }
         }
 
+        private bool displayHeader = true;
+        [Category("Metro Appearance")]
+        public bool DisplayHeader
+        {
+            get { return displayHeader; }
+            set 
+            { 
+                displayHeader = value;
+
+                if (displayHeader)
+                    Padding = new Padding(20, 60, 20, 20);
+                else
+                    Padding = new Padding(20);
+
+                Invalidate();
+            }
+        }
+
         private bool isResizable = true;
         [Category("Metro Appearance")]
         public bool Resizable
@@ -176,20 +194,23 @@ namespace MetroFramework.Forms
                 e.Graphics.FillRectangle(b, topRect);
             }
 
-            switch (TextAlign)
+            if (displayHeader)
             {
-                case TextAlign.Left:                    
-                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(20, 20), foreColor);
-                    break;
+                switch (TextAlign)
+                {
+                    case TextAlign.Left:
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(20, 20), foreColor);
+                        break;
 
-                case TextAlign.Center:
-                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width, 20), foreColor, TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter);
-                    break;
+                    case TextAlign.Center:
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width, 20), foreColor, TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter);
+                        break;
 
-                case TextAlign.Right:
-                    Rectangle actualSize = MeasureText(e.Graphics, ClientRectangle, MetroFonts.Title, Text, TextFormatFlags.RightToLeft);
-                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width - actualSize.Width, 20), foreColor, TextFormatFlags.RightToLeft);
-                    break;
+                    case TextAlign.Right:
+                        Rectangle actualSize = MeasureText(e.Graphics, ClientRectangle, MetroFonts.Title, Text, TextFormatFlags.RightToLeft);
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width - actualSize.Width, 20), foreColor, TextFormatFlags.RightToLeft);
+                        break;
+                }
             }
 
             if (Resizable && (SizeGripStyle == SizeGripStyle.Auto || SizeGripStyle == SizeGripStyle.Show))

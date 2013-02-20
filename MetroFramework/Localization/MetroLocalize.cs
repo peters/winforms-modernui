@@ -9,12 +9,17 @@ namespace MetroFramework.Localization
     {
         private DataSet languageDataset;
 
+        public string DefaultLanguage()
+        {
+            return "en";
+        }
+
         public string CurrentLanguage()
         {
             string language = Application.CurrentCulture.TwoLetterISOLanguageName;
             if (language.Length == 0)
             {
-                language = "EN";
+                language = DefaultLanguage();
             }
 
             return language.ToLower();
@@ -36,6 +41,13 @@ namespace MetroFramework.Localization
 
             string localizationFilename = callingAssembly.GetName().Name + ".Localization." + CurrentLanguage()  + "." + ctrlName + ".xml";
             Stream xmlStream = callingAssembly.GetManifestResourceStream(localizationFilename);
+
+            if (xmlStream == null)
+            {
+                localizationFilename = callingAssembly.GetName().Name + ".Localization." + DefaultLanguage() + "." + ctrlName + ".xml";
+                xmlStream = callingAssembly.GetManifestResourceStream(localizationFilename);
+            }
+
 
             if (languageDataset == null)
                 languageDataset = new DataSet();

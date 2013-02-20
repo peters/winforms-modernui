@@ -211,10 +211,11 @@ namespace MetroFramework.Controls
 
             e.Graphics.Clear(MetroPaint.BackColor.Button.Normal(Theme));
             baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
+            baseTextBox.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
 
-            using (Pen p = new Pen(MetroPaint.BorderColor.Button.Normal(Theme), 2f))
+            using (Pen p = new Pen(MetroPaint.BorderColor.Button.Normal(Theme)))
             {
-                e.Graphics.DrawRectangle(p, new Rectangle(1, 1, Width - 2, Height - 2));
+                e.Graphics.DrawRectangle(p, new Rectangle(0, 0, Width - 1, Height - 1));
             }
         }
 
@@ -240,14 +241,17 @@ namespace MetroFramework.Controls
 
         private void CreateBaseTextBox()
         {
-            baseTextBox = new TextBox
-            {
-                BorderStyle = BorderStyle.None,
-                Font = MetroFonts.Default(12f),
-                Location = new Point(3, 3)
-            };
+            if (baseTextBox != null) return;
+
+            baseTextBox = new TextBox();
+
+            baseTextBox.BorderStyle = BorderStyle.None;
+            baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
+            baseTextBox.Location = new Point(3, 3);
 
             Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
+            baseTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
+
             Controls.Add(baseTextBox);
         }
 
@@ -279,11 +283,7 @@ namespace MetroFramework.Controls
             if (baseTextBox == null) return;
 
             baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
-            Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
-
-            baseTextBox.Location = new Point(3, 3);
-            baseTextBox.Width = Width - 6;
-            Height = baseTextBox.Height + 6;
+         
         }
 
         #endregion

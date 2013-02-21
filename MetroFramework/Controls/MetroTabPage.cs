@@ -92,11 +92,53 @@ namespace MetroFramework.Controls
         }
 
         [Category("Metro Appearance")]
+        public int HorizontalScrollbarSize
+        {
+            get { return horizontalScrollbar.ScrollbarSize; }
+            set { horizontalScrollbar.ScrollbarSize = value; }
+        }
+
+        [Category("Metro Appearance")]
+        public bool HorizontalScrollbarBarColor
+        {
+            get { return horizontalScrollbar.UseBarColor; }
+            set { horizontalScrollbar.UseBarColor = value; }
+        }
+
+        [Category("Metro Appearance")]
+        public bool HorizontalScrollbarHighlightOnWheel
+        {
+            get { return horizontalScrollbar.HighlightOnWheel; }
+            set { horizontalScrollbar.HighlightOnWheel = value; }
+        }
+
+        [Category("Metro Appearance")]
         private bool showVerticalScrollbar = false;
         public bool VerticalScrollbar
         {
             get { return showVerticalScrollbar; }
             set { showVerticalScrollbar = true; }
+        }
+
+        [Category("Metro Appearance")]
+        public int VerticalScrollbarSize
+        {
+            get { return verticalScrollbar.ScrollbarSize; }
+            set { verticalScrollbar.ScrollbarSize = value; }
+        }
+
+        [Category("Metro Appearance")]
+        public bool VerticalScrollbarBarColor
+        {
+            get { return verticalScrollbar.UseBarColor; }
+            set { verticalScrollbar.UseBarColor = value; }
+        }
+
+        [Category("Metro Appearance")]
+        public bool VerticalScrollbarHighlightOnWheel
+        {
+            get { return verticalScrollbar.HighlightOnWheel; }
+            set { verticalScrollbar.HighlightOnWheel = value; }
         }
 
         [Category("Metro Appearance")]
@@ -203,6 +245,7 @@ namespace MetroFramework.Controls
             base.OnMouseWheel(e);
 
             verticalScrollbar.Value = VerticalScroll.Value;
+            horizontalScrollbar.Value = HorizontalScroll.Value;
         }
 
         protected override void WndProc(ref Message m)

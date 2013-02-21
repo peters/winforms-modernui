@@ -189,6 +189,15 @@ namespace MetroFramework.Controls
             }
         }
 
+        private bool highlightOnWheel = false;
+        [DefaultValue(false)]
+        [Category("Metro Appearance")]
+        public bool HighlightOnWheel
+        {
+            get { return highlightOnWheel; }
+            set { highlightOnWheel = value; }
+        }
+
         private MetroScrollOrientation metroOrientation = MetroScrollOrientation.Vertical;
         private ScrollOrientation scrollOrientation = ScrollOrientation.VerticalScroll;
 
@@ -250,6 +259,7 @@ namespace MetroFramework.Controls
 
                 if (curValue < value)
                 {
+                    dontUpdateColor = true;
                     Value = value;
                 }
                 else
@@ -280,6 +290,7 @@ namespace MetroFramework.Controls
 
                 if (curValue > value)
                 {
+                    dontUpdateColor = true;
                     Value = maximum;
                 }
                 else
@@ -290,6 +301,7 @@ namespace MetroFramework.Controls
             }
         }
 
+        [DefaultValue(1)]
         public int SmallChange
         {
             get { return smallChange; }
@@ -305,6 +317,7 @@ namespace MetroFramework.Controls
             }
         }
 
+        [DefaultValue(5)]
         public int LargeChange
         {
             get { return largeChange; }
@@ -328,6 +341,10 @@ namespace MetroFramework.Controls
             }
         }
 
+        private bool dontUpdateColor = false;
+
+        [DefaultValue(0)]
+        [Browsable(false)]
         public int Value
         {
             get { return curValue; }
@@ -345,9 +362,41 @@ namespace MetroFramework.Controls
 
                 OnScroll(ScrollEventType.ThumbPosition, -1, value, scrollOrientation);
 
+                if (!dontUpdateColor && highlightOnWheel)
+                {
+                    if (!isHovered)
+                        isHovered = true;
+
+                    if (autoHoverTimer == null)
+                    {
+                        autoHoverTimer = new Timer();
+                        autoHoverTimer.Interval = 1000;
+                        autoHoverTimer.Tick += new EventHandler(autoHoverTimer_Tick);
+                        autoHoverTimer.Start();
+                    }
+                    else
+                    {
+                        autoHoverTimer.Stop();
+                        autoHoverTimer.Start();
+                    }
+                }
+                else
+                {
+                    dontUpdateColor = false;
+                }
+
                 Refresh();
             }
         }
+
+        private void autoHoverTimer_Tick(object sender, EventArgs e)
+        {
+            isHovered = false;
+            Invalidate();
+            autoHoverTimer.Stop();
+        }
+
+        private Timer autoHoverTimer = null;
 
         #endregion
 
@@ -549,7 +598,7 @@ namespace MetroFramework.Controls
 
             Focus();
 
-            if (e.Button== MouseButtons.Left) {
+            if (e.Button == MouseButtons.Left) {
 
                 var mouseLocation = e.Location;
 

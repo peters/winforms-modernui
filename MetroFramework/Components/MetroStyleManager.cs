@@ -86,6 +86,12 @@ namespace MetroFramework.Components
                 ((IMetroControl)e.Control).Theme = Theme;
                 ((IMetroControl)e.Control).StyleManager = this;
             }
+            else if (e.Control is IMetroComponent)
+            {
+                ((IMetroComponent)e.Control).Style = Style;
+                ((IMetroComponent)e.Control).Theme = Theme;
+                ((IMetroComponent)e.Control).StyleManager = this;
+            }
             else
             {
                 UpdateOwnerForm();
@@ -129,6 +135,12 @@ namespace MetroFramework.Components
                 }
 
                 if (c.ContextMenuStrip != null && c.ContextMenuStrip is IMetroComponent)
+                {
+                    ((IMetroComponent)c.ContextMenuStrip).Style = Style;
+                    ((IMetroComponent)c.ContextMenuStrip).Theme = Theme;
+                    ((IMetroComponent)c.ContextMenuStrip).StyleManager = this;
+                }
+                else if (c is IMetroComponent)
                 {
                     ((IMetroComponent)c.ContextMenuStrip).Style = Style;
                     ((IMetroComponent)c.ContextMenuStrip).Theme = Theme;

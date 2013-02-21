@@ -77,6 +77,9 @@
     <Compile Include="Components\MetroStyleManager.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Components\MetroToolTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MetroButton.cs">
       <SubType>Component</SubType>
     </Compile>

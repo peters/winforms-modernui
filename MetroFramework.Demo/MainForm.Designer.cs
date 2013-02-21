@@ -71,6 +71,7 @@
             this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
             this.metroComboBox2 = new MetroFramework.Controls.MetroComboBox();
             this.metroComboBox3 = new MetroFramework.Controls.MetroComboBox();
+            this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
             this.metroTile3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -382,6 +383,7 @@
             this.metroCheckBox1.TabIndex = 21;
             this.metroCheckBox1.Text = "Enable other Checkboxes";
             this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroToolTip1.SetToolTip(this.metroCheckBox1, "Mein Testtooltip!");
             this.metroCheckBox1.UseStyleColors = false;
             this.metroCheckBox1.UseVisualStyleBackColor = true;
             // 
@@ -484,7 +486,7 @@
             // 
             this.metroScrollBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroScrollBar1.LargeChange = 5;
+            this.metroScrollBar1.LargeChange = 10;
             this.metroScrollBar1.Location = new System.Drawing.Point(23, 545);
             this.metroScrollBar1.Maximum = 10;
             this.metroScrollBar1.Minimum = 0;
@@ -493,19 +495,17 @@
             this.metroScrollBar1.Orientation = MetroFramework.Controls.MetroScrollOrientation.Horizontal;
             this.metroScrollBar1.ScrollbarSize = 6;
             this.metroScrollBar1.Size = new System.Drawing.Size(865, 6);
-            this.metroScrollBar1.SmallChange = 1;
             this.metroScrollBar1.Style = MetroFramework.MetroColorStyle.Lime;
             this.metroScrollBar1.StyleManager = this.metroStyleManager;
             this.metroScrollBar1.TabIndex = 28;
             this.metroScrollBar1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroScrollBar1.UseBarColor = true;
-            this.metroScrollBar1.Value = 6;
             // 
             // metroScrollBar2
             // 
             this.metroScrollBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroScrollBar2.LargeChange = 5;
+            this.metroScrollBar2.LargeChange = 10;
             this.metroScrollBar2.Location = new System.Drawing.Point(892, 63);
             this.metroScrollBar2.Maximum = 10;
             this.metroScrollBar2.Minimum = 0;
@@ -514,13 +514,11 @@
             this.metroScrollBar2.Orientation = MetroFramework.Controls.MetroScrollOrientation.Vertical;
             this.metroScrollBar2.ScrollbarSize = 10;
             this.metroScrollBar2.Size = new System.Drawing.Size(10, 480);
-            this.metroScrollBar2.SmallChange = 1;
             this.metroScrollBar2.Style = MetroFramework.MetroColorStyle.Lime;
             this.metroScrollBar2.StyleManager = this.metroStyleManager;
             this.metroScrollBar2.TabIndex = 29;
             this.metroScrollBar2.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroScrollBar2.UseBarColor = false;
-            this.metroScrollBar2.Value = 10;
             // 
             // metroLabel6
             // 
@@ -650,7 +648,7 @@
             this.metroToggle1.DisplayStatus = true;
             this.metroToggle1.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroToggle1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
-            this.metroToggle1.Location = new System.Drawing.Point(778, 96);
+            this.metroToggle1.Location = new System.Drawing.Point(662, 456);
             this.metroToggle1.Name = "metroToggle1";
             this.metroToggle1.Size = new System.Drawing.Size(80, 17);
             this.metroToggle1.Style = MetroFramework.MetroColorStyle.Lime;
@@ -743,6 +741,12 @@
             this.metroComboBox3.StyleManager = this.metroStyleManager;
             this.metroComboBox3.TabIndex = 44;
             this.metroComboBox3.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
+            // metroToolTip1
+            // 
+            this.metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroToolTip1.StyleManager = null;
+            this.metroToolTip1.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // MainForm
             // 
@@ -847,6 +851,7 @@
         private Controls.MetroComboBox metroComboBox1;
         private Controls.MetroComboBox metroComboBox2;
         private Controls.MetroComboBox metroComboBox3;
+        private Components.MetroToolTip metroToolTip1;
     }
 }
 

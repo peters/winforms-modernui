@@ -41,6 +41,7 @@ Controls supported
 Components supported
 ------------------
 * StyleManager (Auto inherit a default style to all used controls)
+* ToolTip
 
 Screenshot
 ----------
@@ -53,6 +54,7 @@ License
 -------
 
 The MIT License (MIT)
+
 Copyright (c) 2011 Sven Walter, http://github.com/viperneo
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 

@@ -43,14 +43,17 @@ Components supported
 * StyleManager (Auto inherit a default style to all used controls)
 * ToolTip
 
-Screenshot
+Screenshots
 ----------
 *Light*
+
 ![MetroFramework](http://i.imgur.com/8Yk1BiN.png)
 ![MetroFramework](http://i.imgur.com/qjwRg5z.png)
 ![MetroFramework](http://i.imgur.com/3S7NPLQ.png)
 ![MetroFramework](http://i.imgur.com/ULRej3C.png)
+
 *Dark*
+
 ![MetroFramework](http://i.imgur.com/EddlvbX.png)
 ![MetroFramework](http://i.imgur.com/Djnjkti.png)
 ![MetroFramework](http://i.imgur.com/bI2c6kE.png)

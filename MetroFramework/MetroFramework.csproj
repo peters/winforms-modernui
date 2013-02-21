@@ -71,9 +71,6 @@
     <Compile Include="Animation\ExpandAnimation.cs" />
     <Compile Include="Animation\MoveAnimation.cs" />
     <Compile Include="Animation\TransitionType.cs" />
-    <Compile Include="Components\MetroContextMenu.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Components\MetroStyleManager.cs">
       <SubType>Component</SubType>
     </Compile>

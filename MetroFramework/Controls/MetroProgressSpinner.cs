@@ -174,6 +174,14 @@ namespace MetroFramework.Controls
             set { backwards = value; Refresh(); }
         }
 
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -223,7 +231,12 @@ namespace MetroFramework.Controls
         {
             Color backColor, foreColor;
 
-            if (Parent != null)
+            if (useCustomBackground)
+            {
+                backColor = BackColor;
+                foreColor = MetroPaint.GetStyleColor(Style);
+            }
+            else
             {
                 if (Parent is MetroTile)
                 {
@@ -232,14 +245,9 @@ namespace MetroFramework.Controls
                 }
                 else
                 {
-                    backColor = Parent.BackColor;
+                    backColor = MetroPaint.BackColor.Form(Theme);
                     foreColor = MetroPaint.GetStyleColor(Style);
                 }
-            }
-            else
-            {
-                backColor = MetroPaint.BackColor.Form(Theme);
-                foreColor = MetroPaint.GetStyleColor(Style);
             }
 
             e.Graphics.Clear(backColor);

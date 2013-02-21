@@ -114,15 +114,6 @@ namespace MetroFramework.Controls
         }
 
         [Browsable(false)]
-        public override Color BackColor
-        {
-            get
-            {
-                return MetroPaint.BackColor.Form(Theme);
-            }
-        }
-
-        [Browsable(false)]
         public override Font Font
         {
             get
@@ -162,6 +153,14 @@ namespace MetroFramework.Controls
             }
         }
 
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
         private bool isHovered = false;
         private bool isPressed = false;
         private bool isFocused = false;
@@ -175,7 +174,8 @@ namespace MetroFramework.Controls
             SetStyle(ControlStyles.AllPaintingInWmPaint |
                      ControlStyles.OptimizedDoubleBuffer |
                      ControlStyles.ResizeRedraw |
-                     ControlStyles.UserPaint, true);
+                     ControlStyles.UserPaint |
+                     ControlStyles.SupportsTransparentBackColor, true);
 
             Name = "MetroToggle";
             metroLocalize = new MetroLocalize(this);
@@ -189,8 +189,8 @@ namespace MetroFramework.Controls
         {
             Color backColor, borderColor, foreColor;
 
-            if (Parent != null)
-                backColor = Parent.BackColor;
+            if (useCustomBackground)
+                backColor = BackColor;
             else
                 backColor = MetroPaint.BackColor.Form(Theme);
 

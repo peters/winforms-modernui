@@ -180,6 +180,14 @@ namespace MetroFramework.Controls
             }
         }
 
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
         private bool isHovered = false;
         private bool isPressed = false;
         private bool isFocused = false;
@@ -215,8 +223,8 @@ namespace MetroFramework.Controls
         {
             Color backColor, thumbColor, barColor;
 
-            if (Parent != null)
-                backColor = Parent.BackColor;
+            if (useCustomBackground)
+                backColor = BackColor;
             else
                 backColor = MetroPaint.BackColor.Form(Theme);
 

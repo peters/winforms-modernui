@@ -129,6 +129,30 @@ namespace MetroFramework.Forms
             set { isMovable = value; }
         }
 
+        public new Padding Padding
+        {
+            get { return base.Padding; }
+            set
+            {
+                if (!DisplayHeader)
+                {
+                    if (value.Top < 30)
+                    {
+                        value.Top = 30;
+                    }
+                }
+                else
+                {
+                    if (value.Top < 60)
+                    {
+                        value.Top = 60;
+                    }
+                }
+
+                base.Padding = value;
+            }
+        }
+
         private bool displayHeader = true;
         [Category("Metro Appearance")]
         public bool DisplayHeader
@@ -141,7 +165,7 @@ namespace MetroFramework.Forms
                 if (displayHeader)
                     Padding = new Padding(20, 60, 20, 20);
                 else
-                    Padding = new Padding(20);
+                    Padding = new Padding(20, 30, 20, 20);
 
                 Invalidate();
             }

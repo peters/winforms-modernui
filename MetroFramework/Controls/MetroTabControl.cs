@@ -55,12 +55,12 @@ namespace MetroFramework.Controls
 
         protected override Type CreateCollectionItemType()
         {
-            return typeof (TabPage);
+            return typeof (MetroTabPage);
         }
 
         protected override Type[] CreateNewItemTypes()
         {
-            return new[] { typeof (TabPage) };
+            return new[] { typeof(MetroTabPage) };
         }
     }
 
@@ -79,6 +79,7 @@ namespace MetroFramework.Controls
     #endregion
 
     [Designer(typeof (MetroTabControlDesigner))]
+    [ToolboxBitmap(typeof(TabControl))]
     public class MetroTabControl : TabControl, IMetroControl
     {
         #region Interface
@@ -198,6 +199,14 @@ namespace MetroFramework.Controls
             }
         }
 
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -223,23 +232,10 @@ namespace MetroFramework.Controls
 
             Color backColor;
 
-            if (Parent != null)
-            {
-                if (Parent is MetroTile)
-                {
-                    backColor = MetroPaint.GetStyleColor(Style);
-                }
-                else
-                {
-                    backColor = Parent.BackColor;
-                }
-            }
+            if (useCustomBackground)
+                backColor = BackColor;
             else
-            {
                 backColor = MetroPaint.BackColor.Form(Theme);
-            }
-
-            BackColor = backColor;
 
             e.Graphics.Clear(backColor);
 

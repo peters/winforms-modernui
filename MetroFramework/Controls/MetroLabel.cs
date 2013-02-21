@@ -85,7 +85,7 @@ namespace MetroFramework.Controls
 
         #region Fields
 
-        private TextBox baseTextBox;
+        private DoubleBufferedTextBox baseTextBox;
 
         private bool useStyleColors;
         [Category("Metro Appearance")]
@@ -119,6 +119,14 @@ namespace MetroFramework.Controls
             set { labelMode = value; }
         }
 
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -130,6 +138,10 @@ namespace MetroFramework.Controls
                      ControlStyles.ResizeRedraw |
                      ControlStyles.UserPaint |
                      ControlStyles.SupportsTransparentBackColor, true);
+
+            baseTextBox = new DoubleBufferedTextBox();
+            baseTextBox.Visible = false;
+            Controls.Add(baseTextBox);
         }
 
         #endregion
@@ -140,20 +152,15 @@ namespace MetroFramework.Controls
         {
             Color backColor, foreColor;
 
-            if (Parent != null)
+            if (useCustomBackground)
+                backColor = BackColor;
+            else
             {
+                backColor = MetroPaint.BackColor.Form(Theme);
                 if (Parent is MetroTile)
                 {
                     backColor = MetroPaint.GetStyleColor(Style);
                 }
-                else
-                {
-                    backColor = Parent.BackColor;
-                }
-            }
-            else
-            {
-                backColor = MetroPaint.BackColor.Form(Theme);
             }
 
             if (!Enabled)
@@ -184,7 +191,14 @@ namespace MetroFramework.Controls
                     }
                     else
                     {
-                        foreColor = MetroPaint.ForeColor.Label.Normal(Theme);
+                        if (useStyleColors)
+                        {
+                            foreColor = MetroPaint.GetStyleColor(Style);
+                        }
+                        else
+                        {
+                            foreColor = MetroPaint.ForeColor.Label.Normal(Theme);
+                        }
                     }
                 }
                 else
@@ -252,14 +266,22 @@ namespace MetroFramework.Controls
 
         #region Label Selection Mode
 
+        private class DoubleBufferedTextBox : TextBox
+        {
+            public DoubleBufferedTextBox()
+            {
+                SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            }
+        }
+
         private void CreateBaseTextBox()
         {
-            if (baseTextBox != null) return;
+            if (baseTextBox.Visible) return;
 
-            baseTextBox = new TextBox();
+            baseTextBox.Visible = true;
             baseTextBox.BorderStyle = BorderStyle.None;
             baseTextBox.Font = MetroFonts.Label(metroLabelSize, metroLabelWeight);
-            baseTextBox.Location = new Point(3, 3);
+            baseTextBox.Location = new Point(1, 0);
             baseTextBox.Text = Text;
             baseTextBox.ReadOnly = true;
 
@@ -274,38 +296,23 @@ namespace MetroFramework.Controls
 
         private void DestroyBaseTextbox()
         {
-            if (baseTextBox == null) return;
-
-            if (Controls.Contains(baseTextBox))
-            {
-                Controls.Remove(baseTextBox);
-            }
+            if (!baseTextBox.Visible) return;
             
             baseTextBox.DoubleClick -= BaseTextBoxOnDoubleClick;
             baseTextBox.Click -= BaseTextBoxOnClick;
-            baseTextBox.Dispose();
-            baseTextBox = null;
+            baseTextBox.Visible = false;
         }
 
         private void UpdateBaseTextBox()
         {
-            if (baseTextBox == null) return;
+            if (!baseTextBox.Visible) return;
 
-            if (Parent != null)
-            {
-                if (Parent is MetroTile)
-                {
-                    baseTextBox.BackColor = MetroPaint.GetStyleColor(Style);
-                }
-                else
-                {
-                    baseTextBox.BackColor = Parent.BackColor;
-                }
-            }
+            baseTextBox.SuspendLayout();
+
+            if (useCustomBackground)
+                baseTextBox.BackColor = BackColor;
             else
-            {
                 baseTextBox.BackColor = MetroPaint.BackColor.Form(Theme);
-            }
 
             if (!Enabled)
             {
@@ -317,7 +324,14 @@ namespace MetroFramework.Controls
                     }
                     else
                     {
-                        baseTextBox.ForeColor = MetroPaint.ForeColor.Label.Normal(Theme);
+                        if (useStyleColors)
+                        {
+                            baseTextBox.ForeColor = MetroPaint.GetStyleColor(Style);
+                        }
+                        else
+                        {
+                            baseTextBox.ForeColor = MetroPaint.ForeColor.Label.Disabled(Theme);
+                        }
                     }
                 }
                 else
@@ -342,7 +356,14 @@ namespace MetroFramework.Controls
                     }
                     else
                     {
-                        baseTextBox.ForeColor = MetroPaint.ForeColor.Label.Normal(Theme);
+                        if (useStyleColors)
+                        {
+                            baseTextBox.ForeColor = MetroPaint.GetStyleColor(Style);
+                        }
+                        else
+                        {
+                            baseTextBox.ForeColor = MetroPaint.ForeColor.Label.Normal(Theme);
+                        }
                     }
                 }
                 else
@@ -362,6 +383,8 @@ namespace MetroFramework.Controls
             baseTextBox.Text = Text;
 
             Size = GetPreferredSize(Size.Empty);
+
+            baseTextBox.ResumeLayout();
         }
 
         private void BaseTextBoxOnClick(object sender, EventArgs eventArgs)

@@ -428,9 +428,9 @@ namespace MetroFramework.Drawing
                     public static Color Disabled(MetroThemeStyle theme)
                     {
                         if (theme == MetroThemeStyle.Dark)
-                            return Color.FromArgb(38, 38, 38);
+                            return Color.FromArgb(51, 51, 51);
 
-                        return Color.FromArgb(234, 234, 234);
+                        return Color.FromArgb(221, 221, 221);
                     }
                 }
             }

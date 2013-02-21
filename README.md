@@ -45,10 +45,16 @@ Components supported
 
 Screenshot
 ----------
-*Windows 7*
-![MetroFramework](http://i.imgur.com/RBukk78.png)
-*Windows XP*
-![MetroFramework](http://i.imgur.com/0hlnU2w.jpg)
+*Light*
+![MetroFramework](http://i.imgur.com/8Yk1BiN.png)
+![MetroFramework](http://i.imgur.com/qjwRg5z.png)
+![MetroFramework](http://i.imgur.com/3S7NPLQ.png)
+![MetroFramework](http://i.imgur.com/ULRej3C.png)
+*Dark*
+![MetroFramework](http://i.imgur.com/EddlvbX.png)
+![MetroFramework](http://i.imgur.com/Djnjkti.png)
+![MetroFramework](http://i.imgur.com/bI2c6kE.png)
+![MetroFramework](http://i.imgur.com/7cxHl1Y.png)
 
 License
 -------

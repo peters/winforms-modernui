@@ -103,15 +103,6 @@ namespace MetroFramework.Controls
         }
 
         [Browsable(false)]
-        public override Color BackColor
-        {
-            get
-            {
-                return MetroPaint.BackColor.Form(Theme);
-            }
-        }
-
-        [Browsable(false)]
         public override Font Font
         {
             get
@@ -135,6 +126,14 @@ namespace MetroFramework.Controls
             {
                 base.ForeColor = value;
             }
+        }
+
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
         }
 
         private bool isHovered = false;
@@ -161,8 +160,8 @@ namespace MetroFramework.Controls
         {
             Color backColor, borderColor, foreColor;
 
-            if (Parent != null)
-                backColor = Parent.BackColor;
+            if (useCustomBackground)
+                backColor = BackColor;
             else
                 backColor = MetroPaint.BackColor.Form(Theme);
 
@@ -346,6 +345,7 @@ namespace MetroFramework.Controls
             {
                 proposedSize = new Size(int.MaxValue, int.MaxValue);
                 preferredSize = TextRenderer.MeasureText(g, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), proposedSize, MetroPaint.GetTextFormatFlags(TextAlign));
+                preferredSize.Width += 16;
             }
 
             return preferredSize;

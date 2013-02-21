@@ -148,11 +148,6 @@ namespace MetroFramework.Controls
             if (AcceptsTabChanged != null)
                 AcceptsTabChanged(this, e);
         }
-
-        private void BaseTextBoxEnabledChanged(object sender, EventArgs e)
-        {
-            base.OnEnabledChanged(e);
-        }
         
         private void BaseTextBoxSizeChanged(object sender, EventArgs e)
         {
@@ -236,7 +231,11 @@ namespace MetroFramework.Controls
             baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
             baseTextBox.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
 
-            using (Pen p = new Pen(MetroPaint.BorderColor.Button.Normal(Theme)))
+            Color borderColor = MetroPaint.BorderColor.Button.Normal(Theme);
+            if (useStyleColors)
+                borderColor = MetroPaint.GetStyleColor(Style);
+
+            using (Pen p = new Pen(borderColor))
             {
                 e.Graphics.DrawRectangle(p, new Rectangle(0, 0, Width - 1, Height - 1));
             }
@@ -271,9 +270,10 @@ namespace MetroFramework.Controls
             baseTextBox.BorderStyle = BorderStyle.None;
             baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
             baseTextBox.Location = new Point(3, 3);
+            baseTextBox.Size = new Size(Width - 6, Height - 6);
 
             Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
-            baseTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
+            //baseTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
 
             Controls.Add(baseTextBox);
         }
@@ -290,8 +290,6 @@ namespace MetroFramework.Controls
             baseTextBox.ContextMenuStripChanged += BaseTextBoxContextMenuStripChanged;
             baseTextBox.CursorChanged += BaseTextBoxCursorChanged;
 
-            baseTextBox.EnabledChanged += BaseTextBoxEnabledChanged;
-
             baseTextBox.KeyDown += BaseTextBoxKeyDown;
             baseTextBox.KeyPress += BaseTextBoxKeyPress;
             baseTextBox.KeyUp += BaseTextBoxKeyUp;
@@ -306,7 +304,8 @@ namespace MetroFramework.Controls
             if (baseTextBox == null) return;
 
             baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
-         
+            baseTextBox.Location = new Point(3, 3);
+            baseTextBox.Size = new Size(Width - 6, Height - 6);
         }
 
         #endregion

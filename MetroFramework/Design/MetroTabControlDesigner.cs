@@ -222,7 +222,6 @@ namespace MetroFramework.Design
             properties.Remove("ImageList");
             properties.Remove("TextImageRelation");
 
-            properties.Remove("BackColor");
             properties.Remove("BackgroundImage");
             properties.Remove("BackgroundImageLayout");
             properties.Remove("UseVisualStyleBackColor");

@@ -23,9 +23,12 @@
  */
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
+
 using MetroFramework.Components;
 using MetroFramework.Interfaces;
+using MetroFramework.Drawing;
 
 namespace MetroFramework.Controls
 {
@@ -71,7 +74,30 @@ namespace MetroFramework.Controls
 
         #endregion
 
+        #region Fields
+
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
+        #endregion
+
         #region Overridden Methods
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            Color backColor = MetroPaint.BackColor.Form(Theme);
+            if (useCustomBackground)
+                backColor = BackColor;
+
+            e.Graphics.Clear(backColor);
+        }
 
         protected override void OnEnabledChanged(EventArgs e)
         {

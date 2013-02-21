@@ -86,7 +86,7 @@ namespace MetroFramework.Controls
         public bool HorizontalScrollbar
         {
             get { return showHorizontalScrollbar; }
-            set { showHorizontalScrollbar = true; }
+            set { showHorizontalScrollbar = value; }
         }
 
         [Category("Metro Appearance")]
@@ -115,7 +115,7 @@ namespace MetroFramework.Controls
         public bool VerticalScrollbar
         {
             get { return showVerticalScrollbar; }
-            set { showVerticalScrollbar = true; }
+            set { showVerticalScrollbar = value; }
         }
 
         [Category("Metro Appearance")]
@@ -156,6 +156,14 @@ namespace MetroFramework.Controls
 
                 base.AutoScroll = value;
             }
+        }
+
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
         }
 
         #endregion
@@ -208,14 +216,12 @@ namespace MetroFramework.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Color backColor;
+            base.OnPaint(e);
 
-            if (Parent != null)
-                backColor = Parent.BackColor;
-            else
-                backColor = MetroPaint.BackColor.Form(Theme);
+            Color backColor = MetroPaint.BackColor.Form(Theme);
 
-            BackColor = backColor;
+            if (useCustomBackground)
+                backColor = BackColor;
 
             e.Graphics.Clear(backColor);
 

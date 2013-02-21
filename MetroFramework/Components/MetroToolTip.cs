@@ -146,6 +146,19 @@ namespace MetroFramework.Components
 
         #region Management Methods
 
+        public new void SetToolTip(Control control, string caption)
+        {
+            base.SetToolTip(control, caption);
+
+            if (control is IMetroControl)
+            {
+                foreach (Control c in control.Controls)
+                {
+                    SetToolTip(c, caption);
+                }
+            }
+        }
+
         private void MetroToolTip_Popup(object sender, PopupEventArgs e)
         {
             if (e.AssociatedWindow is IMetroForm)

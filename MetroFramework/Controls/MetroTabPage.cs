@@ -29,6 +29,7 @@ using System.Windows.Forms;
 
 using MetroFramework.Interfaces;
 using MetroFramework.Design;
+using MetroFramework.Drawing;
 using MetroFramework.Components;
 using MetroFramework.Native;
 
@@ -88,7 +89,7 @@ namespace MetroFramework.Controls
         public bool HorizontalScrollbar 
         {
             get { return showHorizontalScrollbar; }
-            set { showHorizontalScrollbar = true; }
+            set { showHorizontalScrollbar = value; }
         }
 
         [Category("Metro Appearance")]
@@ -117,7 +118,7 @@ namespace MetroFramework.Controls
         public bool VerticalScrollbar
         {
             get { return showVerticalScrollbar; }
-            set { showVerticalScrollbar = true; }
+            set { showVerticalScrollbar = value; }
         }
 
         [Category("Metro Appearance")]
@@ -158,6 +159,14 @@ namespace MetroFramework.Controls
 
                 base.AutoScroll = value;
             }
+        }
+
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
         }
 
         #endregion
@@ -204,6 +213,15 @@ namespace MetroFramework.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
+
+            Color backColor = MetroPaint.BackColor.Form(Theme);
+
+            if (useCustomBackground)
+                backColor = BackColor;
+
+            e.Graphics.Clear(backColor);
+
             if (DesignMode)
             {
                 horizontalScrollbar.Visible = false;
@@ -236,8 +254,6 @@ namespace MetroFramework.Controls
                 verticalScrollbar.SmallChange = VerticalScroll.SmallChange;
                 verticalScrollbar.LargeChange = VerticalScroll.LargeChange;
             }
-
-            base.OnPaint(e);
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)

@@ -127,6 +127,14 @@ namespace MetroFramework.Controls
             set { useCustomBackground = value; }
         }
 
+        private bool useCustomForeColor = false;
+        [Category("Metro Appearance")]
+        public bool CustomForeColor
+        {
+            get { return useCustomForeColor; }
+            set { useCustomForeColor = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -163,31 +171,47 @@ namespace MetroFramework.Controls
                 }
             }
 
-            if (!Enabled)
+            if (useCustomForeColor)
+                foreColor = ForeColor;
+            else
             {
-                if (Parent != null)
+                if (!Enabled)
                 {
-                    if (Parent is MetroTile)
+                    if (Parent != null)
                     {
-                        foreColor = MetroPaint.ForeColor.Tile.Disabled(Theme);
+                        if (Parent is MetroTile)
+                        {
+                            foreColor = MetroPaint.ForeColor.Tile.Disabled(Theme);
+                        }
+                        else
+                        {
+                            foreColor = MetroPaint.ForeColor.Label.Normal(Theme);
+                        }
                     }
                     else
                     {
-                        foreColor = MetroPaint.ForeColor.Label.Normal(Theme);
+                        foreColor = MetroPaint.ForeColor.Label.Disabled(Theme);
                     }
                 }
                 else
                 {
-                    foreColor = MetroPaint.ForeColor.Label.Disabled(Theme);
-                }
-            }
-            else
-            {
-                if (Parent != null)
-                {
-                    if (Parent is MetroTile)
+                    if (Parent != null)
                     {
-                        foreColor = MetroPaint.ForeColor.Tile.Normal(Theme);
+                        if (Parent is MetroTile)
+                        {
+                            foreColor = MetroPaint.ForeColor.Tile.Normal(Theme);
+                        }
+                        else
+                        {
+                            if (useStyleColors)
+                            {
+                                foreColor = MetroPaint.GetStyleColor(Style);
+                            }
+                            else
+                            {
+                                foreColor = MetroPaint.ForeColor.Label.Normal(Theme);
+                            }
+                        }
                     }
                     else
                     {
@@ -199,17 +223,6 @@ namespace MetroFramework.Controls
                         {
                             foreColor = MetroPaint.ForeColor.Label.Normal(Theme);
                         }
-                    }
-                }
-                else
-                {
-                    if (useStyleColors)
-                    {
-                        foreColor = MetroPaint.GetStyleColor(Style);
-                    }
-                    else
-                    {
-                        foreColor = MetroPaint.ForeColor.Label.Normal(Theme);
                     }
                 }
             }
@@ -260,6 +273,26 @@ namespace MetroFramework.Controls
         {
             base.OnEnabledChanged(e);
             Invalidate();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            if (LabelMode == MetroLabelMode.Selectable)
+            {
+                HideBaseTextBox();
+            }
+
+            base.OnResize(e);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+
+            if (LabelMode == MetroLabelMode.Selectable)
+            {
+                ShowBaseTextBox();
+            }
         }
 
         #endregion
@@ -381,10 +414,21 @@ namespace MetroFramework.Controls
 
             baseTextBox.Font = MetroFonts.Label(metroLabelSize, metroLabelWeight);
             baseTextBox.Text = Text;
+            baseTextBox.BorderStyle = BorderStyle.None;
 
             Size = GetPreferredSize(Size.Empty);
 
             baseTextBox.ResumeLayout();
+        }
+
+        private void HideBaseTextBox()
+        {
+            baseTextBox.Visible = false;
+        }
+
+        private void ShowBaseTextBox()
+        {
+            baseTextBox.Visible = true;
         }
 
         private void BaseTextBoxOnClick(object sender, EventArgs eventArgs)

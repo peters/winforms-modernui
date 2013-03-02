@@ -386,8 +386,21 @@ namespace MetroFramework.Controls
             {
                 if (!TabPages[SelectedIndex].Focused)
                 {
-                    TabPages[SelectedIndex].Select();
-                    TabPages[SelectedIndex].Focus();
+                    bool subControlFocused = false;
+                    foreach (Control ctrl in TabPages[SelectedIndex].Controls)
+                    {
+                        if (ctrl.Focused)
+                        {
+                            subControlFocused = true;
+                            return;
+                        }
+                    }
+
+                    if (!subControlFocused)
+                    {
+                        TabPages[SelectedIndex].Select();
+                        TabPages[SelectedIndex].Focus();
+                    }
                 }
             }
             

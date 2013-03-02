@@ -103,6 +103,22 @@ namespace MetroFramework.Controls
             set { metroTextBoxWeight = value; UpdateBaseTextBox(); }
         }
 
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
+        private bool useCustomForeColor = false;
+        [Category("Metro Appearance")]
+        public bool CustomForeColor
+        {
+            get { return useCustomForeColor; }
+            set { useCustomForeColor = value; }
+        }
+
         #endregion
 
         #region Routing Fields
@@ -132,7 +148,7 @@ namespace MetroFramework.Controls
 
         public MetroTextBox()
         {
-            SetStyle(ControlStyles.DoubleBuffer, true);
+            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             CreateBaseTextBox();
             UpdateBaseTextBox();
             AddEventHandler();       
@@ -227,9 +243,25 @@ namespace MetroFramework.Controls
         {
             base.OnPaint(e);
 
-            e.Graphics.Clear(MetroPaint.BackColor.Button.Normal(Theme));
-            baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
-            baseTextBox.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
+            if (useCustomBackground)
+            {
+                e.Graphics.Clear(BackColor);
+                baseTextBox.BackColor = BackColor;
+            }
+            else
+            {
+                e.Graphics.Clear(MetroPaint.BackColor.Button.Normal(Theme));
+                baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
+            }
+
+            if (useCustomForeColor)
+            {
+                baseTextBox.ForeColor = ForeColor;
+            }
+            else
+            {
+                baseTextBox.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
+            }
 
             Color borderColor = MetroPaint.BorderColor.Button.Normal(Theme);
             if (useStyleColors)

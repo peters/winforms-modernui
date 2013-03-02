@@ -373,20 +373,36 @@ namespace MetroFramework.Forms
 
         protected override void WndProc(ref Message m)
         {
-            base.WndProc(ref m);
+            if (MaximizeBox == true)
+            {
+                base.WndProc(ref m);
+            }
 
             if (!DesignMode)
             {
+                if (MaximizeBox == false)
+                {
+                    if (m.Msg == (int)WinApi.Messages.WM_LBUTTONDBLCLK)
+                    {
+                        return;
+                    }
+                }
                 if (m.Msg == (int)WinApi.Messages.WM_NCHITTEST)
                 {
                     m.Result = HitTestNCA(m.HWnd, m.WParam, m.LParam);
                 }
             }
+
+            if (MaximizeBox == false)
+            {
+                base.WndProc(ref m);
+            }
         }
 
         private IntPtr HitTestNCA(IntPtr hwnd, IntPtr wparam, IntPtr lparam)
         {
-            Point vPoint = PointToClient(new Point((int)lparam & 0xFFFF, (int)lparam >> 16 & 0xFFFF));
+            //Point vPoint = PointToClient(new Point((int)lparam & 0xFFFF, (int)lparam >> 16 & 0xFFFF));
+            Point vPoint = PointToClient(new Point((Int16)lparam, (Int16)((int)lparam >> 16)));
             int vPadding = Math.Max(Padding.Right, Padding.Bottom);
 
             if (Resizable)

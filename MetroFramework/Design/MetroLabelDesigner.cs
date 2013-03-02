@@ -58,7 +58,6 @@ namespace MetroFramework.Design
             properties.Remove("UseVisualStyleBackColor");
 
             properties.Remove("Font");
-            properties.Remove("ForeColor");
             properties.Remove("RightToLeft");
 
             base.PreFilterProperties(properties);

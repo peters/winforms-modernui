@@ -115,25 +115,20 @@ namespace MetroFramework.Controls
             }
         }
 
-        [Browsable(false)]
-        public override Color ForeColor
-        {
-            get
-            {
-                return base.ForeColor;
-            }
-            set
-            {
-                base.ForeColor = value;
-            }
-        }
-
         private bool useCustomBackground = false;
         [Category("Metro Appearance")]
         public bool CustomBackground
         {
             get { return useCustomBackground; }
             set { useCustomBackground = value; }
+        }
+
+        private bool useCustomForeColor = false;
+        [Category("Metro Appearance")]
+        public bool CustomForeColor
+        {
+            get { return useCustomForeColor; }
+            set { useCustomForeColor = value; }
         }
 
         private bool isHovered = false;
@@ -165,25 +160,49 @@ namespace MetroFramework.Controls
             else
                 backColor = MetroPaint.BackColor.Form(Theme);
 
-            if (isHovered && !isPressed && Enabled)
+            if (useCustomForeColor)
             {
-                foreColor = MetroPaint.ForeColor.CheckBox.Hover(Theme);
-                borderColor = MetroPaint.BorderColor.CheckBox.Hover(Theme);
-            }
-            else if (isHovered && isPressed && Enabled)
-            {
-                foreColor = MetroPaint.ForeColor.CheckBox.Press(Theme);
-                borderColor = MetroPaint.BorderColor.CheckBox.Press(Theme);
-            }
-            else if (!Enabled)
-            {
-                foreColor = MetroPaint.ForeColor.CheckBox.Disabled(Theme);
-                borderColor = MetroPaint.BorderColor.CheckBox.Disabled(Theme);
+                foreColor = ForeColor;
+
+                if (isHovered && !isPressed && Enabled)
+                {
+                    borderColor = MetroPaint.BorderColor.CheckBox.Hover(Theme);
+                }
+                else if (isHovered && isPressed && Enabled)
+                {
+                    borderColor = MetroPaint.BorderColor.CheckBox.Press(Theme);
+                }
+                else if (!Enabled)
+                {
+                    borderColor = MetroPaint.BorderColor.CheckBox.Disabled(Theme);
+                }
+                else
+                {
+                    borderColor = MetroPaint.BorderColor.CheckBox.Normal(Theme);
+                }
             }
             else
             {
-                foreColor = !useStyleColors ? MetroPaint.ForeColor.CheckBox.Normal(Theme) : MetroPaint.GetStyleColor(Style);
-                borderColor = MetroPaint.BorderColor.CheckBox.Normal(Theme);
+                if (isHovered && !isPressed && Enabled)
+                {
+                    foreColor = MetroPaint.ForeColor.CheckBox.Hover(Theme);
+                    borderColor = MetroPaint.BorderColor.CheckBox.Hover(Theme);
+                }
+                else if (isHovered && isPressed && Enabled)
+                {
+                    foreColor = MetroPaint.ForeColor.CheckBox.Press(Theme);
+                    borderColor = MetroPaint.BorderColor.CheckBox.Press(Theme);
+                }
+                else if (!Enabled)
+                {
+                    foreColor = MetroPaint.ForeColor.CheckBox.Disabled(Theme);
+                    borderColor = MetroPaint.BorderColor.CheckBox.Disabled(Theme);
+                }
+                else
+                {
+                    foreColor = !useStyleColors ? MetroPaint.ForeColor.CheckBox.Normal(Theme) : MetroPaint.GetStyleColor(Style);
+                    borderColor = MetroPaint.BorderColor.CheckBox.Normal(Theme);
+                }
             }
 
             e.Graphics.Clear(backColor);

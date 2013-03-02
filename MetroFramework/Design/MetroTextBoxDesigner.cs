@@ -56,11 +56,9 @@ namespace MetroFramework.Design
         protected override void PreFilterProperties(IDictionary properties)
         {
             properties.Remove("BackgroundImage");
-            properties.Remove("ForeColor");
             properties.Remove("ImeMode");
             properties.Remove("Padding");
             properties.Remove("BackgroundImageLayout");
-            properties.Remove("BackColor");
             properties.Remove("Font");
 
             base.PreFilterProperties(properties);

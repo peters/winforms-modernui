@@ -150,6 +150,7 @@
             // metroLink4
             // 
             this.metroLink4.CustomBackground = false;
+            this.metroLink4.CustomForeColor = false;
             this.metroLink4.Enabled = false;
             this.metroLink4.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroLink4.FontWeight = MetroFramework.MetroLinkWeight.Bold;
@@ -167,6 +168,7 @@
             // metroLink3
             // 
             this.metroLink3.CustomBackground = false;
+            this.metroLink3.CustomForeColor = false;
             this.metroLink3.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroLink3.FontWeight = MetroFramework.MetroLinkWeight.Bold;
             this.metroLink3.Location = new System.Drawing.Point(399, 76);
@@ -184,6 +186,7 @@
             // 
             this.metroLabel9.AutoSize = true;
             this.metroLabel9.CustomBackground = false;
+            this.metroLabel9.CustomForeColor = false;
             this.metroLabel9.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel9.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel9.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -201,6 +204,7 @@
             // 
             this.metroLabel8.AutoSize = true;
             this.metroLabel8.CustomBackground = false;
+            this.metroLabel8.CustomForeColor = false;
             this.metroLabel8.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel8.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel8.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -217,6 +221,7 @@
             // metroLink1
             // 
             this.metroLink1.CustomBackground = false;
+            this.metroLink1.CustomForeColor = false;
             this.metroLink1.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroLink1.FontWeight = MetroFramework.MetroLinkWeight.Bold;
             this.metroLink1.Location = new System.Drawing.Point(399, 47);
@@ -235,6 +240,7 @@
             // 
             this.metroLabel1.AutoSize = true;
             this.metroLabel1.CustomBackground = false;
+            this.metroLabel1.CustomForeColor = false;
             this.metroLabel1.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel1.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -364,6 +370,8 @@
             // 
             // metroTextBox4
             // 
+            this.metroTextBox4.CustomBackground = false;
+            this.metroTextBox4.CustomForeColor = false;
             this.metroTextBox4.Enabled = false;
             this.metroTextBox4.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.metroTextBox4.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
@@ -381,6 +389,8 @@
             // 
             // metroTextBox3
             // 
+            this.metroTextBox3.CustomBackground = false;
+            this.metroTextBox3.CustomForeColor = false;
             this.metroTextBox3.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.metroTextBox3.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.metroTextBox3.Location = new System.Drawing.Point(323, 134);
@@ -397,6 +407,8 @@
             // 
             // metroTextBox2
             // 
+            this.metroTextBox2.CustomBackground = false;
+            this.metroTextBox2.CustomForeColor = false;
             this.metroTextBox2.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.metroTextBox2.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.metroTextBox2.Location = new System.Drawing.Point(323, 78);
@@ -415,6 +427,7 @@
             // 
             this.metroLabel15.AutoSize = true;
             this.metroLabel15.CustomBackground = false;
+            this.metroLabel15.CustomForeColor = false;
             this.metroLabel15.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel15.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel15.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -433,6 +446,7 @@
             // 
             this.metroLabel12.AutoSize = true;
             this.metroLabel12.CustomBackground = false;
+            this.metroLabel12.CustomForeColor = false;
             this.metroLabel12.Enabled = false;
             this.metroLabel12.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel12.FontWeight = MetroFramework.MetroLabelWeight.Light;
@@ -452,6 +466,7 @@
             // 
             this.metroLabel13.AutoSize = true;
             this.metroLabel13.CustomBackground = false;
+            this.metroLabel13.CustomForeColor = false;
             this.metroLabel13.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel13.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel13.LabelMode = MetroFramework.Controls.MetroLabelMode.Selectable;
@@ -470,6 +485,7 @@
             // 
             this.metroLabel14.AutoSize = true;
             this.metroLabel14.CustomBackground = false;
+            this.metroLabel14.CustomForeColor = false;
             this.metroLabel14.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel14.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel14.LabelMode = MetroFramework.Controls.MetroLabelMode.Selectable;
@@ -489,6 +505,7 @@
             // 
             this.metroLabel11.AutoSize = true;
             this.metroLabel11.CustomBackground = false;
+            this.metroLabel11.CustomForeColor = false;
             this.metroLabel11.Enabled = false;
             this.metroLabel11.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel11.FontWeight = MetroFramework.MetroLabelWeight.Light;
@@ -508,6 +525,7 @@
             // 
             this.metroLabel10.AutoSize = true;
             this.metroLabel10.CustomBackground = false;
+            this.metroLabel10.CustomForeColor = false;
             this.metroLabel10.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel10.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel10.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -526,6 +544,7 @@
             // 
             this.metroLabel3.AutoSize = true;
             this.metroLabel3.CustomBackground = false;
+            this.metroLabel3.CustomForeColor = false;
             this.metroLabel3.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel3.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -543,6 +562,9 @@
             // 
             // metroTextBox1
             // 
+            this.metroTextBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.metroTextBox1.CustomBackground = false;
+            this.metroTextBox1.CustomForeColor = false;
             this.metroTextBox1.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.metroTextBox1.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.metroTextBox1.Location = new System.Drawing.Point(323, 50);
@@ -562,6 +584,7 @@
             // 
             this.metroLabel2.AutoSize = true;
             this.metroLabel2.CustomBackground = false;
+            this.metroLabel2.CustomForeColor = false;
             this.metroLabel2.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel2.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel2.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -672,6 +695,7 @@
             // 
             this.metroRadioButton3.AutoSize = true;
             this.metroRadioButton3.CustomBackground = false;
+            this.metroRadioButton3.CustomForeColor = false;
             this.metroRadioButton3.Enabled = false;
             this.metroRadioButton3.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroRadioButton3.FontWeight = MetroFramework.MetroLinkWeight.Regular;
@@ -691,6 +715,7 @@
             // 
             this.metroRadioButton2.AutoSize = true;
             this.metroRadioButton2.CustomBackground = false;
+            this.metroRadioButton2.CustomForeColor = false;
             this.metroRadioButton2.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroRadioButton2.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroRadioButton2.Location = new System.Drawing.Point(28, 181);
@@ -709,6 +734,7 @@
             // 
             this.metroCheckBox3.AutoSize = true;
             this.metroCheckBox3.CustomBackground = false;
+            this.metroCheckBox3.CustomForeColor = false;
             this.metroCheckBox3.Enabled = false;
             this.metroCheckBox3.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroCheckBox3.FontWeight = MetroFramework.MetroLinkWeight.Regular;
@@ -727,6 +753,7 @@
             // 
             this.metroCheckBox2.AutoSize = true;
             this.metroCheckBox2.CustomBackground = false;
+            this.metroCheckBox2.CustomForeColor = false;
             this.metroCheckBox2.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroCheckBox2.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroCheckBox2.Location = new System.Drawing.Point(28, 74);
@@ -744,6 +771,7 @@
             // 
             this.metroLabel19.AutoSize = true;
             this.metroLabel19.CustomBackground = false;
+            this.metroLabel19.CustomForeColor = false;
             this.metroLabel19.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel19.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel19.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -761,6 +789,7 @@
             // 
             this.metroLabel18.AutoSize = true;
             this.metroLabel18.CustomBackground = false;
+            this.metroLabel18.CustomForeColor = false;
             this.metroLabel18.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel18.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel18.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -778,6 +807,7 @@
             // 
             this.metroLabel17.AutoSize = true;
             this.metroLabel17.CustomBackground = false;
+            this.metroLabel17.CustomForeColor = false;
             this.metroLabel17.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel17.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel17.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -795,6 +825,7 @@
             // 
             this.metroLabel16.AutoSize = true;
             this.metroLabel16.CustomBackground = false;
+            this.metroLabel16.CustomForeColor = false;
             this.metroLabel16.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel16.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel16.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -831,6 +862,7 @@
             // 
             this.metroRadioButton1.AutoSize = true;
             this.metroRadioButton1.CustomBackground = false;
+            this.metroRadioButton1.CustomForeColor = false;
             this.metroRadioButton1.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroRadioButton1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroRadioButton1.Location = new System.Drawing.Point(28, 160);
@@ -869,6 +901,7 @@
             // 
             this.metroCheckBox1.AutoSize = true;
             this.metroCheckBox1.CustomBackground = false;
+            this.metroCheckBox1.CustomForeColor = false;
             this.metroCheckBox1.FontSize = MetroFramework.MetroLinkSize.Small;
             this.metroCheckBox1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroCheckBox1.Location = new System.Drawing.Point(28, 53);
@@ -897,7 +930,7 @@
             this.metroTabPage3.Controls.Add(this.metroProgressSpinner1);
             this.metroTabPage3.Controls.Add(this.metroProgressBar);
             this.metroTabPage3.CustomBackground = false;
-            this.metroTabPage3.HorizontalScrollbar = false;
+            this.metroTabPage3.HorizontalScrollbar = true;
             this.metroTabPage3.HorizontalScrollbarBarColor = true;
             this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage3.HorizontalScrollbarSize = 10;
@@ -910,7 +943,7 @@
             this.metroTabPage3.TabIndex = 2;
             this.metroTabPage3.Text = "Scroll && Progress";
             this.metroTabPage3.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTabPage3.VerticalScrollbar = false;
+            this.metroTabPage3.VerticalScrollbar = true;
             this.metroTabPage3.VerticalScrollbarBarColor = true;
             this.metroTabPage3.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage3.VerticalScrollbarSize = 10;
@@ -919,6 +952,7 @@
             // 
             this.metroLabel7.AutoSize = true;
             this.metroLabel7.CustomBackground = false;
+            this.metroLabel7.CustomForeColor = false;
             this.metroLabel7.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel7.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel7.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -962,6 +996,7 @@
             // 
             this.metroLabel6.AutoSize = true;
             this.metroLabel6.CustomBackground = false;
+            this.metroLabel6.CustomForeColor = false;
             this.metroLabel6.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel6.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel6.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -979,6 +1014,7 @@
             // 
             this.metroLabel5.AutoSize = true;
             this.metroLabel5.CustomBackground = false;
+            this.metroLabel5.CustomForeColor = false;
             this.metroLabel5.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel5.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel5.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
@@ -1014,6 +1050,7 @@
             // 
             this.metroLabel4.AutoSize = true;
             this.metroLabel4.CustomBackground = false;
+            this.metroLabel4.CustomForeColor = false;
             this.metroLabel4.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel4.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel4.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;

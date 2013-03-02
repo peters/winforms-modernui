@@ -117,25 +117,20 @@ namespace MetroFramework.Controls
             }
         }
 
-        [Browsable(false)]
-        public override Color ForeColor
-        {
-            get
-            {
-                return base.ForeColor;
-            }
-            set
-            {
-                base.ForeColor = value;
-            }
-        }
-
         private bool useCustomBackground = false;
         [Category("Metro Appearance")]
         public bool CustomBackground
         {
             get { return useCustomBackground; }
             set { useCustomBackground = value; }
+        }
+
+        private bool useCustomForeColor = false;
+        [Category("Metro Appearance")]
+        public bool CustomForeColor
+        {
+            get { return useCustomForeColor; }
+            set { useCustomForeColor = value; }
         }
 
         private bool isHovered = false;
@@ -168,21 +163,26 @@ namespace MetroFramework.Controls
             else
                 backColor = MetroPaint.BackColor.Form(Theme);
 
-            if (isHovered && !isPressed && Enabled)
-            {
-                foreColor = MetroPaint.ForeColor.Link.Hover(Theme);
-            }
-            else if (isHovered && isPressed && Enabled)
-            {
-                foreColor = MetroPaint.ForeColor.Link.Press(Theme);
-            }
-            else if (!Enabled)
-            {
-                foreColor = MetroPaint.ForeColor.Link.Disabled(Theme);
-            }
+            if (useCustomForeColor)
+                foreColor = ForeColor;
             else
             {
-                foreColor = !useStyleColors ? MetroPaint.ForeColor.Link.Normal(Theme) : MetroPaint.GetStyleColor(Style);
+                if (isHovered && !isPressed && Enabled)
+                {
+                    foreColor = MetroPaint.ForeColor.Link.Hover(Theme);
+                }
+                else if (isHovered && isPressed && Enabled)
+                {
+                    foreColor = MetroPaint.ForeColor.Link.Press(Theme);
+                }
+                else if (!Enabled)
+                {
+                    foreColor = MetroPaint.ForeColor.Link.Disabled(Theme);
+                }
+                else
+                {
+                    foreColor = !useStyleColors ? MetroPaint.ForeColor.Link.Normal(Theme) : MetroPaint.GetStyleColor(Style);
+                }
             }
 
             e.Graphics.Clear(backColor);

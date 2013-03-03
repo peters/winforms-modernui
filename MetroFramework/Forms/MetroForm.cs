@@ -375,6 +375,11 @@ namespace MetroFramework.Forms
         {
             if (MaximizeBox == true)
             {
+                if (!WndProc_Movable(m))
+                {
+                    return;
+                }
+
                 base.WndProc(ref m);
             }
 
@@ -387,6 +392,10 @@ namespace MetroFramework.Forms
                         return;
                     }
                 }
+                if (!WndProc_Movable(m))
+                {
+                    return;
+                }
                 if (m.Msg == (int)WinApi.Messages.WM_NCHITTEST)
                 {
                     m.Result = HitTestNCA(m.HWnd, m.WParam, m.LParam);
@@ -397,6 +406,22 @@ namespace MetroFramework.Forms
             {
                 base.WndProc(ref m);
             }
+        }
+
+        private bool WndProc_Movable(Message m)
+        {
+            if (Movable) return true;
+
+            if (m.Msg == (int)WinApi.Messages.WM_SYSCOMMAND)
+            {
+                int moveCommand = m.WParam.ToInt32() & 0xfff0;
+                if (moveCommand == (int)WinApi.Messages.SC_MOVE)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private IntPtr HitTestNCA(IntPtr hwnd, IntPtr wparam, IntPtr lparam)

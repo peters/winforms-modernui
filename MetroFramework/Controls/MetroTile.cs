@@ -99,13 +99,28 @@ namespace MetroFramework.Controls
 
         #region Fields
 
-        [Browsable(false)]
-        public override Color BackColor
+        private bool useCustomBackground = false;
+        [Category("Metro Appearance")]
+        public bool CustomBackground
         {
-            get
-            {
-                return MetroPaint.BackColor.Form(Theme);
-            }
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
+        private bool useCustomForeColor = false;
+        [Category("Metro Appearance")]
+        public bool CustomForeColor
+        {
+            get { return useCustomForeColor; }
+            set { useCustomForeColor = value; }
+        }
+
+        private bool paintTileCount = true;
+        [Category("Metro Appearance")]
+        public bool PaintTileCount
+        {
+            get { return paintTileCount; }
+            set { paintTileCount = value; }
         }
 
         private int tileCount = 0;
@@ -141,6 +156,11 @@ namespace MetroFramework.Controls
 
             backColor = MetroPaint.GetStyleColor(Style);
 
+            if (useCustomBackground)
+            {
+                backColor = BackColor;
+            }
+
             if (isHovered && !isPressed && Enabled)
             {
                 foreColor = MetroPaint.ForeColor.Tile.Hover(Theme);
@@ -156,6 +176,11 @@ namespace MetroFramework.Controls
             else
             {
                 foreColor = MetroPaint.ForeColor.Tile.Normal(Theme);
+            }
+
+            if (useCustomForeColor)
+            {
+                foreColor = ForeColor;
             }
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -176,7 +201,7 @@ namespace MetroFramework.Controls
                 }
             }
 
-            if (TileCount > 0)
+            if (TileCount > 0 && paintTileCount)
             {
                 Size countSize = TextRenderer.MeasureText(TileCount.ToString(), MetroFonts.TileCount);
 

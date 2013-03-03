@@ -295,8 +295,11 @@
             // metroTileSwitch
             // 
             this.metroTileSwitch.ActiveControl = null;
+            this.metroTileSwitch.CustomBackground = false;
+            this.metroTileSwitch.CustomForeColor = false;
             this.metroTileSwitch.Location = new System.Drawing.Point(28, 133);
             this.metroTileSwitch.Name = "metroTileSwitch";
+            this.metroTileSwitch.PaintTileCount = true;
             this.metroTileSwitch.Size = new System.Drawing.Size(166, 80);
             this.metroTileSwitch.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTileSwitch.StyleManager = null;
@@ -309,9 +312,12 @@
             // metroTile2
             // 
             this.metroTile2.ActiveControl = null;
+            this.metroTile2.CustomBackground = false;
+            this.metroTile2.CustomForeColor = false;
             this.metroTile2.Enabled = false;
             this.metroTile2.Location = new System.Drawing.Point(114, 47);
             this.metroTile2.Name = "metroTile2";
+            this.metroTile2.PaintTileCount = true;
             this.metroTile2.Size = new System.Drawing.Size(80, 80);
             this.metroTile2.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTile2.StyleManager = null;
@@ -323,8 +329,11 @@
             // metroTile1
             // 
             this.metroTile1.ActiveControl = null;
+            this.metroTile1.CustomBackground = false;
+            this.metroTile1.CustomForeColor = false;
             this.metroTile1.Location = new System.Drawing.Point(28, 47);
             this.metroTile1.Name = "metroTile1";
+            this.metroTile1.PaintTileCount = true;
             this.metroTile1.Size = new System.Drawing.Size(80, 80);
             this.metroTile1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTile1.StyleManager = null;

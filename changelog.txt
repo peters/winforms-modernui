@@ -1,6 +1,16 @@
 Changelog File
 
 -----------------------------------------------------------------------------------
+SW 2013-03-03 19:20 - AssemblyVersion 1.1.0.0
+-----------------------------------------------------------------------------------
+
+* MetroForm Property Moveable disables the possibility to move the form completely
+* MetroTile has new Property "PaintTileCount" to disable the painting of the tile counts
+* Basic controls now providing Properties "CustomBackColor" and "CustomForeColor" to override the default metro framework styles
+* Several bug fixes
+
+
+-----------------------------------------------------------------------------------
 SW 2013-02-20 17:03 - AssemblyVersion 1.1.0.0
 -----------------------------------------------------------------------------------
 

@@ -427,16 +427,17 @@ namespace MetroFramework.Forms
         private IntPtr HitTestNCA(IntPtr hwnd, IntPtr wparam, IntPtr lparam)
         {
             //Point vPoint = PointToClient(new Point((int)lparam & 0xFFFF, (int)lparam >> 16 & 0xFFFF));
-            Point vPoint = PointToClient(new Point((Int16)lparam, (Int16)((int)lparam >> 16)));
+            //Point vPoint = PointToClient(new Point((Int16)lparam, (Int16)((int)lparam >> 16)));
+            Point vPoint = new Point((Int16)lparam, (Int16)((int)lparam >> 16));
             int vPadding = Math.Max(Padding.Right, Padding.Bottom);
 
             if (Resizable)
             {
-                if (new Rectangle(ClientRectangle.Width - vPadding, ClientRectangle.Height - vPadding, vPadding, vPadding).Contains(vPoint))
+                if (RectangleToScreen(new Rectangle(ClientRectangle.Width - vPadding, ClientRectangle.Height - vPadding, vPadding, vPadding)).Contains(vPoint))
                     return (IntPtr)WinApi.HitTest.HTBOTTOMRIGHT;
             }
 
-            if (new Rectangle(5, 5, ClientRectangle.Width - 10, 50).Contains(vPoint))
+            if (RectangleToScreen(new Rectangle(5, 5, ClientRectangle.Width - 10, 50)).Contains(vPoint))
                 return (IntPtr)WinApi.HitTest.HTCAPTION;
 
             return (IntPtr)WinApi.HitTest.HTCLIENT;

@@ -47,6 +47,7 @@ namespace MetroFramework.Forms
 
     public enum ShadowType
     {
+        None,
         Flat,
         DropShadow
     }
@@ -188,15 +189,7 @@ namespace MetroFramework.Forms
             set { isResizable = value; }
         }
 
-        private bool hasShadow = true;
-        [Category("Metro Appearance")]
-        public bool Shadow
-        {
-            get { return hasShadow; }
-            set { hasShadow = value; }
-        }
-
-        private ShadowType shadowType = ShadowType.DropShadow;
+        private ShadowType shadowType = ShadowType.Flat;
         [Category("Metro Appearance")]
         public ShadowType ShadowType
         {
@@ -345,11 +338,11 @@ namespace MetroFramework.Forms
         {
             base.OnLoad(e);
 
-            if (metroFlatShadowForm == null && !DesignMode && hasShadow && shadowType == ShadowType.Flat)
+            if (metroFlatShadowForm == null && !DesignMode && shadowType == ShadowType.Flat)
             {
                 metroFlatShadowForm = new MetroFlatDropShadow(this);
             }
-            if (metroRealisticShadowForm == null && !DesignMode && hasShadow && shadowType == ShadowType.DropShadow)
+            if (metroRealisticShadowForm == null && !DesignMode && shadowType == ShadowType.DropShadow)
             {
                 metroRealisticShadowForm = new MetroRealisticDropShadow(this);
             }
@@ -953,6 +946,8 @@ namespace MetroFramework.Forms
                 if (o is Form)
                     this.Bounds = GetBounds();
 
+                Visible = false;
+
                 long delta = DateTime.Now.Ticks - lastResizedOn;
                 if (delta > 100000)
                 {
@@ -963,6 +958,8 @@ namespace MetroFramework.Forms
 
             private void shadowTargetForm_ResizeEnd(object o, EventArgs e)
             {
+                Visible = true;
+
                 lastResizedOn = 0;
                 Invalidate();
             }
@@ -973,7 +970,7 @@ namespace MetroFramework.Forms
                 SetBitmap(getShadow, 255);
             }
 
-            private void SetBitmap(Bitmap bitmap, byte opacity = 255)
+            private void SetBitmap(Bitmap bitmap, byte opacity)
             {
                 if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
                     throw new ApplicationException("The bitmap must be 32ppp with alpha-channel.");

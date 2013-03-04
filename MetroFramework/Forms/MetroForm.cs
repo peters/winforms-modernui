@@ -23,6 +23,8 @@
  */
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -41,6 +43,12 @@ namespace MetroFramework.Forms
         Left,
         Center,
         Right
+    }
+
+    public enum ShadowType
+    {
+        Flat,
+        DropShadow
     }
    
     public class MetroForm : Form, IMetroForm, IDisposable
@@ -88,7 +96,8 @@ namespace MetroFramework.Forms
 
         #region Fields
 
-        protected MetroDropShadow metroDropShadowForm = null;
+        protected MetroFlatDropShadow metroFlatShadowForm = null;
+        protected MetroRealisticDropShadow metroRealisticShadowForm = null;
 
         private bool isInitialized = false;
 
@@ -187,6 +196,13 @@ namespace MetroFramework.Forms
             set { hasShadow = value; }
         }
 
+        private ShadowType shadowType = ShadowType.DropShadow;
+        [Category("Metro Appearance")]
+        public ShadowType ShadowType
+        {
+            get { return shadowType; }
+            set { shadowType = value; }
+        }
 
         private int borderWidth = 5;
 
@@ -211,13 +227,22 @@ namespace MetroFramework.Forms
 
         protected override void Dispose(bool disposing)
         {
-            if (metroDropShadowForm != null)
+            if (metroFlatShadowForm != null)
             {
-                if (!metroDropShadowForm.IsDisposed)
+                if (!metroFlatShadowForm.IsDisposed)
                 {
-                    metroDropShadowForm.Owner = null;
-                    metroDropShadowForm.Dispose();
-                    metroDropShadowForm = null;
+                    metroFlatShadowForm.Owner = null;
+                    metroFlatShadowForm.Dispose();
+                    metroFlatShadowForm = null;
+                }
+            }
+            if (metroRealisticShadowForm != null)
+            {
+                if (!metroRealisticShadowForm.IsDisposed)
+                {
+                    metroRealisticShadowForm.Owner = null;
+                    metroRealisticShadowForm.Dispose();
+                    metroRealisticShadowForm = null;
                 }
             }
 
@@ -286,11 +311,17 @@ namespace MetroFramework.Forms
             if (!(this is MetroTaskWindow))
                 MetroTaskWindow.ForceClose();
 
-            if (metroDropShadowForm != null)
+            if (metroFlatShadowForm != null)
             {
-                metroDropShadowForm.Visible = false;
-                metroDropShadowForm.Owner = null;
-                metroDropShadowForm = null;
+                metroFlatShadowForm.Visible = false;
+                metroFlatShadowForm.Owner = null;
+                metroFlatShadowForm = null;
+            }
+            if (metroRealisticShadowForm != null)
+            {
+                metroRealisticShadowForm.Visible = false;
+                metroRealisticShadowForm.Owner = null;
+                metroRealisticShadowForm = null;
             }
 
             base.OnClosing(e);
@@ -314,8 +345,14 @@ namespace MetroFramework.Forms
         {
             base.OnLoad(e);
 
-            if (metroDropShadowForm == null && !DesignMode && hasShadow)
-                metroDropShadowForm = new MetroDropShadow(this);
+            if (metroFlatShadowForm == null && !DesignMode && hasShadow && shadowType == ShadowType.Flat)
+            {
+                metroFlatShadowForm = new MetroFlatDropShadow(this);
+            }
+            if (metroRealisticShadowForm == null && !DesignMode && hasShadow && shadowType == ShadowType.DropShadow)
+            {
+                metroRealisticShadowForm = new MetroRealisticDropShadow(this);
+            }
         }
 
         protected override void OnActivated(EventArgs e)
@@ -744,13 +781,13 @@ namespace MetroFramework.Forms
 
         #endregion
 
-        #region DropShadow Form
+        #region Flat DropShadow Form
 
-        protected class MetroDropShadow : Form
+        protected class MetroFlatDropShadow : Form
         {
             private Form shadowTargetForm;
 
-            public MetroDropShadow(Form targetForm)
+            public MetroFlatDropShadow(Form targetForm)
             {
                 SetStyle(ControlStyles.AllPaintingInWmPaint |
                          ControlStyles.OptimizedDoubleBuffer |
@@ -822,6 +859,234 @@ namespace MetroFramework.Forms
                 using (Brush b = new SolidBrush(Color.Black))
                 {
                     e.Graphics.FillRectangle(b, new Rectangle(4, 4, ClientRectangle.Width - 8, ClientRectangle.Height - 8));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Windows7 DropShadow Form
+
+        protected class MetroRealisticDropShadow : Form
+        {
+            private Form shadowTargetForm;
+            private Point Offset = new Point(-15, -15);
+            private bool isBringingToFront;
+            private Bitmap getShadow;
+            private Timer timer = new Timer();
+            private long lastResizedOn = 0;
+
+            public MetroRealisticDropShadow(Form parentForm)
+            {
+                shadowTargetForm = parentForm;
+
+                FormBorderStyle = FormBorderStyle.None;
+                ShowInTaskbar = false;
+
+                uint wl = WinApi.GetWindowLong(this.Handle, -20);
+                wl = wl | 0x80000 | 0x20;
+                WinApi.SetWindowLong(this.Handle, -20, wl);
+
+                StartPosition = parentForm.StartPosition;
+
+                parentForm.Activated += shadowTargetForm_Activated; 
+                Deactivate += MetroRealisticDropShadow_Deactivated;
+                parentForm.Move += shadowTargetForm_Move;
+                parentForm.Resize += shadowTargetForm_Resize;
+                parentForm.ResizeEnd += shadowTargetForm_ResizeEnd;
+
+                parentForm.Owner = this;
+
+                Bounds = GetBounds();
+
+                Load += MetroRealisticDropShadow_Load;
+                
+            }
+
+            private void MetroRealisticDropShadow_Load(object sendr, EventArgs e)
+            {
+                timer.Interval = 50;
+                timer.Tick += timer_Tick;
+                timer.Start();
+            }
+
+            private void timer_Tick(object sendr, EventArgs e)
+            {
+                timer.Tick -= timer_Tick;
+                timer.Stop();
+                getShadow = DrawBlurBorder();
+                SetBitmap(getShadow, 255);
+            }
+
+            private Rectangle GetBounds()
+            {
+                return new Rectangle((shadowTargetForm).Location.X + Offset.X, (shadowTargetForm).Location.Y + Offset.Y, shadowTargetForm.ClientRectangle.Width + Math.Abs(Offset.X * 2), shadowTargetForm.ClientRectangle.Height + Math.Abs(Offset.Y * 2));
+            }
+
+            private void shadowTargetForm_Activated(object o, EventArgs e)
+            {
+                Visible = (shadowTargetForm.WindowState == FormWindowState.Normal);
+                if (Visible) Show();
+
+                if (isBringingToFront)
+                {
+                    isBringingToFront = false;
+                    return;
+                }
+
+                this.BringToFront();
+            }
+
+            private void MetroRealisticDropShadow_Deactivated(object o, EventArgs e)
+            {
+                isBringingToFront = true;
+            }
+
+            private void shadowTargetForm_Move(object o, EventArgs e)
+            {
+                if (o is Form)
+                    this.Bounds = GetBounds();
+            }
+
+            private void shadowTargetForm_Resize(object o, EventArgs e)
+            {
+                if (o is Form)
+                    this.Bounds = GetBounds();
+
+                long delta = DateTime.Now.Ticks - lastResizedOn;
+                if (delta > 100000)
+                {
+                    lastResizedOn = DateTime.Now.Ticks;
+                    Invalidate();
+                }
+            }
+
+            private void shadowTargetForm_ResizeEnd(object o, EventArgs e)
+            {
+                lastResizedOn = 0;
+                Invalidate();
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                getShadow = DrawBlurBorder();
+                SetBitmap(getShadow, 255);
+            }
+
+            private void SetBitmap(Bitmap bitmap, byte opacity = 255)
+            {
+                if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
+                    throw new ApplicationException("The bitmap must be 32ppp with alpha-channel.");
+
+                IntPtr screenDc = WinApi.GetDC(IntPtr.Zero);
+                IntPtr memDc = WinApi.CreateCompatibleDC(screenDc);
+                IntPtr hBitmap = IntPtr.Zero;
+                IntPtr oldBitmap = IntPtr.Zero;
+
+                try
+                {
+                    hBitmap = bitmap.GetHbitmap(Color.FromArgb(0));
+                    oldBitmap = WinApi.SelectObject(memDc, hBitmap);
+
+                    WinApi.Size size = new WinApi.Size(bitmap.Width, bitmap.Height);
+                    WinApi.Point pointSource = new WinApi.Point(0, 0);
+                    WinApi.Point topPos = new WinApi.Point(Left, Top);
+                    WinApi.BLENDFUNCTION blend = new WinApi.BLENDFUNCTION();
+                    blend.BlendOp = WinApi.AC_SRC_OVER;
+                    blend.BlendFlags = 0;
+                    blend.SourceConstantAlpha = opacity;
+                    blend.AlphaFormat = WinApi.AC_SRC_ALPHA;
+
+                    WinApi.UpdateLayeredWindow(Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, WinApi.ULW_ALPHA);
+                }
+                finally
+                {
+                    WinApi.ReleaseDC(IntPtr.Zero, screenDc);
+                    if (hBitmap != IntPtr.Zero)
+                    {
+                        WinApi.SelectObject(memDc, oldBitmap);
+                        WinApi.DeleteObject(hBitmap);
+                    }
+                    WinApi.DeleteDC(memDc);
+                }
+            }
+
+            private Bitmap DrawBlurBorder()
+            {
+                return (Bitmap)DrawOutsetShadow(0, 0, 40, 1, Color.Black, new Rectangle(1, 1, ClientRectangle.Width, ClientRectangle.Height));
+            }
+
+            private Image DrawOutsetShadow(int hShadow, int vShadow, int blur, int spread, Color color, Rectangle shadowCanvasArea)
+            {
+                Rectangle rOuter = shadowCanvasArea;
+                Rectangle rInner = shadowCanvasArea;
+                rInner.Offset(hShadow, vShadow);
+                rInner.Inflate(-blur, -blur);
+                rOuter.Inflate(spread, spread);
+                rOuter.Offset(hShadow, vShadow);
+
+                Rectangle originalOuter = rOuter;
+
+                Bitmap img = new Bitmap(originalOuter.Width, originalOuter.Height, PixelFormat.Format32bppArgb);
+                Graphics g = Graphics.FromImage(img);
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                var currentBlur = 0;
+                do
+                {
+                    var transparency = (rOuter.Height - rInner.Height) / (double)(blur * 2 + spread * 2);
+                    var shadowColor = Color.FromArgb(((int)(200 * (transparency * transparency))), color);
+                    var rOutput = rInner;
+                    rOutput.Offset(-originalOuter.Left, -originalOuter.Top);
+
+                    DrawRoundedRectangle(g, rOutput, currentBlur, Pens.Transparent, shadowColor);
+                    rInner.Inflate(1, 1);
+                    currentBlur = (int)((double)blur * (1 - (transparency * transparency)));
+
+                } while (rOuter.Contains(rInner));
+
+                g.Flush();
+                g.Dispose();
+
+                return img;
+            }
+
+            private void DrawRoundedRectangle(Graphics g, Rectangle bounds, int cornerRadius, Pen drawPen, Color fillColor)
+            {
+                int strokeOffset = Convert.ToInt32(Math.Ceiling(drawPen.Width));
+                bounds = Rectangle.Inflate(bounds, -strokeOffset, -strokeOffset);
+
+                var gfxPath = new GraphicsPath();
+
+                if (cornerRadius > 0)
+                {
+                    gfxPath.AddArc(bounds.X, bounds.Y, cornerRadius, cornerRadius, 180, 90);
+                    gfxPath.AddArc(bounds.X + bounds.Width - cornerRadius, bounds.Y, cornerRadius, cornerRadius, 270, 90);
+                    gfxPath.AddArc(bounds.X + bounds.Width - cornerRadius, bounds.Y + bounds.Height - cornerRadius, cornerRadius, cornerRadius, 0, 90);
+                    gfxPath.AddArc(bounds.X, bounds.Y + bounds.Height - cornerRadius, cornerRadius, cornerRadius, 90, 90);
+                }
+                else
+                {
+                    gfxPath.AddRectangle(bounds);
+                }
+
+                gfxPath.CloseAllFigures();
+
+                if (cornerRadius > 5)
+                {
+                    using (SolidBrush b = new SolidBrush(fillColor))
+                    {
+                        g.FillPath(b, gfxPath);
+                    }
+                }
+                if (drawPen != Pens.Transparent)
+                {
+                    using (Pen p = new Pen(drawPen.Color))
+                    {
+                        p.EndCap = p.StartCap = LineCap.Round;
+                        g.DrawPath(p, gfxPath);
+                    }
                 }
             }
         }

@@ -1,6 +1,16 @@
 Changelog File
 
 -----------------------------------------------------------------------------------
+SW 2013-03-04 17:32 - AssemblyVersion 1.1.0.0
+-----------------------------------------------------------------------------------
+
+* Added support for realistic drop shadow
+* Implemented "ShadowType" Property to switch between old flat shadow and new realistic drop shadow
+
+*** thx to nripendra, who delivers the base code! ***
+
+
+-----------------------------------------------------------------------------------
 SW 2013-03-03 19:20 - AssemblyVersion 1.1.0.0
 -----------------------------------------------------------------------------------
 

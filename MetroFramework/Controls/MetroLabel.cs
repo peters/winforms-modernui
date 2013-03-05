@@ -233,6 +233,11 @@ namespace MetroFramework.Controls
             {
                 CreateBaseTextBox();
                 UpdateBaseTextBox();
+
+                if (!baseTextBox.Visible)
+                {
+                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), ClientRectangle, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
+                }
             }
             else
             {
@@ -307,9 +312,24 @@ namespace MetroFramework.Controls
             }
         }
 
+        private bool firstInitialization = true; 
+
         private void CreateBaseTextBox()
         {
-            if (baseTextBox.Visible) return;
+            if (baseTextBox.Visible && !firstInitialization) return;
+            if (!firstInitialization) return;
+
+            firstInitialization = false;
+
+            if (!DesignMode)
+            {
+                Form parentForm = FindForm();
+                if (parentForm != null)
+                {
+                    parentForm.ResizeBegin += new EventHandler(parentForm_ResizeBegin);
+                    parentForm.ResizeEnd += new EventHandler(parentForm_ResizeEnd);
+                }
+            }
 
             baseTextBox.Visible = true;
             baseTextBox.BorderStyle = BorderStyle.None;
@@ -327,6 +347,22 @@ namespace MetroFramework.Controls
             Controls.Add(baseTextBox);
         }
 
+        private void parentForm_ResizeEnd(object sender, EventArgs e)
+        {
+            if (LabelMode == MetroLabelMode.Selectable)
+            {
+                ShowBaseTextBox();
+            }
+        }
+
+        private void parentForm_ResizeBegin(object sender, EventArgs e)
+        {
+            if (LabelMode == MetroLabelMode.Selectable)
+            {
+                HideBaseTextBox();
+            }
+        }
+
         private void DestroyBaseTextbox()
         {
             if (!baseTextBox.Visible) return;
@@ -340,6 +376,7 @@ namespace MetroFramework.Controls
         {
             if (!baseTextBox.Visible) return;
 
+            SuspendLayout();
             baseTextBox.SuspendLayout();
 
             if (useCustomBackground)
@@ -419,6 +456,7 @@ namespace MetroFramework.Controls
             Size = GetPreferredSize(Size.Empty);
 
             baseTextBox.ResumeLayout();
+            ResumeLayout();
         }
 
         private void HideBaseTextBox()

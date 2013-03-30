@@ -1,4 +1,4 @@
-﻿/**
+/**
  * MetroFramework - Modern UI for WinForms
  * 
  * The MIT License (MIT)
@@ -21,6 +21,11 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+ 
+/*
+ *  JT 2013-03-22: Fixed positioning and removal/disposal of shadows
+ */
+ 
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -220,23 +225,10 @@ namespace MetroFramework.Forms
 
         protected override void Dispose(bool disposing)
         {
-            if (metroFlatShadowForm != null)
+            // JT: Don't touch the shadow objects when we are calle from the finalizer
+            if (disposing)
             {
-                if (!metroFlatShadowForm.IsDisposed)
-                {
-                    metroFlatShadowForm.Owner = null;
-                    metroFlatShadowForm.Dispose();
-                    metroFlatShadowForm = null;
-                }
-            }
-            if (metroRealisticShadowForm != null)
-            {
-                if (!metroRealisticShadowForm.IsDisposed)
-                {
-                    metroRealisticShadowForm.Owner = null;
-                    metroRealisticShadowForm.Dispose();
-                    metroRealisticShadowForm = null;
-                }
+                RemoveShadow();
             }
 
             base.Dispose(disposing);
@@ -304,20 +296,37 @@ namespace MetroFramework.Forms
             if (!(this is MetroTaskWindow))
                 MetroTaskWindow.ForceClose();
 
+            // JT:
+            RemoveShadow();
+
+            base.OnClosing(e);
+        }
+
+        // JT: make sure shadow form is disposed and we are no longer owned by it
+        private void RemoveShadow()
+        {
             if (metroFlatShadowForm != null)
             {
-                metroFlatShadowForm.Visible = false;
-                metroFlatShadowForm.Owner = null;
-                metroFlatShadowForm = null;
+                if (!metroFlatShadowForm.IsDisposed)
+                {
+                    metroFlatShadowForm.Visible = false;
+                    Owner = metroFlatShadowForm.Owner;
+                    metroFlatShadowForm.Owner = null;
+                    metroFlatShadowForm.Dispose();
+                    metroFlatShadowForm = null;
+                }
             }
             if (metroRealisticShadowForm != null)
             {
-                metroRealisticShadowForm.Visible = false;
-                metroRealisticShadowForm.Owner = null;
-                metroRealisticShadowForm = null;
+                if (!metroRealisticShadowForm.IsDisposed)
+                {
+                    metroRealisticShadowForm.Visible = false;
+                    Owner = metroRealisticShadowForm.Owner;
+                    metroRealisticShadowForm.Owner = null;
+                    metroRealisticShadowForm.Dispose();
+                    metroRealisticShadowForm = null;
+                }
             }
-
-            base.OnClosing(e);
         }
 
         protected override void OnDeactivate(EventArgs e)
@@ -337,6 +346,19 @@ namespace MetroFramework.Forms
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
+            // JT: Moved here to implement CenterParent before we are owned by the shadow form
+            // JT: this also avoids the shadow appearing in a different location
+            // JT: Using CenterToScreen() also fixes the issue with forms always appearing on the primary screen
+            if(!DesignMode) switch (StartPosition)
+            {
+                case FormStartPosition.CenterParent:
+                    CenterToParent();
+                    break;
+                case FormStartPosition.CenterScreen:
+                    CenterToScreen();
+                    break;
+            }
 
             if (metroFlatShadowForm == null && !DesignMode && shadowType == ShadowType.Flat)
             {
@@ -367,14 +389,16 @@ namespace MetroFramework.Forms
                     UpdateWindowButtonPosition();
                 }
 
-                if (StartPosition == FormStartPosition.CenterScreen)
-                {
-                    Point initialLocation = new Point();
-                    initialLocation.X = (Screen.PrimaryScreen.WorkingArea.Width - (ClientRectangle.Width + 5)) / 2;
-                    initialLocation.Y = (Screen.PrimaryScreen.WorkingArea.Height - (ClientRectangle.Height + 5)) / 2;
-                    Location = initialLocation;
-                    base.OnActivated(e);
-                }
+                // JT: See OnLoad()
+
+                //if (StartPosition == FormStartPosition.CenterScreen)
+                //{
+                //    Point initialLocation = new Point();
+                //    initialLocation.X = (Screen.PrimaryScreen.WorkingArea.Width - (ClientRectangle.Width + 5)) / 2;
+                //    initialLocation.Y = (Screen.PrimaryScreen.WorkingArea.Height - (ClientRectangle.Height + 5)) / 2;
+                //    Location = initialLocation;
+                //    base.OnActivated(e);
+                //}
 
                 isInitialized = true;
             }
@@ -854,6 +878,7 @@ namespace MetroFramework.Forms
                     e.Graphics.FillRectangle(b, new Rectangle(4, 4, ClientRectangle.Width - 8, ClientRectangle.Height - 8));
                 }
             }
+
         }
 
         #endregion
@@ -887,7 +912,14 @@ namespace MetroFramework.Forms
                 parentForm.Move += shadowTargetForm_Move;
                 parentForm.Resize += shadowTargetForm_Resize;
                 parentForm.ResizeEnd += shadowTargetForm_ResizeEnd;
+                // JT: the shadow would be left over if the form was only hidden, not closed
+                parentForm.VisibleChanged += shadowTargetForm_VisibleChanged;
 
+                // JT: to allow centering to parent after we become the parent form's owner
+                if (parentForm.Owner != null)
+                    Owner = parentForm.Owner;
+
+                // JT: is this really necessary??
                 parentForm.Owner = this;
 
                 Bounds = GetBounds();
@@ -914,6 +946,12 @@ namespace MetroFramework.Forms
             private Rectangle GetBounds()
             {
                 return new Rectangle((shadowTargetForm).Location.X + Offset.X, (shadowTargetForm).Location.Y + Offset.Y, shadowTargetForm.ClientRectangle.Width + Math.Abs(Offset.X * 2), shadowTargetForm.ClientRectangle.Height + Math.Abs(Offset.Y * 2));
+            }
+
+            // JT: the shadow would be left over if the form was only hidden, not closed
+            private void shadowTargetForm_VisibleChanged(object sender, EventArgs e)
+            {
+                Visible = shadowTargetForm.Visible;
             }
 
             private void shadowTargetForm_Activated(object o, EventArgs e)

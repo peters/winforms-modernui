@@ -123,6 +123,26 @@ namespace MetroFramework.Controls
 
         #region Routing Fields
 
+        public override ContextMenu ContextMenu
+        {
+            get { return baseTextBox.ContextMenu; }
+            set 
+            {
+                ContextMenu = value;
+                baseTextBox.ContextMenu = value; 
+            }
+        }
+
+        public override ContextMenuStrip ContextMenuStrip
+        {
+            get { return baseTextBox.ContextMenuStrip; }
+            set
+            {
+                ContextMenuStrip = value;
+                baseTextBox.ContextMenuStrip = value;
+            }
+        }
+
         public bool Multiline
         {
             get { return baseTextBox.Multiline; }
@@ -140,6 +160,24 @@ namespace MetroFramework.Controls
         {
             get { return baseTextBox.SelectedText;  }
             set { baseTextBox.Text = value; }
+        }
+
+        public bool ReadOnly
+        {
+            get { return baseTextBox.ReadOnly; }
+            set { baseTextBox.ReadOnly = value; }
+        }
+
+        public char PasswordChar
+        {
+            get { return baseTextBox.PasswordChar; }
+            set { baseTextBox.PasswordChar = value; }
+        }
+
+        public bool UseSystemPasswordChar
+        {
+            get { return baseTextBox.UseSystemPasswordChar; }
+            set { baseTextBox.UseSystemPasswordChar = value; }
         }
 
         #endregion
@@ -233,6 +271,16 @@ namespace MetroFramework.Controls
         public void SelectAll()
         {
             baseTextBox.SelectAll();
+        }
+
+        public void Clear()
+        {
+            baseTextBox.Clear();
+        }
+
+        public void AppendText(string text)
+        {
+            baseTextBox.AppendText(text);
         }
 
         #endregion

@@ -21,6 +21,7 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -46,6 +47,22 @@ namespace MetroFramework.Components
             }
         }
 
+        private UserControl ownerControl = null;
+        public UserControl OwnerControl
+        {
+            get { return ownerControl; }
+            set
+            {
+                if (ownerControl != null)
+                    return;
+
+                ownerControl = value;
+                ownerControl.ControlAdded += new ControlEventHandler(NewControlOnOwnerControl);
+
+                UpdateOwnerControl();
+            }
+        }
+
         private MetroColorStyle metroStyle = MetroColorStyle.Blue;
         public MetroColorStyle Style
         {
@@ -54,6 +71,7 @@ namespace MetroFramework.Components
             { 
                 metroStyle = value;
                 UpdateOwnerForm();
+                UpdateOwnerControl();
             }
         }
 
@@ -65,6 +83,7 @@ namespace MetroFramework.Components
             {
                 metroTheme = value;
                 UpdateOwnerForm();
+                UpdateOwnerControl();
             }
         }
 
@@ -76,6 +95,11 @@ namespace MetroFramework.Components
         public MetroStyleManager(Form ownerForm)
         {
             this.OwnerForm = ownerForm;
+        }
+
+        public MetroStyleManager(UserControl ownerControl)
+        {
+            this.ownerControl = ownerControl;
         }
 
         private void NewControlOnOwnerForm(object sender, ControlEventArgs e)
@@ -95,6 +119,26 @@ namespace MetroFramework.Components
             else
             {
                 UpdateOwnerForm();
+            }
+        }
+
+        private void NewControlOnOwnerControl(object sender, ControlEventArgs e)
+        {
+            if (e.Control is IMetroControl)
+            {
+                ((IMetroControl)e.Control).Style = Style;
+                ((IMetroControl)e.Control).Theme = Theme;
+                ((IMetroControl)e.Control).StyleManager = this;
+            }
+            else if (e.Control is IMetroComponent)
+            {
+                ((IMetroComponent)e.Control).Style = Style;
+                ((IMetroComponent)e.Control).Theme = Theme;
+                ((IMetroComponent)e.Control).StyleManager = this;
+            }
+            else
+            {
+                UpdateOwnerControl();
             }
         }
 
@@ -121,6 +165,31 @@ namespace MetroFramework.Components
             }
 
             ownerForm.Refresh();
+        }
+
+        public void UpdateOwnerControl()
+        {
+            if (ownerControl == null)
+                return;
+
+            if (ownerControl is IMetroControl)
+            {
+                ((IMetroControl)ownerControl).Style = Style;
+                ((IMetroControl)ownerControl).Theme = Theme;
+                ((IMetroControl)ownerControl).StyleManager = this;
+            }
+
+            if (ownerControl.Controls.Count > 0)
+                UpdateControlCollection(ownerControl.Controls);
+
+            if (ownerControl.ContextMenuStrip != null && ownerControl.ContextMenuStrip is IMetroComponent)
+            {
+                ((IMetroComponent)ownerControl.ContextMenuStrip).Style = Style;
+                ((IMetroComponent)ownerControl.ContextMenuStrip).Theme = Theme;
+                ((IMetroComponent)ownerControl.ContextMenuStrip).StyleManager = this;
+            }
+
+            ownerControl.Refresh();
         }
 
         private void UpdateControlCollection(Control.ControlCollection controls)

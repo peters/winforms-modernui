@@ -154,15 +154,17 @@ namespace MetroFramework.Controls
             }
         }
 
-        private uint smallChange = 1;
-        public uint SmallChange
+        // jt: changed these to use int (uint is not CLS compatible)
+
+        private int smallChange = 1;
+        public int SmallChange
         {
             get { return smallChange; }
             set { smallChange = value; }
         }
 
-        private uint largeChange = 5;
-        public uint LargeChange
+        private int largeChange = 5;
+        public int LargeChange
         {
             get { return largeChange; }
             set { largeChange = value; }

@@ -26,7 +26,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using MetroFramework.Components;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 using MetroFramework.Native;
@@ -39,7 +38,7 @@ namespace MetroFramework.Controls
         Vertical
     }
 
-    [Designer(typeof (MetroScrollBarDesigner))]
+    [Designer("MetroFramework.Design.MetroScrollBarDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [DefaultEvent("Scroll")]
     [DefaultProperty("Value")]
     public class MetroScrollBar : Control, IMetroControl

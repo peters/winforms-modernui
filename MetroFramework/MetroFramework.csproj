@@ -12,8 +12,8 @@
     <AssemblyName>MetroFramework</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>MetroFramework.pfx</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../MetroFramework.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -58,11 +58,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\AnimationBase.cs" />
@@ -128,16 +127,6 @@
     <Compile Include="Controls\MetroUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Design\MetroTabPageDesigner.cs" />
-    <Compile Include="Design\MetroProgressSpinnerDesigner.cs" />
-    <Compile Include="Design\MetroProgressBarDesigner.cs" />
-    <Compile Include="Design\MetroButtonDesigner.cs" />
-    <Compile Include="Design\MetroLabelDesigner.cs" />
-    <Compile Include="Design\MetroLinkDesigner.cs" />
-    <Compile Include="Design\MetroScrollBarDesigner.cs" />
-    <Compile Include="Design\MetroTabControlDesigner.cs" />
-    <Compile Include="Design\MetroTextBoxDesigner.cs" />
-    <Compile Include="Design\MetroTileDesigner.cs" />
     <Compile Include="Drawing\MetroPaint.cs" />
     <Compile Include="Forms\MetroMessageBox.cs">
       <SubType>Form</SubType>

@@ -27,13 +27,12 @@ using System.ComponentModel;
 using System.Windows.Forms;
 
 using MetroFramework.Components;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
-    [Designer(typeof(MetroLinkDesigner))]
+    [Designer("MetroFramework.Design.MetroLinkDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(LinkLabel))]
     [DefaultEvent("Click")]
     public class MetroLink : Button, IMetroControl

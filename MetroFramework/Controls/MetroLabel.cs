@@ -27,7 +27,6 @@ using System.ComponentModel;
 using System.Windows.Forms;
 
 using MetroFramework.Components;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 
@@ -39,7 +38,7 @@ namespace MetroFramework.Controls
         Selectable
     }
 
-    [Designer(typeof(MetroLabelDesigner))]
+    [Designer("MetroFramework.Design.MetroLabelDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(Label))]
     public class MetroLabel : Label, IMetroControl
     {

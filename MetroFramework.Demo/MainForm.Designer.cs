@@ -1097,14 +1097,14 @@
             // 
             this.metroTrackBar1.BackColor = System.Drawing.Color.Transparent;
             this.metroTrackBar1.CustomBackground = false;
-            this.metroTrackBar1.LargeChange = ((uint)(5u));
+            this.metroTrackBar1.LargeChange = 5;
             this.metroTrackBar1.Location = new System.Drawing.Point(28, 146);
             this.metroTrackBar1.Maximum = 100;
             this.metroTrackBar1.Minimum = 0;
             this.metroTrackBar1.MouseWheelBarPartitions = 10;
             this.metroTrackBar1.Name = "metroTrackBar1";
             this.metroTrackBar1.Size = new System.Drawing.Size(237, 23);
-            this.metroTrackBar1.SmallChange = ((uint)(1u));
+            this.metroTrackBar1.SmallChange = 1;
             this.metroTrackBar1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTrackBar1.StyleManager = null;
             this.metroTrackBar1.TabIndex = 4;

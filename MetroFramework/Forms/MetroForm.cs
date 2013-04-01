@@ -215,8 +215,11 @@ namespace MetroFramework.Forms
             Name = "MetroForm";
             Padding = new Padding(20, 60, 20, 20);
             StartPosition = FormStartPosition.CenterScreen;
-            MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
 
+            //JT: This is wrong - why should the window be limited to the size of the designer;s primary screen???
+            //MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
+
+            //JT: What is this supposed to be good for?
             RemoveCloseButton();
             FormBorderStyle = FormBorderStyle.None;
         }
@@ -250,23 +253,10 @@ namespace MetroFramework.Forms
 
             if (displayHeader)
             {
-                switch (TextAlign)
-                {
-                    case TextAlign.Left:
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(20, 20), foreColor);
-                        break;
-
-                    case TextAlign.Center:
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width, 20), foreColor, TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter);
-                        break;
-
-                    case TextAlign.Right:
-                        // JT: Replaced TextFormatFlags.RightToLeft with .Right
-                        Rectangle actualSize = MeasureText(e.Graphics, ClientRectangle, MetroFonts.Title, Text, TextFormatFlags.Right);
-                        // JT: Fix right-align of text
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width - 20 - actualSize.Width, 20), foreColor, TextFormatFlags.Right);
-                break;
-                }
+                // Assuming padding 20px on left/right; 20px from top; max 40px height
+                Rectangle bounds = new Rectangle(20, 20, ClientRectangle.Width - 2*20, 40);
+                TextFormatFlags flags = TextFormatFlags.EndEllipsis | GetTextFormatFlags();
+                TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, bounds, foreColor, flags);
             }
 
             if (Resizable && (SizeGripStyle == SizeGripStyle.Auto || SizeGripStyle == SizeGripStyle.Show))
@@ -284,6 +274,17 @@ namespace MetroFramework.Forms
                     });
                 }
             }
+        }
+
+        private TextFormatFlags GetTextFormatFlags()
+        {
+            switch (TextAlign)
+            {
+                case TextAlign.Left: return TextFormatFlags.Left;
+                case TextAlign.Center: return TextFormatFlags.HorizontalCenter;
+                case TextAlign.Right: return TextFormatFlags.Right;
+            }
+            throw new InvalidOperationException();
         }
 
         #endregion

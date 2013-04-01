@@ -28,7 +28,6 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using MetroFramework.Interfaces;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 
 namespace MetroFramework.Components

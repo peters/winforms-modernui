@@ -24,10 +24,10 @@
 using System;
 using System.Drawing;
 using System.ComponentModel;
+using System.Security;
 using System.Windows.Forms;
 
 using MetroFramework.Components;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 
@@ -39,7 +39,7 @@ namespace MetroFramework.Controls
         Selectable
     }
 
-    [Designer(typeof(MetroLabelDesigner))]
+    [Designer("MetroFramework.Design.MetroLabelDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(Label))]
     public class MetroLabel : Label, IMetroControl
     {
@@ -469,11 +469,13 @@ namespace MetroFramework.Controls
             baseTextBox.Visible = true;
         }
 
+        [SecuritySafeCritical]
         private void BaseTextBoxOnClick(object sender, EventArgs eventArgs)
         {
             Native.WinCaret.HideCaret(baseTextBox.Handle);
         }
 
+        [SecuritySafeCritical]
         private void BaseTextBoxOnDoubleClick(object sender, EventArgs eventArgs)
         {
             baseTextBox.SelectAll();

@@ -25,10 +25,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Security;
 using System.Windows.Forms;
 
 using MetroFramework.Interfaces;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Components;
 using MetroFramework.Native;
@@ -36,7 +36,7 @@ using MetroFramework.Native;
 namespace MetroFramework.Controls
 {
     [ToolboxItem(false)]
-    [Designer(typeof(MetroTabPageDesigner))]
+    [Designer("MetroFramework.Design.MetroTabPageDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     public class MetroTabPage : TabPage, IMetroControl
     {
         #region Interface
@@ -264,6 +264,7 @@ namespace MetroFramework.Controls
             horizontalScrollbar.Value = HorizontalScroll.Value;
         }
 
+        [SecuritySafeCritical]
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);

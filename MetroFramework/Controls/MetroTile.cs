@@ -27,13 +27,12 @@ using System.ComponentModel;
 using System.Windows.Forms;
 
 using MetroFramework.Drawing;
-using MetroFramework.Design;
 using MetroFramework.Components;
 using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
-    [Designer(typeof(MetroTileDesigner))]
+    [Designer("MetroFramework.Design.MetroTileDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(Button))]
     public class MetroTile : Button, IContainerControl, IMetroControl
     {

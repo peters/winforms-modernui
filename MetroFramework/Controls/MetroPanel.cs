@@ -24,6 +24,7 @@
 using System;
 using System.Drawing;
 using System.ComponentModel;
+using System.Security;
 using System.Windows.Forms;
 
 using MetroFramework.Components;
@@ -267,6 +268,7 @@ namespace MetroFramework.Controls
             horizontalScrollbar.Value = HorizontalScroll.Value;
         }
 
+        [SecuritySafeCritical]
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);

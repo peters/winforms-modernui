@@ -26,13 +26,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using MetroFramework.Components;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
-    [Designer(typeof(MetroTextBoxDesigner))]
+    [Designer("MetroFramework.Design.MetroTextBoxDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     public class MetroTextBox : Control, IMetroControl
     {
         #region Interface

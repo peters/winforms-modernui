@@ -23,53 +23,24 @@
  */
 using System;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Security;
 using System.Security.Permissions;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 using MetroFramework.Components;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 using MetroFramework.Native;
 
 namespace MetroFramework.Controls
 {
-    #region MetroTabPageCollectionEditor
-
-    internal class MetroTabPageCollectionEditor : CollectionEditor
-    {
-        protected override CollectionForm CreateCollectionForm()
-        {
-            var baseForm = base.CreateCollectionForm();
-            baseForm.Text = "MetroTabPage Collection Editor";
-            return baseForm;
-        }
-
-        public MetroTabPageCollectionEditor(Type type)
-            : base(type)
-        { }
-
-        protected override Type CreateCollectionItemType()
-        {
-            return typeof (MetroTabPage);
-        }
-
-        protected override Type[] CreateNewItemTypes()
-        {
-            return new[] { typeof(MetroTabPage) };
-        }
-    }
-
-    #endregion
 
     #region MetroTabPageCollection
 
     [ToolboxItem(false)]
-    [Editor(typeof(MetroTabPageCollectionEditor), typeof(UITypeEditor))]
+    [Editor("MetroFramework.Design.MetroTabPageCollectionEditor, " + AssemblyRef.MetroFrameworkDesignSN, typeof(UITypeEditor))]
     public class MetroTabPageCollection : TabControl.TabPageCollection
     {
         public MetroTabPageCollection(MetroTabControl owner) : base(owner)
@@ -78,7 +49,7 @@ namespace MetroFramework.Controls
 
     #endregion
 
-    [Designer(typeof (MetroTabControlDesigner))]
+    [Designer("MetroFramework.Design.MetroTabControlDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(TabControl))]
     public class MetroTabControl : TabControl, IMetroControl
     {
@@ -168,7 +139,7 @@ namespace MetroFramework.Controls
             }
         }
 
-        [Editor(typeof (MetroTabPageCollectionEditor), typeof (UITypeEditor))]
+        [Editor("MetroFramework.Design.MetroTabPageCollectionEditor, " + AssemblyRef.MetroFrameworkDesignSN, typeof(UITypeEditor))]
         public new TabPageCollection TabPages
         {
             get
@@ -345,6 +316,7 @@ namespace MetroFramework.Controls
             Invalidate();
         }
 
+        [SecuritySafeCritical]
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);

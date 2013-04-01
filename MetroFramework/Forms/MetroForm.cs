@@ -28,6 +28,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Security;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -260,9 +261,11 @@ namespace MetroFramework.Forms
                         break;
 
                     case TextAlign.Right:
-                        Rectangle actualSize = MeasureText(e.Graphics, ClientRectangle, MetroFonts.Title, Text, TextFormatFlags.RightToLeft);
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width - actualSize.Width, 20), foreColor, TextFormatFlags.RightToLeft);
-                        break;
+                        // JT: Replaced TextFormatFlags.RightToLeft with .Right
+                        Rectangle actualSize = MeasureText(e.Graphics, ClientRectangle, MetroFonts.Title, Text, TextFormatFlags.Right);
+                        // JT: Fix right-align of text
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, new Point(ClientRectangle.Width - 20 - actualSize.Width, 20), foreColor, TextFormatFlags.Right);
+                break;
                 }
             }
 
@@ -337,6 +340,7 @@ namespace MetroFramework.Forms
             }
         }
 
+        [SecuritySafeCritical]
         public bool FocusMe()
         {
             return WinApi.SetForegroundWindow(Handle);
@@ -499,6 +503,7 @@ namespace MetroFramework.Forms
             }
         }
 
+        [SecuritySafeCritical]
         private void MoveControl()
         {
             WinApi.ReleaseCapture();
@@ -595,7 +600,8 @@ namespace MetroFramework.Forms
 
             Dictionary<int, WindowButtons> priorityOrder = new Dictionary<int, WindowButtons>(3) { {0, WindowButtons.Close}, {1, WindowButtons.Maximize}, {2, WindowButtons.Minimize} };
 
-            Point firstButtonLocation = new Point(ClientRectangle.Width - 40, borderWidth);
+            // JT: position closer to the edge
+            Point firstButtonLocation = new Point(ClientRectangle.Width - borderWidth - 16, borderWidth);
             int lastDrawedButtonPosition = firstButtonLocation.X - 25;
 
             MetroFormButton firstButton = null;
@@ -882,6 +888,7 @@ namespace MetroFramework.Forms
             private Timer timer = new Timer();
             private long lastResizedOn = 0;
 
+            [SecuritySafeCritical]
             public MetroRealisticDropShadow(Form parentForm)
             {
                 shadowTargetForm = parentForm;
@@ -992,6 +999,7 @@ namespace MetroFramework.Forms
                 SetBitmap(getShadow, 255);
             }
 
+            [SecuritySafeCritical]
             private void SetBitmap(Bitmap bitmap, byte opacity)
             {
                 if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
@@ -1114,6 +1122,7 @@ namespace MetroFramework.Forms
 
         #region Helper methods
 
+        [SecuritySafeCritical]
         public void RemoveCloseButton()
         {
             IntPtr hMenu = WinApi.GetSystemMenu(Handle, false);

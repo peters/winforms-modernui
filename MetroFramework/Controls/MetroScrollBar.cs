@@ -24,9 +24,9 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Security;
 using System.Windows.Forms;
 using MetroFramework.Components;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 using MetroFramework.Native;
@@ -39,7 +39,7 @@ namespace MetroFramework.Controls
         Vertical
     }
 
-    [Designer(typeof (MetroScrollBarDesigner))]
+    [Designer("MetroFramework.Design.MetroScrollBarDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [DefaultEvent("Scroll")]
     [DefaultProperty("Value")]
     public class MetroScrollBar : Control, IMetroControl
@@ -440,12 +440,14 @@ namespace MetroFramework.Controls
 
         #region Update Methods
 
+        [SecuritySafeCritical]
         public void BeginUpdate()
         {
             WinApi.SendMessage(Handle, (int) WinApi.Messages.WM_SETREDRAW, false, 0);
             inUpdate = true;
         }
 
+        [SecuritySafeCritical]
         public void EndUpdate()
         {
             WinApi.SendMessage(Handle, (int)WinApi.Messages.WM_SETREDRAW, true, 0);

@@ -23,277 +23,183 @@
  */
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Interfaces;
 
 namespace MetroFramework.Components
 {
-    public class MetroStyleManager : Component, ICloneable
+    public class MetroStyleManager : Component, ICloneable, ISupportInitialize
     {
-        private bool updateOtherControls = false;
-        public bool UpdateOtherControls
-        {
-            get { return updateOtherControls; }
-            set { updateOtherControls = value; }
-        }
+        public MetroStyleManager()
+        {}
 
-        private Form ownerForm = null;
-        public Form OwnerForm
+        //public MetroStyleManager(ContainerControl owner)
+        //    : this()
+        //{
+        //    Owner = owner;
+        //}
+
+        /// <summary>
+        ///     The Container owning components.
+        /// </summary>
+        private readonly IContainer _parent;
+
+        public MetroStyleManager(IContainer parent)
+            : this()
         {
-            get { return ownerForm; }
-            set 
+            Debug.WriteLine("MetroStyleManager in IContainer");
+            if (parent != null)
             {
-                if (ownerForm != null)
-                {
-                    ownerForm.ControlAdded -= NewControlOnOwnerForm;
-                }
-
-                ownerForm = value;
-
-                if (value != null)
-                {
-                    ownerForm.ControlAdded += new ControlEventHandler(NewControlOnOwnerForm);
-                }
-
-                UpdateOwnerForm();
+                _parent = parent;
+                parent.Add(this);
             }
         }
 
-        private ContainerControl ownerControl = null;
-        public ContainerControl OwnerControl
+        #region ICloneable
+
+        // What's the use case here?
+        // Do we need to clone parent container, too?
+
+        public object Clone()
         {
-            get { return ownerControl; }
+            MetroStyleManager newStyleManager = new MetroStyleManager();
+            newStyleManager.metroTheme = Theme;
+            newStyleManager.metroStyle = Style;
+            //newStyleManager.owner = null;
+            return newStyleManager;
+        }
+
+        #endregion
+
+        #region ISupportInitialize
+
+        /// <summary>
+        ///     Defer propagating style information until all controls and components have ben added 
+        ///     and all properties have been set.
+        /// </summary>
+        private bool _initializing;
+
+        void ISupportInitialize.BeginInit()
+        {
+            _initializing = true;
+        }
+
+        void ISupportInitialize.EndInit()
+        {
+            _initializing = false;
+            Refresh();
+        }
+
+        #endregion
+
+        private ContainerControl owner;
+        public ContainerControl Owner
+        {
+            get { return owner; }
             set
             {
-                if (ownerControl != null)
+                // We attach to ControlAdded to propagate styles to dynamically added controls
+
+                if (owner != null) 
                 {
-                    ownerControl.ControlAdded -= NewControlOnOwnerControl;
+                    owner.ControlAdded -= ControlAdded;
                 }
 
-                ownerControl = value;
+                owner = value;
 
                 if (value != null)
                 {
-                    ownerControl.ControlAdded += new ControlEventHandler(NewControlOnOwnerControl);
+                    owner.ControlAdded += ControlAdded;
+                    if(!_initializing) UpdateControl(value);
                 }
-
-                UpdateOwnerControl();
             }
         }
 
         private MetroColorStyle metroStyle = MetroColorStyle.Blue;
+        [DefaultValue(MetroColorStyle.Blue)]
+        [Category("Metro Appearance")]
         public MetroColorStyle Style
         {
             get { return metroStyle; }
             set 
             { 
                 metroStyle = value;
-                UpdateOwnerForm();
-                UpdateOwnerControl();
+                if (!_initializing) Refresh();
             }
         }
 
         private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
+        [DefaultValue(MetroThemeStyle.Light)]
+        [Category("Metro Appearance")]
         public MetroThemeStyle Theme
         {
             get { return metroTheme; }
             set 
             {
                 metroTheme = value;
-                UpdateOwnerForm();
-                UpdateOwnerControl();
+                if (!_initializing) Refresh();
             }
         }
 
-        public MetroStyleManager()
+        private void ControlAdded(object sender, ControlEventArgs e)
         {
-
+            Debug.Assert(e.Control!=null);
+            if(!_initializing) UpdateControl(e.Control);
         }
 
-        public MetroStyleManager(Form ownerForm)
+        public void Refresh()
         {
-            this.OwnerForm = ownerForm;
+            if(owner!=null) UpdateControl(owner);
+
+            // propagate style information to components, i.e. MetroStyleExtender
+            if (_parent == null || _parent.Components == null) return;
+            foreach (IMetroComponent metroComponent in _parent.Components.OfType<IMetroComponent>())
+                ApplyTheme(metroComponent);
         }
 
-        public MetroStyleManager(UserControl ownerControl)
+        private void UpdateControl(Control c)
         {
-            this.ownerControl = ownerControl;
+            if (c == null) return;
+
+            IMetroControl metroControl = c as IMetroControl;
+            if (metroControl != null ) ApplyTheme(metroControl);
+
+            IMetroComponent metroComponent = c as IMetroComponent;
+            if(metroComponent!=null) ApplyTheme(metroComponent);
+
+            TabControl tabControl = c as TabControl;
+            if (tabControl != null)
+            {
+                foreach (TabPage tp in ((TabControl)c).TabPages)
+                    UpdateControl(tp);
+            }
+
+            if (c.Controls != null)
+            {
+                foreach (Control child in c.Controls)
+                    UpdateControl(child);
+            }
+
+            if (c.ContextMenuStrip != null) UpdateControl(c.ContextMenuStrip);
+
+            c.Refresh();
         }
 
-        private void NewControlOnOwnerForm(object sender, ControlEventArgs e)
+        private void ApplyTheme(IMetroControl control)
         {
-            if (e.Control is IMetroControl)
-            {
-                ((IMetroControl)e.Control).Style = Style;
-                ((IMetroControl)e.Control).Theme = Theme;
-                ((IMetroControl)e.Control).StyleManager = this;
-            }
-            else if (e.Control is IMetroComponent)
-            {
-                ((IMetroComponent)e.Control).Style = Style;
-                ((IMetroComponent)e.Control).Theme = Theme;
-                ((IMetroComponent)e.Control).StyleManager = this;
-            }
-            else
-            {
-                UpdateOwnerForm();
-            }
+            control.Style = Style;
+            control.Theme = Theme;
+            control.StyleManager = this;
         }
 
-        private void NewControlOnOwnerControl(object sender, ControlEventArgs e)
+        private void ApplyTheme(IMetroComponent component)
         {
-            if (e.Control is IMetroControl)
-            {
-                ((IMetroControl)e.Control).Style = Style;
-                ((IMetroControl)e.Control).Theme = Theme;
-                ((IMetroControl)e.Control).StyleManager = this;
-            }
-            else if (e.Control is IMetroComponent)
-            {
-                ((IMetroComponent)e.Control).Style = Style;
-                ((IMetroComponent)e.Control).Theme = Theme;
-                ((IMetroComponent)e.Control).StyleManager = this;
-            }
-            else
-            {
-                UpdateOwnerControl();
-            }
+            component.Style = Style;
+            component.Theme = Theme;
+            component.StyleManager = this;
         }
 
-        public void UpdateOwnerForm()
-        {
-            if (ownerForm == null)
-                return;
-
-            if (ownerForm is IMetroForm)
-            {
-                ((IMetroForm)ownerForm).Style = Style;
-                ((IMetroForm)ownerForm).Theme = Theme;
-                ((IMetroForm)ownerForm).StyleManager = this;
-            }
-            else
-            {
-                if (updateOtherControls)
-                {
-                    ownerForm.BackColor = MetroFramework.Drawing.MetroPaint.BackColor.Form(Theme);
-                    ownerForm.ForeColor = MetroFramework.Drawing.MetroPaint.ForeColor.Label.Normal(Theme);
-                }
-            }
-
-            if (ownerForm.Controls.Count > 0)
-                UpdateControlCollection(ownerForm.Controls);
-
-            if (ownerForm.ContextMenuStrip != null && ownerForm.ContextMenuStrip is IMetroComponent)
-            {
-                ((IMetroComponent)ownerForm.ContextMenuStrip).Style = Style;
-                ((IMetroComponent)ownerForm.ContextMenuStrip).Theme = Theme;
-                ((IMetroComponent)ownerForm.ContextMenuStrip).StyleManager = this;
-            }
-
-            ownerForm.Refresh();
-        }
-
-        public void UpdateOwnerControl()
-        {
-            if (ownerControl == null)
-                return;
-
-            if (ownerControl is IMetroControl)
-            {
-                ((IMetroControl)ownerControl).Style = Style;
-                ((IMetroControl)ownerControl).Theme = Theme;
-                ((IMetroControl)ownerControl).StyleManager = this;
-            }
-            else
-            {
-                if (updateOtherControls)
-                {
-                    ownerControl.BackColor = MetroFramework.Drawing.MetroPaint.BackColor.Form(Theme);
-                    ownerControl.ForeColor = MetroFramework.Drawing.MetroPaint.ForeColor.Label.Normal(Theme);
-                }
-            }
-
-            if (ownerControl.Controls.Count > 0)
-                UpdateControlCollection(ownerControl.Controls);
-
-            if (ownerControl.ContextMenuStrip != null && ownerControl.ContextMenuStrip is IMetroComponent)
-            {
-                ((IMetroComponent)ownerControl.ContextMenuStrip).Style = Style;
-                ((IMetroComponent)ownerControl.ContextMenuStrip).Theme = Theme;
-                ((IMetroComponent)ownerControl.ContextMenuStrip).StyleManager = this;
-            }
-
-            ownerControl.Refresh();
-        }
-
-        private void UpdateControlCollection(Control.ControlCollection controls)
-        {
-            foreach (Control c in controls)
-            {
-                if (c is IMetroControl)
-                {
-                    ((IMetroControl)c).Style = Style;
-                    ((IMetroControl)c).Theme = Theme;
-                    ((IMetroControl)c).StyleManager = this;
-                }
-                else
-                {
-                    if (updateOtherControls)
-                    {
-                        c.BackColor = MetroFramework.Drawing.MetroPaint.BackColor.Form(Theme);
-                        c.ForeColor = MetroFramework.Drawing.MetroPaint.ForeColor.Label.Normal(Theme);
-                    }
-                }
-
-                if (c.ContextMenuStrip != null && c.ContextMenuStrip is IMetroComponent)
-                {
-                    ((IMetroComponent)c.ContextMenuStrip).Style = Style;
-                    ((IMetroComponent)c.ContextMenuStrip).Theme = Theme;
-                    ((IMetroComponent)c.ContextMenuStrip).StyleManager = this;
-                }
-                else if (c is IMetroComponent)
-                {
-                    ((IMetroComponent)c.ContextMenuStrip).Style = Style;
-                    ((IMetroComponent)c.ContextMenuStrip).Theme = Theme;
-                    ((IMetroComponent)c.ContextMenuStrip).StyleManager = this;
-                }
-
-                if (c is TabControl)
-                {
-                    foreach (TabPage tp in ((TabControl)c).TabPages)
-                    {
-                        if (tp is IMetroControl)
-                        {
-                            ((IMetroControl)c).Style = Style;
-                            ((IMetroControl)c).Theme = Theme;
-                            ((IMetroControl)c).StyleManager = this;
-                        }
-
-                        if (tp.Controls.Count > 0)
-                            UpdateControlCollection(tp.Controls);
-                    }
-                }
-                if (c is Panel || c is GroupBox || c is ContainerControl)
-                {
-                    UpdateControlCollection(c.Controls);
-                }
-                else
-                {
-                    if (c.Controls.Count > 0)
-                        UpdateControlCollection(c.Controls);
-                }
-
-            }
-        }
-
-        public object Clone()
-        {
-            MetroStyleManager newStyleManager = new MetroStyleManager();
-            newStyleManager.metroTheme = this.Theme;
-            newStyleManager.metroStyle = this.Style;
-            newStyleManager.ownerForm = null;
-
-            return newStyleManager;
-        }
     }
 }

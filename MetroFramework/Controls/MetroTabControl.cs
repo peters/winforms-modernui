@@ -25,6 +25,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Security;
 using System.Security.Permissions;
 using System.Windows.Forms;
 
@@ -315,6 +316,7 @@ namespace MetroFramework.Controls
             Invalidate();
         }
 
+        [SecuritySafeCritical]
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);

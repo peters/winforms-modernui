@@ -24,6 +24,7 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace MetroFramework.Native
 {
@@ -84,6 +85,7 @@ namespace MetroFramework.Native
             private set { autoHide = value; }
         }
 
+        [SecuritySafeCritical]
         public Taskbar()
         {
             IntPtr taskbarHandle = WinApi.FindWindow(Taskbar.ClassName, null);

@@ -23,9 +23,12 @@
  */
 using System;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace MetroFramework.Native
 {
+    // JT: do not make this class public if we have [SuppressUnmanagedCodeSecurity] applied !
+    [SuppressUnmanagedCodeSecurity]
     internal sealed class WinCaret
     {
         [DllImport("User32.dll")]

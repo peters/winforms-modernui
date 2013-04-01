@@ -244,7 +244,7 @@ namespace MetroFramework.Controls
                 }
 
                 Rectangle textRect = new Rectangle(0, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height);
-                TextRenderer.DrawText(e.Graphics, Items[e.Index].ToString(), MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+                TextRenderer.DrawText(e.Graphics, GetItemText(Items[e.Index]), MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
             }
             else
             {

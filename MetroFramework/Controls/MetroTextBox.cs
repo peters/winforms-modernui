@@ -21,6 +21,7 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -177,6 +178,12 @@ namespace MetroFramework.Controls
         {
             get { return baseTextBox.UseSystemPasswordChar; }
             set { baseTextBox.UseSystemPasswordChar = value; }
+        }
+
+        public HorizontalAlignment TextAlign
+        {
+            get { return baseTextBox.TextAlign; }
+            set { baseTextBox.TextAlign = value; }
         }
 
         #endregion

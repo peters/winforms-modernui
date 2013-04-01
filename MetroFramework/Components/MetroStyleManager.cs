@@ -31,6 +31,13 @@ namespace MetroFramework.Components
 {
     public class MetroStyleManager : Component, ICloneable
     {
+        private bool updateOtherControls = false;
+        public bool UpdateOtherControls
+        {
+            get { return updateOtherControls; }
+            set { updateOtherControls = value; }
+        }
+
         private Form ownerForm = null;
         public Form OwnerForm
         {
@@ -38,26 +45,38 @@ namespace MetroFramework.Components
             set 
             {
                 if (ownerForm != null)
-                    return;
+                {
+                    ownerForm.ControlAdded -= NewControlOnOwnerForm;
+                }
 
                 ownerForm = value;
-                ownerForm.ControlAdded += new ControlEventHandler(NewControlOnOwnerForm);
-                
+
+                if (value != null)
+                {
+                    ownerForm.ControlAdded += new ControlEventHandler(NewControlOnOwnerForm);
+                }
+
                 UpdateOwnerForm();
             }
         }
 
-        private UserControl ownerControl = null;
-        public UserControl OwnerControl
+        private ContainerControl ownerControl = null;
+        public ContainerControl OwnerControl
         {
             get { return ownerControl; }
             set
             {
                 if (ownerControl != null)
-                    return;
+                {
+                    ownerControl.ControlAdded -= NewControlOnOwnerControl;
+                }
 
                 ownerControl = value;
-                ownerControl.ControlAdded += new ControlEventHandler(NewControlOnOwnerControl);
+
+                if (value != null)
+                {
+                    ownerControl.ControlAdded += new ControlEventHandler(NewControlOnOwnerControl);
+                }
 
                 UpdateOwnerControl();
             }
@@ -153,6 +172,14 @@ namespace MetroFramework.Components
                 ((IMetroForm)ownerForm).Theme = Theme;
                 ((IMetroForm)ownerForm).StyleManager = this;
             }
+            else
+            {
+                if (updateOtherControls)
+                {
+                    ownerForm.BackColor = MetroFramework.Drawing.MetroPaint.BackColor.Form(Theme);
+                    ownerForm.ForeColor = MetroFramework.Drawing.MetroPaint.ForeColor.Label.Normal(Theme);
+                }
+            }
 
             if (ownerForm.Controls.Count > 0)
                 UpdateControlCollection(ownerForm.Controls);
@@ -178,6 +205,14 @@ namespace MetroFramework.Components
                 ((IMetroControl)ownerControl).Theme = Theme;
                 ((IMetroControl)ownerControl).StyleManager = this;
             }
+            else
+            {
+                if (updateOtherControls)
+                {
+                    ownerControl.BackColor = MetroFramework.Drawing.MetroPaint.BackColor.Form(Theme);
+                    ownerControl.ForeColor = MetroFramework.Drawing.MetroPaint.ForeColor.Label.Normal(Theme);
+                }
+            }
 
             if (ownerControl.Controls.Count > 0)
                 UpdateControlCollection(ownerControl.Controls);
@@ -201,6 +236,14 @@ namespace MetroFramework.Components
                     ((IMetroControl)c).Style = Style;
                     ((IMetroControl)c).Theme = Theme;
                     ((IMetroControl)c).StyleManager = this;
+                }
+                else
+                {
+                    if (updateOtherControls)
+                    {
+                        c.BackColor = MetroFramework.Drawing.MetroPaint.BackColor.Form(Theme);
+                        c.ForeColor = MetroFramework.Drawing.MetroPaint.ForeColor.Label.Normal(Theme);
+                    }
                 }
 
                 if (c.ContextMenuStrip != null && c.ContextMenuStrip is IMetroComponent)

@@ -601,8 +601,7 @@ namespace MetroFramework.Forms
 
             Dictionary<int, WindowButtons> priorityOrder = new Dictionary<int, WindowButtons>(3) { {0, WindowButtons.Close}, {1, WindowButtons.Maximize}, {2, WindowButtons.Minimize} };
 
-            // JT: position closer to the edge
-            Point firstButtonLocation = new Point(ClientRectangle.Width - borderWidth - 16, borderWidth);
+            Point firstButtonLocation = new Point(ClientRectangle.Width - borderWidth - 25, borderWidth);
             int lastDrawedButtonPosition = firstButtonLocation.X - 25;
 
             MetroFormButton firstButton = null;

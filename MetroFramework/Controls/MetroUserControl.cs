@@ -77,6 +77,7 @@ namespace MetroFramework.Controls
         #region Fields
 
         private bool useCustomBackground = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomBackground
         {

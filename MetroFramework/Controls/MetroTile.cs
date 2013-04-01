@@ -99,6 +99,7 @@ namespace MetroFramework.Controls
         #region Fields
 
         private bool useCustomBackground = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomBackground
         {
@@ -107,6 +108,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomForeColor = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomForeColor
         {
@@ -115,6 +117,7 @@ namespace MetroFramework.Controls
         }
 
         private bool paintTileCount = true;
+        [DefaultValue(true)]
         [Category("Metro Appearance")]
         public bool PaintTileCount
         {
@@ -123,6 +126,7 @@ namespace MetroFramework.Controls
         }
 
         private int tileCount = 0;
+        [DefaultValue(0)]
         public int TileCount
         {
             get { return tileCount; }

@@ -21,7 +21,6 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
- 
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -216,10 +215,11 @@ namespace MetroFramework.Forms
             Padding = new Padding(20, 60, 20, 20);
             StartPosition = FormStartPosition.CenterScreen;
 
-            //JT: This is wrong - why should the window be limited to the size of the designer;s primary screen???
-            //MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
+            if (!DesignMode)
+            {
+                MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
+            }
 
-            //JT: What is this supposed to be good for?
             RemoveCloseButton();
             FormBorderStyle = FormBorderStyle.None;
         }
@@ -1120,7 +1120,7 @@ namespace MetroFramework.Forms
 
         #endregion
 
-        #region Helper methods
+        #region Helper Methods
 
         [SecuritySafeCritical]
         public void RemoveCloseButton()

@@ -174,6 +174,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomBackground = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomBackground
         {

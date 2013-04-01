@@ -82,8 +82,9 @@ namespace MetroFramework.Controls
         private MetroScrollBar verticalScrollbar = new MetroScrollBar(MetroScrollOrientation.Vertical);
         private MetroScrollBar horizontalScrollbar = new MetroScrollBar(MetroScrollOrientation.Horizontal);
 
-        [Category("Metro Appearance")]
         private bool showHorizontalScrollbar = false;
+        [DefaultValue(false)]
+        [Category("Metro Appearance")]
         public bool HorizontalScrollbar
         {
             get { return showHorizontalScrollbar; }
@@ -111,8 +112,9 @@ namespace MetroFramework.Controls
             set { horizontalScrollbar.HighlightOnWheel = value; }
         }
 
-        [Category("Metro Appearance")]
         private bool showVerticalScrollbar = false;
+        [DefaultValue(false)]
+        [Category("Metro Appearance")]
         public bool VerticalScrollbar
         {
             get { return showVerticalScrollbar; }
@@ -160,6 +162,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomBackground = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomBackground
         {

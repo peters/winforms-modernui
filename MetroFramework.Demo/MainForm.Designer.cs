@@ -85,8 +85,6 @@
             this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
             this.metroProgressBar = new MetroFramework.Controls.MetroProgressBar();
             this.metroToolTip = new MetroFramework.Components.MetroToolTip();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroTabPage4.SuspendLayout();
@@ -100,21 +98,15 @@
             this.metroTabControl1.Controls.Add(this.metroTabPage4);
             this.metroTabControl1.Controls.Add(this.metroTabPage2);
             this.metroTabControl1.Controls.Add(this.metroTabPage3);
-            this.metroTabControl1.CustomBackground = false;
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroTabControl1.FontSize = MetroFramework.MetroTabControlSize.Medium;
-            this.metroTabControl1.FontWeight = MetroFramework.MetroTabControlWeight.Light;
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.Padding = new System.Drawing.Point(6, 8);
             this.metroTabControl1.SelectedIndex = 0;
             this.metroTabControl1.Size = new System.Drawing.Size(530, 292);
             this.metroTabControl1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabControl1.StyleManager = this.metroStyleManager;
             this.metroTabControl1.TabIndex = 0;
-            this.metroTabControl1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.metroTabControl1.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTabControl1.UseStyleColors = false;
             // 
             // metroTabPage1
             // 
@@ -131,8 +123,6 @@
             this.metroTabPage1.Controls.Add(this.metroTileSwitch);
             this.metroTabPage1.Controls.Add(this.metroTile2);
             this.metroTabPage1.Controls.Add(this.metroTile1);
-            this.metroTabPage1.CustomBackground = false;
-            this.metroTabPage1.Enabled = true;
             this.metroTabPage1.HorizontalScrollbar = true;
             this.metroTabPage1.HorizontalScrollbarBarColor = true;
             this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
@@ -150,15 +140,10 @@
             this.metroTabPage1.VerticalScrollbarBarColor = true;
             this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage1.VerticalScrollbarSize = 10;
-            this.metroTabPage1.Visible = true;
             // 
             // metroLink4
             // 
-            this.metroLink4.CustomBackground = false;
-            this.metroLink4.CustomForeColor = false;
             this.metroLink4.Enabled = false;
-            this.metroLink4.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroLink4.FontWeight = MetroFramework.MetroLinkWeight.Bold;
             this.metroLink4.Location = new System.Drawing.Point(399, 105);
             this.metroLink4.Name = "metroLink4";
             this.metroLink4.Size = new System.Drawing.Size(95, 23);
@@ -168,7 +153,6 @@
             this.metroLink4.Text = "Disabled Link";
             this.metroLink4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.metroLink4.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLink4.UseStyleColors = false;
             // 
             // metroStyleManager
             // 
@@ -180,10 +164,6 @@
             // 
             // metroLink3
             // 
-            this.metroLink3.CustomBackground = false;
-            this.metroLink3.CustomForeColor = false;
-            this.metroLink3.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroLink3.FontWeight = MetroFramework.MetroLinkWeight.Bold;
             this.metroLink3.Location = new System.Drawing.Point(399, 76);
             this.metroLink3.Name = "metroLink3";
             this.metroLink3.Size = new System.Drawing.Size(95, 23);
@@ -198,11 +178,6 @@
             // metroLabel9
             // 
             this.metroLabel9.AutoSize = true;
-            this.metroLabel9.CustomBackground = false;
-            this.metroLabel9.CustomForeColor = false;
-            this.metroLabel9.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel9.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel9.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel9.Location = new System.Drawing.Point(399, 25);
             this.metroLabel9.Name = "metroLabel9";
             this.metroLabel9.Size = new System.Drawing.Size(67, 19);
@@ -211,16 +186,10 @@
             this.metroLabel9.TabIndex = 12;
             this.metroLabel9.Text = "MetroLink";
             this.metroLabel9.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel9.UseStyleColors = false;
             // 
             // metroLabel8
             // 
             this.metroLabel8.AutoSize = true;
-            this.metroLabel8.CustomBackground = false;
-            this.metroLabel8.CustomForeColor = false;
-            this.metroLabel8.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel8.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel8.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel8.Location = new System.Drawing.Point(234, 25);
             this.metroLabel8.Name = "metroLabel8";
             this.metroLabel8.Size = new System.Drawing.Size(83, 19);
@@ -229,14 +198,9 @@
             this.metroLabel8.TabIndex = 11;
             this.metroLabel8.Text = "MetroButton";
             this.metroLabel8.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel8.UseStyleColors = false;
             // 
             // metroLink1
             // 
-            this.metroLink1.CustomBackground = false;
-            this.metroLink1.CustomForeColor = false;
-            this.metroLink1.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroLink1.FontWeight = MetroFramework.MetroLinkWeight.Bold;
             this.metroLink1.Location = new System.Drawing.Point(399, 47);
             this.metroLink1.Name = "metroLink1";
             this.metroLink1.Size = new System.Drawing.Size(95, 23);
@@ -247,16 +211,10 @@
             this.metroLink1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.metroLink1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroLink1, "Link Tooltip");
-            this.metroLink1.UseStyleColors = false;
             // 
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.CustomBackground = false;
-            this.metroLabel1.CustomForeColor = false;
-            this.metroLabel1.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel1.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel1.Location = new System.Drawing.Point(28, 25);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(65, 19);
@@ -265,12 +223,10 @@
             this.metroLabel1.TabIndex = 8;
             this.metroLabel1.Text = "MetroTile";
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel1.UseStyleColors = false;
             // 
             // metroButton3
             // 
             this.metroButton3.Enabled = false;
-            this.metroButton3.Highlight = false;
             this.metroButton3.Location = new System.Drawing.Point(234, 133);
             this.metroButton3.Name = "metroButton3";
             this.metroButton3.Size = new System.Drawing.Size(127, 37);
@@ -294,7 +250,6 @@
             // 
             // metroButton1
             // 
-            this.metroButton1.Highlight = false;
             this.metroButton1.Location = new System.Drawing.Point(234, 47);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(127, 37);
@@ -308,52 +263,40 @@
             // metroTileSwitch
             // 
             this.metroTileSwitch.ActiveControl = null;
-            this.metroTileSwitch.CustomBackground = false;
-            this.metroTileSwitch.CustomForeColor = false;
             this.metroTileSwitch.Location = new System.Drawing.Point(28, 133);
             this.metroTileSwitch.Name = "metroTileSwitch";
-            this.metroTileSwitch.PaintTileCount = true;
             this.metroTileSwitch.Size = new System.Drawing.Size(166, 80);
             this.metroTileSwitch.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTileSwitch.StyleManager = this.metroStyleManager;
             this.metroTileSwitch.TabIndex = 4;
             this.metroTileSwitch.Text = "Switch Style";
             this.metroTileSwitch.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTileSwitch.TileCount = 0;
             this.metroTileSwitch.Click += new System.EventHandler(this.metroTileSwitch_Click);
             // 
             // metroTile2
             // 
             this.metroTile2.ActiveControl = null;
-            this.metroTile2.CustomBackground = false;
-            this.metroTile2.CustomForeColor = false;
             this.metroTile2.Enabled = false;
             this.metroTile2.Location = new System.Drawing.Point(114, 47);
             this.metroTile2.Name = "metroTile2";
-            this.metroTile2.PaintTileCount = true;
             this.metroTile2.Size = new System.Drawing.Size(80, 80);
             this.metroTile2.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTile2.StyleManager = this.metroStyleManager;
             this.metroTile2.TabIndex = 3;
             this.metroTile2.Text = "Disabled";
             this.metroTile2.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTile2.TileCount = 0;
             // 
             // metroTile1
             // 
             this.metroTile1.ActiveControl = null;
-            this.metroTile1.CustomBackground = false;
-            this.metroTile1.CustomForeColor = false;
             this.metroTile1.Location = new System.Drawing.Point(28, 47);
             this.metroTile1.Name = "metroTile1";
-            this.metroTile1.PaintTileCount = true;
             this.metroTile1.Size = new System.Drawing.Size(80, 80);
             this.metroTile1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTile1.StyleManager = this.metroStyleManager;
             this.metroTile1.TabIndex = 2;
             this.metroTile1.Text = "Switch Theme";
             this.metroTile1.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTile1.TileCount = 0;
             this.metroToolTip.SetToolTip(this.metroTile1, "Tile Tooltip");
             this.metroTile1.Click += new System.EventHandler(this.metroTile1_Click);
             // 
@@ -371,9 +314,6 @@
             this.metroTabPage4.Controls.Add(this.metroLabel3);
             this.metroTabPage4.Controls.Add(this.metroTextBox1);
             this.metroTabPage4.Controls.Add(this.metroLabel2);
-            this.metroTabPage4.CustomBackground = false;
-            this.metroTabPage4.Enabled = true;
-            this.metroTabPage4.HorizontalScrollbar = false;
             this.metroTabPage4.HorizontalScrollbarBarColor = true;
             this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage4.HorizontalScrollbarSize = 10;
@@ -386,7 +326,6 @@
             this.metroTabPage4.TabIndex = 3;
             this.metroTabPage4.Text = "Labels && Text";
             this.metroTabPage4.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTabPage4.VerticalScrollbar = false;
             this.metroTabPage4.VerticalScrollbarBarColor = true;
             this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage4.VerticalScrollbarSize = 10;
@@ -394,79 +333,49 @@
             // 
             // metroTextBox4
             // 
-            this.metroTextBox4.CustomBackground = false;
-            this.metroTextBox4.CustomForeColor = false;
             this.metroTextBox4.Enabled = false;
-            this.metroTextBox4.FontSize = MetroFramework.MetroTextBoxSize.Small;
-            this.metroTextBox4.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.metroTextBox4.Location = new System.Drawing.Point(323, 106);
-            this.metroTextBox4.Multiline = false;
             this.metroTextBox4.Name = "metroTextBox4";
             this.metroTextBox4.PasswordChar = '\0';
-            this.metroTextBox4.ReadOnly = false;
             this.metroTextBox4.SelectedText = "";
             this.metroTextBox4.Size = new System.Drawing.Size(171, 22);
             this.metroTextBox4.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTextBox4.StyleManager = this.metroStyleManager;
             this.metroTextBox4.TabIndex = 13;
             this.metroTextBox4.Text = "Disabled Textbox";
-            this.metroTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.metroTextBox4.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox4.UseStyleColors = false;
-            this.metroTextBox4.UseSystemPasswordChar = false;
             // 
             // metroTextBox3
             // 
-            this.metroTextBox3.CustomBackground = false;
-            this.metroTextBox3.CustomForeColor = false;
-            this.metroTextBox3.FontSize = MetroFramework.MetroTextBoxSize.Small;
-            this.metroTextBox3.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.metroTextBox3.Location = new System.Drawing.Point(323, 134);
             this.metroTextBox3.Multiline = true;
             this.metroTextBox3.Name = "metroTextBox3";
             this.metroTextBox3.PasswordChar = '\0';
-            this.metroTextBox3.ReadOnly = false;
             this.metroTextBox3.SelectedText = "";
             this.metroTextBox3.Size = new System.Drawing.Size(171, 91);
             this.metroTextBox3.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTextBox3.StyleManager = this.metroStyleManager;
             this.metroTextBox3.TabIndex = 12;
             this.metroTextBox3.Text = "Multiline Textbox";
-            this.metroTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.metroTextBox3.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox3.UseStyleColors = false;
-            this.metroTextBox3.UseSystemPasswordChar = false;
             // 
             // metroTextBox2
             // 
-            this.metroTextBox2.CustomBackground = false;
-            this.metroTextBox2.CustomForeColor = false;
-            this.metroTextBox2.FontSize = MetroFramework.MetroTextBoxSize.Small;
-            this.metroTextBox2.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.metroTextBox2.Location = new System.Drawing.Point(323, 78);
-            this.metroTextBox2.Multiline = false;
             this.metroTextBox2.Name = "metroTextBox2";
             this.metroTextBox2.PasswordChar = '\0';
-            this.metroTextBox2.ReadOnly = false;
             this.metroTextBox2.SelectedText = "";
             this.metroTextBox2.Size = new System.Drawing.Size(171, 22);
             this.metroTextBox2.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTextBox2.StyleManager = this.metroStyleManager;
             this.metroTextBox2.TabIndex = 11;
             this.metroTextBox2.Text = "Styled Textbox";
-            this.metroTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.metroTextBox2.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTextBox2.UseStyleColors = true;
-            this.metroTextBox2.UseSystemPasswordChar = false;
             // 
             // metroLabel15
             // 
             this.metroLabel15.AutoSize = true;
-            this.metroLabel15.CustomBackground = false;
-            this.metroLabel15.CustomForeColor = false;
-            this.metroLabel15.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel15.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel15.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel15.Location = new System.Drawing.Point(323, 25);
             this.metroLabel15.Margin = new System.Windows.Forms.Padding(3);
             this.metroLabel15.Name = "metroLabel15";
@@ -476,16 +385,11 @@
             this.metroLabel15.TabIndex = 10;
             this.metroLabel15.Text = "MetroTextBox";
             this.metroLabel15.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel15.UseStyleColors = false;
             // 
             // metroLabel12
             // 
             this.metroLabel12.AutoSize = true;
-            this.metroLabel12.CustomBackground = false;
-            this.metroLabel12.CustomForeColor = false;
             this.metroLabel12.Enabled = false;
-            this.metroLabel12.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel12.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel12.LabelMode = MetroFramework.Controls.MetroLabelMode.Selectable;
             this.metroLabel12.Location = new System.Drawing.Point(139, 100);
             this.metroLabel12.Margin = new System.Windows.Forms.Padding(3);
@@ -496,15 +400,10 @@
             this.metroLabel12.TabIndex = 9;
             this.metroLabel12.Text = "Disabled Selectable Label";
             this.metroLabel12.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel12.UseStyleColors = false;
             // 
             // metroLabel13
             // 
             this.metroLabel13.AutoSize = true;
-            this.metroLabel13.CustomBackground = false;
-            this.metroLabel13.CustomForeColor = false;
-            this.metroLabel13.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel13.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel13.LabelMode = MetroFramework.Controls.MetroLabelMode.Selectable;
             this.metroLabel13.Location = new System.Drawing.Point(139, 75);
             this.metroLabel13.Margin = new System.Windows.Forms.Padding(3);
@@ -520,10 +419,6 @@
             // metroLabel14
             // 
             this.metroLabel14.AutoSize = true;
-            this.metroLabel14.CustomBackground = false;
-            this.metroLabel14.CustomForeColor = false;
-            this.metroLabel14.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel14.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel14.LabelMode = MetroFramework.Controls.MetroLabelMode.Selectable;
             this.metroLabel14.Location = new System.Drawing.Point(139, 50);
             this.metroLabel14.Margin = new System.Windows.Forms.Padding(3);
@@ -535,17 +430,11 @@
             this.metroLabel14.Text = "Normal Selectable Label";
             this.metroLabel14.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroLabel14, "Label Tooltip");
-            this.metroLabel14.UseStyleColors = false;
             // 
             // metroLabel11
             // 
             this.metroLabel11.AutoSize = true;
-            this.metroLabel11.CustomBackground = false;
-            this.metroLabel11.CustomForeColor = false;
             this.metroLabel11.Enabled = false;
-            this.metroLabel11.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel11.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel11.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel11.Location = new System.Drawing.Point(28, 100);
             this.metroLabel11.Margin = new System.Windows.Forms.Padding(3);
             this.metroLabel11.Name = "metroLabel11";
@@ -555,16 +444,10 @@
             this.metroLabel11.TabIndex = 6;
             this.metroLabel11.Text = "Disabled Label";
             this.metroLabel11.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel11.UseStyleColors = false;
             // 
             // metroLabel10
             // 
             this.metroLabel10.AutoSize = true;
-            this.metroLabel10.CustomBackground = false;
-            this.metroLabel10.CustomForeColor = false;
-            this.metroLabel10.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel10.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel10.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel10.Location = new System.Drawing.Point(28, 75);
             this.metroLabel10.Margin = new System.Windows.Forms.Padding(3);
             this.metroLabel10.Name = "metroLabel10";
@@ -579,11 +462,6 @@
             // metroLabel3
             // 
             this.metroLabel3.AutoSize = true;
-            this.metroLabel3.CustomBackground = false;
-            this.metroLabel3.CustomForeColor = false;
-            this.metroLabel3.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel3.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel3.Location = new System.Drawing.Point(28, 50);
             this.metroLabel3.Margin = new System.Windows.Forms.Padding(3);
             this.metroLabel3.Name = "metroLabel3";
@@ -594,40 +472,26 @@
             this.metroLabel3.Text = "Normal Label";
             this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroLabel3, "Label Tooltip");
-            this.metroLabel3.UseStyleColors = false;
             // 
             // metroTextBox1
             // 
             this.metroTextBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.metroTextBox1.CustomBackground = false;
-            this.metroTextBox1.CustomForeColor = false;
-            this.metroTextBox1.FontSize = MetroFramework.MetroTextBoxSize.Small;
-            this.metroTextBox1.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.metroTextBox1.Location = new System.Drawing.Point(323, 50);
-            this.metroTextBox1.Multiline = false;
             this.metroTextBox1.Name = "metroTextBox1";
             this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.ReadOnly = false;
+            this.metroTextBox1.PromptText = "With Placeholder support!";
             this.metroTextBox1.SelectedText = "";
             this.metroTextBox1.Size = new System.Drawing.Size(171, 22);
             this.metroTextBox1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTextBox1.StyleManager = this.metroStyleManager;
             this.metroTextBox1.TabIndex = 3;
             this.metroTextBox1.Text = "Normal Textbox";
-            this.metroTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroTextBox1, "Textbox Tooltip");
-            this.metroTextBox1.UseStyleColors = false;
-            this.metroTextBox1.UseSystemPasswordChar = false;
             // 
             // metroLabel2
             // 
             this.metroLabel2.AutoSize = true;
-            this.metroLabel2.CustomBackground = false;
-            this.metroLabel2.CustomForeColor = false;
-            this.metroLabel2.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel2.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel2.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel2.Location = new System.Drawing.Point(28, 25);
             this.metroLabel2.Margin = new System.Windows.Forms.Padding(3);
             this.metroLabel2.Name = "metroLabel2";
@@ -637,7 +501,6 @@
             this.metroLabel2.TabIndex = 2;
             this.metroLabel2.Text = "MetroLabel";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel2.UseStyleColors = false;
             // 
             // metroTabPage2
             // 
@@ -656,9 +519,6 @@
             this.metroTabPage2.Controls.Add(this.metroRadioButton1);
             this.metroTabPage2.Controls.Add(this.metroToggle1);
             this.metroTabPage2.Controls.Add(this.metroCheckBox1);
-            this.metroTabPage2.CustomBackground = false;
-            this.metroTabPage2.Enabled = true;
-            this.metroTabPage2.HorizontalScrollbar = false;
             this.metroTabPage2.HorizontalScrollbarBarColor = true;
             this.metroTabPage2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.HorizontalScrollbarSize = 10;
@@ -671,7 +531,6 @@
             this.metroTabPage2.TabIndex = 1;
             this.metroTabPage2.Text = "Options";
             this.metroTabPage2.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTabPage2.VerticalScrollbar = false;
             this.metroTabPage2.VerticalScrollbarBarColor = true;
             this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.VerticalScrollbarSize = 10;
@@ -679,11 +538,7 @@
             // 
             // metroComboBox2
             // 
-            this.metroComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.metroComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.metroComboBox2.Enabled = false;
-            this.metroComboBox2.FontSize = MetroFramework.MetroLinkSize.Medium;
-            this.metroComboBox2.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroComboBox2.FormattingEnabled = true;
             this.metroComboBox2.ItemHeight = 23;
             this.metroComboBox2.Items.AddRange(new object[] {
@@ -699,11 +554,8 @@
             // metroToggle3
             // 
             this.metroToggle3.AutoSize = true;
-            this.metroToggle3.CustomBackground = false;
             this.metroToggle3.DisplayStatus = false;
             this.metroToggle3.Enabled = false;
-            this.metroToggle3.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroToggle3.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroToggle3.Location = new System.Drawing.Point(327, 206);
             this.metroToggle3.Name = "metroToggle3";
             this.metroToggle3.Size = new System.Drawing.Size(50, 17);
@@ -712,16 +564,12 @@
             this.metroToggle3.TabIndex = 15;
             this.metroToggle3.Text = "Aus";
             this.metroToggle3.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroToggle3.UseStyleColors = false;
             this.metroToggle3.UseVisualStyleBackColor = true;
             // 
             // metroToggle2
             // 
             this.metroToggle2.AutoSize = true;
-            this.metroToggle2.CustomBackground = false;
             this.metroToggle2.DisplayStatus = false;
-            this.metroToggle2.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroToggle2.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroToggle2.Location = new System.Drawing.Point(327, 183);
             this.metroToggle2.Name = "metroToggle2";
             this.metroToggle2.Size = new System.Drawing.Size(50, 17);
@@ -736,11 +584,7 @@
             // metroRadioButton3
             // 
             this.metroRadioButton3.AutoSize = true;
-            this.metroRadioButton3.CustomBackground = false;
-            this.metroRadioButton3.CustomForeColor = false;
             this.metroRadioButton3.Enabled = false;
-            this.metroRadioButton3.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroRadioButton3.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroRadioButton3.Location = new System.Drawing.Point(28, 202);
             this.metroRadioButton3.Name = "metroRadioButton3";
             this.metroRadioButton3.Size = new System.Drawing.Size(137, 15);
@@ -750,16 +594,11 @@
             this.metroRadioButton3.TabStop = true;
             this.metroRadioButton3.Text = "Disabled Radiobutton";
             this.metroRadioButton3.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroRadioButton3.UseStyleColors = false;
             this.metroRadioButton3.UseVisualStyleBackColor = true;
             // 
             // metroRadioButton2
             // 
             this.metroRadioButton2.AutoSize = true;
-            this.metroRadioButton2.CustomBackground = false;
-            this.metroRadioButton2.CustomForeColor = false;
-            this.metroRadioButton2.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroRadioButton2.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroRadioButton2.Location = new System.Drawing.Point(28, 181);
             this.metroRadioButton2.Name = "metroRadioButton2";
             this.metroRadioButton2.Size = new System.Drawing.Size(124, 15);
@@ -775,11 +614,7 @@
             // metroCheckBox3
             // 
             this.metroCheckBox3.AutoSize = true;
-            this.metroCheckBox3.CustomBackground = false;
-            this.metroCheckBox3.CustomForeColor = false;
             this.metroCheckBox3.Enabled = false;
-            this.metroCheckBox3.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroCheckBox3.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroCheckBox3.Location = new System.Drawing.Point(28, 95);
             this.metroCheckBox3.Name = "metroCheckBox3";
             this.metroCheckBox3.Size = new System.Drawing.Size(123, 15);
@@ -788,16 +623,11 @@
             this.metroCheckBox3.TabIndex = 11;
             this.metroCheckBox3.Text = "Disabled Checkbox";
             this.metroCheckBox3.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroCheckBox3.UseStyleColors = false;
             this.metroCheckBox3.UseVisualStyleBackColor = true;
             // 
             // metroCheckBox2
             // 
             this.metroCheckBox2.AutoSize = true;
-            this.metroCheckBox2.CustomBackground = false;
-            this.metroCheckBox2.CustomForeColor = false;
-            this.metroCheckBox2.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroCheckBox2.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroCheckBox2.Location = new System.Drawing.Point(28, 74);
             this.metroCheckBox2.Name = "metroCheckBox2";
             this.metroCheckBox2.Size = new System.Drawing.Size(110, 15);
@@ -812,11 +642,6 @@
             // metroLabel19
             // 
             this.metroLabel19.AutoSize = true;
-            this.metroLabel19.CustomBackground = false;
-            this.metroLabel19.CustomForeColor = false;
-            this.metroLabel19.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel19.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel19.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel19.Location = new System.Drawing.Point(297, 133);
             this.metroLabel19.Name = "metroLabel19";
             this.metroLabel19.Size = new System.Drawing.Size(86, 19);
@@ -825,16 +650,10 @@
             this.metroLabel19.TabIndex = 9;
             this.metroLabel19.Text = "MetroToggle";
             this.metroLabel19.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel19.UseStyleColors = false;
             // 
             // metroLabel18
             // 
             this.metroLabel18.AutoSize = true;
-            this.metroLabel18.CustomBackground = false;
-            this.metroLabel18.CustomForeColor = false;
-            this.metroLabel18.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel18.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel18.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel18.Location = new System.Drawing.Point(28, 133);
             this.metroLabel18.Name = "metroLabel18";
             this.metroLabel18.Size = new System.Drawing.Size(117, 19);
@@ -843,16 +662,10 @@
             this.metroLabel18.TabIndex = 8;
             this.metroLabel18.Text = "MetroRadioButton";
             this.metroLabel18.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel18.UseStyleColors = false;
             // 
             // metroLabel17
             // 
             this.metroLabel17.AutoSize = true;
-            this.metroLabel17.CustomBackground = false;
-            this.metroLabel17.CustomForeColor = false;
-            this.metroLabel17.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel17.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel17.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel17.Location = new System.Drawing.Point(297, 25);
             this.metroLabel17.Name = "metroLabel17";
             this.metroLabel17.Size = new System.Drawing.Size(112, 19);
@@ -861,16 +674,10 @@
             this.metroLabel17.TabIndex = 7;
             this.metroLabel17.Text = "MetroComboBox";
             this.metroLabel17.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel17.UseStyleColors = false;
             // 
             // metroLabel16
             // 
             this.metroLabel16.AutoSize = true;
-            this.metroLabel16.CustomBackground = false;
-            this.metroLabel16.CustomForeColor = false;
-            this.metroLabel16.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel16.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel16.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel16.Location = new System.Drawing.Point(28, 25);
             this.metroLabel16.Name = "metroLabel16";
             this.metroLabel16.Size = new System.Drawing.Size(102, 19);
@@ -879,14 +686,9 @@
             this.metroLabel16.TabIndex = 6;
             this.metroLabel16.Text = "MetroCheckBox";
             this.metroLabel16.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel16.UseStyleColors = false;
             // 
             // metroComboBox1
             // 
-            this.metroComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.metroComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.metroComboBox1.FontSize = MetroFramework.MetroLinkSize.Medium;
-            this.metroComboBox1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroComboBox1.FormattingEnabled = true;
             this.metroComboBox1.ItemHeight = 23;
             this.metroComboBox1.Items.AddRange(new object[] {
@@ -903,10 +705,6 @@
             // metroRadioButton1
             // 
             this.metroRadioButton1.AutoSize = true;
-            this.metroRadioButton1.CustomBackground = false;
-            this.metroRadioButton1.CustomForeColor = false;
-            this.metroRadioButton1.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroRadioButton1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroRadioButton1.Location = new System.Drawing.Point(28, 160);
             this.metroRadioButton1.Name = "metroRadioButton1";
             this.metroRadioButton1.Size = new System.Drawing.Size(132, 15);
@@ -917,16 +715,11 @@
             this.metroRadioButton1.Text = "Normal Radiobutton";
             this.metroRadioButton1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroRadioButton1, "RadioButton Tooltip");
-            this.metroRadioButton1.UseStyleColors = false;
             this.metroRadioButton1.UseVisualStyleBackColor = true;
             // 
             // metroToggle1
             // 
             this.metroToggle1.AutoSize = true;
-            this.metroToggle1.CustomBackground = false;
-            this.metroToggle1.DisplayStatus = true;
-            this.metroToggle1.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroToggle1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroToggle1.Location = new System.Drawing.Point(297, 160);
             this.metroToggle1.Name = "metroToggle1";
             this.metroToggle1.Size = new System.Drawing.Size(80, 17);
@@ -936,16 +729,11 @@
             this.metroToggle1.Text = "Aus";
             this.metroToggle1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroToggle1, "Toggle Tooltip");
-            this.metroToggle1.UseStyleColors = false;
             this.metroToggle1.UseVisualStyleBackColor = true;
             // 
             // metroCheckBox1
             // 
             this.metroCheckBox1.AutoSize = true;
-            this.metroCheckBox1.CustomBackground = false;
-            this.metroCheckBox1.CustomForeColor = false;
-            this.metroCheckBox1.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroCheckBox1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroCheckBox1.Location = new System.Drawing.Point(28, 53);
             this.metroCheckBox1.Name = "metroCheckBox1";
             this.metroCheckBox1.Size = new System.Drawing.Size(118, 15);
@@ -955,7 +743,6 @@
             this.metroCheckBox1.Text = "Normal Checkbox";
             this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroCheckBox1, "Checkbox Tooltip");
-            this.metroCheckBox1.UseStyleColors = false;
             this.metroCheckBox1.UseVisualStyleBackColor = true;
             // 
             // metroTabPage3
@@ -971,8 +758,6 @@
             this.metroTabPage3.Controls.Add(this.metroTrackBar1);
             this.metroTabPage3.Controls.Add(this.metroProgressSpinner1);
             this.metroTabPage3.Controls.Add(this.metroProgressBar);
-            this.metroTabPage3.CustomBackground = false;
-            this.metroTabPage3.Enabled = true;
             this.metroTabPage3.HorizontalScrollbar = true;
             this.metroTabPage3.HorizontalScrollbarBarColor = true;
             this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
@@ -995,11 +780,6 @@
             // metroLabel7
             // 
             this.metroLabel7.AutoSize = true;
-            this.metroLabel7.CustomBackground = false;
-            this.metroLabel7.CustomForeColor = false;
-            this.metroLabel7.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel7.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel7.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel7.Location = new System.Drawing.Point(28, 187);
             this.metroLabel7.Name = "metroLabel7";
             this.metroLabel7.Size = new System.Drawing.Size(97, 19);
@@ -1008,11 +788,9 @@
             this.metroLabel7.TabIndex = 12;
             this.metroLabel7.Text = "MetroScrollBar";
             this.metroLabel7.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel7.UseStyleColors = false;
             // 
             // metroProgressSpinner3
             // 
-            this.metroProgressSpinner3.CustomBackground = false;
             this.metroProgressSpinner3.Location = new System.Drawing.Point(345, 146);
             this.metroProgressSpinner3.Maximum = 100;
             this.metroProgressSpinner3.Name = "metroProgressSpinner3";
@@ -1025,7 +803,6 @@
             // 
             // metroProgressSpinner2
             // 
-            this.metroProgressSpinner2.CustomBackground = false;
             this.metroProgressSpinner2.Location = new System.Drawing.Point(316, 146);
             this.metroProgressSpinner2.Maximum = 100;
             this.metroProgressSpinner2.Name = "metroProgressSpinner2";
@@ -1039,11 +816,6 @@
             // metroLabel6
             // 
             this.metroLabel6.AutoSize = true;
-            this.metroLabel6.CustomBackground = false;
-            this.metroLabel6.CustomForeColor = false;
-            this.metroLabel6.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel6.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel6.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel6.Location = new System.Drawing.Point(287, 124);
             this.metroLabel6.Name = "metroLabel6";
             this.metroLabel6.Size = new System.Drawing.Size(140, 19);
@@ -1052,16 +824,10 @@
             this.metroLabel6.TabIndex = 9;
             this.metroLabel6.Text = "MetroProgressSpinner";
             this.metroLabel6.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel6.UseStyleColors = false;
             // 
             // metroLabel5
             // 
             this.metroLabel5.AutoSize = true;
-            this.metroLabel5.CustomBackground = false;
-            this.metroLabel5.CustomForeColor = false;
-            this.metroLabel5.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel5.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel5.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel5.Location = new System.Drawing.Point(28, 124);
             this.metroLabel5.Name = "metroLabel5";
             this.metroLabel5.Size = new System.Drawing.Size(96, 19);
@@ -1070,15 +836,11 @@
             this.metroLabel5.TabIndex = 8;
             this.metroLabel5.Text = "MetroTrackBar";
             this.metroLabel5.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel5.UseStyleColors = false;
             // 
             // metroProgressBar1
             // 
             this.metroProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroProgressBar1.FontSize = MetroFramework.MetroProgressBarSize.Medium;
-            this.metroProgressBar1.FontWeight = MetroFramework.MetroProgressBarWeight.Light;
-            this.metroProgressBar1.HideProgressText = true;
             this.metroProgressBar1.Location = new System.Drawing.Point(28, 76);
             this.metroProgressBar1.Name = "metroProgressBar1";
             this.metroProgressBar1.ProgressBarStyle = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -1086,18 +848,12 @@
             this.metroProgressBar1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroProgressBar1.StyleManager = this.metroStyleManager;
             this.metroProgressBar1.TabIndex = 7;
-            this.metroProgressBar1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.metroProgressBar1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroProgressBar1.Value = 25;
             // 
             // metroLabel4
             // 
             this.metroLabel4.AutoSize = true;
-            this.metroLabel4.CustomBackground = false;
-            this.metroLabel4.CustomForeColor = false;
-            this.metroLabel4.FontSize = MetroFramework.MetroLabelSize.Medium;
-            this.metroLabel4.FontWeight = MetroFramework.MetroLabelWeight.Light;
-            this.metroLabel4.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel4.Location = new System.Drawing.Point(28, 25);
             this.metroLabel4.Name = "metroLabel4";
             this.metroLabel4.Size = new System.Drawing.Size(116, 19);
@@ -1106,7 +862,6 @@
             this.metroLabel4.TabIndex = 6;
             this.metroLabel4.Text = "MetroProgressBar";
             this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel4.UseStyleColors = false;
             // 
             // metroScrollBar1
             // 
@@ -1131,26 +886,18 @@
             // metroTrackBar1
             // 
             this.metroTrackBar1.BackColor = System.Drawing.Color.Transparent;
-            this.metroTrackBar1.CustomBackground = false;
-            this.metroTrackBar1.LargeChange = 5;
             this.metroTrackBar1.Location = new System.Drawing.Point(28, 146);
-            this.metroTrackBar1.Maximum = 100;
-            this.metroTrackBar1.Minimum = 0;
-            this.metroTrackBar1.MouseWheelBarPartitions = 10;
             this.metroTrackBar1.Name = "metroTrackBar1";
             this.metroTrackBar1.Size = new System.Drawing.Size(237, 23);
-            this.metroTrackBar1.SmallChange = 1;
             this.metroTrackBar1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTrackBar1.StyleManager = this.metroStyleManager;
             this.metroTrackBar1.TabIndex = 4;
             this.metroTrackBar1.Text = "metroTrackBar1";
             this.metroTrackBar1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroTrackBar1, "TrackBar Tooltip");
-            this.metroTrackBar1.Value = 50;
             // 
             // metroProgressSpinner1
             // 
-            this.metroProgressSpinner1.CustomBackground = false;
             this.metroProgressSpinner1.Location = new System.Drawing.Point(287, 146);
             this.metroProgressSpinner1.Maximum = 100;
             this.metroProgressSpinner1.Name = "metroProgressSpinner1";
@@ -1166,17 +913,12 @@
             this.metroProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroProgressBar.Enabled = false;
-            this.metroProgressBar.FontSize = MetroFramework.MetroProgressBarSize.Medium;
-            this.metroProgressBar.FontWeight = MetroFramework.MetroProgressBarWeight.Light;
-            this.metroProgressBar.HideProgressText = true;
             this.metroProgressBar.Location = new System.Drawing.Point(28, 47);
             this.metroProgressBar.Name = "metroProgressBar";
-            this.metroProgressBar.ProgressBarStyle = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.metroProgressBar.Size = new System.Drawing.Size(466, 23);
             this.metroProgressBar.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroProgressBar.StyleManager = this.metroStyleManager;
             this.metroProgressBar.TabIndex = 2;
-            this.metroProgressBar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.metroProgressBar.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroToolTip.SetToolTip(this.metroProgressBar, "ProgressBar Tooltip");
             this.metroProgressBar.Value = 25;
@@ -1187,29 +929,11 @@
             this.metroToolTip.StyleManager = null;
             this.metroToolTip.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(431, 269);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
-            // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(486, 279);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 100);
-            this.panel1.TabIndex = 2;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(570, 372);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.metroTabControl1);
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "MainForm";
@@ -1225,7 +949,6 @@
             this.metroTabPage3.ResumeLayout(false);
             this.metroTabPage3.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1288,8 +1011,6 @@
         private Controls.MetroCheckBox metroCheckBox3;
         private Controls.MetroCheckBox metroCheckBox2;
         private Controls.MetroComboBox metroComboBox2;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
 
     }
 }

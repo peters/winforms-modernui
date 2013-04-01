@@ -168,7 +168,7 @@ namespace MetroFramework.Controls
         private bool isPressed;
 
         private bool useBarColor = false;
-
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool UseBarColor
         {

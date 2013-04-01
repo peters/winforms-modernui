@@ -79,6 +79,7 @@ namespace MetroFramework.Controls
         #region Fields
 
         private bool useStyleColors = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool UseStyleColors
         {
@@ -87,6 +88,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroLinkSize metroLinkSize = MetroLinkSize.Small;
+        [DefaultValue(MetroLinkSize.Small)]
         [Category("Metro Appearance")]
         public MetroLinkSize FontSize
         {
@@ -95,6 +97,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroLinkWeight metroLinkWeight = MetroLinkWeight.Regular;
+        [DefaultValue(MetroLinkWeight.Regular)]
         [Category("Metro Appearance")]
         public MetroLinkWeight FontWeight
         {
@@ -116,6 +119,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomBackground = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomBackground
         {
@@ -124,6 +128,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomForeColor = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomForeColor
         {

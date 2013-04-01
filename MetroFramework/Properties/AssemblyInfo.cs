@@ -21,7 +21,6 @@ using System.Security;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// JT: Ensure API compatibility
 [assembly: CLSCompliant(true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
@@ -40,11 +39,8 @@ using System.Security;
 [assembly: AssemblyVersion(MetroFrameworkAssembly.Version)]
 [assembly: AssemblyFileVersion(MetroFrameworkAssembly.Version)]
 
-// JT: Allow partially trusted callers
 [assembly:AllowPartiallyTrustedCallers]
 
-// JT: either both assemblies have a strong name or both are unsigned
-// JT: for a strong named assembly, we need to specify the full public key and neither Version or Culture
 [assembly: InternalsVisibleTo(AssemblyRef.MetroFrameworkDesignIVT)]
 
 internal static class MetroFrameworkAssembly
@@ -63,8 +59,6 @@ internal static class AssemblyRef
     internal const string MetroFrameworkDesignSN = "MetroFramework.Design, Version=" + MetroFrameworkAssembly.Version 
         + ", Culture=neutral, PublicKeyToken=" + MetroFrameworkKeyToken;
 
-    // JT: either both assemblies have a strong name or both are unsigned
-    // JT: for a strong named assembly, we need to specify the full public key and neither Version or Culture
     internal const string MetroFrameworkDesignIVT = "MetroFramework.Design, PublicKey=" + MetroFrameworkKeyFull;
 
     internal const string MetroFrameworkKey = "5f91a84759bf584a";

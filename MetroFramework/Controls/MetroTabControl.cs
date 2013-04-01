@@ -21,6 +21,7 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -98,7 +99,7 @@ namespace MetroFramework.Controls
         private const int TabBottomBorderHeight = 3;
  
         private bool useStyleColors = false;
-
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool UseStyleColors
         {
@@ -107,7 +108,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroTabControlSize metroLabelSize = MetroTabControlSize.Medium;
-
+        [DefaultValue(MetroTabControlSize.Medium)]
         [Category("Metro Appearance")]
         public MetroTabControlSize FontSize
         {
@@ -116,7 +117,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroTabControlWeight metroLabelWeight = MetroTabControlWeight.Light;
-
+        [DefaultValue(MetroTabControlWeight.Light)]
         [Category("Metro Appearance")]
         public MetroTabControlWeight FontWeight
         {
@@ -125,7 +126,7 @@ namespace MetroFramework.Controls
         }
 
         private ContentAlignment textAlign = ContentAlignment.MiddleLeft;
-
+        [DefaultValue(ContentAlignment.MiddleLeft)]
         [Category("Metro Appearance")]
         public ContentAlignment TextAlign
         {
@@ -150,9 +151,8 @@ namespace MetroFramework.Controls
 
 
         private bool isMirrored;
-
-        [Category("Metro Appearance")]
         [DefaultValue(false)]
+        [Category("Metro Appearance")]
         public new bool IsMirrored
         {
             get
@@ -171,6 +171,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomBackground = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomBackground
         {

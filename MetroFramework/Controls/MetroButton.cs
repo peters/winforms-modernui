@@ -80,6 +80,7 @@ namespace MetroFramework.Controls
         #region Fields
 
         private bool highlight = false;
+        [DefaultValue(false)]
         public bool Highlight
         {
             get { return highlight; }

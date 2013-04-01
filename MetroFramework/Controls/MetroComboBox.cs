@@ -77,6 +77,7 @@ namespace MetroFramework.Controls
 
         #region Fields
 
+        [DefaultValue(DrawMode.OwnerDrawFixed)]
         [Browsable(false)]
         public new DrawMode DrawMode
         {
@@ -84,6 +85,7 @@ namespace MetroFramework.Controls
             set { base.DrawMode = DrawMode.OwnerDrawFixed; }
         }
 
+        [DefaultValue(ComboBoxStyle.DropDownList)]
         [Browsable(false)]
         public new ComboBoxStyle DropDownStyle
         {
@@ -92,6 +94,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroLinkSize metroLinkSize = MetroLinkSize.Medium;
+        [DefaultValue(MetroLinkSize.Medium)]
         [Category("Metro Appearance")]
         public MetroLinkSize FontSize
         {
@@ -100,6 +103,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroLinkWeight metroLinkWeight = MetroLinkWeight.Regular;
+        [DefaultValue(MetroLinkWeight.Regular)]
         [Category("Metro Appearance")]
         public MetroLinkWeight FontWeight
         {

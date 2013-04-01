@@ -21,7 +21,6 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -77,9 +76,10 @@ namespace MetroFramework.Controls
 
         #region Fields
 
-        private TextBox baseTextBox;
-
+        private PromptedTextBox baseTextBox;
+        
         private bool useStyleColors = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool UseStyleColors
         {
@@ -88,6 +88,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroTextBoxSize metroTextBoxSize = MetroTextBoxSize.Small;
+        [DefaultValue(MetroTextBoxSize.Small)]
         [Category("Metro Appearance")]
         public MetroTextBoxSize FontSize
         {
@@ -96,6 +97,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroTextBoxWeight metroTextBoxWeight = MetroTextBoxWeight.Regular;
+        [DefaultValue(MetroTextBoxWeight.Regular)]
         [Category("Metro Appearance")]
         public MetroTextBoxWeight FontWeight
         {
@@ -104,6 +106,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomBackground = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomBackground
         {
@@ -112,11 +115,22 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomForeColor = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomForeColor
         {
             get { return useCustomForeColor; }
             set { useCustomForeColor = value; }
+        }
+
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue("")]
+        [Category("Metro Appearance")]
+        public string PromptText
+        {
+            get { return baseTextBox.PromptText; }
+            set { baseTextBox.PromptText = value; }
         }
 
         #endregion
@@ -143,6 +157,7 @@ namespace MetroFramework.Controls
             }
         }
 
+        [DefaultValue(false)]
         public bool Multiline
         {
             get { return baseTextBox.Multiline; }
@@ -162,6 +177,7 @@ namespace MetroFramework.Controls
             set { baseTextBox.Text = value; }
         }
 
+        [DefaultValue(false)]
         public bool ReadOnly
         {
             get { return baseTextBox.ReadOnly; }
@@ -174,12 +190,14 @@ namespace MetroFramework.Controls
             set { baseTextBox.PasswordChar = value; }
         }
 
+        [DefaultValue(false)]
         public bool UseSystemPasswordChar
         {
             get { return baseTextBox.UseSystemPasswordChar; }
             set { baseTextBox.UseSystemPasswordChar = value; }
         }
 
+        [DefaultValue(HorizontalAlignment.Left)]
         public HorizontalAlignment TextAlign
         {
             get { return baseTextBox.TextAlign; }
@@ -351,7 +369,7 @@ namespace MetroFramework.Controls
         {
             if (baseTextBox != null) return;
 
-            baseTextBox = new TextBox();
+            baseTextBox = new PromptedTextBox();
 
             baseTextBox.BorderStyle = BorderStyle.None;
             baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
@@ -392,6 +410,96 @@ namespace MetroFramework.Controls
             baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
             baseTextBox.Location = new Point(3, 3);
             baseTextBox.Size = new Size(Width - 6, Height - 6);
+        }
+
+        #endregion
+
+        #region PromptedTextBox
+
+        private class PromptedTextBox : TextBox
+        {
+            private const int OCM_COMMAND = 0x2111;
+            private const int WM_PAINT = 15;
+
+            private bool drawPrompt;
+
+            private string promptText = "";
+            [Browsable(true)]
+            [EditorBrowsable(EditorBrowsableState.Always)]
+            [DefaultValue("")]
+            public string PromptText
+            {
+                get { return promptText; }
+                set
+                {
+                    promptText = value.Trim();
+                    Invalidate();
+                }
+            }
+
+            private void DrawTextPrompt()
+            {
+                using (Graphics graphics = CreateGraphics())
+                {
+                    DrawTextPrompt(graphics);
+                }
+            }
+
+            private void DrawTextPrompt(Graphics g)
+            {
+                TextFormatFlags flags = TextFormatFlags.NoPadding | TextFormatFlags.EndEllipsis;
+                Rectangle clientRectangle = ClientRectangle;
+                switch (TextAlign)
+                {
+                    case HorizontalAlignment.Left:
+                        clientRectangle.Offset(1, 1);
+                        break;
+
+                    case HorizontalAlignment.Right:
+                        flags |= TextFormatFlags.Right;
+                        clientRectangle.Offset(0, 1);
+                        break;
+
+                    case HorizontalAlignment.Center:
+                        flags |= TextFormatFlags.HorizontalCenter;
+                        clientRectangle.Offset(0, 1);
+                        break;
+                }
+
+                TextRenderer.DrawText(g, promptText, Font, clientRectangle, SystemColors.GrayText, BackColor, flags);
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+                if (drawPrompt)
+                {
+                    DrawTextPrompt(e.Graphics);
+                }
+            }
+
+            protected override void OnTextAlignChanged(EventArgs e)
+            {
+                base.OnTextAlignChanged(e);
+                Invalidate();
+            }
+
+            protected override void OnTextChanged(EventArgs e)
+            {
+                base.OnTextChanged(e);
+                drawPrompt = Text.Length == 0;
+            }
+
+            protected override void WndProc(ref Message m)
+            {
+                base.WndProc(ref m);
+                if (((m.Msg == WM_PAINT) || (m.Msg == OCM_COMMAND)) &&
+                    (drawPrompt && !GetStyle(ControlStyles.UserPaint)))
+                {
+                    DrawTextPrompt();
+                }
+            }
+
         }
 
         #endregion

@@ -87,7 +87,8 @@ namespace MetroFramework.Controls
 
         private DoubleBufferedTextBox baseTextBox;
 
-        private bool useStyleColors;
+        private bool useStyleColors = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool UseStyleColors
         {
@@ -96,6 +97,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroLabelSize metroLabelSize = MetroLabelSize.Medium;
+        [DefaultValue(MetroLabelSize.Medium)]
         [Category("Metro Appearance")]
         public MetroLabelSize FontSize
         {
@@ -104,6 +106,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroLabelWeight metroLabelWeight = MetroLabelWeight.Light;
+        [DefaultValue(MetroLabelWeight.Light)]
         [Category("Metro Appearance")]
         public MetroLabelWeight FontWeight
         {
@@ -112,6 +115,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroLabelMode labelMode = MetroLabelMode.Default;
+        [DefaultValue(MetroLabelMode.Default)]
         [Category("Metro Appearance")]
         public MetroLabelMode LabelMode
         {
@@ -120,6 +124,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomBackground = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomBackground
         {
@@ -128,6 +133,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useCustomForeColor = false;
+        [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool CustomForeColor
         {

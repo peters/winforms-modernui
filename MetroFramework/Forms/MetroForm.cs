@@ -215,10 +215,14 @@ namespace MetroFramework.Forms
             Padding = new Padding(20, 60, 20, 20);
             StartPosition = FormStartPosition.CenterScreen;
 
-            if (!DesignMode)
-            {
-                MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
-            }
+            // JT: My secondary screen is 1920px high - my primary screen only 1024px...
+            // if anything, we would need to limit the size to the maximum dimensions across all displays
+            // however, there's still plug & play after the form has initialized, displays being turned, sessions 
+            // being switched from remote desktops to actual displays, etc...
+            //if (!DesignMode)
+            //{
+            //    MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
+            //}
 
             RemoveCloseButton();
             FormBorderStyle = FormBorderStyle.None;

@@ -59,7 +59,7 @@ namespace MetroFramework.Forms
                 singletonWindow.StyleManager = ((IMetroForm)parent).StyleManager.Clone() as MetroStyleManager;
 
                 if (singletonWindow.StyleManager != null)
-                    singletonWindow.StyleManager.OwnerForm = singletonWindow;
+                    singletonWindow.StyleManager.Owner = singletonWindow;
             }
 
             singletonWindow.Show(parent);
@@ -177,7 +177,7 @@ namespace MetroFramework.Forms
                 controlContainer.Size = new Size(Width - 40, Height - 80);
                 controlContainer.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
 
-                StyleManager.UpdateOwnerForm();
+                StyleManager.Refresh();
 
                 isInitialized = true;
 

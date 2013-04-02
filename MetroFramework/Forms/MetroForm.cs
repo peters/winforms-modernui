@@ -1188,7 +1188,7 @@ namespace MetroFramework.Forms
                 RestoreSize = Size;
                 RestorePoint = Location;
                 Size = Screen.FromPoint(Location).WorkingArea.Size;
-                Location = new Point();
+                Location = Screen.FromPoint(Location).WorkingArea.Location;
                 isMaximized = true;
             }
 

@@ -1,6 +1,19 @@
 Changelog File
 
 -----------------------------------------------------------------------------------
+SW 2013-04-02 09:55 - AssemblyVersion 1.2.0.0
+-----------------------------------------------------------------------------------
+
+* Added support for a style extender control (applys theme propertys to none framework controls)
+* Fixed textbox tab stop behaviour
+* Fixed maximize window behaviour
+* Fixed ComboBox item text by using a data source
+* Added additional propertys to textbox
+
+*** thx to thielj, who strongly tested and helped to improve the code! ***
+
+
+-----------------------------------------------------------------------------------
 SW 2013-03-04 17:32 - AssemblyVersion 1.1.0.0
 -----------------------------------------------------------------------------------
 

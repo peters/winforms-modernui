@@ -200,6 +200,21 @@ namespace MetroFramework.Forms
 
         private int borderWidth = 5;
 
+        public new FormWindowState WindowState
+        {
+            get { return base.WindowState; }
+            set
+            {
+                if (value == FormWindowState.Maximized)
+                {
+                    HandleMaximizeWindow();
+                    return;
+                }
+
+                base.WindowState = value;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -214,11 +229,6 @@ namespace MetroFramework.Forms
             Name = "MetroForm";
             Padding = new Padding(20, 60, 20, 20);
             StartPosition = FormStartPosition.CenterScreen;
-
-            if (!DesignMode)
-            {
-                MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
-            }
 
             RemoveCloseButton();
             FormBorderStyle = FormBorderStyle.None;
@@ -427,6 +437,19 @@ namespace MetroFramework.Forms
                     return;
                 }
 
+                if (m.Msg == (int)WinApi.Messages.WM_SYSCOMMAND)
+                {
+                    if ((m.WParam.ToInt32() & 0xFFF0) == (int)WinApi.Messages.SC_MAXIMIZE)
+                    {
+                        WindowState = FormWindowState.Maximized;
+                        return;
+                    }
+                    else if ((m.WParam.ToInt32() & 0xFFF0) == (int)WinApi.Messages.SC_RESTORE)
+                    {
+                        return;
+                    }
+                }
+
                 base.WndProc(ref m);
             }
 
@@ -584,7 +607,7 @@ namespace MetroFramework.Forms
                     if (WindowState == FormWindowState.Normal)
                     {
                         WindowState = FormWindowState.Maximized;
-                        btn.Text = "2";
+                        btn.Text = isMaximized ? "2" : "1";
                     }
                     else
                     {
@@ -1141,6 +1164,48 @@ namespace MetroFramework.Forms
             var proposedSize = new Size(int.MaxValue, int.MinValue);
             var actualSize = TextRenderer.MeasureText(g, text, font, proposedSize, flags);
             return new Rectangle(clientRectangle.X, clientRectangle.Y, actualSize.Width, actualSize.Height);
+        }
+
+        private bool isMaximized = false;
+        private Size RestoreSize = Size.Empty;
+        private Point RestorePoint = Point.Empty;
+
+        private void HandleMaximizeWindow()
+        {
+            if (!MaximizeBox || !Resizable)
+            {
+                return;
+            }
+
+            if (isMaximized)
+            {
+                Size = RestoreSize;
+                Location = RestorePoint;
+                isMaximized = false;
+            }
+            else
+            {
+                RestoreSize = Size;
+                RestorePoint = Location;
+                Size = Screen.FromPoint(Location).WorkingArea.Size;
+                Location = Screen.FromPoint(Location).WorkingArea.Location;
+                isMaximized = true;
+            }
+
+            foreach (KeyValuePair<WindowButtons, MetroFormButton> button in windowButtonList)
+            {
+                if (button.Key == WindowButtons.Maximize)
+                {
+                    if (isMaximized)
+                    {
+                        button.Value.Text = "2";
+                    }
+                    else
+                    {
+                        button.Value.Text = "1";
+                    }
+                }
+            }
         }
 
         #endregion

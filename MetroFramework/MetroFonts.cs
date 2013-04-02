@@ -22,6 +22,11 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System.Drawing;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Reflection;
+using System.Drawing.Text;
+using System;
 
 namespace MetroFramework
 {
@@ -97,9 +102,79 @@ namespace MetroFramework
 
     public sealed class MetroFonts
     {
+        private static PrivateFontCollection fontCollection = new PrivateFontCollection();
+
+        private static string ResolveFallbackFontname(string inputName, FontStyle inputStyle)
+        {
+            if (inputName == "Segoe UI Light")
+            {
+                return "Open Sans Light";
+            }
+            else if (inputName == "Segoe UI" && inputStyle == FontStyle.Bold)
+            {
+                return "Open Sans Bold";
+            }
+
+            return "Open Sans";
+        }
+
+        private static int AddResourceFont(string resourceName)
+        {
+            for (int i = 0; i < fontCollection.Families.Length; i++)
+            {
+                FontFamily fontFamily = fontCollection.Families[i];
+                if (fontFamily.Name == resourceName)
+                {
+                    return i;
+                }
+            }
+
+            resourceName = resourceName.Replace(" ", "-").Replace("Open-Sans", "OpenSans");
+            if (resourceName == "OpenSans")
+            {
+                resourceName += "-Regular";
+            }
+
+            resourceName = "MetroFramework.Resources.Fonts." + resourceName + ".ttf";
+
+            Stream fontStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+            IntPtr data = Marshal.AllocCoTaskMem((int)fontStream.Length);
+
+            byte[] fontdata = new byte[fontStream.Length];
+
+            fontStream.Read(fontdata, 0, (int)fontStream.Length);
+
+            Marshal.Copy(fontdata, 0, data, (int)fontStream.Length);
+
+            fontCollection.AddMemoryFont(data, (int)fontStream.Length);
+            fontStream.Close();
+
+            Marshal.FreeCoTaskMem(data);
+
+            return fontCollection.Families.Length - 1;
+        }
+
         private static Font GetSaveFont(string key, FontStyle style, float size)
         {
-            return new Font(key, size, style, GraphicsUnit.Pixel);
+            Font fontTester = new Font(key, size, style, GraphicsUnit.Pixel);
+            if (fontTester.Name == key)
+            {
+                return fontTester;
+            }
+            fontTester.Dispose();
+
+            int fontIndex = AddResourceFont(ResolveFallbackFontname(key, style));
+
+            if (style == FontStyle.Bold)
+            {
+                return new Font(fontCollection.Families[fontIndex], size, style, GraphicsUnit.Pixel);
+            }
+            else if (key.Contains("Light"))
+            {
+                return new Font(fontCollection.Families[fontIndex], size, GraphicsUnit.Pixel);
+            }
+
+            return new Font(fontCollection.Families[fontIndex], size, style, GraphicsUnit.Pixel);
         }
 
         public static Font DefaultLight(float size)

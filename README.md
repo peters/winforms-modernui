@@ -40,6 +40,7 @@ Controls supported
 
 Components supported
 ------------------
+* StyleExtender (Apply theme propertys to none framework controls)
 * StyleManager (Auto inherit a default style to all used controls)
 * ToolTip
 

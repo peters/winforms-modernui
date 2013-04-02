@@ -204,6 +204,13 @@ namespace MetroFramework.Controls
             set { baseTextBox.TextAlign = value; }
         }
 
+        [DefaultValue(true)]
+        public new bool TabStop
+        {
+            get { return baseTextBox.TabStop; }
+            set { baseTextBox.TabStop = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -211,6 +218,9 @@ namespace MetroFramework.Controls
         public MetroTextBox()
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
+
+            base.TabStop = false;
+
             CreateBaseTextBox();
             UpdateBaseTextBox();
             AddEventHandler();       
@@ -377,6 +387,8 @@ namespace MetroFramework.Controls
             baseTextBox.Size = new Size(Width - 6, Height - 6);
 
             Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
+
+            baseTextBox.TabStop = true;
             //baseTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
 
             Controls.Add(baseTextBox);

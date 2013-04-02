@@ -191,13 +191,13 @@ namespace MetroFramework.Controls
 
             if (!isPressed)
             {
-                e.Graphics.Clear(MetroPaint.GetStyleColor(Style));
+                e.Graphics.Clear(backColor);
             }
             else
             {
                 e.Graphics.Clear(MetroPaint.BackColor.Form(Theme));
                 
-                using (SolidBrush b = MetroPaint.GetStyleBrush(Style))
+                using (SolidBrush b = new SolidBrush(backColor)) //MetroPaint.GetStyleBrush(Style))
                 {
                     Point[] polyPoints = new Point[] { new Point(0,0), new Point(Width-1,2),new Point(Width-1,Height-2),new Point(0,Height) };
                     e.Graphics.FillPolygon(b, polyPoints);

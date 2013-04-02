@@ -156,12 +156,12 @@ namespace MetroFramework
 
         private static Font GetSaveFont(string key, FontStyle style, float size)
         {
-            //Font fontTester = new Font(key, size, style, GraphicsUnit.Pixel);
-            //if (fontTester.Name == key)
-            //{
-            //    return fontTester;
-            //}
-            //fontTester.Dispose();
+            Font fontTester = new Font(key, size, style, GraphicsUnit.Pixel);
+            if (fontTester.Name == key)
+            {
+                return fontTester;
+            }
+            fontTester.Dispose();
 
             int fontIndex = AddResourceFont(ResolveFallbackFontname(key, style));
 

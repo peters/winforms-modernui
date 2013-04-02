@@ -405,7 +405,10 @@ namespace MetroFramework.Native
             WM_REFLECT = 0x2000,
             WM_APP = 0x8000,
 
-            SC_MOVE = 0xF010
+            SC_MOVE = 0xF010,
+            SC_MINIMIZE = 0XF020,
+            SC_MAXIMIZE = 0xF030,
+            SC_RESTORE = 0xF120
         }
 
         public enum Bool

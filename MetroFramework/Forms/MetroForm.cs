@@ -215,15 +215,6 @@ namespace MetroFramework.Forms
             Padding = new Padding(20, 60, 20, 20);
             StartPosition = FormStartPosition.CenterScreen;
 
-            // JT: My secondary screen is 1920px high - my primary screen only 1024px...
-            // if anything, we would need to limit the size to the maximum dimensions across all displays
-            // however, there's still plug & play after the form has initialized, displays being turned, sessions 
-            // being switched from remote desktops to actual displays, etc...
-            //if (!DesignMode)
-            //{
-            //    MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
-            //}
-
             RemoveCloseButton();
             FormBorderStyle = FormBorderStyle.None;
         }
@@ -431,6 +422,14 @@ namespace MetroFramework.Forms
                     return;
                 }
 
+                if (m.Msg == (int)WinApi.Messages.WM_SYSCOMMAND)
+                {
+                    if ((m.WParam.ToInt32() & 0xFFF0) == (int)WinApi.Messages.SC_MAXIMIZE)
+                    {
+                        MeasureMaximizedSize();
+                    }
+                }
+
                 base.WndProc(ref m);
             }
 
@@ -587,6 +586,7 @@ namespace MetroFramework.Forms
                 {
                     if (WindowState == FormWindowState.Normal)
                     {
+                        MeasureMaximizedSize();
                         WindowState = FormWindowState.Maximized;
                         btn.Text = "2";
                     }
@@ -1145,6 +1145,11 @@ namespace MetroFramework.Forms
             var proposedSize = new Size(int.MaxValue, int.MinValue);
             var actualSize = TextRenderer.MeasureText(g, text, font, proposedSize, flags);
             return new Rectangle(clientRectangle.X, clientRectangle.Y, actualSize.Width, actualSize.Height);
+        }
+
+        private void MeasureMaximizedSize()
+        {
+            MaximumSize = Screen.FromPoint(Location).WorkingArea.Size;
         }
 
         #endregion

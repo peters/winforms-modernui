@@ -1,58 +1,51 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 
 namespace MetroFramework.Components
 {
-    /// <summary>
-    ///     Extend legacy controls with an <c>ApplyMetroTheme</c> property.
-    /// </summary>
-    /// <remarks>
-    ///     The theme is applied to <see cref="Control.BackColor"/> and <see cref="Control.ForeColor"/> only.
-    /// </remarks>
-	[ProvideProperty("ApplyMetroTheme",typeof(Control))] // we can provide more than one property if we like
-    public class MetroStyleExtender : Component, IExtenderProvider, IMetroComponent
+	[ProvideProperty("ApplyMetroTheme", typeof(Control))]
+    public sealed class MetroStyleExtender : Component, IExtenderProvider, IMetroComponent
 	{
-
-        // see http://www.codeproject.com/Articles/4683/Getting-to-know-IExtenderProvider
-
-        // TODO: Need something more performant here if we extend > 10 controls
-        private readonly List<Control> _extendedControls = new List<Control>();
+        private readonly Hashtable extendedControls = new Hashtable();
 
         public MetroStyleExtender()
-        {}
+        {
+        
+        }
 
         public MetroStyleExtender(IContainer parent)
             : this()
         {
-            Debug.Assert(parent!=null);
-            parent.Add(this);
+            if (parent != null)
+            {
+                parent.Add(this);
+            }
         }
 
         private void UpdateTheme(MetroThemeStyle theme)
         {
             Color backColor = MetroPaint.BackColor.Form(theme);
             Color foreColor = MetroPaint.ForeColor.Label.Normal(theme);
-            foreach (var c in _extendedControls)
+
+            foreach (DictionaryEntry de in extendedControls)
             {
-                try
+                Control ctrl = de.Value as Control;
+                if (ctrl != null)
                 {
-                    c.BackColor = backColor;
-                }
-                catch
-                {
-                }
-                try
-                {
-                    c.ForeColor = foreColor;
-                }
-                catch
-                {
+                    try
+                    {
+                        ctrl.BackColor = backColor;
+                        ctrl.ForeColor = foreColor;
+                    }
+                    catch { }
                 }
             }
         }
@@ -66,22 +59,32 @@ namespace MetroFramework.Components
 
         [DefaultValue(false)]
         [Category("Metro Appearance")]
-        [Description("Apply Metro Theme background and foreground colors.")]
+        [Description("Apply Metro Theme BackColor and ForeColor.")]
         public bool GetApplyMetroTheme(Control control)
 		{
-		    return control != null && _extendedControls.Contains(control);
+		    return control != null && extendedControls.Contains(control);
 		}
 
         public void SetApplyMetroTheme(Control control, bool value)
         {
-            if (control == null) return;
-            if (_extendedControls.Contains(control))
+            if (control == null)
             {
-                if (!value) _extendedControls.Remove(control);
+                return;
+            }
+
+            if (extendedControls.Contains(control))
+            {
+                if (!value)
+                {
+                    extendedControls.Remove(control);
+                }
             }
             else
             {
-                if (value) _extendedControls.Add(control);
+                if (value)
+                {
+                    extendedControls.Add(control.GetHashCode(), control);
+                }
             }
         }
 
@@ -90,25 +93,26 @@ namespace MetroFramework.Components
         #region IMetroComponent implementation
 
         [Browsable(false)]
-	    MetroColorStyle IMetroComponent.Style
+        MetroColorStyle IMetroComponent.Style
 	    {
             get { throw new NotSupportedException(); } 
-            set { /* ignore */ }
+            set { }
 	    }
+        
         [Browsable(false)]
 	    MetroThemeStyle IMetroComponent.Theme
 	    {
             get { throw new NotSupportedException(); } 
             set { UpdateTheme(value); }
 	    }
+
         [Browsable(false)]
-	    MetroStyleManager IMetroComponent.StyleManager
+        MetroStyleManager IMetroComponent.StyleManager
 	    {
             get { throw new NotSupportedException(); }
-            set { /* ignore */ }
+            set { }
         }
 
         #endregion
-
 	}
 }

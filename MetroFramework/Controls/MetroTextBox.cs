@@ -377,6 +377,9 @@ namespace MetroFramework.Controls
             baseTextBox.Size = new Size(Width - 6, Height - 6);
 
             Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
+            TabStop = false;
+
+            baseTextBox.TabStop = true;
             //baseTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
 
             Controls.Add(baseTextBox);

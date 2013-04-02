@@ -156,14 +156,23 @@ namespace MetroFramework
 
         private static Font GetSaveFont(string key, FontStyle style, float size)
         {
-            Font fontTester = new Font(key, size, style, GraphicsUnit.Pixel);
-            if (fontTester.Name == key)
-            {
-                return fontTester;
-            }
-            fontTester.Dispose();
+            //Font fontTester = new Font(key, size, style, GraphicsUnit.Pixel);
+            //if (fontTester.Name == key)
+            //{
+            //    return fontTester;
+            //}
+            //fontTester.Dispose();
 
             int fontIndex = AddResourceFont(ResolveFallbackFontname(key, style));
+
+            if (style == FontStyle.Bold)
+            {
+                return new Font(fontCollection.Families[fontIndex], size, style, GraphicsUnit.Pixel);
+            }
+            else if (key.Contains("Light"))
+            {
+                return new Font(fontCollection.Families[fontIndex], size, GraphicsUnit.Pixel);
+            }
 
             return new Font(fontCollection.Families[fontIndex], size, style, GraphicsUnit.Pixel);
         }

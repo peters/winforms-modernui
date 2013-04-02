@@ -63,16 +63,16 @@ namespace MetroFramework.Components
 
         #region ISupportInitialize
 
-        private bool isInitialized;
+        private bool isInitializing;
 
         void ISupportInitialize.BeginInit()
         {
-            isInitialized = false;
+            isInitializing = true;
         }
 
         void ISupportInitialize.EndInit()
         {
-            isInitialized = true;
+            isInitializing = false;
             Refresh();
         }
 
@@ -95,7 +95,7 @@ namespace MetroFramework.Components
                 {
                     owner.ControlAdded += ControlAdded;
 
-                    if (isInitialized)
+                    if (!isInitializing)
                     {
                         UpdateControl(value);
                     }
@@ -113,7 +113,7 @@ namespace MetroFramework.Components
             { 
                 metroStyle = value;
 
-                if (isInitialized)
+                if (!isInitializing)
                 {
                     Refresh();
                 }
@@ -130,7 +130,7 @@ namespace MetroFramework.Components
             {
                 metroTheme = value;
 
-                if (isInitialized)
+                if (!isInitializing)
                 {
                     Refresh();
                 }
@@ -139,7 +139,7 @@ namespace MetroFramework.Components
 
         private void ControlAdded(object sender, ControlEventArgs e)
         {
-            if (isInitialized)
+            if (!isInitializing)
             {
                 UpdateControl(e.Control);
             }

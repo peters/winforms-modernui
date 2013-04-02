@@ -961,7 +961,6 @@
             // 
             // richTextBox1
             // 
-            this.metroStyleExtender.SetApplyMetroFont(this.richTextBox1, true);
             this.metroStyleExtender.SetApplyMetroTheme(this.richTextBox1, true);
             this.richTextBox1.Location = new System.Drawing.Point(0, 78);
             this.richTextBox1.Name = "richTextBox1";
@@ -971,7 +970,6 @@
             // 
             // label2
             // 
-            this.metroStyleExtender.SetApplyMetroFont(this.label2, true);
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 53);
             this.label2.Name = "label2";

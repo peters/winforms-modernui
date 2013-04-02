@@ -29,7 +29,7 @@ using System.Security;
 namespace MetroFramework.Native
 {
     [SuppressUnmanagedCodeSecurity]
-    internal class WinApi
+    internal static class WinApi
     {
         #region Structs
 

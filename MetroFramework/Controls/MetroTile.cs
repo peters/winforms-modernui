@@ -133,6 +133,13 @@ namespace MetroFramework.Controls
             set { tileCount = value; }
         }
 
+        [DefaultValue(ContentAlignment.BottomLeft)]
+        public new ContentAlignment TextAlign
+        {
+            get { return base.TextAlign; }
+            set { base.TextAlign = value; }
+        }
+
         private bool isHovered = false;
         private bool isPressed = false;
         private bool isFocused = false;
@@ -147,6 +154,8 @@ namespace MetroFramework.Controls
                      ControlStyles.OptimizedDoubleBuffer |
                      ControlStyles.ResizeRedraw |
                      ControlStyles.UserPaint, true);
+
+            TextAlign = ContentAlignment.BottomLeft;
         }
 
         #endregion
@@ -197,7 +206,7 @@ namespace MetroFramework.Controls
             {
                 e.Graphics.Clear(MetroPaint.BackColor.Form(Theme));
                 
-                using (SolidBrush b = new SolidBrush(backColor)) //MetroPaint.GetStyleBrush(Style))
+                using (SolidBrush b = new SolidBrush(backColor))
                 {
                     Point[] polyPoints = new Point[] { new Point(0,0), new Point(Width-1,2),new Point(Width-1,Height-2),new Point(0,Height) };
                     e.Graphics.FillPolygon(b, polyPoints);
@@ -215,63 +224,59 @@ namespace MetroFramework.Controls
 
             Size textSize = TextRenderer.MeasureText(Text, MetroFonts.Tile);
 
+            TextFormatFlags flags = TextFormatFlags.LeftAndRightPadding | TextFormatFlags.EndEllipsis;
+            Rectangle clientRectangle = ClientRectangle;
+
             switch (TextAlign)
             {
-                case ContentAlignment.BottomLeft:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, Height - textSize.Height), foreColor);
-                        break;
-                    }
                 case ContentAlignment.BottomCenter:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width/2 - textSize.Width/2, Height - textSize.Height), foreColor);
-                        break;
-                    }
+                    flags |= TextFormatFlags.Bottom;
+                    flags |= TextFormatFlags.HorizontalCenter;
+                    break;
+                    
                 case ContentAlignment.BottomRight:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width - textSize.Width, Height - textSize.Height), foreColor);
-                        break;
-                    }
-                case ContentAlignment.MiddleLeft:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, Height/2 - textSize.Height/2), foreColor);
-                        break;
-                    }
-                case ContentAlignment.MiddleCenter:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width / 2 - textSize.Width / 2, Height / 2 - textSize.Height / 2), foreColor);
-                        break;
-                    }
-                case ContentAlignment.MiddleRight:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width - textSize.Width, Height / 2 - textSize.Height / 2), foreColor);
-                        break;
-                    }
-                case ContentAlignment.TopLeft:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, 0), foreColor);
-                        break;
-                    }
-                case ContentAlignment.TopCenter:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width / 2 - textSize.Width / 2, 0), foreColor);
-                        break;
-                    }
-                case ContentAlignment.TopRight:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width - textSize.Width, 0), foreColor);
-                        break;
-                    }
-                default:
-                    {
-                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, Height - textSize.Height), foreColor);
-                        break;
-                    }
+                    flags |= TextFormatFlags.Bottom;
+                    flags |= TextFormatFlags.Right;
+                    break;
 
+                case ContentAlignment.MiddleLeft:
+                    flags |= TextFormatFlags.VerticalCenter;
+                    flags |= TextFormatFlags.Left;
+                    break;
+
+                case ContentAlignment.MiddleCenter:
+                    flags |= TextFormatFlags.VerticalCenter;
+                    flags |= TextFormatFlags.HorizontalCenter;
+                    break;
+
+                case ContentAlignment.MiddleRight:
+                    flags |= TextFormatFlags.VerticalCenter;
+                    flags |= TextFormatFlags.Right;
+                    break;
+
+                case ContentAlignment.TopLeft:
+                    flags |= TextFormatFlags.Top;
+                    flags |= TextFormatFlags.Left;
+                    break;
+
+                case ContentAlignment.TopCenter:
+                    flags |= TextFormatFlags.Top;
+                    flags |= TextFormatFlags.HorizontalCenter;
+                    break;
+
+                case ContentAlignment.TopRight:
+                    flags |= TextFormatFlags.Top;
+                    flags |= TextFormatFlags.Right;
+                    break;
+
+                default:
+                case ContentAlignment.BottomLeft:
+                    flags |= TextFormatFlags.Bottom;
+                    flags |= TextFormatFlags.Left;
+                    break;
             }
 
-            
-
+            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, clientRectangle, foreColor, flags);
 
             if (false && isFocused)
                 ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);

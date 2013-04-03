@@ -461,6 +461,7 @@ namespace MetroFramework.Controls
             {
                 TextFormatFlags flags = TextFormatFlags.NoPadding | TextFormatFlags.EndEllipsis;
                 Rectangle clientRectangle = ClientRectangle;
+
                 switch (TextAlign)
                 {
                     case HorizontalAlignment.Left:

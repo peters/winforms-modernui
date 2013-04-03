@@ -436,6 +436,17 @@ namespace MetroFramework.Native
         public const byte AC_SRC_OVER = 0x00;
         public const byte AC_SRC_ALPHA = 0x01;
 
+        // GetWindow() constants
+        public const int GW_HWNDFIRST = 0;
+        public const int GW_HWNDLAST = 1;
+        public const int GW_HWNDNEXT = 2;
+        public const int GW_HWNDPREV = 3;
+        public const int GW_OWNER = 4;
+        public const int GW_CHILD = 5;
+        public const int HC_ACTION = 0;
+        public const int WH_CALLWNDPROC = 4;
+        public const int GWL_WNDPROC = -4;
+
         #endregion
 
         #region API Calls
@@ -501,10 +512,43 @@ namespace MetroFramework.Native
         public static extern IntPtr GetDCEx(IntPtr hwnd, IntPtr hrgnclip, uint fdwOptions);
 
         [DllImport("user32.dll")]
-        public static extern int ReleaseDC(IntPtr hwnd, IntPtr hDc);
-
-        [DllImport("user32.dll")]
         public static extern bool ShowScrollBar(IntPtr hWnd, int bar, int cmd);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr GetWindowDC(IntPtr handle);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr ReleaseDC(IntPtr handle, IntPtr hDC);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern int GetClassName(IntPtr hwnd, char[] className, int maxCount);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr GetWindow(IntPtr hwnd, int uCmd);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern bool IsWindowVisible(IntPtr hwnd);
+
+        [DllImport("user32", CharSet = CharSet.Auto)]
+        public static extern int GetClientRect(IntPtr hwnd, ref RECT lpRect);
+
+        [DllImport("user32", CharSet = CharSet.Auto)]
+        public static extern int GetClientRect(IntPtr hwnd, [In, Out] ref Rectangle rect);
+
+        [DllImport("user32", CharSet = CharSet.Auto)]
+        public static extern bool MoveWindow(IntPtr hwnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+
+        [DllImport("user32", CharSet = CharSet.Auto)]
+        public static extern bool UpdateWindow(IntPtr hwnd);
+
+        [DllImport("user32", CharSet = CharSet.Auto)]
+        public static extern bool InvalidateRect(IntPtr hwnd, ref Rectangle rect, bool bErase);
+
+        [DllImport("user32", CharSet = CharSet.Auto)]
+        public static extern bool ValidateRect(IntPtr hwnd, ref Rectangle rect);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        internal static extern bool GetWindowRect(IntPtr hWnd, [In, Out] ref Rectangle rect);
 
         #endregion
 

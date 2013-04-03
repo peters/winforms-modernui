@@ -25,6 +25,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Design;
 using System.Security;
 using System.Security.Permissions;
@@ -95,6 +96,9 @@ namespace MetroFramework.Controls
         #endregion
 
         #region Fields
+
+        private SubClass scUpDown = null;
+        private bool bUpDown = false;
 
         private const int TabBottomBorderHeight = 3;
  
@@ -230,25 +234,30 @@ namespace MetroFramework.Controls
 
         private void DrawTabBottomBorder(int index, Graphics graphics)
         {
-            using (var bgBrush = new SolidBrush(MetroPaint.BorderColor.TabControl.Normal(Theme)))
+            using (Brush bgBrush = new SolidBrush(MetroPaint.BorderColor.TabControl.Normal(Theme)))
             {
-                graphics.FillRectangle(bgBrush, -2 + GetTabRect(0).X + DisplayRectangle.X, GetTabRect(index).Bottom + 2 - TabBottomBorderHeight,
-                                       Width - (Width - DisplayRectangle.Width + DisplayRectangle.X) + 4,
-                                       TabBottomBorderHeight);
+                //graphics.FillRectangle(bgBrush, -2 + GetTabRect(0).X + DisplayRectangle.X, GetTabRect(index).Bottom + 2 - TabBottomBorderHeight,
+                //                       Width - (Width - DisplayRectangle.Width + DisplayRectangle.X) + 4,
+                //                       TabBottomBorderHeight);
+
+                Rectangle borderRectangle = new Rectangle(DisplayRectangle.X, GetTabRect(index).Bottom + 2 - TabBottomBorderHeight, DisplayRectangle.Width, TabBottomBorderHeight);
+
+                graphics.FillRectangle(bgBrush, borderRectangle);
             }
         }
 
         private void DrawTabSelected(int index, Graphics graphics)
         {
-            using (var selectionBrush = new SolidBrush(MetroPaint.GetStyleColor(Style)))
+            using (Brush selectionBrush = new SolidBrush(MetroPaint.GetStyleColor(Style)))
             {
-                var selectedTabRect = GetTabRect(index);
-                var textAreaRect = MeasureText(TabPages[index].Text);
+                Rectangle selectedTabRect = GetTabRect(index);
+                Size textAreaRect = MeasureText(TabPages[index].Text);
+
                 graphics.FillRectangle(selectionBrush, new Rectangle
                 {
                     X = -2 + selectedTabRect.X + DisplayRectangle.X,
                     Y = selectedTabRect.Bottom + 2 - TabBottomBorderHeight,
-                    Width = selectedTabRect.Width,
+                    Width = selectedTabRect.Width + 2,
                     Height = TabBottomBorderHeight
                 });
             }
@@ -257,9 +266,9 @@ namespace MetroFramework.Controls
         private Size MeasureText(string text)
         {
             Size preferredSize;
-            using (var g = CreateGraphics())
+            using (Graphics g = CreateGraphics())
             {
-                var proposedSize = new Size(int.MaxValue, int.MaxValue);
+                Size proposedSize = new Size(int.MaxValue, int.MaxValue);
                 preferredSize = TextRenderer.MeasureText(g, text, MetroFonts.TabControl(metroLabelSize, metroLabelWeight),
                                                          proposedSize,
                                                          MetroPaint.GetTextFormatFlags(TextAlign) |
@@ -271,9 +280,10 @@ namespace MetroFramework.Controls
         private void DrawTab(int index, Graphics graphics)
         {
             Color foreColor;
-            var backColor = Parent != null ? Parent.BackColor : MetroPaint.BackColor.Form(Theme);
-            var tabPage = TabPages[index];
-            var tabRect = GetTabRect(index);
+            Color backColor = Parent != null ? Parent.BackColor : MetroPaint.BackColor.Form(Theme);
+
+            TabPage tabPage = TabPages[index];
+            Rectangle tabRect = GetTabRect(index);
 
             if (!Enabled)
             {
@@ -289,10 +299,58 @@ namespace MetroFramework.Controls
                 tabRect.X = DisplayRectangle.X;
             }
 
+            Rectangle bgRect = tabRect;
+
             tabRect.Width += 20;
+
+            using (Brush bgBrush = new SolidBrush(backColor))
+            {
+                graphics.FillRectangle(bgBrush, bgRect);
+            }
 
             TextRenderer.DrawText(graphics, tabPage.Text, MetroFonts.TabControl(metroLabelSize, metroLabelWeight),
                                   tabRect, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
+        }
+
+        private void DrawUpDown(Graphics graphics)
+        {
+            Color foreColor;
+            Color backColor = Parent != null ? Parent.BackColor : MetroPaint.BackColor.Form(Theme);
+
+            if (!Enabled)
+            {
+                foreColor = MetroPaint.ForeColor.Label.Disabled(Theme);
+            }
+            else
+            {
+                foreColor = !useStyleColors ? MetroPaint.ForeColor.TabControl.Normal(Theme) : MetroPaint.GetStyleColor(Style);
+            }
+
+            Rectangle borderRect = new Rectangle();
+            WinApi.GetClientRect(scUpDown.Handle, ref borderRect);
+
+            graphics.CompositingQuality = CompositingQuality.HighQuality;
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            graphics.Clear(backColor);
+
+            using (Brush b = new SolidBrush(MetroPaint.BorderColor.TabControl.Normal(Theme)))
+            {
+                GraphicsPath gp = new GraphicsPath(FillMode.Winding);
+                PointF[] pts = { new PointF(6, 6), new PointF(16, 0), new PointF(16, 12) };
+                gp.AddLines(pts);
+
+                graphics.FillPath(b, gp);
+
+                gp.Reset();
+
+                PointF[] pts2 = { new PointF(borderRect.Width - 15, 0), new PointF(borderRect.Width - 5, 6), new PointF(borderRect.Width - 15, 12) };
+                gp.AddLines(pts2);
+
+                graphics.FillPath(b, gp);
+
+                gp.Dispose();
+            }
         }
 
         #endregion
@@ -378,6 +436,114 @@ namespace MetroFramework.Controls
             }
             
             base.OnMouseWheel(e);
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            FindUpDown();
+        }
+
+        protected override void OnControlAdded(ControlEventArgs e)
+        {
+ 	         base.OnControlAdded(e);
+             FindUpDown();
+             UpdateUpDown();
+        }
+
+        protected override void OnControlRemoved(ControlEventArgs e)
+        {
+ 	        base.OnControlRemoved(e);
+            FindUpDown();
+            UpdateUpDown();
+        }
+
+        protected override void  OnSelectedIndexChanged(EventArgs e)
+        {
+ 	        base.OnSelectedIndexChanged(e);
+            UpdateUpDown();
+            Invalidate();
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void FindUpDown()
+        {
+            bool bFound = false;
+
+            IntPtr pWnd = WinApi.GetWindow(Handle, WinApi.GW_CHILD);
+
+            while (pWnd != IntPtr.Zero)
+            {
+                char[] className = new char[33];
+
+                int length = WinApi.GetClassName(pWnd, className, 32);
+
+                string s = new string(className, 0, length);
+
+                if (s == "msctls_updown32")
+                {
+                    bFound = true;
+
+                    if (!bUpDown)
+                    {
+                        this.scUpDown = new SubClass(pWnd, true);
+                        this.scUpDown.SubClassedWndProc += new SubClass.SubClassWndProcEventHandler(scUpDown_SubClassedWndProc);
+
+                        bUpDown = true;
+                    }
+                    break;
+                }
+
+                pWnd = WinApi.GetWindow(pWnd, WinApi.GW_HWNDNEXT);
+            }
+
+            if ((!bFound) && (bUpDown))
+                bUpDown = false;
+        }
+
+        private void UpdateUpDown()
+        {
+            if (bUpDown)
+            {
+                if (WinApi.IsWindowVisible(scUpDown.Handle))
+                {
+                    Rectangle rect = new Rectangle();
+                    WinApi.GetClientRect(scUpDown.Handle, ref rect);
+                    WinApi.InvalidateRect(scUpDown.Handle, ref rect, true);
+                }
+            }
+        }
+
+        private int scUpDown_SubClassedWndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case (int)WinApi.Messages.WM_PAINT:
+
+                    IntPtr hDC = WinApi.GetWindowDC(scUpDown.Handle);
+
+                    Graphics g = Graphics.FromHdc(hDC);
+
+					DrawUpDown(g);
+
+					g.Dispose();
+
+                    WinApi.ReleaseDC(scUpDown.Handle, hDC);
+
+                    m.Result = IntPtr.Zero;
+
+                    Rectangle rect = new Rectangle();
+
+                    WinApi.GetClientRect(scUpDown.Handle, ref rect);
+                    WinApi.ValidateRect(scUpDown.Handle, ref rect);
+
+                    return 1;
+            }
+
+            return 0;
         }
 
         #endregion

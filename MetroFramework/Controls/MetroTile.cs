@@ -140,6 +140,34 @@ namespace MetroFramework.Controls
             set { base.TextAlign = value; }
         }
 
+        private Image tileImage = null;
+        [DefaultValue(null)]
+        [Category("Metro Appearance")]
+        public Image TileImage
+        {
+            get { return tileImage; }
+            set { tileImage = value; }
+        }
+
+        private bool useTileImage = false;
+        [DefaultValue(false)]
+        [Category("Metro Appearance")]
+        public bool UseTileImage
+        {
+            get { return useTileImage; }
+            set { useTileImage = value; }
+        }
+
+        private ContentAlignment tileImageAlign = ContentAlignment.TopLeft;
+        [DefaultValue(ContentAlignment.TopLeft)]
+        [Category("Metro Appearance")]
+        public ContentAlignment TileImageAlign
+        {
+            get { return tileImageAlign; }
+            set { tileImageAlign = value; }
+        }
+
+
         private bool isHovered = false;
         private bool isPressed = false;
         private bool isFocused = false;
@@ -210,6 +238,58 @@ namespace MetroFramework.Controls
                 {
                     Point[] polyPoints = new Point[] { new Point(0,0), new Point(Width-1,2),new Point(Width-1,Height-2),new Point(0,Height) };
                     e.Graphics.FillPolygon(b, polyPoints);
+                }
+            }
+
+            if (useTileImage)
+            {
+                if (tileImage != null)
+                {
+                    Rectangle rect;
+                    switch (tileImageAlign)
+                    {
+                        case ContentAlignment.BottomLeft:
+                            rect = new Rectangle(new Point(0, Height - TileImage.Height), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        case ContentAlignment.BottomCenter:
+                            rect = new Rectangle(new Point(Width / 2 - TileImage.Width / 2, Height - TileImage.Height), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        case ContentAlignment.BottomRight:
+                            rect = new Rectangle(new Point(Width - TileImage.Width, Height - TileImage.Height), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        case ContentAlignment.MiddleLeft:
+                            rect = new Rectangle(new Point(0, Height / 2 - TileImage.Height / 2), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        case ContentAlignment.MiddleCenter:
+                            rect = new Rectangle(new Point(Width / 2 - TileImage.Width / 2, Height / 2 - TileImage.Height / 2), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        case ContentAlignment.MiddleRight:
+                            rect = new Rectangle(new Point(Width - TileImage.Width, Height / 2 - TileImage.Height / 2), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        case ContentAlignment.TopLeft:
+                            rect = new Rectangle(new Point(0, 0), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        case ContentAlignment.TopCenter:
+                            rect = new Rectangle(new Point(Width / 2 - TileImage.Width / 2, 0), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        case ContentAlignment.TopRight:
+                            rect = new Rectangle(new Point(Width - TileImage.Width, 0), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+
+                        default:
+                            rect = new Rectangle(new Point(0, 0), new System.Drawing.Size(TileImage.Width, TileImage.Height));
+                            break;
+                    }
+
+                    e.Graphics.DrawImage(TileImage, rect);
                 }
             }
 

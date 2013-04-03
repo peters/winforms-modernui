@@ -406,6 +406,11 @@ namespace MetroFramework.Forms
                 isInitialized = true;
             }
 
+            if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+
             if (DesignMode) return;
 
             Refresh();

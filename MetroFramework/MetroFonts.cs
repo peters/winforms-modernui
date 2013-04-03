@@ -44,6 +44,20 @@ namespace MetroFramework
         Bold
     }
 
+    public enum MetroTileTextSize
+    {
+        Small,
+        Medium,
+        Tall
+    }
+
+    public enum MetroTileTextWeight
+    {
+        Light,
+        Regular,
+        Bold
+    }
+
     public enum MetroLinkSize
     {
         Small,
@@ -207,9 +221,37 @@ namespace MetroFramework
             get { return DefaultBold(11f); }
         }
 
-        public static Font Tile
+        public static Font Tile(MetroTileTextSize labelSize, MetroTileTextWeight labelWeight)
         {
-            get { return Default(14f); }
+            if (labelSize == MetroTileTextSize.Small)
+            {
+                if (labelWeight == MetroTileTextWeight.Light)
+                    return DefaultLight(12f);
+                if (labelWeight == MetroTileTextWeight.Regular)
+                    return Default(12f);
+                if (labelWeight == MetroTileTextWeight.Bold)
+                    return DefaultBold(12f);
+            }
+            else if (labelSize == MetroTileTextSize.Medium)
+            {
+                if (labelWeight == MetroTileTextWeight.Light)
+                    return DefaultLight(14f);
+                if (labelWeight == MetroTileTextWeight.Regular)
+                    return Default(14f);
+                if (labelWeight == MetroTileTextWeight.Bold)
+                    return DefaultBold(14f);
+            }
+            else if (labelSize == MetroTileTextSize.Tall)
+            {
+                if (labelWeight == MetroTileTextWeight.Light)
+                    return DefaultLight(18f);
+                if (labelWeight == MetroTileTextWeight.Regular)
+                    return Default(18f);
+                if (labelWeight == MetroTileTextWeight.Bold)
+                    return DefaultBold(18f);
+            }
+
+            return DefaultLight(14f);
         }
 
         public static Font TileCount

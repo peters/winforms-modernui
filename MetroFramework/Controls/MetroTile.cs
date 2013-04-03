@@ -167,6 +167,23 @@ namespace MetroFramework.Controls
             set { tileImageAlign = value; }
         }
 
+        private MetroTileTextSize tileTextFontSize = MetroTileTextSize.Medium;
+        [DefaultValue(MetroTileTextSize.Medium)]
+        [Category("Metro Appearance")]
+        public MetroTileTextSize TileTextFontSize
+        {
+            get { return tileTextFontSize; }
+            set { tileTextFontSize = value; Refresh(); }
+        }
+
+        private MetroTileTextWeight tileTextFontWeight = MetroTileTextWeight.Light;
+        [DefaultValue(MetroTileTextWeight.Light)]
+        [Category("Metro Appearance")]
+        public MetroTileTextWeight TileTextFontWeight
+        {
+            get { return tileTextFontWeight; }
+            set { tileTextFontWeight = value; Refresh(); }
+        }
 
         private bool isHovered = false;
         private bool isPressed = false;
@@ -302,7 +319,7 @@ namespace MetroFramework.Controls
                 e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             }
 
-            Size textSize = TextRenderer.MeasureText(Text, MetroFonts.Tile);
+            Size textSize = TextRenderer.MeasureText(Text, MetroFonts.Tile(tileTextFontSize, tileTextFontWeight));
 
             TextFormatFlags flags = TextFormatFlags.LeftAndRightPadding | TextFormatFlags.EndEllipsis;
             Rectangle clientRectangle = ClientRectangle;
@@ -356,7 +373,7 @@ namespace MetroFramework.Controls
                     break;
             }
 
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, clientRectangle, foreColor, flags);
+            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile(tileTextFontSize,tileTextFontWeight), clientRectangle, foreColor, flags);
 
             if (false && isFocused)
                 ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);

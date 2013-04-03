@@ -191,13 +191,13 @@ namespace MetroFramework.Controls
 
             if (!isPressed)
             {
-                e.Graphics.Clear(MetroPaint.GetStyleColor(Style));
+                e.Graphics.Clear(backColor);
             }
             else
             {
                 e.Graphics.Clear(MetroPaint.BackColor.Form(Theme));
                 
-                using (SolidBrush b = MetroPaint.GetStyleBrush(Style))
+                using (SolidBrush b = new SolidBrush(backColor)) //MetroPaint.GetStyleBrush(Style))
                 {
                     Point[] polyPoints = new Point[] { new Point(0,0), new Point(Width-1,2),new Point(Width-1,Height-2),new Point(0,Height) };
                     e.Graphics.FillPolygon(b, polyPoints);
@@ -214,7 +214,63 @@ namespace MetroFramework.Controls
             }
 
             Size textSize = TextRenderer.MeasureText(Text, MetroFonts.Tile);
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, Height-textSize.Height), foreColor);
+
+            switch (TextAlign)
+            {
+                case ContentAlignment.BottomLeft:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, Height - textSize.Height), foreColor);
+                        break;
+                    }
+                case ContentAlignment.BottomCenter:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width/2 - textSize.Width/2, Height - textSize.Height), foreColor);
+                        break;
+                    }
+                case ContentAlignment.BottomRight:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width - textSize.Width, Height - textSize.Height), foreColor);
+                        break;
+                    }
+                case ContentAlignment.MiddleLeft:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, Height/2 - textSize.Height/2), foreColor);
+                        break;
+                    }
+                case ContentAlignment.MiddleCenter:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width / 2 - textSize.Width / 2, Height / 2 - textSize.Height / 2), foreColor);
+                        break;
+                    }
+                case ContentAlignment.MiddleRight:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width - textSize.Width, Height / 2 - textSize.Height / 2), foreColor);
+                        break;
+                    }
+                case ContentAlignment.TopLeft:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, 0), foreColor);
+                        break;
+                    }
+                case ContentAlignment.TopCenter:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width / 2 - textSize.Width / 2, 0), foreColor);
+                        break;
+                    }
+                case ContentAlignment.TopRight:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(Width - textSize.Width, 0), foreColor);
+                        break;
+                    }
+                default:
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile, new Point(0, Height - textSize.Height), foreColor);
+                        break;
+                    }
+
+            }
+
+            
 
 
             if (false && isFocused)

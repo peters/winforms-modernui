@@ -1192,17 +1192,20 @@ namespace MetroFramework.Forms
                 isMaximized = true;
             }
 
-            foreach (KeyValuePair<WindowButtons, MetroFormButton> button in windowButtonList)
+            if (windowButtonList != null)
             {
-                if (button.Key == WindowButtons.Maximize)
+                foreach (KeyValuePair<WindowButtons, MetroFormButton> button in windowButtonList)
                 {
-                    if (isMaximized)
+                    if (button.Key == WindowButtons.Maximize)
                     {
-                        button.Value.Text = "2";
-                    }
-                    else
-                    {
-                        button.Value.Text = "1";
+                        if (isMaximized)
+                        {
+                            button.Value.Text = "2";
+                        }
+                        else
+                        {
+                            button.Value.Text = "1";
+                        }
                     }
                 }
             }

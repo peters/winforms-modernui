@@ -24,9 +24,11 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace MetroFramework.Native
 {
+    [SuppressUnmanagedCodeSecurity]
     internal class DwmApi
     {
         #region Structs
@@ -113,6 +115,21 @@ namespace MetroFramework.Native
             public int fEnable;
             public IntPtr hRgnBlur;
             public int fTransitionOnMaximized;
+
+            private DWM_BLURBEHIND(bool enable)
+            {
+                dwFlags = DWM_BB_ENABLE;
+                fEnable = enable ? 1 : 0;
+                hRgnBlur = IntPtr.Zero;
+                fTransitionOnMaximized = 0;
+            }
+
+            public static DWM_BLURBEHIND Enable = new DWM_BLURBEHIND(true);
+            public static DWM_BLURBEHIND Disable = new DWM_BLURBEHIND(false);
+
+            public const int DWM_BB_ENABLE = 1;
+            public const int DWM_BB_BLURREGION = 2;
+            public const int DWM_BB_TRANSITIONONMAXIMIZED = 4;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -288,6 +305,9 @@ namespace MetroFramework.Native
         public static extern int DwmUnregisterThumbnail(IntPtr hThumbnailId);
         [DllImport("dwmapi.dll")]
         public static extern int DwmUpdateThumbnailProperties(IntPtr hThumbnailId, ref DWM_THUMBNAIL_PROPERTIES ptnProperties);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmEnableBlurBehindWindow(IntPtr hWnd, ref DWM_BLURBEHIND pBlurBehind);
 
         [DllImport("uxtheme.dll")]
         public static extern int SetWindowThemeAttribute(IntPtr hWnd, WindowThemeAttributeType wtype, ref WTA_OPTIONS attributes, uint size);

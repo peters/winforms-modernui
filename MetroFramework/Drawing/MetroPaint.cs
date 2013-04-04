@@ -30,6 +30,14 @@ namespace MetroFramework.Drawing
     {
         public sealed class BorderColor
         {
+            public static Color Form(MetroThemeStyle theme)
+            {
+                if (theme == MetroThemeStyle.Dark)
+                    return Color.FromArgb(68, 68, 68);
+
+                return Color.FromArgb(204, 204, 204);
+            }
+
             public static class Button
             {
                 public static Color Normal(MetroThemeStyle theme)

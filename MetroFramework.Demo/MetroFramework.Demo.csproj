@@ -108,6 +108,10 @@
       <Name>MetroFramework.Design</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\MetroFramework.Fonts\MetroFramework.Fonts.csproj">
+      <Project>{5a2fcae8-c2fa-41bd-90ea-16103ea07b26}</Project>
+      <Name>MetroFramework.Fonts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MetroFramework\MetroFramework.csproj">
       <Project>{bb41ac8b-cbed-4387-a7e0-4567edb3f57f}</Project>
       <Name>MetroFramework</Name>

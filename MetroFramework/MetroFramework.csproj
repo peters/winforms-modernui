@@ -56,6 +56,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -174,9 +175,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Resources\Fonts\OpenSans-Bold.ttf" />
-    <EmbeddedResource Include="Resources\Fonts\OpenSans-Light.ttf" />
-    <EmbeddedResource Include="Resources\Fonts\OpenSans-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -200,9 +198,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Localization\en\MetroToggle.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Fonts\Apache License Version 2.txt" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

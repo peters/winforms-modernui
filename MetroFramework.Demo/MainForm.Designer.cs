@@ -112,7 +112,7 @@
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Name = "metroTabControl1";
             this.metroTabControl1.SelectedIndex = 0;
-            this.metroTabControl1.Size = new System.Drawing.Size(529, 283);
+            this.metroTabControl1.Size = new System.Drawing.Size(530, 292);
             this.metroTabControl1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabControl1.StyleManager = this.metroStyleManager;
             this.metroTabControl1.TabIndex = 0;
@@ -140,7 +140,7 @@
             this.metroTabPage1.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage1.Name = "metroTabPage1";
             this.metroTabPage1.Padding = new System.Windows.Forms.Padding(25);
-            this.metroTabPage1.Size = new System.Drawing.Size(521, 244);
+            this.metroTabPage1.Size = new System.Drawing.Size(522, 253);
             this.metroTabPage1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabPage1.StyleManager = this.metroStyleManager;
             this.metroTabPage1.TabIndex = 0;
@@ -326,7 +326,7 @@
             this.metroTabPage4.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage4.Name = "metroTabPage4";
             this.metroTabPage4.Padding = new System.Windows.Forms.Padding(25);
-            this.metroTabPage4.Size = new System.Drawing.Size(521, 244);
+            this.metroTabPage4.Size = new System.Drawing.Size(522, 253);
             this.metroTabPage4.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabPage4.StyleManager = this.metroStyleManager;
             this.metroTabPage4.TabIndex = 3;
@@ -531,7 +531,7 @@
             this.metroTabPage2.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage2.Name = "metroTabPage2";
             this.metroTabPage2.Padding = new System.Windows.Forms.Padding(25);
-            this.metroTabPage2.Size = new System.Drawing.Size(521, 244);
+            this.metroTabPage2.Size = new System.Drawing.Size(522, 253);
             this.metroTabPage2.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabPage2.StyleManager = this.metroStyleManager;
             this.metroTabPage2.TabIndex = 1;
@@ -771,7 +771,7 @@
             this.metroTabPage3.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage3.Name = "metroTabPage3";
             this.metroTabPage3.Padding = new System.Windows.Forms.Padding(25);
-            this.metroTabPage3.Size = new System.Drawing.Size(521, 244);
+            this.metroTabPage3.Size = new System.Drawing.Size(522, 253);
             this.metroTabPage3.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabPage3.StyleManager = this.metroStyleManager;
             this.metroTabPage3.TabIndex = 2;
@@ -940,7 +940,7 @@
             this.metroTabPage5.HorizontalScrollbarSize = 10;
             this.metroTabPage5.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage5.Name = "metroTabPage5";
-            this.metroTabPage5.Size = new System.Drawing.Size(521, 244);
+            this.metroTabPage5.Size = new System.Drawing.Size(522, 253);
             this.metroTabPage5.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabPage5.StyleManager = this.metroStyleManager;
             this.metroTabPage5.TabIndex = 4;
@@ -997,10 +997,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(569, 363);
+            this.ClientSize = new System.Drawing.Size(570, 372);
             this.Controls.Add(this.metroTabControl1);
-            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "MainForm";
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.Flat;
             this.StyleManager = this.metroStyleManager;
             this.Text = "metro framework";
             this.metroTabControl1.ResumeLayout(false);
@@ -1026,6 +1026,7 @@
         private Controls.MetroTabPage metroTabPage1;
         private Controls.MetroTile metroTileSwitch;
         private Controls.MetroTile metroTile2;
+        private Controls.MetroTile metroTile1;
         private Components.MetroToolTip metroToolTip;
         private Controls.MetroButton metroButton3;
         private Controls.MetroButton metroButton2;
@@ -1083,7 +1084,6 @@
         private Components.MetroStyleExtender metroStyleExtender;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private Controls.MetroTile metroTile1;
 
     }
 }

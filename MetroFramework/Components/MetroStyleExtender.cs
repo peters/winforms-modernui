@@ -58,7 +58,7 @@ namespace MetroFramework.Components
 
         bool IExtenderProvider.CanExtend(object target)
 		{
-		    return target is Control && !(target is IMetroControl);
+		    return target is Control && !(target is IMetroControl || target is IMetroForm);
 		}
 
         [DefaultValue(false)]

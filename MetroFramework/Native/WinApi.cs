@@ -34,25 +34,25 @@ namespace MetroFramework.Native
         #region Structs
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct Point
+        public struct POINT
         {
             public Int32 x;
             public Int32 y;
 
-            public Point(Int32 x, Int32 y) { this.x = x; this.y = y; }
+            public POINT(Int32 x, Int32 y) { this.x = x; this.y = y; }
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct Size
+        public struct SIZE
         {
             public Int32 cx;
             public Int32 cy;
 
-            public Size(Int32 cx, Int32 cy) { this.cx = cx; this.cy = cy; }
+            public SIZE(Int32 cx, Int32 cy) { this.cx = cx; this.cy = cy; }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct ARGB
+        public struct ARGB
         {
             public byte Blue;
             public byte Green;
@@ -92,6 +92,16 @@ namespace MetroFramework.Native
             public RECT rect1;
             public RECT rect2;
             public IntPtr lppos;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MINMAXINFO
+        {
+            public POINT ptReserved;
+            public POINT ptMaxSize;
+            public POINT ptMaxPosition;
+            public POINT ptMinTrackSize;
+            public POINT ptMaxTrackSize;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -404,6 +414,7 @@ namespace MetroFramework.Native
             WM_USER = 0x400,
             WM_REFLECT = 0x2000,
             WM_APP = 0x8000,
+            WM_DWMCOMPOSITIONCHANGED = 0x031E,
 
             SC_MOVE = 0xF010,
             SC_MINIMIZE = 0XF020,
@@ -452,7 +463,7 @@ namespace MetroFramework.Native
         #region API Calls
 
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
-        public static extern Bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref Point pptDst, ref Size psize, IntPtr hdcSrc, ref Point pprSrc, Int32 crKey, ref BLENDFUNCTION pblend, Int32 dwFlags);
+        public static extern Bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref POINT pptDst, ref SIZE psize, IntPtr hdcSrc, ref POINT pprSrc, Int32 crKey, ref BLENDFUNCTION pblend, Int32 dwFlags);
 
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
         public static extern IntPtr GetDC(IntPtr hWnd);

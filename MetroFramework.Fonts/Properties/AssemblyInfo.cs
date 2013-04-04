@@ -42,7 +42,6 @@ using System.Runtime.InteropServices;
 internal static class MetroFrameworkDesignAssembly
 {
     internal const string Title = "MetroFramework.Fonts.dll";
-    // JT: Use same information as main MetroFramework.dll
     internal const string Version = MetroFrameworkAssembly.Version;
     internal const string Description = MetroFrameworkAssembly.Description;
     internal const string Copyright = MetroFrameworkAssembly.Copyright;

@@ -211,6 +211,12 @@ namespace MetroFramework.Controls
             set { baseTextBox.TabStop = value; }
         }
 
+        public int MaxLength
+        {
+            get { return baseTextBox.MaxLength; }
+            set { baseTextBox.MaxLength = value; }
+        }
+
         #endregion
 
         #region Constructor

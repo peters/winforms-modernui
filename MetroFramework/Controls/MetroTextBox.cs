@@ -217,6 +217,12 @@ namespace MetroFramework.Controls
             set { baseTextBox.MaxLength = value; }
         }
 
+        public ScrollBars ScrollBars
+        {
+            get { return baseTextBox.ScrollBars; }
+            set { baseTextBox.ScrollBars = value; }
+        }
+
         #endregion
 
         #region Constructor

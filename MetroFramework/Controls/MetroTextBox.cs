@@ -211,6 +211,18 @@ namespace MetroFramework.Controls
             set { baseTextBox.TabStop = value; }
         }
 
+        public int MaxLength
+        {
+            get { return baseTextBox.MaxLength; }
+            set { baseTextBox.MaxLength = value; }
+        }
+
+        public ScrollBars ScrollBars
+        {
+            get { return baseTextBox.ScrollBars; }
+            set { baseTextBox.ScrollBars = value; }
+        }
+
         #endregion
 
         #region Constructor

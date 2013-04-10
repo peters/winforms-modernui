@@ -123,6 +123,9 @@
     <Compile Include="Controls\MetroTile.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MetroTilePart.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MetroToggle.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -132,6 +135,38 @@
     <Compile Include="Controls\MetroUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Drawing\Html\CssAnonymousBlockBox.cs" />
+    <Compile Include="Drawing\Html\CssAnonymousBox.cs" />
+    <Compile Include="Drawing\Html\CssBlock.cs" />
+    <Compile Include="Drawing\Html\CssBox.cs" />
+    <Compile Include="Drawing\Html\CssBoxWord.cs" />
+    <Compile Include="Drawing\Html\CssBoxWordSplitter.cs" />
+    <Compile Include="Drawing\Html\CssConstants.cs" />
+    <Compile Include="Drawing\Html\CssDefaults.cs" />
+    <Compile Include="Drawing\Html\CssDrawingHelper.cs" />
+    <Compile Include="Drawing\Html\CssLayoutEngine.cs" />
+    <Compile Include="Drawing\Html\CssLength.cs" />
+    <Compile Include="Drawing\Html\CssLineBox.cs" />
+    <Compile Include="Drawing\Html\CssPropertyAttribute.cs" />
+    <Compile Include="Drawing\Html\CssPropertyInheritedAttribute.cs" />
+    <Compile Include="Drawing\Html\CssRectangle.cs" />
+    <Compile Include="Drawing\Html\CssTable.cs" />
+    <Compile Include="Drawing\Html\CssValue.cs" />
+    <Compile Include="Drawing\Html\HtmlConstants.cs" />
+    <Compile Include="Drawing\Html\HtmlLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Drawing\Html\HtmlPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Drawing\Html\HtmlRenderer.cs" />
+    <Compile Include="Drawing\Html\HtmlTag.cs" />
+    <Compile Include="Drawing\Html\HtmlToolTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Drawing\Html\InitialContainer.cs" />
+    <Compile Include="Drawing\Html\Parser.cs" />
+    <Compile Include="Drawing\MetroBackBuffer.cs" />
     <Compile Include="Drawing\MetroPaint.cs" />
     <Compile Include="Forms\MetroMessageBox.cs">
       <SubType>Form</SubType>
@@ -149,6 +184,7 @@
     <Compile Include="MetroBrushes.cs" />
     <Compile Include="MetroColors.cs" />
     <Compile Include="MetroColorStyle.cs" />
+    <Compile Include="MetroDefaults.cs" />
     <Compile Include="MetroFonts.cs" />
     <Compile Include="MetroPens.cs" />
     <Compile Include="MetroThemeStyle.cs" />

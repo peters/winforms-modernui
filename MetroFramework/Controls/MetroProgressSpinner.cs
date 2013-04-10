@@ -32,34 +32,58 @@ using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
-    [Designer("MetroFramework.Design.MetroProgressSpinnerDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
+    [Designer("MetroFramework.Design.Controls.MetroProgressSpinnerDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(ProgressBar))]
     public class MetroProgressSpinner : Control, IMetroControl
     {
         #region Interface
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroColorStyle.Default)]
         public MetroColorStyle Style
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroStyle != MetroColorStyle.Default)
+                {
+                    return metroStyle;
+                }
+
+                if (StyleManager != null && metroStyle == MetroColorStyle.Default)
+                {
                     return StyleManager.Style;
+                }
+                if (StyleManager == null && metroStyle == MetroColorStyle.Default)
+                {
+                    return MetroDefaults.Style;
+                }
 
                 return metroStyle;
             }
             set { metroStyle = value; }
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [Category("Metro Appearance")]
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroThemeStyle.Default)]
         public MetroThemeStyle Theme
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                {
+                    return metroTheme;
+                }
+
+                if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                {
                     return StyleManager.Theme;
+                }
+                if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return MetroDefaults.Theme;
+                }
 
                 return metroTheme;
             }
@@ -68,6 +92,7 @@ namespace MetroFramework.Controls
 
         private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
@@ -83,7 +108,7 @@ namespace MetroFramework.Controls
         private float angle = 270;
 
         [DefaultValue(true)]
-        [Category("Metro Behaviour")]
+        [Category(MetroDefaults.PropertyCategory.Behaviour)]
         public bool Spinning
         {
             get { return timer.Enabled; }
@@ -91,7 +116,7 @@ namespace MetroFramework.Controls
         }
 
         [DefaultValue(0)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public int Value
         {
             get { return progress; }
@@ -106,7 +131,7 @@ namespace MetroFramework.Controls
 
         private int minimum = 0;
         [DefaultValue(0)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public int Minimum
         {
             get { return minimum; }
@@ -125,7 +150,7 @@ namespace MetroFramework.Controls
 
         private int maximum = 100;
         [DefaultValue(0)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public int Maximum
         {
             get { return maximum; }
@@ -142,7 +167,7 @@ namespace MetroFramework.Controls
 
         private bool ensureVisible = true;
         [DefaultValue(true)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool EnsureVisible
         {
             get { return ensureVisible; }
@@ -151,7 +176,7 @@ namespace MetroFramework.Controls
 
         private float speed;
         [DefaultValue(1f)]
-        [Category("Metro Behaviour")]
+        [Category(MetroDefaults.PropertyCategory.Behaviour)]
         public float Speed
         {
             get { return speed; }
@@ -166,7 +191,7 @@ namespace MetroFramework.Controls
 
         private bool backwards;
         [DefaultValue(false)]
-        [Category("Metro Behaviour")]
+        [Category(MetroDefaults.PropertyCategory.Behaviour)]
         public bool Backwards
         {
             get { return backwards; }
@@ -175,7 +200,7 @@ namespace MetroFramework.Controls
 
         private bool useCustomBackground = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool CustomBackground
         {
             get { return useCustomBackground; }

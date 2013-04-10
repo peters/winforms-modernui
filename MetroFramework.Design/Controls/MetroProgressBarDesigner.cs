@@ -22,50 +22,45 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms.Design;
 
-using MetroFramework.Controls;
-
-namespace MetroFramework.Design
+namespace MetroFramework.Design.Controls
 {
-
-    [Designer(typeof(ScrollableControlDesigner), typeof(ParentControlDesigner))]
-    internal class MetroScrollBarDesigner : ControlDesigner
+    internal class MetroProgressBarDesigner : ControlDesigner
     {
         public override SelectionRules SelectionRules
         {
             get
             {
-                PropertyDescriptor propDescriptor = TypeDescriptor.GetProperties(Component)["Orientation"];
-
-                if (propDescriptor != null)
-                {
-                    MetroScrollOrientation orientation = (MetroScrollOrientation)propDescriptor.GetValue(Component);
-
-                    if (orientation == MetroScrollOrientation.Vertical)
-                    {
-                        return SelectionRules.Visible | SelectionRules.Moveable | SelectionRules.BottomSizeable | SelectionRules.TopSizeable;
-                    }
-
-                    return SelectionRules.Visible | SelectionRules.Moveable | SelectionRules.LeftSizeable | SelectionRules.RightSizeable;
-                }
-
                 return base.SelectionRules;
             }
         }
 
         protected override void PreFilterProperties(IDictionary properties)
         {
-            properties.Remove("Text");
-            properties.Remove("BackgroundImage");
-            properties.Remove("ForeColor");
             properties.Remove("ImeMode");
             properties.Remove("Padding");
-            properties.Remove("BackgroundImageLayout");
+            properties.Remove("FlatAppearance");
+            properties.Remove("FlatStyle");
+            properties.Remove("AutoEllipsis");
+            properties.Remove("UseCompatibleTextRendering");            
+
+            properties.Remove("Image");
+            properties.Remove("ImageAlign");
+            properties.Remove("ImageIndex");
+            properties.Remove("ImageKey");
+            properties.Remove("ImageList");
+            properties.Remove("TextImageRelation");
+            
             properties.Remove("BackColor");
+            properties.Remove("BackgroundImage");
+            properties.Remove("BackgroundImageLayout");
+            properties.Remove("UseVisualStyleBackColor");
+
             properties.Remove("Font");
+            properties.Remove("ForeColor");
             properties.Remove("RightToLeft");
+            properties.Remove("Text");
 
             base.PreFilterProperties(properties);
         }

@@ -31,33 +31,57 @@ using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
-    [Designer("MetroFramework.Design.MetroTextBoxDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
+    [Designer("MetroFramework.Design.Controls.MetroTextBoxDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     public class MetroTextBox : Control, IMetroControl
     {
         #region Interface
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroColorStyle.Default)]
         public MetroColorStyle Style
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroStyle != MetroColorStyle.Default)
+                {
+                    return metroStyle;
+                }
+
+                if (StyleManager != null && metroStyle == MetroColorStyle.Default)
+                {
                     return StyleManager.Style;
+                }
+                if (StyleManager == null && metroStyle == MetroColorStyle.Default)
+                {
+                    return MetroDefaults.Style;
+                }
 
                 return metroStyle;
             }
             set { metroStyle = value; }
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [Category("Metro Appearance")]
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroThemeStyle.Default)]
         public MetroThemeStyle Theme
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                {
+                    return metroTheme;
+                }
+
+                if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                {
                     return StyleManager.Theme;
+                }
+                if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return MetroDefaults.Theme;
+                }
 
                 return metroTheme;
             }
@@ -66,6 +90,7 @@ namespace MetroFramework.Controls
 
         private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
@@ -80,7 +105,7 @@ namespace MetroFramework.Controls
         
         private bool useStyleColors = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool UseStyleColors
         {
             get { return useStyleColors; }
@@ -89,7 +114,7 @@ namespace MetroFramework.Controls
 
         private MetroTextBoxSize metroTextBoxSize = MetroTextBoxSize.Small;
         [DefaultValue(MetroTextBoxSize.Small)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroTextBoxSize FontSize
         {
             get { return metroTextBoxSize; }
@@ -98,7 +123,7 @@ namespace MetroFramework.Controls
 
         private MetroTextBoxWeight metroTextBoxWeight = MetroTextBoxWeight.Regular;
         [DefaultValue(MetroTextBoxWeight.Regular)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroTextBoxWeight FontWeight
         {
             get { return metroTextBoxWeight; }
@@ -107,7 +132,7 @@ namespace MetroFramework.Controls
 
         private bool useCustomBackground = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool CustomBackground
         {
             get { return useCustomBackground; }
@@ -116,7 +141,7 @@ namespace MetroFramework.Controls
 
         private bool useCustomForeColor = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool CustomForeColor
         {
             get { return useCustomForeColor; }
@@ -126,7 +151,7 @@ namespace MetroFramework.Controls
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [DefaultValue("")]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public string PromptText
         {
             get { return baseTextBox.PromptText; }
@@ -461,6 +486,11 @@ namespace MetroFramework.Controls
                 }
             }
 
+            public PromptedTextBox()
+            {
+                drawPrompt= (Text.Trim().Length == 0);
+            }
+
             private void DrawTextPrompt()
             {
                 using (Graphics graphics = CreateGraphics())
@@ -512,14 +542,13 @@ namespace MetroFramework.Controls
             protected override void OnTextChanged(EventArgs e)
             {
                 base.OnTextChanged(e);
-                drawPrompt = Text.Length == 0;
+                drawPrompt = (Text.Trim().Length == 0);
             }
 
             protected override void WndProc(ref Message m)
             {
                 base.WndProc(ref m);
-                if (((m.Msg == WM_PAINT) || (m.Msg == OCM_COMMAND)) &&
-                    (drawPrompt && !GetStyle(ControlStyles.UserPaint)))
+                if (((m.Msg == WM_PAINT) || (m.Msg == OCM_COMMAND)) && (drawPrompt && !GetStyle(ControlStyles.UserPaint)))
                 {
                     DrawTextPrompt();
                 }

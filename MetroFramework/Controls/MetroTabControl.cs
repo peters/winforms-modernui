@@ -38,7 +38,6 @@ using MetroFramework.Native;
 
 namespace MetroFramework.Controls
 {
-
     #region MetroTabPageCollection
 
     [ToolboxItem(false)]
@@ -51,34 +50,58 @@ namespace MetroFramework.Controls
 
     #endregion
 
-    [Designer("MetroFramework.Design.MetroTabControlDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
+    [Designer("MetroFramework.Design.Controls.MetroTabControlDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(TabControl))]
     public class MetroTabControl : TabControl, IMetroControl
     {
         #region Interface
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroColorStyle.Default)]
         public MetroColorStyle Style
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroStyle != MetroColorStyle.Default)
+                {
+                    return metroStyle;
+                }
+
+                if (StyleManager != null && metroStyle == MetroColorStyle.Default)
+                {
                     return StyleManager.Style;
+                }
+                if (StyleManager == null && metroStyle == MetroColorStyle.Default)
+                {
+                    return MetroDefaults.Style;
+                }
 
                 return metroStyle;
             }
             set { metroStyle = value; }
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [Category("Metro Appearance")]
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroThemeStyle.Default)]
         public MetroThemeStyle Theme
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                {
+                    return metroTheme;
+                }
+
+                if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                {
                     return StyleManager.Theme;
+                }
+                if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return MetroDefaults.Theme;
+                }
 
                 return metroTheme;
             }
@@ -87,6 +110,7 @@ namespace MetroFramework.Controls
 
         private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
@@ -104,7 +128,7 @@ namespace MetroFramework.Controls
  
         private bool useStyleColors = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool UseStyleColors
         {
             get { return useStyleColors; }
@@ -113,7 +137,7 @@ namespace MetroFramework.Controls
 
         private MetroTabControlSize metroLabelSize = MetroTabControlSize.Medium;
         [DefaultValue(MetroTabControlSize.Medium)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroTabControlSize FontSize
         {
             get { return metroLabelSize; }
@@ -122,7 +146,7 @@ namespace MetroFramework.Controls
 
         private MetroTabControlWeight metroLabelWeight = MetroTabControlWeight.Light;
         [DefaultValue(MetroTabControlWeight.Light)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroTabControlWeight FontWeight
         {
             get { return metroLabelWeight; }
@@ -131,7 +155,7 @@ namespace MetroFramework.Controls
 
         private ContentAlignment textAlign = ContentAlignment.MiddleLeft;
         [DefaultValue(ContentAlignment.MiddleLeft)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public ContentAlignment TextAlign
         {
             get
@@ -156,7 +180,7 @@ namespace MetroFramework.Controls
 
         private bool isMirrored;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public new bool IsMirrored
         {
             get
@@ -176,7 +200,7 @@ namespace MetroFramework.Controls
 
         private bool useCustomBackground = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool CustomBackground
         {
             get { return useCustomBackground; }
@@ -236,12 +260,7 @@ namespace MetroFramework.Controls
         {
             using (Brush bgBrush = new SolidBrush(MetroPaint.BorderColor.TabControl.Normal(Theme)))
             {
-                //graphics.FillRectangle(bgBrush, -2 + GetTabRect(0).X + DisplayRectangle.X, GetTabRect(index).Bottom + 2 - TabBottomBorderHeight,
-                //                       Width - (Width - DisplayRectangle.Width + DisplayRectangle.X) + 4,
-                //                       TabBottomBorderHeight);
-
                 Rectangle borderRectangle = new Rectangle(DisplayRectangle.X, GetTabRect(index).Bottom + 2 - TabBottomBorderHeight, DisplayRectangle.Width, TabBottomBorderHeight);
-
                 graphics.FillRectangle(bgBrush, borderRectangle);
             }
         }
@@ -251,15 +270,8 @@ namespace MetroFramework.Controls
             using (Brush selectionBrush = new SolidBrush(MetroPaint.GetStyleColor(Style)))
             {
                 Rectangle selectedTabRect = GetTabRect(index);
-                //Size textAreaRect = MeasureText(TabPages[index].Text);
-
-                graphics.FillRectangle(selectionBrush, new Rectangle
-                {
-                    X = -2 + selectedTabRect.X + DisplayRectangle.X,
-                    Y = selectedTabRect.Bottom + 2 - TabBottomBorderHeight,
-                    Width = selectedTabRect.Width + 2,
-                    Height = TabBottomBorderHeight
-                });
+                Rectangle borderRectangle = new Rectangle(selectedTabRect.X + ((index == 0) ? 2 : 0), GetTabRect(index).Bottom + 2 - TabBottomBorderHeight, selectedTabRect.Width + ((index == 0) ? 0 : 2), TabBottomBorderHeight);
+                graphics.FillRectangle(selectionBrush, borderRectangle);
             }
         }
 
@@ -315,17 +327,7 @@ namespace MetroFramework.Controls
         [SecuritySafeCritical]
         private void DrawUpDown(Graphics graphics)
         {
-            //Color foreColor;
             Color backColor = Parent != null ? Parent.BackColor : MetroPaint.BackColor.Form(Theme);
-
-            //if (!Enabled)
-            //{
-            //    foreColor = MetroPaint.ForeColor.Label.Disabled(Theme);
-            //}
-            //else
-            //{
-            //    foreColor = !useStyleColors ? MetroPaint.ForeColor.TabControl.Normal(Theme) : MetroPaint.GetStyleColor(Style);
-            //}
 
             Rectangle borderRect = new Rectangle();
             WinApi.GetClientRect(scUpDown.Handle, ref borderRect);

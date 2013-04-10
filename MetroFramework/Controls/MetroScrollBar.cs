@@ -33,41 +33,69 @@ using MetroFramework.Native;
 
 namespace MetroFramework.Controls
 {
+    #region Enums
+
     public enum MetroScrollOrientation
     {
         Horizontal,
         Vertical
     }
 
-    [Designer("MetroFramework.Design.MetroScrollBarDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
+    #endregion
+
+    [Designer("MetroFramework.Design.Controls.MetroScrollBarDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [DefaultEvent("Scroll")]
     [DefaultProperty("Value")]
     public class MetroScrollBar : Control, IMetroControl
     {
         #region Interface
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroColorStyle.Default)]
         public MetroColorStyle Style
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroStyle != MetroColorStyle.Default)
+                {
+                    return metroStyle;
+                }
+
+                if (StyleManager != null && metroStyle == MetroColorStyle.Default)
+                {
                     return StyleManager.Style;
+                }
+                if (StyleManager == null && metroStyle == MetroColorStyle.Default)
+                {
+                    return MetroDefaults.Style;
+                }
 
                 return metroStyle;
             }
             set { metroStyle = value; }
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [Category("Metro Appearance")]
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroThemeStyle.Default)]
         public MetroThemeStyle Theme
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                {
+                    return metroTheme;
+                }
+
+                if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                {
                     return StyleManager.Theme;
+                }
+                if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return MetroDefaults.Theme;
+                }
 
                 return metroTheme;
             }
@@ -76,6 +104,7 @@ namespace MetroFramework.Controls
 
         private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
@@ -169,14 +198,14 @@ namespace MetroFramework.Controls
 
         private bool useBarColor = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool UseBarColor
         {
             get { return useBarColor; }
             set { useBarColor = value; }
         }
 
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public int ScrollbarSize
         {
             get { return Orientation == MetroScrollOrientation.Vertical ? Width : Height; }
@@ -191,7 +220,7 @@ namespace MetroFramework.Controls
 
         private bool highlightOnWheel = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool HighlightOnWheel
         {
             get { return highlightOnWheel; }

@@ -25,6 +25,7 @@ namespace MetroFramework
 {
     public enum MetroColorStyle
     {
+        Default,
         Black,
         White,
         Silver,

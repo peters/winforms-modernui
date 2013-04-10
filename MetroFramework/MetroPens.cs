@@ -28,16 +28,16 @@ namespace MetroFramework
 {
     public sealed class MetroPens
     {
-        private static Dictionary<string, Pen> metroPens;
+        private static Dictionary<string, Pen> metroPens = new Dictionary<string ,Pen>();
         private static Pen GetSavePen(string key, Color color)
         {
-            if (metroPens == null)
-                metroPens = new Dictionary<string, Pen>();
+            lock (metroPens)
+            {
+                if (!metroPens.ContainsKey(key))
+                    metroPens.Add(key, new Pen(color, 1f));
 
-            if (!metroPens.ContainsKey(key))
-                metroPens.Add(key, new Pen(color, 1f));
-
-            return metroPens[key].Clone() as Pen;
+                return metroPens[key].Clone() as Pen;
+            }
         }
 
         public static Pen Black

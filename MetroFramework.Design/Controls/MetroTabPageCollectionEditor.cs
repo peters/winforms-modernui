@@ -21,47 +21,36 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms.Design;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Text;
 
 using MetroFramework.Controls;
 
-namespace MetroFramework.Design
+namespace MetroFramework.Design.Controls
 {
-    internal class MetroTextBoxDesigner : ControlDesigner
+    internal class MetroTabPageCollectionEditor : CollectionEditor
     {
-        public override SelectionRules SelectionRules
+        protected override CollectionForm CreateCollectionForm()
         {
-            get
-            {
-                PropertyDescriptor propDescriptor = TypeDescriptor.GetProperties(Component)["Multiline"];
-
-                if (propDescriptor != null)
-                {
-                    bool isMultiline = (bool)propDescriptor.GetValue(Component);
-
-                    if (isMultiline)
-                    {
-                        return SelectionRules.Visible | SelectionRules.Moveable | SelectionRules.AllSizeable;
-                    }
-
-                    return SelectionRules.Visible | SelectionRules.Moveable | SelectionRules.LeftSizeable | SelectionRules.RightSizeable;
-                }
-
-                return base.SelectionRules;
-            }
+            var baseForm = base.CreateCollectionForm();
+            baseForm.Text = "MetroTabPage Collection Editor";
+            return baseForm;
         }
 
-        protected override void PreFilterProperties(IDictionary properties)
-        {
-            properties.Remove("BackgroundImage");
-            properties.Remove("ImeMode");
-            properties.Remove("Padding");
-            properties.Remove("BackgroundImageLayout");
-            properties.Remove("Font");
+        public MetroTabPageCollectionEditor(Type type)
+            : base(type)
+        { }
 
-            base.PreFilterProperties(properties);
+        protected override Type CreateCollectionItemType()
+        {
+            return typeof(MetroTabPage);
+        }
+
+        protected override Type[] CreateNewItemTypes()
+        {
+            return new[] { typeof(MetroTabPage) };
         }
     }
 }

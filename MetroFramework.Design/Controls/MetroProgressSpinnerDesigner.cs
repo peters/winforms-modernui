@@ -24,7 +24,7 @@
 using System.Collections;
 using System.Windows.Forms.Design;
 
-namespace MetroFramework.Design
+namespace MetroFramework.Design.Controls
 {
     internal class MetroProgressSpinnerDesigner : ControlDesigner
     {

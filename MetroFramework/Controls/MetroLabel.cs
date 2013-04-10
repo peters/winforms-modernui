@@ -33,40 +33,68 @@ using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
+    #region Enums
+
     public enum MetroLabelMode
     {
         Default,
         Selectable
     }
 
-    [Designer("MetroFramework.Design.MetroLabelDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
+    #endregion
+
+    [Designer("MetroFramework.Design.Controls.MetroLabelDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(Label))]
     public class MetroLabel : Label, IMetroControl
     {
         #region Interface
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroColorStyle.Default)]
         public MetroColorStyle Style
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroStyle != MetroColorStyle.Default)
+                {
+                    return metroStyle;
+                }
+
+                if (StyleManager != null && metroStyle == MetroColorStyle.Default)
+                {
                     return StyleManager.Style;
+                }
+                if (StyleManager == null && metroStyle == MetroColorStyle.Default)
+                {
+                    return MetroDefaults.Style;
+                }
 
                 return metroStyle;
             }
             set { metroStyle = value; }
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [Category("Metro Appearance")]
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroThemeStyle.Default)]
         public MetroThemeStyle Theme
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                {
+                    return metroTheme;
+                }
+
+                if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                {
                     return StyleManager.Theme;
+                }
+                if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return MetroDefaults.Theme;
+                }
 
                 return metroTheme;
             }
@@ -75,6 +103,7 @@ namespace MetroFramework.Controls
 
         private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
@@ -89,7 +118,7 @@ namespace MetroFramework.Controls
 
         private bool useStyleColors = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool UseStyleColors
         {
             get { return useStyleColors; }
@@ -98,7 +127,7 @@ namespace MetroFramework.Controls
 
         private MetroLabelSize metroLabelSize = MetroLabelSize.Medium;
         [DefaultValue(MetroLabelSize.Medium)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroLabelSize FontSize
         {
             get { return metroLabelSize; }
@@ -107,7 +136,7 @@ namespace MetroFramework.Controls
 
         private MetroLabelWeight metroLabelWeight = MetroLabelWeight.Light;
         [DefaultValue(MetroLabelWeight.Light)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroLabelWeight FontWeight
         {
             get { return metroLabelWeight; }
@@ -116,7 +145,7 @@ namespace MetroFramework.Controls
 
         private MetroLabelMode labelMode = MetroLabelMode.Default;
         [DefaultValue(MetroLabelMode.Default)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroLabelMode LabelMode
         {
             get { return labelMode; }
@@ -125,7 +154,7 @@ namespace MetroFramework.Controls
 
         private bool useCustomBackground = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool CustomBackground
         {
             get { return useCustomBackground; }
@@ -134,7 +163,7 @@ namespace MetroFramework.Controls
 
         private bool useCustomForeColor = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool CustomForeColor
         {
             get { return useCustomForeColor; }
@@ -150,8 +179,7 @@ namespace MetroFramework.Controls
             SetStyle(ControlStyles.AllPaintingInWmPaint |
                      ControlStyles.OptimizedDoubleBuffer |
                      ControlStyles.ResizeRedraw |
-                     ControlStyles.UserPaint |
-                     ControlStyles.SupportsTransparentBackColor, true);
+                     ControlStyles.UserPaint, true);
 
             baseTextBox = new DoubleBufferedTextBox();
             baseTextBox.Visible = false;
@@ -167,7 +195,25 @@ namespace MetroFramework.Controls
             Color backColor, foreColor;
 
             if (useCustomBackground)
+            {
                 backColor = BackColor;
+
+                if (backColor == Color.Transparent)
+                {
+                    if (Parent is IMetroControl)
+                    {
+                        backColor = MetroPaint.BackColor.Form(Theme);
+                    }
+                    else if (Parent != null)
+                    {
+                        backColor = Parent.BackColor;
+                    }
+                    else
+                    {
+                        backColor = MetroPaint.BackColor.Form(Theme);
+                    }
+                }
+            }
             else
             {
                 backColor = MetroPaint.BackColor.Form(Theme);
@@ -178,7 +224,9 @@ namespace MetroFramework.Controls
             }
 
             if (useCustomForeColor)
+            {
                 foreColor = ForeColor;
+            }
             else
             {
                 if (!Enabled)
@@ -233,7 +281,10 @@ namespace MetroFramework.Controls
                 }
             }
 
-            e.Graphics.Clear(backColor);
+            if (backColor != Color.Transparent)
+            {
+                e.Graphics.Clear(backColor);
+            }
 
             if (LabelMode == MetroLabelMode.Selectable)
             {
@@ -242,14 +293,14 @@ namespace MetroFramework.Controls
 
                 if (!baseTextBox.Visible)
                 {
-                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), ClientRectangle, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
+                    TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), ClientRectangle, foreColor, MetroPaint.GetTextFormatFlags(TextAlign));
                 }
             }
             else
             {
                 DestroyBaseTextbox();
-                TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), ClientRectangle, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
-            }            
+                TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), ClientRectangle, foreColor, MetroPaint.GetTextFormatFlags(TextAlign));
+            }
         }
 
         #endregion

@@ -25,9 +25,9 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms.Design;
 
-namespace MetroFramework.Design
+namespace MetroFramework.Design.Controls
 {
-    internal class MetroLabelDesigner : ControlDesigner
+    internal class MetroButtonDesigner : ControlDesigner
     {
         public override SelectionRules SelectionRules
         {
@@ -44,7 +44,7 @@ namespace MetroFramework.Design
             properties.Remove("FlatAppearance");
             properties.Remove("FlatStyle");
             properties.Remove("AutoEllipsis");
-            properties.Remove("UseCompatibleTextRendering");
+            properties.Remove("UseCompatibleTextRendering");            
 
             properties.Remove("Image");
             properties.Remove("ImageAlign");
@@ -52,12 +52,14 @@ namespace MetroFramework.Design
             properties.Remove("ImageKey");
             properties.Remove("ImageList");
             properties.Remove("TextImageRelation");
-
+            
+            properties.Remove("BackColor");
             properties.Remove("BackgroundImage");
             properties.Remove("BackgroundImageLayout");
             properties.Remove("UseVisualStyleBackColor");
 
             properties.Remove("Font");
+            properties.Remove("ForeColor");
             properties.Remove("RightToLeft");
 
             base.PreFilterProperties(properties);

@@ -22,11 +22,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System.Collections;
+using System.ComponentModel;
 using System.Windows.Forms.Design;
 
-namespace MetroFramework.Design
+namespace MetroFramework.Design.Controls
 {
-    internal class MetroProgressBarDesigner : ControlDesigner
+    internal class MetroTileDesigner : ParentControlDesigner
     {
         public override SelectionRules SelectionRules
         {
@@ -36,6 +37,11 @@ namespace MetroFramework.Design
             }
         }
 
+        public override bool CanParent(System.Windows.Forms.Control control)
+        {
+            return (control is MetroFramework.Controls.MetroLabel || control is MetroFramework.Controls.MetroProgressSpinner);
+        }
+
         protected override void PreFilterProperties(IDictionary properties)
         {
             properties.Remove("ImeMode");
@@ -43,7 +49,7 @@ namespace MetroFramework.Design
             properties.Remove("FlatAppearance");
             properties.Remove("FlatStyle");
             properties.Remove("AutoEllipsis");
-            properties.Remove("UseCompatibleTextRendering");            
+            properties.Remove("UseCompatibleTextRendering");
 
             properties.Remove("Image");
             properties.Remove("ImageAlign");
@@ -51,16 +57,13 @@ namespace MetroFramework.Design
             properties.Remove("ImageKey");
             properties.Remove("ImageList");
             properties.Remove("TextImageRelation");
-            
-            properties.Remove("BackColor");
+
             properties.Remove("BackgroundImage");
             properties.Remove("BackgroundImageLayout");
             properties.Remove("UseVisualStyleBackColor");
 
             properties.Remove("Font");
-            properties.Remove("ForeColor");
             properties.Remove("RightToLeft");
-            properties.Remove("Text");
 
             base.PreFilterProperties(properties);
         }

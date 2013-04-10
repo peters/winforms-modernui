@@ -44,17 +44,19 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MetroButtonDesigner.cs" />
-    <Compile Include="MetroLabelDesigner.cs" />
-    <Compile Include="MetroLinkDesigner.cs" />
-    <Compile Include="MetroProgressBarDesigner.cs" />
-    <Compile Include="MetroProgressSpinnerDesigner.cs" />
-    <Compile Include="MetroScrollBarDesigner.cs" />
-    <Compile Include="MetroTabControlDesigner.cs" />
-    <Compile Include="MetroTabPageCollectionEditor.cs" />
-    <Compile Include="MetroTabPageDesigner.cs" />
-    <Compile Include="MetroTextBoxDesigner.cs" />
-    <Compile Include="MetroTileDesigner.cs" />
+    <Compile Include="Components\MetroStyleManagerDesigner.cs" />
+    <Compile Include="Controls\MetroButtonDesigner.cs" />
+    <Compile Include="Controls\MetroLabelDesigner.cs" />
+    <Compile Include="Controls\MetroLinkDesigner.cs" />
+    <Compile Include="Controls\MetroPanelDesigner.cs" />
+    <Compile Include="Controls\MetroProgressBarDesigner.cs" />
+    <Compile Include="Controls\MetroProgressSpinnerDesigner.cs" />
+    <Compile Include="Controls\MetroScrollBarDesigner.cs" />
+    <Compile Include="Controls\MetroTabControlDesigner.cs" />
+    <Compile Include="Controls\MetroTabPageCollectionEditor.cs" />
+    <Compile Include="Controls\MetroTabPageDesigner.cs" />
+    <Compile Include="Controls\MetroTextBoxDesigner.cs" />
+    <Compile Include="Controls\MetroTileDesigner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

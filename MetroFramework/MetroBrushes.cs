@@ -28,16 +28,16 @@ namespace MetroFramework
 {
     public sealed class MetroBrushes
     {
-        private static Dictionary<string, SolidBrush> metroBrushes;
+        private static Dictionary<string, SolidBrush> metroBrushes = new Dictionary<string, SolidBrush>();
         private static SolidBrush GetSaveBrush(string key, Color color)
         {
-            if (metroBrushes == null)
-                metroBrushes = new Dictionary<string, SolidBrush>();
+            lock (metroBrushes)
+            {
+                if (!metroBrushes.ContainsKey(key))
+                    metroBrushes.Add(key, new SolidBrush(color));
 
-            if (!metroBrushes.ContainsKey(key))
-                metroBrushes.Add(key, new SolidBrush(color));
-
-            return metroBrushes[key].Clone() as SolidBrush;
+                return metroBrushes[key].Clone() as SolidBrush;
+            }
         }
 
         public static SolidBrush Black

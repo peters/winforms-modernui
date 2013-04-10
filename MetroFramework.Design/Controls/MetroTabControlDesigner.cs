@@ -31,7 +31,7 @@ using System.Windows.Forms.Design;
 using MetroFramework.Controls;
 using MetroFramework.Native;
 
-namespace MetroFramework.Design
+namespace MetroFramework.Design.Controls
 {
     internal class MetroTabControlDesigner : ParentControlDesigner
     {

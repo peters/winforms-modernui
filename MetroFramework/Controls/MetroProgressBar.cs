@@ -32,34 +32,58 @@ using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
-    [Designer("MetroFramework.Design.MetroProgressBarDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
+    [Designer("MetroFramework.Design.Controls.MetroProgressBarDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(ProgressBar))]
     public class MetroProgressBar : ProgressBar, IMetroControl
     {
         #region Interface
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroColorStyle.Default)]
         public new MetroColorStyle Style
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroStyle != MetroColorStyle.Default)
+                {
+                    return metroStyle;
+                }
+
+                if (StyleManager != null && metroStyle == MetroColorStyle.Default)
+                {
                     return StyleManager.Style;
+                }
+                if (StyleManager == null && metroStyle == MetroColorStyle.Default)
+                {
+                    return MetroDefaults.Style;
+                }
 
                 return metroStyle;
             }
             set { metroStyle = value; }
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [Category("Metro Appearance")]
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroThemeStyle.Default)]
         public MetroThemeStyle Theme
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                {
+                    return metroTheme;
+                }
+
+                if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                {
                     return StyleManager.Theme;
+                }
+                if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return MetroDefaults.Theme;
+                }
 
                 return metroTheme;
             }
@@ -68,6 +92,7 @@ namespace MetroFramework.Controls
 
         private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
@@ -80,7 +105,7 @@ namespace MetroFramework.Controls
 
         private MetroProgressBarSize metroLabelSize = MetroProgressBarSize.Medium;
         [DefaultValue(MetroProgressBarSize.Medium)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroProgressBarSize FontSize
         {
             get { return metroLabelSize; }
@@ -89,7 +114,7 @@ namespace MetroFramework.Controls
 
         private MetroProgressBarWeight metroLabelWeight = MetroProgressBarWeight.Light;
         [DefaultValue(MetroProgressBarWeight.Light)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroProgressBarWeight FontWeight
         {
             get { return metroLabelWeight; }
@@ -98,7 +123,7 @@ namespace MetroFramework.Controls
 
         private ContentAlignment textAlign = ContentAlignment.MiddleRight;
         [DefaultValue(ContentAlignment.MiddleRight)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public ContentAlignment TextAlign
         {
             get { return textAlign; }
@@ -107,7 +132,7 @@ namespace MetroFramework.Controls
 
         private bool hideProgressText = true;
         [DefaultValue(true)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool HideProgressText
         {
             get { return hideProgressText; }
@@ -116,7 +141,7 @@ namespace MetroFramework.Controls
 
         private ProgressBarStyle progressBarStyle = ProgressBarStyle.Continuous;
         [DefaultValue(ProgressBarStyle.Continuous)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public ProgressBarStyle ProgressBarStyle
         {
             get { return progressBarStyle; }

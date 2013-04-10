@@ -39,28 +39,52 @@ namespace MetroFramework.Controls
     {
         #region Interface
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroColorStyle.Default)]
         public MetroColorStyle Style
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroStyle != MetroColorStyle.Default)
+                {
+                    return metroStyle;
+                }
+
+                if (StyleManager != null && metroStyle == MetroColorStyle.Default)
+                {
                     return StyleManager.Style;
+                }
+                if (StyleManager == null && metroStyle == MetroColorStyle.Default)
+                {
+                    return MetroDefaults.Style;
+                }
 
                 return metroStyle;
             }
             set { metroStyle = value; }
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [Category("Metro Appearance")]
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroThemeStyle.Default)]
         public MetroThemeStyle Theme
         {
             get
             {
-                if (StyleManager != null)
+                if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                {
+                    return metroTheme;
+                }
+
+                if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                {
                     return StyleManager.Theme;
+                }
+                if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return MetroDefaults.Theme;
+                }
 
                 return metroTheme;
             }
@@ -69,6 +93,7 @@ namespace MetroFramework.Controls
 
         private MetroStyleManager metroStyleManager = null;
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
@@ -83,7 +108,7 @@ namespace MetroFramework.Controls
 
         private bool useStyleColors = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool UseStyleColors
         {
             get { return useStyleColors; }
@@ -92,7 +117,7 @@ namespace MetroFramework.Controls
 
         private MetroLinkSize metroLinkSize = MetroLinkSize.Small;
         [DefaultValue(MetroLinkSize.Small)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroLinkSize FontSize
         {
             get { return metroLinkSize; }
@@ -101,7 +126,7 @@ namespace MetroFramework.Controls
 
         private MetroLinkWeight metroLinkWeight = MetroLinkWeight.Regular;
         [DefaultValue(MetroLinkWeight.Regular)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroLinkWeight FontWeight
         {
             get { return metroLinkWeight; }
@@ -110,7 +135,7 @@ namespace MetroFramework.Controls
 
         private bool displayStatus = true;
         [DefaultValue(true)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool DisplayStatus
         {
             get { return displayStatus; }
@@ -159,7 +184,7 @@ namespace MetroFramework.Controls
 
         private bool useCustomBackground = false;
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool CustomBackground
         {
             get { return useCustomBackground; }
@@ -195,9 +220,33 @@ namespace MetroFramework.Controls
             Color backColor, borderColor, foreColor;
 
             if (useCustomBackground)
+            {
                 backColor = BackColor;
+
+                if (backColor == Color.Transparent)
+                {
+                    if (Parent is IMetroControl)
+                    {
+                        backColor = MetroPaint.BackColor.Form(Theme);
+                    }
+                    else if (Parent != null)
+                    {
+                        backColor = Parent.BackColor;
+                    }
+                    else
+                    {
+                        backColor = MetroPaint.BackColor.Form(Theme);
+                    }
+                }
+            }
             else
+            {
                 backColor = MetroPaint.BackColor.Form(Theme);
+                if (Parent is MetroTile)
+                {
+                    backColor = MetroPaint.GetStyleColor(Style);
+                }
+            }
 
             if (isHovered && !isPressed && Enabled)
             {

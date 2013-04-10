@@ -30,14 +30,90 @@ using MetroFramework.Interfaces;
 
 namespace MetroFramework.Components
 {
+    [Designer("MetroFramework.Design.Components.MetroStyleManagerDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     public sealed class MetroStyleManager : Component, ICloneable, ISupportInitialize
     {
+        #region Fields
+
+        private readonly IContainer parentContainer;
+
+        private MetroColorStyle metroStyle = MetroDefaults.Style;
+        [DefaultValue(MetroDefaults.Style)]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public MetroColorStyle Style
+        {
+            get { return metroStyle; }
+            set
+            {
+                if (value == MetroColorStyle.Default)
+                {
+                    value = MetroDefaults.Style;
+                }
+
+                metroStyle = value;
+
+                if (!isInitializing)
+                {
+                    Update();
+                }
+            }
+        }
+
+        private MetroThemeStyle metroTheme = MetroDefaults.Theme;
+        [DefaultValue(MetroDefaults.Theme)]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public MetroThemeStyle Theme
+        {
+            get { return metroTheme; }
+            set
+            {
+                if (value == MetroThemeStyle.Default)
+                {
+                    value = MetroDefaults.Theme;
+                }
+
+                metroTheme = value;
+
+                if (!isInitializing)
+                {
+                    Update();
+                }
+            }
+        }
+
+        private ContainerControl owner;
+        public ContainerControl Owner
+        {
+            get { return owner; }
+            set
+            {
+                if (owner != null)
+                {
+                    owner.ControlAdded -= ControlAdded;
+                }
+
+                owner = value;
+
+                if (value != null)
+                {
+                    owner.ControlAdded += ControlAdded;
+
+                    if (!isInitializing)
+                    {
+                        UpdateControl(value);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
         public MetroStyleManager()
         {
         
         }
-
-        private readonly IContainer parentContainer;
 
         public MetroStyleManager(IContainer parentContainer)
             : this()
@@ -48,6 +124,8 @@ namespace MetroFramework.Components
                 this.parentContainer.Add(this);
             }
         }
+
+        #endregion
 
         #region ICloneable
 
@@ -73,69 +151,12 @@ namespace MetroFramework.Components
         void ISupportInitialize.EndInit()
         {
             isInitializing = false;
-            Refresh();
+            Update();
         }
 
         #endregion
 
-        private ContainerControl owner;
-        public ContainerControl Owner
-        {
-            get { return owner; }
-            set
-            {
-                if (owner != null) 
-                {
-                    owner.ControlAdded -= ControlAdded;
-                }
-
-                owner = value;
-
-                if (value != null)
-                {
-                    owner.ControlAdded += ControlAdded;
-
-                    if (!isInitializing)
-                    {
-                        UpdateControl(value);
-                    }
-                }
-            }
-        }
-
-        private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [DefaultValue(MetroColorStyle.Blue)]
-        [Category("Metro Appearance")]
-        public MetroColorStyle Style
-        {
-            get { return metroStyle; }
-            set 
-            { 
-                metroStyle = value;
-
-                if (!isInitializing)
-                {
-                    Refresh();
-                }
-            }
-        }
-
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [DefaultValue(MetroThemeStyle.Light)]
-        [Category("Metro Appearance")]
-        public MetroThemeStyle Theme
-        {
-            get { return metroTheme; }
-            set 
-            {
-                metroTheme = value;
-
-                if (!isInitializing)
-                {
-                    Refresh();
-                }
-            }
-        }
+        #region Management Methods
 
         private void ControlAdded(object sender, ControlEventArgs e)
         {
@@ -145,7 +166,7 @@ namespace MetroFramework.Components
             }
         }
 
-        public void Refresh()
+        public void Update()
         {
             if (owner != null)
             {
@@ -212,16 +233,14 @@ namespace MetroFramework.Components
 
         private void ApplyTheme(IMetroControl control)
         {
-            control.Style = Style;
-            control.Theme = Theme;
             control.StyleManager = this;
         }
 
         private void ApplyTheme(IMetroComponent component)
         {
-            component.Style = Style;
-            component.Theme = Theme;
             component.StyleManager = this;
         }
+
+        #endregion
     }
 }

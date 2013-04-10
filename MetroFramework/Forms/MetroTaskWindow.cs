@@ -177,7 +177,7 @@ namespace MetroFramework.Forms
                 controlContainer.Size = new Size(Width - 40, Height - 80);
                 controlContainer.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
 
-                StyleManager.Refresh();
+                StyleManager.Update();
 
                 isInitialized = true;
 

@@ -38,7 +38,7 @@ namespace MetroFramework.Components
         #region Interface
 
         private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroColorStyle Style
         {
             get
@@ -52,7 +52,7 @@ namespace MetroFramework.Components
         }
 
         private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroThemeStyle Theme
         {
             get

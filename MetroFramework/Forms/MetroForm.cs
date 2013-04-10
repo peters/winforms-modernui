@@ -70,7 +70,7 @@ namespace MetroFramework.Forms
         #region Interface
 
         private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroColorStyle Style
         {
             get
@@ -85,7 +85,7 @@ namespace MetroFramework.Forms
 
         private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
 
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroThemeStyle Theme
         {
             get
@@ -112,7 +112,7 @@ namespace MetroFramework.Forms
 
         private MetroFormTextAlign textAlign = MetroFormTextAlign.Left;
         [Browsable(true)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroFormTextAlign TextAlign
         {
             get { return textAlign; }
@@ -128,7 +128,7 @@ namespace MetroFramework.Forms
         private MetroFormBorderStyle formBorderStyle = MetroFormBorderStyle.None;
         [DefaultValue(MetroFormBorderStyle.None)]
         [Browsable(true)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroFormBorderStyle BorderStyle
         {
             get { return formBorderStyle; }
@@ -136,7 +136,7 @@ namespace MetroFramework.Forms
         }
 
         private bool isMovable = true;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool Movable
         {
             get { return isMovable; }
@@ -159,7 +159,7 @@ namespace MetroFramework.Forms
         }
 
         private bool displayHeader = true;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(true)]
         public bool DisplayHeader
         {
@@ -177,7 +177,7 @@ namespace MetroFramework.Forms
         }
 
         private bool isResizable = true;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool Resizable
         {
             get { return isResizable; }
@@ -185,7 +185,7 @@ namespace MetroFramework.Forms
         }
 
         private MetroFormShadowType shadowType = MetroFormShadowType.Flat;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroFormShadowType.Flat)]
         public MetroFormShadowType ShadowType
         {
@@ -634,7 +634,7 @@ namespace MetroFramework.Forms
             #region Interface
 
             private MetroColorStyle metroStyle = MetroColorStyle.Blue;
-            [Category("Metro Appearance")]
+            [Category(MetroDefaults.PropertyCategory.Appearance)]
             public MetroColorStyle Style
             {
                 get
@@ -648,7 +648,7 @@ namespace MetroFramework.Forms
             }
 
             private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
-            [Category("Metro Appearance")]
+            [Category(MetroDefaults.PropertyCategory.Appearance)]
             public MetroThemeStyle Theme
             {
                 get

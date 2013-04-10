@@ -14,7 +14,68 @@ namespace MetroFramework.Components
 	[ProvideProperty("ApplyMetroTheme", typeof(Control))]
     public sealed class MetroStyleExtender : Component, IExtenderProvider, IMetroComponent
 	{
+        #region Interface
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public MetroColorStyle Style
+        {
+            get { throw new NotSupportedException(); }
+            set { }
+        }
+
+        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(MetroThemeStyle.Default)]
+        public MetroThemeStyle Theme
+        {
+            get
+            {
+                if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                {
+                    return metroTheme;
+                }
+
+                if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return StyleManager.Theme;
+                }
+                if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                {
+                    return MetroDefaults.Theme;
+                }
+
+                return metroTheme;
+            }
+            set 
+            { 
+                metroTheme = value;
+                UpdateTheme();
+            }
+        }
+
+        private MetroStyleManager metroStyleManager = null;
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public MetroStyleManager StyleManager
+        {
+            get { return metroStyleManager; }
+            set 
+            { 
+                metroStyleManager = value;
+                UpdateTheme();
+            }
+        }
+
+        #endregion
+
+        #region Fields
+
         private readonly List<Control> extendedControls = new List<Control>();
+
+        #endregion
+
+        #region Constructor
 
         public MetroStyleExtender()
         {
@@ -30,10 +91,14 @@ namespace MetroFramework.Components
             }
         }
 
-        private void UpdateTheme(MetroThemeStyle theme)
+        #endregion
+
+        #region Management Methods
+
+        private void UpdateTheme()
         {
-            Color backColor = MetroPaint.BackColor.Form(theme);
-            Color foreColor = MetroPaint.ForeColor.Label.Normal(theme);
+            Color backColor = MetroPaint.BackColor.Form(Theme);
+            Color foreColor = MetroPaint.ForeColor.Label.Normal(Theme);
 
             foreach (Control ctrl in extendedControls)
             {
@@ -54,7 +119,9 @@ namespace MetroFramework.Components
             }
         }
 
-        #region IExtenderProvider implementation
+        #endregion
+
+        #region IExtenderProvider
 
         bool IExtenderProvider.CanExtend(object target)
 		{
@@ -62,7 +129,7 @@ namespace MetroFramework.Components
 		}
 
         [DefaultValue(false)]
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         [Description("Apply Metro Theme BackColor and ForeColor.")]
         public bool GetApplyMetroTheme(Control control)
 		{
@@ -90,31 +157,6 @@ namespace MetroFramework.Components
                     extendedControls.Add(control);
                 }
             }
-        }
-
-        #endregion
-
-        #region IMetroComponent implementation
-
-        [Browsable(false)]
-        MetroColorStyle IMetroComponent.Style
-	    {
-            get { throw new NotSupportedException(); } 
-            set { }
-	    }
-        
-        [Browsable(false)]
-	    MetroThemeStyle IMetroComponent.Theme
-	    {
-            get { throw new NotSupportedException(); } 
-            set { UpdateTheme(value); }
-	    }
-
-        [Browsable(false)]
-        MetroStyleManager IMetroComponent.StyleManager
-	    {
-            get { throw new NotSupportedException(); }
-            set { }
         }
 
         #endregion

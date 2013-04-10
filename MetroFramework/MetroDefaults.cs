@@ -21,12 +21,19 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Windows.Forms.Design;
+using System;
 
-namespace MetroFramework.Design
+namespace MetroFramework
 {
-    internal class MetroTabPageDesigner : ScrollableControlDesigner
+    internal static class MetroDefaults
     {
+        public const MetroColorStyle Style = MetroColorStyle.Blue;
+        public const MetroThemeStyle Theme = MetroThemeStyle.Light;
 
+        public static class PropertyCategory
+        {
+            public const string Appearance = "Metro Appearance";
+            public const string Behaviour = "Metro Behaviour";
+        }
     }
 }

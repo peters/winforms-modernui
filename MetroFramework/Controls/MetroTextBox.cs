@@ -158,6 +158,68 @@ namespace MetroFramework.Controls
             set { baseTextBox.PromptText = value; }
         }
 
+        private Image textBoxIcon = null;
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue(null)]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public Image Icon
+        {
+            get { return textBoxIcon; }
+            set 
+            { 
+                textBoxIcon = value;
+                Refresh();
+            }
+        }
+
+        private bool textBoxIconRight = false;
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue(false)]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public bool IconRight
+        {
+            get { return textBoxIconRight; }
+            set
+            {
+                textBoxIconRight = value;
+                Refresh();
+            }
+        }
+
+        private bool displayIcon = true;
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue(true)]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public bool DisplayIcon
+        {
+            get { return displayIcon; }
+            set 
+            { 
+                displayIcon = value;
+                Refresh();
+            }
+        }
+
+        protected Size iconSize 
+        {
+            get 
+            {
+                if (displayIcon && textBoxIcon != null)
+                {
+                    Size originalSize = textBoxIcon.Size;
+                    double resizeFactor = (ClientRectangle.Height - 2) / (double)originalSize.Height;
+
+                    Point iconLocation = new Point(1, 1);
+                    return new Size((int)(originalSize.Width * resizeFactor), (int)(originalSize.Height * resizeFactor));
+                }
+
+                return Size.Empty;
+            }   
+        }
+
         #endregion
 
         #region Routing Fields
@@ -390,6 +452,24 @@ namespace MetroFramework.Controls
             {
                 e.Graphics.DrawRectangle(p, new Rectangle(0, 0, Width - 1, Height - 1));
             }
+
+            DrawIcon(e.Graphics);
+        }
+
+        private void DrawIcon(Graphics g)
+        {
+            if (displayIcon && textBoxIcon != null)
+            {
+                Point iconLocation = new Point(1, 1);
+                if (textBoxIconRight)
+                {
+                    iconLocation = new Point(ClientRectangle.Width - iconSize.Width - 1, 1);
+                }
+
+                g.DrawImage(textBoxIcon, new Rectangle(iconLocation, iconSize));
+
+                UpdateBaseTextBox();
+            }
         }
 
         #endregion
@@ -405,7 +485,7 @@ namespace MetroFramework.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            UpdateBaseTextBox();
+            //UpdateBaseTextBox();
         }
 
         #endregion
@@ -457,8 +537,23 @@ namespace MetroFramework.Controls
             if (baseTextBox == null) return;
 
             baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
-            baseTextBox.Location = new Point(3, 3);
-            baseTextBox.Size = new Size(Width - 6, Height - 6);
+
+            if (displayIcon)
+            {
+                Point textBoxLocation = new Point(iconSize.Width + 4, 3);
+                if (textBoxIconRight)
+                {
+                    textBoxLocation = new Point(3, 3);
+                }
+
+                baseTextBox.Location = textBoxLocation;
+                baseTextBox.Size = new Size(Width - 7 - iconSize.Width, Height - 6);
+            }
+            else
+            {
+                baseTextBox.Location = new Point(3, 3);
+                baseTextBox.Size = new Size(Width - 6, Height - 6);
+            }
         }
 
         #endregion

@@ -136,6 +136,23 @@ namespace MetroFramework.Controls
             set { metroLinkWeight = value; }
         }
 
+        private string promptText = "";
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue("")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public string PromptText
+        {
+            get { return promptText; }
+            set 
+            {
+                promptText = value.Trim();
+                Invalidate();    
+            }
+        }
+
+        private bool drawPrompt = false;
+
         [Browsable(false)]
         public override Color BackColor
         {
@@ -188,6 +205,8 @@ namespace MetroFramework.Controls
 
             base.DrawMode = DrawMode.OwnerDrawFixed;
             base.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            drawPrompt = (SelectedIndex == -1);
         }
 
         #endregion
@@ -237,10 +256,15 @@ namespace MetroFramework.Controls
             }
 
             Rectangle textRect = new Rectangle(2, 2, Width - 20, Height - 4);
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
 
             if (false && isFocused)
                 ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
+
+            if (drawPrompt)
+            {
+                DrawTextPrompt(e.Graphics);
+            }
         }
 
         protected override void OnDrawItem(DrawItemEventArgs e)
@@ -266,12 +290,26 @@ namespace MetroFramework.Controls
                 }
 
                 Rectangle textRect = new Rectangle(0, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height);
-                TextRenderer.DrawText(e.Graphics, GetItemText(Items[e.Index]), MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+                TextRenderer.DrawText(e.Graphics, GetItemText(Items[e.Index]), MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
             }
             else
             {
                 base.OnDrawItem(e);
             }
+        }
+
+        private void DrawTextPrompt()
+        {
+            using (Graphics graphics = CreateGraphics())
+            {
+                DrawTextPrompt(graphics);
+            }
+        }
+
+        private void DrawTextPrompt(Graphics g)
+        {
+            Rectangle textRect = new Rectangle(2, 2, Width - 20, Height - 4);
+            TextRenderer.DrawText(g, promptText, MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, SystemColors.GrayText, BackColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
         }
 
         #endregion
@@ -396,6 +434,26 @@ namespace MetroFramework.Controls
             }
 
             return preferredSize;
+        }
+
+        protected override void OnSelectedIndexChanged(EventArgs e)
+        {
+            base.OnSelectedIndexChanged(e);
+            drawPrompt = (SelectedIndex == -1);
+            Invalidate();
+        }
+
+        private const int OCM_COMMAND = 0x2111;
+        private const int WM_PAINT = 15;
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+
+            if (((m.Msg == WM_PAINT) || (m.Msg == OCM_COMMAND)) && (drawPrompt))
+            {
+                DrawTextPrompt();
+            }
         }
 
         #endregion

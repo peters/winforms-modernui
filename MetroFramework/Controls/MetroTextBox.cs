@@ -216,7 +216,7 @@ namespace MetroFramework.Controls
                     return new Size((int)(originalSize.Width * resizeFactor), (int)(originalSize.Height * resizeFactor));
                 }
 
-                return Size.Empty;
+                return new Size(-1, -1);
             }   
         }
 
@@ -485,7 +485,7 @@ namespace MetroFramework.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            //UpdateBaseTextBox();
+            UpdateBaseTextBox();
         }
 
         #endregion

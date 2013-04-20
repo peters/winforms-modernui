@@ -73,6 +73,20 @@ namespace MetroFramework
         Bold
     }
 
+    public enum MetroComboBoxSize
+    {
+        Small,
+        Medium,
+        Tall
+    }
+
+    public enum MetroComboBoxWeight
+    {
+        Light,
+        Regular,
+        Bold
+    }
+
     public enum MetroTextBoxSize
     {
         Small,
@@ -109,6 +123,34 @@ namespace MetroFramework
     }
 
     public enum MetroTabControlWeight
+    {
+        Light,
+        Regular,
+        Bold
+    }
+
+    public enum MetroCheckBoxSize
+    {
+        Small,
+        Medium,
+        Tall
+    }
+
+    public enum MetroCheckBoxWeight
+    {
+        Light,
+        Regular,
+        Bold
+    }
+
+    public enum MetroButtonSize
+    {
+        Small,
+        Medium,
+        Tall
+    }
+
+    public enum MetroButtonWeight
     {
         Light,
         Regular,
@@ -185,11 +227,6 @@ namespace MetroFramework
             get { return Default(14f); }
         }
 
-        public static Font Button
-        {
-            get { return DefaultBold(11f); }
-        }
-
         public static Font Tile(MetroTileTextSize labelSize, MetroTileTextWeight labelWeight)
         {
             if (labelSize == MetroTileTextSize.Small)
@@ -255,6 +292,39 @@ namespace MetroFramework
                 if (linkWeight == MetroLinkWeight.Regular)
                     return Default(18f);
                 if (linkWeight == MetroLinkWeight.Bold)
+                    return DefaultBold(18f);
+            }
+
+            return Default(12f);
+        }
+
+        public static Font ComboBox(MetroComboBoxSize linkSize, MetroComboBoxWeight linkWeight)
+        {
+            if (linkSize == MetroComboBoxSize.Small)
+            {
+                if (linkWeight == MetroComboBoxWeight.Light)
+                    return DefaultLight(12f);
+                if (linkWeight == MetroComboBoxWeight.Regular)
+                    return Default(12f);
+                if (linkWeight == MetroComboBoxWeight.Bold)
+                    return DefaultBold(12f);
+            }
+            else if (linkSize == MetroComboBoxSize.Medium)
+            {
+                if (linkWeight == MetroComboBoxWeight.Light)
+                    return DefaultLight(14f);
+                if (linkWeight == MetroComboBoxWeight.Regular)
+                    return Default(14f);
+                if (linkWeight == MetroComboBoxWeight.Bold)
+                    return DefaultBold(14f);
+            }
+            else if (linkSize == MetroComboBoxSize.Tall)
+            {
+                if (linkWeight == MetroComboBoxWeight.Light)
+                    return DefaultLight(18f);
+                if (linkWeight == MetroComboBoxWeight.Regular)
+                    return Default(18f);
+                if (linkWeight == MetroComboBoxWeight.Bold)
                     return DefaultBold(18f);
             }
 
@@ -391,6 +461,72 @@ namespace MetroFramework
             }
 
             return DefaultLight(14f);
+        }
+
+        public static Font CheckBox(MetroCheckBoxSize linkSize, MetroCheckBoxWeight linkWeight)
+        {
+            if (linkSize == MetroCheckBoxSize.Small)
+            {
+                if (linkWeight == MetroCheckBoxWeight.Light)
+                    return DefaultLight(12f);
+                if (linkWeight == MetroCheckBoxWeight.Regular)
+                    return Default(12f);
+                if (linkWeight == MetroCheckBoxWeight.Bold)
+                    return DefaultBold(12f);
+            }
+            else if (linkSize == MetroCheckBoxSize.Medium)
+            {
+                if (linkWeight == MetroCheckBoxWeight.Light)
+                    return DefaultLight(14f);
+                if (linkWeight == MetroCheckBoxWeight.Regular)
+                    return Default(14f);
+                if (linkWeight == MetroCheckBoxWeight.Bold)
+                    return DefaultBold(14f);
+            }
+            else if (linkSize == MetroCheckBoxSize.Tall)
+            {
+                if (linkWeight == MetroCheckBoxWeight.Light)
+                    return DefaultLight(18f);
+                if (linkWeight == MetroCheckBoxWeight.Regular)
+                    return Default(18f);
+                if (linkWeight == MetroCheckBoxWeight.Bold)
+                    return DefaultBold(18f);
+            }
+
+            return Default(12f);
+        }
+
+        public static Font Button(MetroButtonSize linkSize, MetroButtonWeight linkWeight)
+        {
+            if (linkSize == MetroButtonSize.Small)
+            {
+                if (linkWeight == MetroButtonWeight.Light)
+                    return DefaultLight(11f);
+                if (linkWeight == MetroButtonWeight.Regular)
+                    return Default(11f);
+                if (linkWeight == MetroButtonWeight.Bold)
+                    return DefaultBold(11f);
+            }
+            else if (linkSize == MetroButtonSize.Medium)
+            {
+                if (linkWeight == MetroButtonWeight.Light)
+                    return DefaultLight(13f);
+                if (linkWeight == MetroButtonWeight.Regular)
+                    return Default(13f);
+                if (linkWeight == MetroButtonWeight.Bold)
+                    return DefaultBold(13f);
+            }
+            else if (linkSize == MetroButtonSize.Tall)
+            {
+                if (linkWeight == MetroButtonWeight.Light)
+                    return DefaultLight(16f);
+                if (linkWeight == MetroButtonWeight.Regular)
+                    return Default(16f);
+                if (linkWeight == MetroButtonWeight.Bold)
+                    return DefaultBold(16f);
+            }
+
+            return Default(11f);
         }
     }
 }

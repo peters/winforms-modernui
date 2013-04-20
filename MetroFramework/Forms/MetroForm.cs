@@ -633,28 +633,82 @@ namespace MetroFramework.Forms
         {
             #region Interface
 
-            private MetroColorStyle metroStyle = MetroColorStyle.Blue;
             [Category(MetroDefaults.PropertyCategory.Appearance)]
+            public event EventHandler<MetroPaintEventArgs> CustomPaintBackground;
+            protected virtual void OnCustomPaintBackground(MetroPaintEventArgs e)
+            {
+                if (GetStyle(ControlStyles.UserPaint) && CustomPaintBackground != null)
+                {
+                    CustomPaintBackground(this, e);
+                }
+            }
+
+            [Category(MetroDefaults.PropertyCategory.Appearance)]
+            public event EventHandler<MetroPaintEventArgs> CustomPaint;
+            protected virtual void OnCustomPaint(MetroPaintEventArgs e)
+            {
+                if (GetStyle(ControlStyles.UserPaint) && CustomPaint != null)
+                {
+                    CustomPaint(this, e);
+                }
+            }
+
+            [Category(MetroDefaults.PropertyCategory.Appearance)]
+            public event EventHandler<MetroPaintEventArgs> CustomPaintForeground;
+            protected virtual void OnCustomPaintForeground(MetroPaintEventArgs e)
+            {
+                if (GetStyle(ControlStyles.UserPaint) && CustomPaintForeground != null)
+                {
+                    CustomPaintForeground(this, e);
+                }
+            }
+
+            private MetroColorStyle metroStyle = MetroColorStyle.Default;
+            [Category(MetroDefaults.PropertyCategory.Appearance)]
+            [DefaultValue(MetroColorStyle.Default)]
             public MetroColorStyle Style
             {
                 get
                 {
-                    if (StyleManager != null)
+                    if (DesignMode || metroStyle != MetroColorStyle.Default)
+                    {
+                        return metroStyle;
+                    }
+
+                    if (StyleManager != null && metroStyle == MetroColorStyle.Default)
+                    {
                         return StyleManager.Style;
+                    }
+                    if (StyleManager == null && metroStyle == MetroColorStyle.Default)
+                    {
+                        return MetroDefaults.Style;
+                    }
 
                     return metroStyle;
                 }
                 set { metroStyle = value; }
             }
 
-            private MetroThemeStyle metroTheme = MetroThemeStyle.Light;
+            private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
             [Category(MetroDefaults.PropertyCategory.Appearance)]
+            [DefaultValue(MetroThemeStyle.Default)]
             public MetroThemeStyle Theme
             {
                 get
                 {
-                    if (StyleManager != null)
+                    if (DesignMode || metroTheme != MetroThemeStyle.Default)
+                    {
+                        return metroTheme;
+                    }
+
+                    if (StyleManager != null && metroTheme == MetroThemeStyle.Default)
+                    {
                         return StyleManager.Theme;
+                    }
+                    if (StyleManager == null && metroTheme == MetroThemeStyle.Default)
+                    {
+                        return MetroDefaults.Theme;
+                    }
 
                     return metroTheme;
                 }
@@ -663,10 +717,47 @@ namespace MetroFramework.Forms
 
             private MetroStyleManager metroStyleManager = null;
             [Browsable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public MetroStyleManager StyleManager
             {
                 get { return metroStyleManager; }
                 set { metroStyleManager = value; }
+            }
+
+            private bool useCustomBackColor = false;
+            [DefaultValue(false)]
+            [Category(MetroDefaults.PropertyCategory.Appearance)]
+            public bool UseCustomBackColor
+            {
+                get { return useCustomBackColor; }
+                set { useCustomBackColor = value; }
+            }
+
+            private bool useCustomForeColor = false;
+            [DefaultValue(false)]
+            [Category(MetroDefaults.PropertyCategory.Appearance)]
+            public bool UseCustomForeColor
+            {
+                get { return useCustomForeColor; }
+                set { useCustomForeColor = value; }
+            }
+
+            private bool useStyleColors = false;
+            [DefaultValue(false)]
+            [Category(MetroDefaults.PropertyCategory.Appearance)]
+            public bool UseStyleColors
+            {
+                get { return useStyleColors; }
+                set { useStyleColors = value; }
+            }
+
+            [Browsable(false)]
+            [Category(MetroDefaults.PropertyCategory.Behaviour)]
+            [DefaultValue(false)]
+            public bool UseSelectable
+            {
+                get { return GetStyle(ControlStyles.Selectable); }
+                set { SetStyle(ControlStyles.Selectable, value); }
             }
 
             #endregion

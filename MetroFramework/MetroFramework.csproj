@@ -123,9 +123,6 @@
     <Compile Include="Controls\MetroTile.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MetroTilePart.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\MetroToggle.cs">
       <SubType>Component</SubType>
     </Compile>

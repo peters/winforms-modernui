@@ -35,22 +35,14 @@ namespace MetroFramework.Design.Controls
 {
     internal class MetroTabControlDesigner : ParentControlDesigner
     {
-        #region Variables
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly DesignerVerbCollection _verbs = new DesignerVerbCollection();
-        /// <summary>
-        /// 
-        /// </summary>
-        private IDesignerHost _designerHost;
-        /// <summary>
-        /// 
-        /// </summary>
-        private ISelectionService _selectionService;
-        #endregion
-
         #region Fields
+
+        private readonly DesignerVerbCollection designerVerbs = new DesignerVerbCollection();
+
+        private IDesignerHost designerHost;
+
+        private ISelectionService selectionService;
+
         public override SelectionRules SelectionRules
         {
             get
@@ -62,12 +54,12 @@ namespace MetroFramework.Design.Controls
         {
             get
             {
-                if (_verbs.Count == 2)
+                if (designerVerbs.Count == 2)
                 {
                     var myControl = (MetroTabControl)Control;
-                    _verbs[1].Enabled = myControl.TabCount != 0;
+                    designerVerbs[1].Enabled = myControl.TabCount != 0;
                 }
-                return _verbs;
+                return designerVerbs;
             }
         }
 
@@ -75,7 +67,7 @@ namespace MetroFramework.Design.Controls
         {
             get
             {
-                return _designerHost ?? (_designerHost = (IDesignerHost)(GetService(typeof(IDesignerHost))));
+                return designerHost ?? (designerHost = (IDesignerHost)(GetService(typeof(IDesignerHost))));
             }
         }
 
@@ -83,21 +75,25 @@ namespace MetroFramework.Design.Controls
         {
             get
             {
-                return _selectionService ?? (_selectionService = (ISelectionService)(GetService(typeof(ISelectionService))));
+                return selectionService ?? (selectionService = (ISelectionService)(GetService(typeof(ISelectionService))));
             }
         }
+
         #endregion
 
         #region Constructor
+
         public MetroTabControlDesigner()
         {
             var verb1 = new DesignerVerb("Add Tab", OnAddPage);
             var verb2 = new DesignerVerb("Remove Tab", OnRemovePage);
-            _verbs.AddRange(new[] { verb1, verb2 });
+            designerVerbs.AddRange(new[] { verb1, verb2 });
         }
+
         #endregion
 
-        #region Private methods
+        #region Private Methods
+        
         private void OnAddPage(Object sender, EventArgs e)
         {
             var parentControl = (MetroTabControl) Control;
@@ -155,9 +151,11 @@ namespace MetroFramework.Design.Controls
                     break;
             }
         }
+
         #endregion
 
         #region Overrides
+
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
@@ -176,7 +174,7 @@ namespace MetroFramework.Design.Controls
         {
             if (SelectionService.PrimarySelection == Control)
             {
-                var hti = new WinApi.TCHITTESTINFO
+                var hti = new MetroFramework.Native.WinApi.TCHITTESTINFO
                 {
                     pt = Control.PointToClient(point),
                     flags = 0
@@ -227,7 +225,6 @@ namespace MetroFramework.Design.Controls
             properties.Remove("UseVisualStyleBackColor");
 
             properties.Remove("Font");
-            properties.Remove("ForeColor");
             properties.Remove("RightToLeft");
 
             base.PreFilterProperties(properties);

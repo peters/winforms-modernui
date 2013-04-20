@@ -53,6 +53,8 @@ namespace MetroFramework.Design.Controls
             properties.Remove("ImageList");
             properties.Remove("TextImageRelation");
 
+            properties.Remove("BackgroundImage");
+            properties.Remove("BackgroundImageLayout");
             properties.Remove("UseVisualStyleBackColor");
 
             properties.Remove("Font");

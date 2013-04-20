@@ -33,41 +33,94 @@ using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
+    #region MetroTilePartCollection
+
+    public class MetroTilePartCollection : CollectionBase
+    {
+        private object owner = null;
+        public object Owner
+        {
+            get { return owner; }
+            set { owner = value; }
+        }
+
+        public MetroTilePartCollection(object owner)
+        {
+            this.Owner = owner;
+        }
+
+        public int Add(MetroTilePart item)
+        {
+            return base.List.Add(item);
+        }
+
+        public bool Contains(MetroTilePart item)
+        {
+            return base.List.Contains(item);
+        }
+
+        public int IndexOf(MetroTilePart item)
+        {
+            return base.List.IndexOf(item);
+        }
+
+        public void Insert(int index, MetroTilePart item)
+        {
+            base.List.Insert(index, item);
+        }
+
+        public void Remove(MetroTilePart item)
+        {
+            base.List.Remove(item);
+        }
+
+        public MetroTilePart this[string index]
+        {
+            get
+            {
+                foreach (MetroTilePart item in base.List)
+                {
+                    if (item.Name == index)
+                    {
+                        return item;
+                    }
+                }
+                return null;
+            }
+            set
+            {
+                int num = 0;
+                foreach (MetroTilePart item in base.List)
+                {
+                    if (item.Name == index)
+                    {
+                        base.List[num] = value;
+                    }
+                    num++;
+                }
+            }
+        }
+
+        public MetroTilePart this[int index]
+        {
+            get
+            {
+                return (MetroTilePart)base.List[index];
+            }
+            set
+            {
+                base.List[index] = value;
+            }
+        }
+    }
+
+    #endregion
+
     [Designer("MetroFramework.Design.Controls.MetroTileDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(Button))]
     public class MetroTile : Button, IContainerControl, IMetroControl
     {
         #region Interface
-
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public event EventHandler<MetroPaintEventArgs> CustomPaintBackground;
-        protected virtual void OnCustomPaintBackground(MetroPaintEventArgs e)
-        {
-            if (GetStyle(ControlStyles.UserPaint) && CustomPaintBackground != null)
-            {
-                CustomPaintBackground(this, e);
-            }
-        }
-
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public event EventHandler<MetroPaintEventArgs> CustomPaint;
-        protected virtual void OnCustomPaint(MetroPaintEventArgs e)
-        {
-            if (GetStyle(ControlStyles.UserPaint) && CustomPaint != null)
-            {
-                CustomPaint(this, e);
-            }
-        }
-
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public event EventHandler<MetroPaintEventArgs> CustomPaintForeground;
-        protected virtual void OnCustomPaintForeground(MetroPaintEventArgs e)
-        {
-            if (GetStyle(ControlStyles.UserPaint) && CustomPaintForeground != null)
-            {
-                CustomPaintForeground(this, e);
-            }
-        }
 
         private MetroColorStyle metroStyle = MetroColorStyle.Default;
         [Category(MetroDefaults.PropertyCategory.Appearance)]
@@ -130,42 +183,6 @@ namespace MetroFramework.Controls
             set { metroStyleManager = value; }
         }
 
-        private bool useCustomBackColor = false;
-        [DefaultValue(false)]
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public bool UseCustomBackColor
-        {
-            get { return useCustomBackColor; }
-            set { useCustomBackColor = value; }
-        }
-
-        private bool useCustomForeColor = false;
-        [DefaultValue(false)]
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public bool UseCustomForeColor
-        {
-            get { return useCustomForeColor; }
-            set { useCustomForeColor = value; }
-        }
-
-        private bool useStyleColors = false;
-        [DefaultValue(false)]
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public bool UseStyleColors
-        {
-            get { return useStyleColors; }
-            set { useStyleColors = value; }
-        }
-
-        [Browsable(false)]
-        [Category(MetroDefaults.PropertyCategory.Behaviour)]
-        [DefaultValue(false)]
-        public bool UseSelectable
-        {
-            get { return GetStyle(ControlStyles.Selectable); }
-            set { SetStyle(ControlStyles.Selectable, value); }
-        }
-
         private Control activeControl = null;
         [Browsable(false)]
         public Control ActiveControl
@@ -189,6 +206,24 @@ namespace MetroFramework.Controls
         #endregion
 
         #region Fields
+
+        private bool useCustomBackground = false;
+        [DefaultValue(false)]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public bool CustomBackground
+        {
+            get { return useCustomBackground; }
+            set { useCustomBackground = value; }
+        }
+
+        private bool useCustomForeColor = false;
+        [DefaultValue(false)]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public bool CustomForeColor
+        {
+            get { return useCustomForeColor; }
+            set { useCustomForeColor = value; }
+        }
 
         private bool paintTileCount = true;
         [DefaultValue(true)]
@@ -281,54 +316,16 @@ namespace MetroFramework.Controls
 
         #region Paint Methods
 
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            try
-            {
-                Color backColor = BackColor;
-
-                if (!useCustomBackColor)
-                {
-                    backColor = MetroPaint.GetStyleColor(Style);
-                }
-
-                if (backColor.A == 255)
-                {
-                    e.Graphics.Clear(backColor);
-                    return;
-                }
-
-                base.OnPaintBackground(e);
-
-                OnCustomPaintBackground(new MetroPaintEventArgs(backColor, Color.Empty, e.Graphics));
-            }
-            catch
-            {
-                Invalidate();
-            }
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
-            try
-            {
-                if (GetStyle(ControlStyles.AllPaintingInWmPaint))
-                {
-                    OnPaintBackground(e);
-                }
+            Color backColor, foreColor;
 
-                OnCustomPaint(new MetroPaintEventArgs(Color.Empty, Color.Empty, e.Graphics));
-                OnPaintForeground(e);
-            }
-            catch
-            {
-                Invalidate();
-            }
-        }
+            backColor = MetroPaint.GetStyleColor(Style);
 
-        protected virtual void OnPaintForeground(PaintEventArgs e)
-        {
-            Color foreColor;
+            if (useCustomBackground)
+            {
+                backColor = BackColor;
+            }
 
             if (isHovered && !isPressed && Enabled)
             {
@@ -352,9 +349,23 @@ namespace MetroFramework.Controls
                 foreColor = ForeColor;
             }
 
-            if (isPressed)
-            {
 
+
+            if (!isPressed)
+            {
+                e.Graphics.Clear(backColor);
+            }
+            else
+            {
+                e.Graphics.Clear(MetroPaint.BackColor.Form(Theme));
+
+                Rectangle pressedRectangle = ClientRectangle;
+                pressedRectangle.Inflate(-2, -2);
+
+                using (SolidBrush b = new SolidBrush(backColor))
+                {
+                    e.Graphics.FillRectangle(b, pressedRectangle);
+                }
             }
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -423,11 +434,60 @@ namespace MetroFramework.Controls
 
             Size textSize = TextRenderer.MeasureText(Text, MetroFonts.Tile(tileTextFontSize, tileTextFontWeight));
 
-            TextFormatFlags flags = MetroPaint.GetTextFormatFlags(TextAlign) | TextFormatFlags.LeftAndRightPadding | TextFormatFlags.EndEllipsis;
+            TextFormatFlags flags = TextFormatFlags.LeftAndRightPadding | TextFormatFlags.EndEllipsis;
             Rectangle textRectangle = ClientRectangle;
             if (isPressed)
             {
                 textRectangle.Inflate(-2, -2);
+            }
+
+            switch (TextAlign)
+            {
+                case ContentAlignment.BottomCenter:
+                    flags |= TextFormatFlags.Bottom;
+                    flags |= TextFormatFlags.HorizontalCenter;
+                    break;
+                    
+                case ContentAlignment.BottomRight:
+                    flags |= TextFormatFlags.Bottom;
+                    flags |= TextFormatFlags.Right;
+                    break;
+
+                case ContentAlignment.MiddleLeft:
+                    flags |= TextFormatFlags.VerticalCenter;
+                    flags |= TextFormatFlags.Left;
+                    break;
+
+                case ContentAlignment.MiddleCenter:
+                    flags |= TextFormatFlags.VerticalCenter;
+                    flags |= TextFormatFlags.HorizontalCenter;
+                    break;
+
+                case ContentAlignment.MiddleRight:
+                    flags |= TextFormatFlags.VerticalCenter;
+                    flags |= TextFormatFlags.Right;
+                    break;
+
+                case ContentAlignment.TopLeft:
+                    flags |= TextFormatFlags.Top;
+                    flags |= TextFormatFlags.Left;
+                    break;
+
+                case ContentAlignment.TopCenter:
+                    flags |= TextFormatFlags.Top;
+                    flags |= TextFormatFlags.HorizontalCenter;
+                    break;
+
+                case ContentAlignment.TopRight:
+                    flags |= TextFormatFlags.Top;
+                    flags |= TextFormatFlags.Right;
+                    break;
+
+                default:
+                case ContentAlignment.BottomLeft:
+                    flags |= TextFormatFlags.Bottom;
+                    flags |= TextFormatFlags.Left;
+                    break;
             }
 
             TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile(tileTextFontSize, tileTextFontWeight), textRectangle, foreColor, flags);

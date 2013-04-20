@@ -21,26 +21,11 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace MetroFramework.Drawing
 {
-    public class MetroPaintEventArgs : EventArgs
-    {
-        public Color BackColor { get; private set; }
-        public Color ForeColor { get; private set; }
-        public Graphics Graphics { get; private set; }
-
-        public MetroPaintEventArgs(Color backColor, Color foreColor, Graphics g)
-        {
-            BackColor = backColor;
-            ForeColor = foreColor;
-            Graphics = g;
-        }
-    }
-
     public sealed class MetroPaint
     {
         public sealed class BorderColor

@@ -22,22 +22,35 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 using MetroFramework.Components;
 using MetroFramework.Interfaces;
-using MetroFramework.Drawing;
 
 namespace MetroFramework.Controls
 {
-    public class MetroUserControl : UserControl, IMetroControl
+    #region Enums
+
+    public enum MetroTilePartContentType
+    {
+        Text,
+        Image,
+        Html
+    }
+
+    #endregion
+
+    [ToolboxItem(false)]
+    public class MetroTilePart : Control, IMetroControl
     {
         #region Interface
 
         private MetroColorStyle metroStyle = MetroColorStyle.Default;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroColorStyle.Default)]
         public MetroColorStyle Style
         {
@@ -63,7 +76,7 @@ namespace MetroFramework.Controls
         }
 
         private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
-        [Category("Metro Appearance")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroThemeStyle.Default)]
         public MetroThemeStyle Theme
         {
@@ -101,34 +114,46 @@ namespace MetroFramework.Controls
 
         #region Fields
 
-        private bool useCustomBackground = false;
-        [DefaultValue(false)]
-        [Category("Metro Appearance")]
-        public bool CustomBackground
+        private MetroTilePartContentType partContentType = MetroTilePartContentType.Text;
+        [DefaultValue(MetroTilePartContentType.Text)]
+        [Category(MetroDefaults.PropertyCategory.Behaviour)]
+        public MetroTilePartContentType ContentType 
         {
-            get { return useCustomBackground; }
-            set { useCustomBackground = value; }
+            get { return partContentType; }
+            set { partContentType = value; }
+        }
+
+        private string partHtmlContent = "";
+        [DefaultValue("")]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public string HtmlContent
+        {
+            get { return partHtmlContent; }
+            set { partHtmlContent = value; }
         }
 
         #endregion
 
-        #region Overridden Methods
+        #region Constructor
+
+        public MetroTilePart()
+        {
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            Dock = DockStyle.Fill;
+        }
+
+        #endregion
+
+        #region Paint Methods
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            Color backColor = MetroPaint.BackColor.Form(Theme);
-            if (useCustomBackground)
-                backColor = BackColor;
-
-            e.Graphics.Clear(backColor);
-        }
-
-        protected override void OnEnabledChanged(EventArgs e)
-        {
-            base.OnEnabledChanged(e);
-            Invalidate();
+            if (partContentType == MetroTilePartContentType.Html)
+            {
+                MetroFramework.Drawing.Html.HtmlRenderer.Render(e.Graphics, partHtmlContent, ClientRectangle, true);
+            }
         }
 
         #endregion

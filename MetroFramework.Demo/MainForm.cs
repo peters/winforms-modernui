@@ -25,10 +25,5 @@ namespace MetroFramework.Demo
         {
             metroStyleManager.Theme = metroStyleManager.Theme == MetroThemeStyle.Light ? MetroThemeStyle.Dark : MetroThemeStyle.Light;
         }
-
-        private void metroButton1_Click(object sender, EventArgs e)
-        {
-            MetroTaskWindow.ShowTaskWindow(this,"SubControl in TaskWindow", new TaskWindowControl(), 10);
-        }
     }
 }

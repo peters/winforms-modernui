@@ -50,7 +50,6 @@ namespace MetroFramework.Forms
             singletonWindow = new MetroTaskWindow(secToClose, userControl);
             singletonWindow.Text = title;
             singletonWindow.Resizable = false;
-            singletonWindow.Movable = true;
             singletonWindow.StartPosition = FormStartPosition.Manual;
             
             if (parent != null && parent is IMetroForm)
@@ -63,7 +62,7 @@ namespace MetroFramework.Forms
                     singletonWindow.StyleManager.Owner = singletonWindow;
             }
 
-            singletonWindow.Show();
+            singletonWindow.Show(parent);
         }
 
         public static bool IsVisible()
@@ -146,9 +145,10 @@ namespace MetroFramework.Forms
 
                 MaximizeBox = false;
                 MinimizeBox = false;
-                Movable = true;
+                Movable = false;
 
                 TopMost = true;
+                FormBorderStyle = FormBorderStyle.FixedDialog;
 
                 Size = new Size(400, 200);
 
@@ -177,15 +177,7 @@ namespace MetroFramework.Forms
                 controlContainer.Size = new Size(Width - 40, Height - 80);
                 controlContainer.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
 
-                controlContainer.AutoScroll = false;
-                controlContainer.HorizontalScrollbar = false;
-                controlContainer.VerticalScrollbar = false;
-                controlContainer.Refresh();
-
-                if (StyleManager != null)
-                {
-                    StyleManager.Update();
-                }
+                StyleManager.Update();
 
                 isInitialized = true;
 

@@ -50,36 +50,6 @@ namespace MetroFramework.Controls
     {
         #region Interface
 
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public event EventHandler<MetroPaintEventArgs> CustomPaintBackground;
-        protected virtual void OnCustomPaintBackground(MetroPaintEventArgs e)
-        {
-            if (GetStyle(ControlStyles.UserPaint) && CustomPaintBackground != null)
-            {
-                CustomPaintBackground(this, e);
-            }
-        }
-
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public event EventHandler<MetroPaintEventArgs> CustomPaint;
-        protected virtual void OnCustomPaint(MetroPaintEventArgs e)
-        {
-            if (GetStyle(ControlStyles.UserPaint) && CustomPaint != null)
-            {
-                CustomPaint(this, e);
-            }
-        }
-
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public event EventHandler<MetroPaintEventArgs> CustomPaintForeground;
-        protected virtual void OnCustomPaintForeground(MetroPaintEventArgs e)
-        {
-            if (GetStyle(ControlStyles.UserPaint) && CustomPaintForeground != null)
-            {
-                CustomPaintForeground(this, e);
-            }
-        }
-
         private MetroColorStyle metroStyle = MetroColorStyle.Default;
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroColorStyle.Default)]
@@ -139,46 +109,6 @@ namespace MetroFramework.Controls
         {
             get { return metroStyleManager; }
             set { metroStyleManager = value; }
-        }
-
-        private bool useCustomBackColor = false;
-        [DefaultValue(false)]
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        public bool UseCustomBackColor
-        {
-            get { return useCustomBackColor; }
-            set { useCustomBackColor = value; }
-        }
-
-        private bool useCustomForeColor = false;
-        [Browsable(false)]
-        [DefaultValue(false)]
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool UseCustomForeColor
-        {
-            get { return useCustomForeColor; }
-            set { useCustomForeColor = value; }
-        }
-
-        private bool useStyleColors = false;
-        [Browsable(false)]
-        [DefaultValue(false)]
-        [Category(MetroDefaults.PropertyCategory.Appearance)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool UseStyleColors
-        {
-            get { return useStyleColors; }
-            set { useStyleColors = value; }
-        }
-
-        [Browsable(false)]
-        [Category(MetroDefaults.PropertyCategory.Behaviour)]
-        [DefaultValue(false)]
-        public bool UseSelectable
-        {
-            get { return GetStyle(ControlStyles.Selectable); }
-            set { SetStyle(ControlStyles.Selectable, value); }
         }
 
         #endregion
@@ -506,7 +436,7 @@ namespace MetroFramework.Controls
             SetStyle(ControlStyles.OptimizedDoubleBuffer |
                      ControlStyles.ResizeRedraw |
                      ControlStyles.Selectable |
-                     ControlStyles.SupportsTransparentBackColor |
+                     ControlStyles.AllPaintingInWmPaint |
                      ControlStyles.UserPaint, true);
 
             Width = 10;
@@ -561,88 +491,27 @@ namespace MetroFramework.Controls
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            try
-            {
-                Color backColor = BackColor;
-
-                if (!useCustomBackColor)
-                {
-                    if (Parent != null)
-                    {
-                        if (Parent is IMetroControl)
-                        {
-                            backColor = MetroPaint.BackColor.Form(Theme);
-                        }
-                        else
-                        {
-                            backColor = Parent.BackColor;
-                        }
-                    }
-                    else
-                    {
-                        backColor = MetroPaint.BackColor.Form(Theme);
-                    }
-                }
-
-                if (backColor.A == 255)
-                {
-                    e.Graphics.Clear(backColor);
-                    return;
-                }
-
-                base.OnPaintBackground(e);
-
-                OnCustomPaintBackground(new MetroPaintEventArgs(backColor, Color.Empty, e.Graphics));
-            }
-            catch
-            {
-                Invalidate();
-            }
+            // no painting here
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            try
-            {
-                if (GetStyle(ControlStyles.AllPaintingInWmPaint))
-                {
-                    OnPaintBackground(e);
-                }
-
-                OnCustomPaint(new MetroPaintEventArgs(Color.Empty, Color.Empty, e.Graphics));
-                OnPaintForeground(e);
-            }
-            catch
-            {
-                Invalidate();
-            }
-        }
-
-        protected virtual void OnPaintForeground(PaintEventArgs e)
-        {
             Color backColor, thumbColor, barColor;
 
-            if (useCustomBackColor)
+            if (Parent != null)
             {
-                backColor = BackColor;
-            }
-            else
-            {
-                if (Parent != null)
-                {
-                    if (Parent is IMetroControl)
-                    {
-                        backColor = MetroPaint.BackColor.Form(Theme);
-                    }
-                    else
-                    {
-                        backColor = Parent.BackColor;
-                    }
-                }
-                else
+                if (Parent is IMetroControl)
                 {
                     backColor = MetroPaint.BackColor.Form(Theme);
                 }
+                else
+                {
+                    backColor = Parent.BackColor;
+                }
+            }
+            else
+            {
+                backColor = MetroPaint.BackColor.Form(Theme);
             }
 
             if (isHovered && !isPressed && Enabled)
@@ -666,9 +535,8 @@ namespace MetroFramework.Controls
                 barColor = MetroPaint.BackColor.ScrollBar.Bar.Normal(Theme);
             }
 
+            e.Graphics.Clear(backColor);
             DrawScrollBar(e.Graphics, backColor, thumbColor, barColor);
-
-            OnCustomPaintForeground(new MetroPaintEventArgs(backColor, thumbColor, e.Graphics));
         }
 
         private void DrawScrollBar(Graphics g, Color backColor, Color thumbColor, Color barColor)

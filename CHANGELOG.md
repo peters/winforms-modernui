@@ -1,17 +1,6 @@
 Changelog File
 
 -----------------------------------------------------------------------------------
-SW 2013-04-20 12:36 - AssemblyVersion 1.3.0.0
------------------------------------------------------------------------------------
-
-* Updated assembly version to 1.3.0.0
-* Fixed several bugs
-* Enhanced overall drawing behvaiour with custom drawing events for full manipulation support in drawing process
-* Every Control supports real transparency now
-* Background Image included back into several controls
-
-
------------------------------------------------------------------------------------
 SW 2013-04-02 09:55 - AssemblyVersion 1.2.0.0
 -----------------------------------------------------------------------------------
 

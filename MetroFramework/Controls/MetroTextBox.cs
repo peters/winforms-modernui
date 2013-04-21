@@ -527,7 +527,6 @@ namespace MetroFramework.Controls
                 e.Graphics.DrawRectangle(p, new Rectangle(0, 0, Width - 1, Height - 1));
             }
 
-<<<<<<< HEAD
             DrawIcon(e.Graphics);
         }
 
@@ -545,9 +544,8 @@ namespace MetroFramework.Controls
 
                 UpdateBaseTextBox();
             }
-=======
-            OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, baseTextBox.ForeColor, e.Graphics));
->>>>>>> several changes and fixes
+
+            OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, baseTextBox.ForeColor, g));
         }
 
         #endregion

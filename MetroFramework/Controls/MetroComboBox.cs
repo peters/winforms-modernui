@@ -207,9 +207,8 @@ namespace MetroFramework.Controls
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroComboBoxWeight FontWeight
         {
-<<<<<<< HEAD
-            get { return metroLinkWeight; }
-            set { metroLinkWeight = value; }
+            get { return metroComboBoxWeight; }
+            set { metroComboBoxWeight = value; }
         }
 
         private string promptText = "";
@@ -228,19 +227,6 @@ namespace MetroFramework.Controls
         }
 
         private bool drawPrompt = false;
-
-        [Browsable(false)]
-        public override Color BackColor
-        {
-            get
-            {
-                return MetroPaint.BackColor.Form(Theme);
-            }
-=======
-            get { return metroComboBoxWeight; }
-            set { metroComboBoxWeight = value; }
->>>>>>> several changes and fixes
-        }
 
         [Browsable(false)]
         public override Font Font
@@ -364,13 +350,10 @@ namespace MetroFramework.Controls
             }
 
             Rectangle textRect = new Rectangle(2, 2, Width - 20, Height - 4);
-<<<<<<< HEAD
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
-=======
+
             TextRenderer.DrawText(e.Graphics, Text, MetroFonts.ComboBox(metroComboBoxSize, metroComboBoxWeight), textRect, foreColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
 
             OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, foreColor, e.Graphics));
->>>>>>> several changes and fixes
 
             if (displayFocusRectangle && isFocused)
                 ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
@@ -402,11 +385,7 @@ namespace MetroFramework.Controls
                 }
 
                 Rectangle textRect = new Rectangle(0, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height);
-<<<<<<< HEAD
-                TextRenderer.DrawText(e.Graphics, GetItemText(Items[e.Index]), MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, foreColor, backColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
-=======
                 TextRenderer.DrawText(e.Graphics, GetItemText(Items[e.Index]), MetroFonts.ComboBox(metroComboBoxSize, metroComboBoxWeight), textRect, foreColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
->>>>>>> several changes and fixes
             }
             else
             {
@@ -425,7 +404,7 @@ namespace MetroFramework.Controls
         private void DrawTextPrompt(Graphics g)
         {
             Rectangle textRect = new Rectangle(2, 2, Width - 20, Height - 4);
-            TextRenderer.DrawText(g, promptText, MetroFonts.Link(metroLinkSize, metroLinkWeight), textRect, SystemColors.GrayText, BackColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+            TextRenderer.DrawText(g, promptText, MetroFonts.ComboBox(metroComboBoxSize, metroComboBoxWeight), textRect, SystemColors.GrayText, BackColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
         }
 
         #endregion

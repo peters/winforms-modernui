@@ -137,6 +137,18 @@ namespace MetroFramework.Components
             return newStyleManager;
         }
 
+        public object Clone(ContainerControl owner)
+        {
+            MetroStyleManager clonedManager = Clone() as MetroStyleManager;
+
+            if (owner is IMetroForm)
+            {
+                clonedManager.Owner = owner;
+            }
+
+            return clonedManager;
+        }
+
         #endregion
 
         #region ISupportInitialize

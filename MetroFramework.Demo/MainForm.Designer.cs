@@ -111,10 +111,6 @@
             this.metroTabPage1.SuspendLayout();
             this.metroTabPage3.SuspendLayout();
             this.metroTabPage4.SuspendLayout();
-<<<<<<< HEAD
-            this.metroTabPage3.SuspendLayout();
-=======
->>>>>>> several changes and fixes
             this.metroTabPage2.SuspendLayout();
             this.metroTabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
@@ -986,10 +982,6 @@
             this.metroTile5.Style = MetroFramework.MetroColorStyle.Red;
             this.metroTile5.TabIndex = 8;
             this.metroTile5.Text = "metroTile5";
-<<<<<<< HEAD
-=======
-            this.metroTile5.UseSelectable = true;
->>>>>>> several changes and fixes
             // 
             // metroTile4
             // 
@@ -1000,10 +992,6 @@
             this.metroTile4.Style = MetroFramework.MetroColorStyle.Orange;
             this.metroTile4.TabIndex = 7;
             this.metroTile4.Text = "metroTile4";
-<<<<<<< HEAD
-=======
-            this.metroTile4.UseSelectable = true;
->>>>>>> several changes and fixes
             // 
             // metroTile3
             // 
@@ -1014,10 +1002,6 @@
             this.metroTile3.Style = MetroFramework.MetroColorStyle.Lime;
             this.metroTile3.TabIndex = 6;
             this.metroTile3.Text = "metroTile3";
-<<<<<<< HEAD
-=======
-            this.metroTile3.UseSelectable = true;
->>>>>>> several changes and fixes
             // 
             // propertyGrid1
             // 
@@ -1082,11 +1066,6 @@
             this.metroTabPage3.PerformLayout();
             this.metroTabPage4.ResumeLayout(false);
             this.metroTabPage4.PerformLayout();
-<<<<<<< HEAD
-            this.metroTabPage3.ResumeLayout(false);
-            this.metroTabPage3.PerformLayout();
-=======
->>>>>>> several changes and fixes
             this.metroTabPage2.ResumeLayout(false);
             this.metroTabPage2.PerformLayout();
             this.metroTabPage5.ResumeLayout(false);

@@ -34,6 +34,7 @@ using MetroFramework.Localization;
 
 namespace MetroFramework.Controls
 {
+    [Designer("MetroFramework.Design.Controls.MetroToggleDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(CheckBox))]
     public class MetroToggle : CheckBox, IMetroControl
     {

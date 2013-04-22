@@ -22,6 +22,13 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// Based on original work by 
+// (c) Mick Doherty / Oscar Londono
+// http://dotnetrix.co.uk/tabcontrol.htm
+// http://www.pcreview.co.uk/forums/adding-custom-tabpages-design-time-t2904262.html
+// http://www.codeproject.com/Articles/12185/A-NET-Flat-TabControl-CustomDraw
+// http://www.codeproject.com/Articles/278/Fully-owner-drawn-tab-control
+
 using System;
 using System.ComponentModel;
 using System.Drawing;

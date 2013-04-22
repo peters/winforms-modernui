@@ -21,6 +21,12 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+// Based on original work by 
+// (c) Mick Doherty
+// http://dotnetrix.co.uk/tabcontrol.htm
+// http://www.pcreview.co.uk/forums/adding-custom-tabpages-design-time-t2904262.html
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;

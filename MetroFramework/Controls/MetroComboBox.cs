@@ -372,6 +372,11 @@ namespace MetroFramework.Controls
 
                 if (e.State == (DrawItemState.NoAccelerator | DrawItemState.NoFocusRect) || e.State == DrawItemState.None)
                 {
+                    using (SolidBrush b = new SolidBrush(this.BackColor))
+                    {
+                        e.Graphics.FillRectangle(b, new Rectangle(e.Bounds.Left, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height));
+                    }
+
                     foreColor = MetroPaint.ForeColor.Link.Normal(Theme);
                 }
                 else

@@ -879,11 +879,13 @@ namespace MetroFramework.Forms
         #region Shadows
 
         private const int CS_DROPSHADOW = 0x20000;
+        const int WS_MINIMIZEBOX = 0x20000;
         protected override CreateParams CreateParams
         {
             get
             {
                 CreateParams cp = base.CreateParams;
+                cp.Style |= WS_MINIMIZEBOX;
                 if (ShadowType == MetroFormShadowType.SystemShadow)
                     cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;

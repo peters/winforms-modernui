@@ -787,11 +787,13 @@ namespace MetroFramework.Forms
             {
                 Color backColor, foreColor;
 
+                MetroThemeStyle _Theme = Theme;
                 if (Parent != null)
                 {
                     if (Parent is IMetroForm)
                     {
-                        backColor = MetroPaint.BackColor.Form(Theme);
+                        _Theme = ((IMetroForm)Parent).Theme;
+                        backColor = MetroPaint.BackColor.Form(_Theme);
                     }
                     else if (Parent is IMetroControl)
                     {
@@ -804,27 +806,27 @@ namespace MetroFramework.Forms
                 }
                 else
                 {
-                    backColor = MetroPaint.BackColor.Form(Theme);
+                    backColor = MetroPaint.BackColor.Form(_Theme);
                 }
 
                 if (isHovered && !isPressed && Enabled)
                 {
-                    foreColor = MetroPaint.ForeColor.Button.Normal(Theme);
-                    backColor = MetroPaint.BackColor.Button.Normal(Theme);
+                    foreColor = MetroPaint.ForeColor.Button.Normal(_Theme);
+                    backColor = MetroPaint.BackColor.Button.Normal(_Theme);
                 }
                 else if (isHovered && isPressed && Enabled)
                 {
-                    foreColor = MetroPaint.ForeColor.Button.Press(Theme);
+                    foreColor = MetroPaint.ForeColor.Button.Press(_Theme);
                     backColor = MetroPaint.GetStyleColor(Style);
                 }
                 else if (!Enabled)
                 {
-                    foreColor = MetroPaint.ForeColor.Button.Disabled(Theme);
-                    backColor = MetroPaint.BackColor.Button.Disabled(Theme);
+                    foreColor = MetroPaint.ForeColor.Button.Disabled(_Theme);
+                    backColor = MetroPaint.BackColor.Button.Disabled(_Theme);
                 }
                 else
                 {
-                    foreColor = MetroPaint.ForeColor.Button.Normal(Theme);
+                    foreColor = MetroPaint.ForeColor.Button.Normal(_Theme);
                 }
 
                 e.Graphics.Clear(backColor);

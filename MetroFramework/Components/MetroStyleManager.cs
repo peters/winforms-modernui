@@ -33,6 +33,12 @@ namespace MetroFramework.Components
     [Designer("MetroFramework.Design.Components.MetroStyleManagerDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     public sealed class MetroStyleManager : Component, ICloneable, ISupportInitialize
     {
+        public delegate void TChange(object sender, MetroThemeStyle theme);
+        public delegate void SChange(object sender, MetroColorStyle style);
+
+        public event TChange ThemeChanged;
+        public event SChange StyleChanged;
+
         #region Fields
 
         private readonly IContainer parentContainer;
@@ -51,6 +57,7 @@ namespace MetroFramework.Components
                 }
 
                 metroStyle = value;
+                if (StyleChanged != null)  StyleChanged(this, value);
 
                 if (!isInitializing)
                 {
@@ -73,6 +80,7 @@ namespace MetroFramework.Components
                 }
 
                 metroTheme = value;
+                if (ThemeChanged != null) ThemeChanged(this, value);
 
                 if (!isInitializing)
                 {

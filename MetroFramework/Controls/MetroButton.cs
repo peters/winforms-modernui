@@ -166,6 +166,19 @@ namespace MetroFramework.Controls
             set { SetStyle(ControlStyles.Selectable, value); }
         }
 
+        private Bitmap _image = null;
+
+        public Image Image
+        { 
+            get { return base.Image; }
+            set 
+            { 
+                base.Image = value;
+                if (value == null) return;
+                _image = ApplyInvert(new Bitmap(value));
+            }
+        }
+
         #endregion
 
         #region Fields
@@ -188,8 +201,8 @@ namespace MetroFramework.Controls
             set { highlight = value; }
         }
 
-        private MetroButtonSize metroButtonSize = MetroButtonSize.Small;
-        [DefaultValue(MetroButtonSize.Small)]
+        private MetroButtonSize metroButtonSize = MetroButtonSize.Medium;
+        [DefaultValue(MetroButtonSize.Medium)]
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroButtonSize FontSize
         {
@@ -197,13 +210,25 @@ namespace MetroFramework.Controls
             set { metroButtonSize = value; }
         }
 
-        private MetroButtonWeight metroButtonWeight = MetroButtonWeight.Bold;
-        [DefaultValue(MetroButtonWeight.Bold)]
+        private MetroButtonWeight metroButtonWeight = MetroButtonWeight.Regular;
+        [DefaultValue(MetroButtonWeight.Regular)]
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroButtonWeight FontWeight
         {
             get { return metroButtonWeight; }
             set { metroButtonWeight = value; }
+        }
+
+        Int32 _imagesize = 20;
+
+        [DefaultValue(20)]
+        public Int32 ImageSize
+        {
+            get { return _imagesize; }
+            set { 
+                _imagesize = value;
+                Invalidate();
+            }
         }
 
         private bool isHovered = false;
@@ -234,21 +259,21 @@ namespace MetroFramework.Controls
 
                 if (isHovered && !isPressed && Enabled)
                 {
-                    backColor = MetroPaint.BackColor.Button.Hover(Theme);
+                    backColor = MetroPaint.BackColor.Button.Normal(Theme);
                 }
                 else if (isHovered && isPressed && Enabled)
                 {
-                    backColor = MetroPaint.BackColor.Button.Press(Theme);
+                    backColor = MetroPaint.GetStyleColor(Style);
                 }
                 else if (!Enabled)
                 {
-                    backColor = MetroPaint.BackColor.Button.Disabled(Theme);
+                    backColor = MetroPaint.BackColor.Button.Normal(Theme);
                 }
                 else
                 {
                     if (!useCustomBackColor)
                     {
-                        backColor = MetroPaint.BackColor.Button.Normal(Theme);
+                        backColor = MetroPaint.BackColor.Form(Theme);
                     } 
                 }
 
@@ -292,17 +317,17 @@ namespace MetroFramework.Controls
 
             if (isHovered && !isPressed && Enabled)
             {
-                borderColor = MetroPaint.BorderColor.Button.Hover(Theme);
-                foreColor = MetroPaint.ForeColor.Button.Hover(Theme);
+                borderColor = MetroPaint.BackColor.Button.Normal(Theme);
+                foreColor = MetroPaint.ForeColor.Button.Normal(Theme);
             }
             else if (isHovered && isPressed && Enabled)
             {
-                borderColor = MetroPaint.BorderColor.Button.Press(Theme);
+                borderColor = MetroPaint.GetStyleColor(Style);
                 foreColor = MetroPaint.ForeColor.Button.Press(Theme);
             }
             else if (!Enabled)
             {
-                borderColor = MetroPaint.BorderColor.Button.Disabled(Theme);
+                borderColor = MetroPaint.BackColor.Button.Normal(Theme);
                 foreColor = MetroPaint.ForeColor.Button.Disabled(Theme);
             }
             else
@@ -345,6 +370,90 @@ namespace MetroFramework.Controls
 
             if (displayFocusRectangle && isFocused)
                 ControlPaint.DrawFocusRectangle(e.Graphics, ClientRectangle);
+
+            DrawIcon(e.Graphics);
+        }
+
+  
+        private void DrawIcon(Graphics g)
+        {
+            if (Image != null)
+            {
+                Point iconLocation = new Point(2, (ClientRectangle.Height - iconSize.Height) / 2);
+                int _filler = 5;
+
+                switch (ImageAlign) 
+                {
+                    case ContentAlignment.BottomCenter:
+                        iconLocation = new Point((ClientRectangle.Width - iconSize.Width) / 2, (ClientRectangle.Height - iconSize.Height) - _filler);
+                        break;
+                    case ContentAlignment.BottomLeft:
+                        iconLocation = new Point(_filler, (ClientRectangle.Height - iconSize.Height) - _filler);
+                        break;
+                    case ContentAlignment.BottomRight:
+                        iconLocation = new Point((ClientRectangle.Width - iconSize.Width) - _filler, (ClientRectangle.Height - iconSize.Height) - _filler);
+                        break;
+                    case ContentAlignment.MiddleCenter:
+                        iconLocation = new Point((ClientRectangle.Width - iconSize.Width)/2 , (ClientRectangle.Height - iconSize.Height) / 2);
+                        break;
+                    case ContentAlignment.MiddleLeft:
+                        iconLocation = new Point(_filler, (ClientRectangle.Height - iconSize.Height) / 2);
+                        break;
+                    case ContentAlignment.MiddleRight:
+                        iconLocation = new Point((ClientRectangle.Width - iconSize.Width) - _filler, (ClientRectangle.Height - iconSize.Height) / 2);
+                        break;
+                    case ContentAlignment.TopCenter:
+                        iconLocation = new Point((ClientRectangle.Width - iconSize.Width) / 2, _filler);
+                        break;
+                    case ContentAlignment.TopLeft:
+                        iconLocation = new Point(_filler, _filler);
+                        break;
+                    case ContentAlignment.TopRight:
+                        iconLocation = new Point((ClientRectangle.Width - iconSize.Width) - _filler, _filler);
+                        break;
+                }
+
+                g.DrawImage((Theme == MetroThemeStyle.Dark) ? ((isPressed) ? Image : _image) : (isPressed) ? _image : Image, new Rectangle(iconLocation, iconSize));
+
+                //UpdateBaseTextBox();
+            }
+        }
+
+        public Bitmap ApplyInvert(Bitmap bitmapImage)
+        {
+            byte A, R, G, B;
+            Color pixelColor;
+
+            for (int y = 0; y < bitmapImage.Height; y++)
+            {
+                for (int x = 0; x < bitmapImage.Width; x++)
+                {
+                    pixelColor = bitmapImage.GetPixel(x, y);
+                    A = pixelColor.A;
+                    R = (byte)(255 - pixelColor.R);
+                    G = (byte)(255 - pixelColor.G);
+                    B = (byte)(255 - pixelColor.B);
+                    bitmapImage.SetPixel(x, y, Color.FromArgb((int)A, (int)R, (int)G, (int)B));
+                }
+            }
+
+            return bitmapImage;
+        }
+        protected Size iconSize
+        {
+            get
+            {
+                if (Image != null)
+                {
+                    Size originalSize = Image.Size;
+                    double resizeFactor = _imagesize / (double)originalSize.Height;
+
+                    Point iconLocation = new Point(1, 1);
+                    return new Size((int)(originalSize.Width * resizeFactor), (int)(originalSize.Height * resizeFactor));
+                }
+
+                return new Size(-1, -1);
+            }
         }
 
         #endregion

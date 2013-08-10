@@ -320,12 +320,12 @@ namespace MetroFramework.Controls
             if (isHovered && !isPressed && Enabled)
             {
                 foreColor = MetroPaint.ForeColor.ComboBox.Hover(Theme);
-                borderColor = MetroPaint.BorderColor.ComboBox.Hover(Theme);
+                borderColor = MetroPaint.GetStyleColor(Style);
             }
             else if (isHovered && isPressed && Enabled)
             {
                 foreColor = MetroPaint.ForeColor.ComboBox.Press(Theme);
-                borderColor = MetroPaint.BorderColor.ComboBox.Press(Theme);
+                borderColor = MetroPaint.GetStyleColor(Style);
             }
             else if (!Enabled)
             {
@@ -369,10 +369,16 @@ namespace MetroFramework.Controls
             if (e.Index >= 0)
             {
                 Color foreColor;
+                Color backColor = BackColor;
+
+                if (!useCustomBackColor)
+                {
+                    backColor = MetroPaint.BackColor.Form(Theme);
+                }
 
                 if (e.State == (DrawItemState.NoAccelerator | DrawItemState.NoFocusRect) || e.State == DrawItemState.None)
                 {
-                    using (SolidBrush b = new SolidBrush(this.BackColor))
+                    using (SolidBrush b = new SolidBrush(backColor))
                     {
                         e.Graphics.FillRectangle(b, new Rectangle(e.Bounds.Left, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height));
                     }

@@ -919,7 +919,7 @@ namespace MetroFramework.Drawing
             switch (WrapToLine)
             {
                 case true:
-                    controlFlags |= TextFormatFlags.WordBreak;
+                    controlFlags = TextFormatFlags.WordBreak;
                     break;
                 case false:
                     controlFlags = TextFormatFlags.EndEllipsis;

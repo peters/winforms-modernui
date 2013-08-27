@@ -231,6 +231,7 @@ namespace MetroFramework.Forms
             FormBorderStyle = FormBorderStyle.None;
             Name = "MetroForm";
             StartPosition = FormStartPosition.CenterScreen;
+            TransparencyKey = Color.Lavender;
         }
 
         protected override void Dispose(bool disposing)
@@ -381,8 +382,21 @@ namespace MetroFramework.Forms
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
+            if (shadowType == MetroFormShadowType.AeroShadow &&
+                IsAeroThemeEnabled() && IsDropShadowSupported())
+            {
+                int val = 2;
+                DwmApi.DwmSetWindowAttribute(Handle, 2, ref val, 4);
+                var m = new DwmApi.MARGINS
+                {
+                    cyBottomHeight = 1,
+                    cxLeftWidth = 0,
+                    cxRightWidth = 0,
+                    cyTopHeight = 0
+                };
 
-            if (DesignMode) return;
+                DwmApi.DwmExtendFrameIntoClientArea(Handle, ref m);
+            }
         }
 
         protected override void OnEnabledChanged(EventArgs e)
@@ -506,6 +520,21 @@ namespace MetroFramework.Forms
         {
             WinApi.ReleaseCapture();
             WinApi.SendMessage(Handle, (int)WinApi.Messages.WM_NCLBUTTONDOWN, (int)WinApi.HitTest.HTCAPTION, 0);
+        }
+
+        [SecuritySafeCritical]
+        private static bool IsAeroThemeEnabled()
+        {
+            if (Environment.OSVersion.Version.Major <= 5) return false;
+
+            bool aeroEnabled;
+            DwmApi.DwmIsCompositionEnabled(out aeroEnabled);
+            return aeroEnabled;
+        }
+
+        private static bool IsDropShadowSupported()
+        {
+            return Environment.OSVersion.Version.Major > 5 && SystemInformation.IsDropShadowEnabled;
         }
 
         #endregion
@@ -906,19 +935,6 @@ namespace MetroFramework.Forms
 
                 case MetroFormShadowType.DropShadow:
                     shadowForm = new MetroRealisticDropShadow(this);
-                    return;
-
-                case MetroFormShadowType.AeroShadow:
-                    try
-                    {
-                        shadowForm = new MetroAeroDropShadow(this);
-                        return;
-                    }
-                    catch (Exception)
-                    {
-                        ShadowType = MetroFormShadowType.DropShadow;
-                        CreateShadow();
-                    }
                     return;
             }
         }

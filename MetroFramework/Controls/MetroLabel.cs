@@ -209,6 +209,15 @@ namespace MetroFramework.Controls
             set { labelMode = value; }
         }
 
+        private bool wrapToLine;
+        [DefaultValue(false)]
+        [Category(MetroDefaults.PropertyCategory.Behaviour)]
+        public bool WrapToLine
+        {
+            get { return wrapToLine; }
+            set { wrapToLine = value; Refresh(); }
+        }
+
         #endregion
 
         #region Constructor
@@ -353,7 +362,7 @@ namespace MetroFramework.Controls
             else
             {
                 DestroyBaseTextbox();
-                TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), ClientRectangle, foreColor, MetroPaint.GetTextFormatFlags(TextAlign));
+                TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Label(metroLabelSize, metroLabelWeight), ClientRectangle, foreColor, MetroPaint.GetTextFormatFlags(TextAlign, wrapToLine));
                 OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, foreColor, e.Graphics));
             }
         }

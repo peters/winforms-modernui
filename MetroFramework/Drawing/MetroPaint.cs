@@ -909,8 +909,22 @@ namespace MetroFramework.Drawing
 
         public static TextFormatFlags GetTextFormatFlags(ContentAlignment textAlign)
         {
-            TextFormatFlags controlFlags = TextFormatFlags.EndEllipsis;
+            return GetTextFormatFlags(textAlign, false);
+        }
 
+        public static TextFormatFlags GetTextFormatFlags(ContentAlignment textAlign,bool WrapToLine)
+        {
+            TextFormatFlags controlFlags = TextFormatFlags.Default;
+
+            switch (WrapToLine)
+            {
+                case true:
+                    controlFlags |= TextFormatFlags.WordBreak;
+                    break;
+                case false:
+                    controlFlags = TextFormatFlags.EndEllipsis;
+                    break;
+            }
             switch (textAlign)
             {
                 case ContentAlignment.TopLeft:

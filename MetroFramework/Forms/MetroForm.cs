@@ -63,6 +63,14 @@ namespace MetroFramework.Forms
         FixedSingle
     }
 
+    public enum BackLocation
+    {
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight
+    }
+
     #endregion
 
     public class MetroForm : Form, IMetroForm, IDisposable
@@ -217,6 +225,56 @@ namespace MetroFramework.Forms
 
         private const int borderWidth = 5;
 
+        private Image backImage;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(null)]
+        public Image BackImage
+        {
+            get { return backImage; }
+            set
+            {
+                backImage = value;
+                Refresh();
+            }
+        }
+
+        private Padding backImagePadding;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public Padding BackImagePadding
+        {
+            get { return backImagePadding; }
+            set
+            {
+                backImagePadding = value;
+                Refresh();
+            }
+        }
+
+        private int backMaxSize;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public int BackMaxSize
+        {
+            get { return backMaxSize; }
+            set
+            {
+                backMaxSize = value;
+                Refresh();
+            }
+        }
+
+        private BackLocation backLocation;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(BackLocation.TopLeft)]
+        public BackLocation BackLocation
+        {
+            get { return backLocation; }
+            set
+            {
+                backLocation = value;
+                Refresh();
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -274,6 +332,27 @@ namespace MetroFramework.Forms
                             new Point(Width - 1, Height - 1),
                             new Point(Width - 1, borderWidth)
                         });
+                }
+            }
+
+            if (backImage != null && backMaxSize != 0)
+            {
+                Image img = MetroImage.ResizeImage(backImage, new Rectangle(0, 0, backMaxSize, backMaxSize));
+                switch (backLocation)
+                {
+                    case BackLocation.TopLeft:
+                        e.Graphics.DrawImage(img, 0 + backImagePadding.Left, 0 + backImagePadding.Top);
+                        break;
+                    case BackLocation.TopRight:
+                        e.Graphics.DrawImage(img, ClientRectangle.Right - (backImagePadding.Right + img.Width), 0 + backImagePadding.Top);
+                        break;
+                    case BackLocation.BottomLeft:
+                        e.Graphics.DrawImage(img, 0 + backImagePadding.Left, ClientRectangle.Bottom - (img.Height + backImagePadding.Bottom));
+                        break;
+                    case BackLocation.BottomRight:
+                        e.Graphics.DrawImage(img, ClientRectangle.Right - (backImagePadding.Right + img.Width),
+                                             ClientRectangle.Bottom - (img.Height + backImagePadding.Bottom));
+                        break;
                 }
             }
 

@@ -183,6 +183,7 @@
     <Compile Include="MetroColorStyle.cs" />
     <Compile Include="MetroDefaults.cs" />
     <Compile Include="MetroFonts.cs" />
+    <Compile Include="MetroImage.cs" />
     <Compile Include="MetroPens.cs" />
     <Compile Include="MetroThemeStyle.cs" />
     <Compile Include="Native\DwmApi.cs" />

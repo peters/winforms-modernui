@@ -249,7 +249,7 @@ namespace MetroFramework.Controls
                 if (displayIcon && textBoxIcon != null)
                 {
                     Size originalSize = textBoxIcon.Size;
-                    double resizeFactor = 16 / (double)originalSize.Height;
+                    double resizeFactor = (ClientRectangle.Height - 2) / (double)originalSize.Height;
 
                     Point iconLocation = new Point(1, 1);
                     return new Size((int)(originalSize.Width * resizeFactor), (int)(originalSize.Height * resizeFactor));
@@ -294,24 +294,6 @@ namespace MetroFramework.Controls
         {
             get { return baseTextBox.Text; }
             set { baseTextBox.Text = value; }
-        }
-
-        public string WaterMark
-        {
-            get { return baseTextBox.WaterMarkText; }
-            set { baseTextBox.WaterMarkText = value; }
-        }
-
-        public Color WaterMarkColor
-        {
-            get { return baseTextBox.WaterMarkColor; }
-            set { baseTextBox.WaterMarkColor = value; }
-        }
-
-        public Font WaterMarkFont
-        {
-            get { return baseTextBox.WaterMarkFont; }
-            set { baseTextBox.WaterMarkFont = value; }
         }
 
         [Browsable(false)]
@@ -482,12 +464,12 @@ namespace MetroFramework.Controls
             try
             {
                 Color backColor = BackColor;
-                baseTextBox.BackColor = backColor;
+                baseTextBox.BackColor = BackColor;
 
                 if (!useCustomBackColor)
                 {
-                    backColor = MetroPaint.BackColor.Form(Theme);
-                    baseTextBox.BackColor = backColor;
+                    backColor = MetroPaint.BackColor.Button.Normal(Theme);
+                    baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
                 }
 
                 if (backColor.A == 255)
@@ -537,7 +519,7 @@ namespace MetroFramework.Controls
 
             Color borderColor = MetroPaint.BorderColor.Button.Normal(Theme);
 
-            if (useStyleColors )
+            if (useStyleColors)
                 borderColor = MetroPaint.GetStyleColor(Style);
 
             using (Pen p = new Pen(borderColor))
@@ -552,10 +534,10 @@ namespace MetroFramework.Controls
         {
             if (displayIcon && textBoxIcon != null)
             {
-                Point iconLocation = new Point(1, (ClientRectangle.Height - iconSize.Height) / 2);
+                Point iconLocation = new Point(1, 1);
                 if (textBoxIconRight)
                 {
-                    iconLocation = new Point(ClientRectangle.Width - iconSize.Width - 1, (ClientRectangle.Height - iconSize.Height) / 2);
+                    iconLocation = new Point(ClientRectangle.Width - iconSize.Width - 1, 1);
                 }
 
                 g.DrawImage(textBoxIcon, new Rectangle(iconLocation, iconSize));
@@ -624,20 +606,6 @@ namespace MetroFramework.Controls
             baseTextBox.SizeChanged += BaseTextBoxSizeChanged;
 
             baseTextBox.TextChanged += BaseTextBoxTextChanged;
-            baseTextBox.GotFocus += baseTextBox_GotFocus;
-            baseTextBox.LostFocus += baseTextBox_LostFocus;
-        }
-
-        void baseTextBox_LostFocus(object sender, EventArgs e)
-        {
-            UseStyleColors = false;
-            Invalidate();
-        }
-
-        void baseTextBox_GotFocus(object sender, EventArgs e)
-        {
-            UseStyleColors = true;
-            Invalidate();
         }
 
         private void UpdateBaseTextBox()
@@ -689,34 +657,6 @@ namespace MetroFramework.Controls
                 }
             }
 
-            private Font oldFont = null;
-            private Boolean waterMarkTextEnabled = false;
-
-            private Color _waterMarkColor = MetroPaint.ForeColor.Button.Disabled(MetroThemeStyle.Dark);
-            public Color WaterMarkColor
-            {
-                get { return _waterMarkColor; }
-                set
-                {
-                    _waterMarkColor = value; Invalidate();/*thanks to Bernhard Elbl
-                                                              for Invalidate()*/
-                }
-            }
-
-            private Font _waterMarkFont = MetroFramework.MetroFonts.WaterMark(MetroLabelSize.Small, MetroWaterMarkWeight.Italic);
-            public Font WaterMarkFont
-            {
-                get { return _waterMarkFont; }
-                set { _waterMarkFont = value; }
-            }
-
-            private string _waterMarkText = "Water Mark";
-            public string WaterMarkText
-            {
-                get { return _waterMarkText; }
-                set { _waterMarkText = value; Invalidate(); }
-            }
-
             public PromptedTextBox()
             {
                 drawPrompt = (Text.Trim().Length == 0);
@@ -738,22 +678,21 @@ namespace MetroFramework.Controls
                 switch (TextAlign)
                 {
                     case HorizontalAlignment.Left:
-                        clientRectangle.Offset(1, 0);
+                        clientRectangle.Offset(1, 1);
                         break;
 
                     case HorizontalAlignment.Right:
                         flags |= TextFormatFlags.Right;
-                        clientRectangle.Offset(0, 0);
+                        clientRectangle.Offset(0, 1);
                         break;
 
                     case HorizontalAlignment.Center:
                         flags |= TextFormatFlags.HorizontalCenter;
-                        clientRectangle.Offset(0, 0);
+                        clientRectangle.Offset(0, 1);
                         break;
                 }
 
-                SolidBrush drawBrush = new SolidBrush(WaterMarkColor);
-                TextRenderer.DrawText(g, waterMarkTextEnabled ? WaterMarkText : promptText, waterMarkTextEnabled ? _waterMarkFont : Font, clientRectangle, waterMarkTextEnabled ? WaterMarkColor : SystemColors.GrayText, BackColor, flags);
+                TextRenderer.DrawText(g, promptText, Font, clientRectangle, SystemColors.GrayText, BackColor, flags);
             }
 
             protected override void OnPaint(PaintEventArgs e)
@@ -763,46 +702,6 @@ namespace MetroFramework.Controls
                 {
                     DrawTextPrompt(e.Graphics);
                 }
-            }
-
-            protected override void OnCreateControl()
-            {
-                base.OnCreateControl();
-                WaterMark_Toggel(null, null);
-            }
-
-            private void WaterMark_Toggel(object sender, EventArgs args)
-            {
-                if (this.Text.Length <= 0)
-                    EnableWaterMark();
-                else
-                    DisbaleWaterMark();
-            }
-
-            private void EnableWaterMark()
-            {
-                //Save current font until returning the UserPaint style to false (NOTE:
-                //It is a try and error advice)
-                oldFont = new System.Drawing.Font(Font.FontFamily, Font.Size, Font.Style,Font.Unit);
-
-                //Enable OnPaint event handler
-                this.SetStyle(ControlStyles.UserPaint, true);
-                this.waterMarkTextEnabled = true;
-                
-                //Triger OnPaint immediatly
-                Refresh();
-            }
-
-            private void DisbaleWaterMark()
-            {
-                //Disbale OnPaint event handler
-                this.waterMarkTextEnabled = false;
-                this.SetStyle(ControlStyles.UserPaint, false);
-
-                //Return back oldFont if existed
-                if (oldFont != null)
-                    this.Font = new System.Drawing.Font(oldFont.FontFamily, oldFont.Size,
-                        oldFont.Style, oldFont.Unit);
             }
 
             protected override void OnTextAlignChanged(EventArgs e)
@@ -815,8 +714,6 @@ namespace MetroFramework.Controls
             {
                 base.OnTextChanged(e);
                 drawPrompt = (Text.Trim().Length == 0);
-                WaterMark_Toggel(this, new EventArgs());
-                Invalidate();
             }
 
             protected override void WndProc(ref Message m)
@@ -828,23 +725,8 @@ namespace MetroFramework.Controls
                 }
             }
 
-            protected override void OnLostFocus(EventArgs e)
-            {
-                base.OnLostFocus(e);
-                WaterMark_Toggel(this, new EventArgs());
-            }
-
-            protected override void OnFontChanged(EventArgs e)
-            {
-                if (waterMarkTextEnabled)
-                {
-                    oldFont = new System.Drawing.Font(Font.FontFamily, Font.Size, Font.Style,Font.Unit);
-                    Refresh();
-                }
-            }
         }
 
         #endregion
-
     }
 }

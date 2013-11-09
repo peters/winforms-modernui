@@ -1,4 +1,4 @@
-﻿/**
+/**
  * MetroFramework - Modern UI for WinForms
  * 
  * The MIT License (MIT)
@@ -34,6 +34,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Design;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 using System.Windows.Forms;
@@ -547,6 +548,7 @@ namespace MetroFramework.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+            this.OnFontChanged(EventArgs.Empty);
             FindUpDown();
         }
 
@@ -571,6 +573,23 @@ namespace MetroFramework.Controls
             Invalidate();
         }
 
+        //send font change to properly resize tab page header rects
+        //http://www.codeproject.com/Articles/13305/Painting-Your-Own-Tabs?msg=2707590#xx2707590xx
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+        private const int WM_SETFONT = 0x30;
+        private const int WM_FONTCHANGE = 0x1d;
+
+        [SecuritySafeCritical]
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            IntPtr hFont = MetroFonts.TabControl(metroLabelSize, metroLabelWeight).ToHfont();
+            SendMessage(this.Handle, WM_SETFONT, hFont, (IntPtr)(-1));
+            SendMessage(this.Handle, WM_FONTCHANGE, IntPtr.Zero, IntPtr.Zero);
+            this.UpdateStyles();
+        }
         #endregion
 
         #region Helper Methods
@@ -656,5 +675,6 @@ namespace MetroFramework.Controls
         }
 
         #endregion
+
     }
 }

@@ -426,6 +426,7 @@ namespace MetroFramework.Controls
         protected override void OnGotFocus(EventArgs e)
         {
             isFocused = true;
+            isHovered = true;
             Invalidate();
 
             base.OnGotFocus(e);
@@ -444,6 +445,7 @@ namespace MetroFramework.Controls
         protected override void OnEnter(EventArgs e)
         {
             isFocused = true;
+            isHovered = true;
             Invalidate();
 
             base.OnEnter(e);
@@ -477,8 +479,8 @@ namespace MetroFramework.Controls
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            isHovered = false;
-            isPressed = false;
+            //isHovered = false;
+            //isPressed = false;
             Invalidate();
 
             base.OnKeyUp(e);
@@ -517,7 +519,13 @@ namespace MetroFramework.Controls
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            isHovered = false;
+            //This will check if control got the focus
+            //If not thats the only it will remove the focus color
+            if (!isFocused)
+            {
+                isHovered = false;
+            }
+            
             Invalidate();
 
             base.OnMouseLeave(e);

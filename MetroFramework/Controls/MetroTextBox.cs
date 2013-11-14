@@ -295,6 +295,12 @@ namespace MetroFramework.Controls
             get { return baseTextBox.Text; }
             set { baseTextBox.Text = value; }
         }
+        
+        public string[] Lines
+        {
+            get { return baseTextBox.Lines; }
+            set { baseTextBox.Lines = value; }
+        }
 
         [Browsable(false)]
         public string SelectedText

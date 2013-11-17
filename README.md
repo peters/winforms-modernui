@@ -84,7 +84,7 @@ Screenshots
 ![MetroFramework](http://i.imgur.com/9fMa7VI.jpg)
 ![MetroFramework](http://i.imgur.com/qSzeXsw.jpg)
 ![MetroFramework](http://i.imgur.com/YksXEjN.jpg)
-![MetroFramework](http://i.imgur.com/lSyVdPg.jpg)
+![MetroFramework](http://i.imgur.com/6gASnLa.jpg)
 
 License
 -------

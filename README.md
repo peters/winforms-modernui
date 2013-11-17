@@ -38,7 +38,7 @@ Controls supported
 * TrackBar
 * Custom User Control
 * ContextMenu
-* Messagebox
+* MessageBox
 
 Components supported
 ------------------
@@ -69,10 +69,22 @@ Screenshots
 
 *Dark*
 
-![MetroFramework](http://i.imgur.com/EddlvbX.png)
-![MetroFramework](http://i.imgur.com/Djnjkti.png)
-![MetroFramework](http://i.imgur.com/bI2c6kE.png)
-![MetroFramework](http://i.imgur.com/7cxHl1Y.png)
+![MetroFramework](http://i.imgur.com/Ho6WQpX.jpg)
+![MetroFramework](http://i.imgur.com/f0S0I0z.jpg)
+![MetroFramework](http://i.imgur.com/GkRCM09.jpg)
+
+*MetroContext Menu*
+
+![MetroFramework](http://i.imgur.com/dqOXrwR.jpg)
+
+*MetroMessageBox*
+
+![MetroFramework](http://i.imgur.com/lSyVdPg.jpg)
+![MetroFramework](http://i.imgur.com/rsNpkHP.jpg)
+![MetroFramework](http://i.imgur.com/9fMa7VI.jpg)
+![MetroFramework](http://i.imgur.com/qSzeXsw.jpg)
+![MetroFramework](http://i.imgur.com/YksXEjN.jpg)
+![MetroFramework](http://i.imgur.com/lSyVdPg.jpg)
 
 License
 -------

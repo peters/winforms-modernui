@@ -225,6 +225,7 @@ namespace MetroFramework.Forms
 
         private const int borderWidth = 5;
 
+        private Bitmap _image = null;
         private Image backImage;
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(null)]
@@ -234,6 +235,7 @@ namespace MetroFramework.Forms
             set
             {
                 backImage = value;
+                _image = ApplyInvert(new Bitmap(value));
                 Refresh();
             }
         }
@@ -275,6 +277,18 @@ namespace MetroFramework.Forms
             }
         }
 
+        private bool _imageinvert;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        [DefaultValue(true)]
+        public bool ApplyImageInvert
+        {
+            get { return _imageinvert; }
+            set
+            {
+                _imageinvert = value;
+                Refresh();
+            }
+        }
         #endregion
 
         #region Constructor
@@ -305,6 +319,32 @@ namespace MetroFramework.Forms
         #endregion
 
         #region Paint Methods
+
+        public Bitmap ApplyInvert(Bitmap bitmapImage)
+        {
+            byte A, R, G, B;
+            Color pixelColor;
+
+            for (int y = 0; y < bitmapImage.Height; y++)
+            {
+                for (int x = 0; x < bitmapImage.Width; x++)
+                {
+                    pixelColor = bitmapImage.GetPixel(x, y);
+                    A = pixelColor.A;
+                    R = (byte)(255 - pixelColor.R);
+                    G = (byte)(255 - pixelColor.G);
+                    B = (byte)(255 - pixelColor.B);
+
+                    if (R <= 0) R= 17;
+                    if (G <= 0) G= 17;
+                    if (B <= 0) B= 17;
+                    //bitmapImage.SetPixel(x, y, Color.FromArgb((int)A, (int)R, (int)G, (int)B));
+                    bitmapImage.SetPixel(x, y, Color.FromArgb((int)R, (int)G, (int)B));
+                }
+            }
+
+            return bitmapImage;
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -338,6 +378,11 @@ namespace MetroFramework.Forms
             if (backImage != null && backMaxSize != 0)
             {
                 Image img = MetroImage.ResizeImage(backImage, new Rectangle(0, 0, backMaxSize, backMaxSize));
+                if (_imageinvert)
+                {
+                    img = MetroImage.ResizeImage((Theme == MetroThemeStyle.Dark) ? _image : backImage, new Rectangle(0, 0, backMaxSize, backMaxSize));
+                }
+
                 switch (backLocation)
                 {
                     case BackLocation.TopLeft:

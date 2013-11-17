@@ -75,5 +75,10 @@ namespace MetroFramework.Demo
         {
             MetroMessageBox.Show(this, "This is a sample `default` MetroMessagebox ", "MetroMessagebox");
         }
+
+        private void metroButton4_Click(object sender, EventArgs e)
+        {
+            metroTextBox2.Focus();
+        }
     }
 }

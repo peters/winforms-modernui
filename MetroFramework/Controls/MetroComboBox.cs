@@ -219,10 +219,10 @@ namespace MetroFramework.Controls
         public string PromptText
         {
             get { return promptText; }
-            set 
+            set
             {
                 promptText = value.Trim();
-                Invalidate();    
+                Invalidate();
             }
         }
 
@@ -346,7 +346,7 @@ namespace MetroFramework.Controls
 
             using (SolidBrush b = new SolidBrush(foreColor))
             {
-                e.Graphics.FillPolygon(b, new Point[] { new Point(Width - 20, (Height / 2) - 2), new Point(Width - 9, (Height / 2) - 2), new Point(Width - 15,  (Height / 2) + 4) });
+                e.Graphics.FillPolygon(b, new Point[] { new Point(Width - 20, (Height / 2) - 2), new Point(Width - 9, (Height / 2) - 2), new Point(Width - 15, (Height / 2) + 4) });
             }
 
             Rectangle textRect = new Rectangle(2, 2, Width - 20, Height - 4);
@@ -369,10 +369,16 @@ namespace MetroFramework.Controls
             if (e.Index >= 0)
             {
                 Color foreColor;
+                Color backColor = BackColor;
+
+                if (!useCustomBackColor)
+                {
+                    backColor = MetroPaint.BackColor.Form(Theme);
+                }
 
                 if (e.State == (DrawItemState.NoAccelerator | DrawItemState.NoFocusRect) || e.State == DrawItemState.None)
                 {
-                    using (SolidBrush b = new SolidBrush(this.BackColor))
+                    using (SolidBrush b = new SolidBrush(backColor))
                     {
                         e.Graphics.FillRectangle(b, new Rectangle(e.Bounds.Left, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height));
                     }
@@ -525,7 +531,7 @@ namespace MetroFramework.Controls
             {
                 isHovered = false;
             }
-            
+
             Invalidate();
 
             base.OnMouseLeave(e);

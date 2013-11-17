@@ -85,6 +85,14 @@
             this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
             this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
             this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
+            this.metroTabPage6 = new MetroFramework.Controls.MetroTabPage();
+            this.metroButton12 = new MetroFramework.Controls.MetroButton();
+            this.metroButton11 = new MetroFramework.Controls.MetroButton();
+            this.metroButton10 = new MetroFramework.Controls.MetroButton();
+            this.metroButton9 = new MetroFramework.Controls.MetroButton();
+            this.metroButton8 = new MetroFramework.Controls.MetroButton();
+            this.metroButton7 = new MetroFramework.Controls.MetroButton();
+            this.metroButton6 = new MetroFramework.Controls.MetroButton();
             this.metroTabPage5 = new MetroFramework.Controls.MetroTabPage();
             this.metroTile5 = new MetroFramework.Controls.MetroTile();
             this.metroTile4 = new MetroFramework.Controls.MetroTile();
@@ -103,23 +111,15 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.metroTabPage6 = new MetroFramework.Controls.MetroTabPage();
-            this.metroButton6 = new MetroFramework.Controls.MetroButton();
-            this.metroButton7 = new MetroFramework.Controls.MetroButton();
-            this.metroButton8 = new MetroFramework.Controls.MetroButton();
-            this.metroButton9 = new MetroFramework.Controls.MetroButton();
-            this.metroButton10 = new MetroFramework.Controls.MetroButton();
-            this.metroButton11 = new MetroFramework.Controls.MetroButton();
-            this.metroButton12 = new MetroFramework.Controls.MetroButton();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroTabPage3.SuspendLayout();
             this.metroTabPage4.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
+            this.metroTabPage6.SuspendLayout();
             this.metroTabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
             this.metroContextMenu1.SuspendLayout();
-            this.metroTabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroTabControl1
@@ -378,7 +378,7 @@
             this.metroProgressBar1.Location = new System.Drawing.Point(28, 76);
             this.metroProgressBar1.Name = "metroProgressBar1";
             this.metroProgressBar1.ProgressBarStyle = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.metroProgressBar1.Size = new System.Drawing.Size(502, 23);
+            this.metroProgressBar1.Size = new System.Drawing.Size(518, 23);
             this.metroProgressBar1.TabIndex = 7;
             this.metroProgressBar1.Value = 25;
             // 
@@ -403,7 +403,7 @@
             this.metroScrollBar1.Name = "metroScrollBar1";
             this.metroScrollBar1.Orientation = MetroFramework.Controls.MetroScrollOrientation.Horizontal;
             this.metroScrollBar1.ScrollbarSize = 10;
-            this.metroScrollBar1.Size = new System.Drawing.Size(502, 10);
+            this.metroScrollBar1.Size = new System.Drawing.Size(518, 10);
             this.metroScrollBar1.TabIndex = 5;
             this.metroToolTip.SetToolTip(this.metroScrollBar1, "Scrollbar Tooltip");
             this.metroScrollBar1.UseBarColor = true;
@@ -436,7 +436,7 @@
             this.metroProgressBar.Enabled = false;
             this.metroProgressBar.Location = new System.Drawing.Point(28, 47);
             this.metroProgressBar.Name = "metroProgressBar";
-            this.metroProgressBar.Size = new System.Drawing.Size(502, 23);
+            this.metroProgressBar.Size = new System.Drawing.Size(518, 23);
             this.metroProgressBar.TabIndex = 2;
             this.metroToolTip.SetToolTip(this.metroProgressBar, "ProgressBar Tooltip");
             this.metroProgressBar.Value = 25;
@@ -791,7 +791,10 @@
             this.metroComboBox1.FormattingEnabled = true;
             this.metroComboBox1.ItemHeight = 23;
             this.metroComboBox1.Items.AddRange(new object[] {
-            "Normal Combobox"});
+            "Normal Combobox 1",
+            "Normal Combobox 2",
+            "Normal Combobox 3",
+            "Normal Combobox 4"});
             this.metroComboBox1.Location = new System.Drawing.Point(181, 47);
             this.metroComboBox1.Name = "metroComboBox1";
             this.metroComboBox1.PromptText = "Prompted ComboBox";
@@ -833,6 +836,97 @@
             this.metroCheckBox1.Text = "Normal Checkbox";
             this.metroToolTip.SetToolTip(this.metroCheckBox1, "Checkbox Tooltip");
             this.metroCheckBox1.UseSelectable = true;
+            // 
+            // metroTabPage6
+            // 
+            this.metroTabPage6.Controls.Add(this.metroButton12);
+            this.metroTabPage6.Controls.Add(this.metroButton11);
+            this.metroTabPage6.Controls.Add(this.metroButton10);
+            this.metroTabPage6.Controls.Add(this.metroButton9);
+            this.metroTabPage6.Controls.Add(this.metroButton8);
+            this.metroTabPage6.Controls.Add(this.metroButton7);
+            this.metroTabPage6.Controls.Add(this.metroButton6);
+            this.metroTabPage6.HorizontalScrollbarBarColor = true;
+            this.metroTabPage6.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage6.HorizontalScrollbarSize = 10;
+            this.metroTabPage6.Location = new System.Drawing.Point(4, 35);
+            this.metroTabPage6.Name = "metroTabPage6";
+            this.metroTabPage6.Size = new System.Drawing.Size(569, 253);
+            this.metroTabPage6.TabIndex = 5;
+            this.metroTabPage6.Text = "MessageBox";
+            this.metroTabPage6.VerticalScrollbarBarColor = true;
+            this.metroTabPage6.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage6.VerticalScrollbarSize = 10;
+            // 
+            // metroButton12
+            // 
+            this.metroButton12.Location = new System.Drawing.Point(197, 97);
+            this.metroButton12.Name = "metroButton12";
+            this.metroButton12.Size = new System.Drawing.Size(140, 31);
+            this.metroButton12.TabIndex = 8;
+            this.metroButton12.Text = "Default";
+            this.metroButton12.UseSelectable = true;
+            this.metroButton12.Click += new System.EventHandler(this.metroButton12_Click);
+            // 
+            // metroButton11
+            // 
+            this.metroButton11.Location = new System.Drawing.Point(383, 10);
+            this.metroButton11.Name = "metroButton11";
+            this.metroButton11.Size = new System.Drawing.Size(140, 31);
+            this.metroButton11.TabIndex = 7;
+            this.metroButton11.Text = "Retry Cancel";
+            this.metroButton11.UseSelectable = true;
+            this.metroButton11.Click += new System.EventHandler(this.metroButton11_Click);
+            // 
+            // metroButton10
+            // 
+            this.metroButton10.Location = new System.Drawing.Point(12, 57);
+            this.metroButton10.Name = "metroButton10";
+            this.metroButton10.Size = new System.Drawing.Size(140, 31);
+            this.metroButton10.TabIndex = 6;
+            this.metroButton10.Text = "Ok Cancel";
+            this.metroButton10.UseSelectable = true;
+            this.metroButton10.Click += new System.EventHandler(this.metroButton10_Click);
+            // 
+            // metroButton9
+            // 
+            this.metroButton9.Location = new System.Drawing.Point(383, 54);
+            this.metroButton9.Name = "metroButton9";
+            this.metroButton9.Size = new System.Drawing.Size(140, 31);
+            this.metroButton9.TabIndex = 5;
+            this.metroButton9.Text = "Abort Retry Ignore";
+            this.metroButton9.UseSelectable = true;
+            this.metroButton9.Click += new System.EventHandler(this.metroButton9_Click);
+            // 
+            // metroButton8
+            // 
+            this.metroButton8.Location = new System.Drawing.Point(197, 56);
+            this.metroButton8.Name = "metroButton8";
+            this.metroButton8.Size = new System.Drawing.Size(140, 31);
+            this.metroButton8.TabIndex = 4;
+            this.metroButton8.Text = "Yes No Cancel";
+            this.metroButton8.UseSelectable = true;
+            this.metroButton8.Click += new System.EventHandler(this.metroButton8_Click);
+            // 
+            // metroButton7
+            // 
+            this.metroButton7.Location = new System.Drawing.Point(197, 12);
+            this.metroButton7.Name = "metroButton7";
+            this.metroButton7.Size = new System.Drawing.Size(140, 31);
+            this.metroButton7.TabIndex = 3;
+            this.metroButton7.Text = "Yes No";
+            this.metroButton7.UseSelectable = true;
+            this.metroButton7.Click += new System.EventHandler(this.metroButton7_Click);
+            // 
+            // metroButton6
+            // 
+            this.metroButton6.Location = new System.Drawing.Point(12, 13);
+            this.metroButton6.Name = "metroButton6";
+            this.metroButton6.Size = new System.Drawing.Size(140, 31);
+            this.metroButton6.TabIndex = 2;
+            this.metroButton6.Text = "Ok";
+            this.metroButton6.UseSelectable = true;
+            this.metroButton6.Click += new System.EventHandler(this.metroButton6_Click);
             // 
             // metroTabPage5
             // 
@@ -928,6 +1022,7 @@
             // metroStyleManager
             // 
             this.metroStyleManager.Owner = this;
+            this.metroStyleManager.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // metroToolTip
             // 
@@ -982,112 +1077,21 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
-            // metroTabPage6
-            // 
-            this.metroTabPage6.Controls.Add(this.metroButton12);
-            this.metroTabPage6.Controls.Add(this.metroButton11);
-            this.metroTabPage6.Controls.Add(this.metroButton10);
-            this.metroTabPage6.Controls.Add(this.metroButton9);
-            this.metroTabPage6.Controls.Add(this.metroButton8);
-            this.metroTabPage6.Controls.Add(this.metroButton7);
-            this.metroTabPage6.Controls.Add(this.metroButton6);
-            this.metroTabPage6.HorizontalScrollbarBarColor = true;
-            this.metroTabPage6.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage6.HorizontalScrollbarSize = 10;
-            this.metroTabPage6.Location = new System.Drawing.Point(4, 35);
-            this.metroTabPage6.Name = "metroTabPage6";
-            this.metroTabPage6.Size = new System.Drawing.Size(569, 253);
-            this.metroTabPage6.TabIndex = 5;
-            this.metroTabPage6.Text = "MessageBox";
-            this.metroTabPage6.VerticalScrollbarBarColor = true;
-            this.metroTabPage6.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage6.VerticalScrollbarSize = 10;
-            // 
-            // metroButton6
-            // 
-            this.metroButton6.Location = new System.Drawing.Point(12, 13);
-            this.metroButton6.Name = "metroButton6";
-            this.metroButton6.Size = new System.Drawing.Size(140, 31);
-            this.metroButton6.TabIndex = 2;
-            this.metroButton6.Text = "Ok";
-            this.metroButton6.UseSelectable = true;
-            this.metroButton6.Click += new System.EventHandler(this.metroButton6_Click);
-            // 
-            // metroButton7
-            // 
-            this.metroButton7.Location = new System.Drawing.Point(197, 12);
-            this.metroButton7.Name = "metroButton7";
-            this.metroButton7.Size = new System.Drawing.Size(140, 31);
-            this.metroButton7.TabIndex = 3;
-            this.metroButton7.Text = "Yes No";
-            this.metroButton7.UseSelectable = true;
-            this.metroButton7.Click += new System.EventHandler(this.metroButton7_Click);
-            // 
-            // metroButton8
-            // 
-            this.metroButton8.Location = new System.Drawing.Point(197, 56);
-            this.metroButton8.Name = "metroButton8";
-            this.metroButton8.Size = new System.Drawing.Size(140, 31);
-            this.metroButton8.TabIndex = 4;
-            this.metroButton8.Text = "Yes No Cancel";
-            this.metroButton8.UseSelectable = true;
-            this.metroButton8.Click += new System.EventHandler(this.metroButton8_Click);
-            // 
-            // metroButton9
-            // 
-            this.metroButton9.Location = new System.Drawing.Point(383, 54);
-            this.metroButton9.Name = "metroButton9";
-            this.metroButton9.Size = new System.Drawing.Size(140, 31);
-            this.metroButton9.TabIndex = 5;
-            this.metroButton9.Text = "Abort Retry Ignore";
-            this.metroButton9.UseSelectable = true;
-            this.metroButton9.Click += new System.EventHandler(this.metroButton9_Click);
-            // 
-            // metroButton10
-            // 
-            this.metroButton10.Location = new System.Drawing.Point(12, 57);
-            this.metroButton10.Name = "metroButton10";
-            this.metroButton10.Size = new System.Drawing.Size(140, 31);
-            this.metroButton10.TabIndex = 6;
-            this.metroButton10.Text = "Ok Cancel";
-            this.metroButton10.UseSelectable = true;
-            this.metroButton10.Click += new System.EventHandler(this.metroButton10_Click);
-            // 
-            // metroButton11
-            // 
-            this.metroButton11.Location = new System.Drawing.Point(383, 10);
-            this.metroButton11.Name = "metroButton11";
-            this.metroButton11.Size = new System.Drawing.Size(140, 31);
-            this.metroButton11.TabIndex = 7;
-            this.metroButton11.Text = "Retry Cancel";
-            this.metroButton11.UseSelectable = true;
-            this.metroButton11.Click += new System.EventHandler(this.metroButton11_Click);
-            // 
-            // metroButton12
-            // 
-            this.metroButton12.Location = new System.Drawing.Point(197, 97);
-            this.metroButton12.Name = "metroButton12";
-            this.metroButton12.Size = new System.Drawing.Size(140, 31);
-            this.metroButton12.TabIndex = 8;
-            this.metroButton12.Text = "Default";
-            this.metroButton12.UseSelectable = true;
-            this.metroButton12.Click += new System.EventHandler(this.metroButton12_Click);
-            // 
             // MainForm
             // 
+            this.ApplyImageInvert = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackImage = global::MetroFramework.Demo.Properties.Resources.GitHub_Mark;
             this.BackImagePadding = new System.Windows.Forms.Padding(210, 10, 0, 0);
-            this.BackLocation = MetroFramework.Forms.BackLocation.TopLeft;
             this.BackMaxSize = 50;
-            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.None;
             this.ClientSize = new System.Drawing.Size(617, 372);
             this.Controls.Add(this.metroTabControl1);
             this.Name = "MainForm";
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.StyleManager = this.metroStyleManager;
             this.Text = "metro framework";
+            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroTabControl1.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);
             this.metroTabPage1.PerformLayout();
@@ -1097,11 +1101,11 @@
             this.metroTabPage4.PerformLayout();
             this.metroTabPage2.ResumeLayout(false);
             this.metroTabPage2.PerformLayout();
+            this.metroTabPage6.ResumeLayout(false);
             this.metroTabPage5.ResumeLayout(false);
             this.metroTabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
             this.metroContextMenu1.ResumeLayout(false);
-            this.metroTabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

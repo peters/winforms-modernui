@@ -3,7 +3,7 @@
 set config=Release
 set outputdir=%cwd%\build
 set cwd=%CD%
-set commonflags=/p:Configuration=%config% /p:CLSCompliant=False 
+set commonflags=/p:Configuration=%config%;AllowUnsafeBlocks=true /p:CLSCompliant=False
 
 if %PROCESSOR_ARCHITECTURE%==x86 (
          set msbuild="%WINDIR%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
@@ -13,7 +13,7 @@ if %PROCESSOR_ARCHITECTURE%==x86 (
 :build
 echo ---------------------------------------------------------------------
 echo Building AnyCpu release...
-%msbuild% MetroFramework\MetroFramework.csproj %commonflags% /tv:2.0 /p:TargetFrameworkVersion=v2.0 /p:Platform="Any Cpu" /p:OutputPath="%outputdir%\AnyCpu\NET20"
+%msbuild% MetroFramework\MetroFramework.csproj %commonflags% /tv:3.5 /p:TargetFrameworkVersion=v2.0 /p:Platform="Any Cpu" /p:OutputPath="%outputdir%\AnyCpu\NET20"
 if errorlevel 1 goto build-error
 %msbuild% MetroFramework\MetroFramework.csproj %commonflags% /tv:3.5 /p:TargetFrameworkVersion=v3.5 /p:Platform="Any Cpu" /p:OutputPath="%outputdir%\AnyCpu\NET35"
 if errorlevel 1 goto build-error

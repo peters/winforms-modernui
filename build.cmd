@@ -5,8 +5,10 @@ set outputdir=%cwd%\build
 set cwd=%CD%
 set commonflags=/p:Configuration=%config% /p:CLSCompliant=False 
 
-set fdir=%WINDIR%\Microsoft.NET\Framework
-set msbuild=%fdir%\v4.0.30319\msbuild.exe
+if %PROCESSOR_ARCHITECTURE%==x86 (
+         set msbuild="%WINDIR%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
+) else ( set msbuild="%WINDIR%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe"
+)
 
 :build
 echo ---------------------------------------------------------------------

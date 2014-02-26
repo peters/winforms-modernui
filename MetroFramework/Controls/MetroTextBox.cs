@@ -364,10 +364,15 @@ namespace MetroFramework.Controls
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
 
             base.TabStop = false;
-
+            base.GotFocus += MetroTextBox_GotFocus;
             CreateBaseTextBox();
             UpdateBaseTextBox();
             AddEventHandler();       
+        }
+
+        void MetroTextBox_GotFocus(object sender, EventArgs e)
+        {
+            baseTextBox.Focus();
         }
 
         #endregion

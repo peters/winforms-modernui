@@ -37,6 +37,8 @@ Controls supported
 * TabControl
 * TrackBar
 * Custom User Control
+* ContextMenu
+* MessageBox
 
 Components supported
 ------------------
@@ -48,17 +50,41 @@ Screenshots
 ----------
 *Light*
 
-![MetroFramework](http://i.imgur.com/8Yk1BiN.png)
-![MetroFramework](http://i.imgur.com/qjwRg5z.png)
-![MetroFramework](http://i.imgur.com/3S7NPLQ.png)
-![MetroFramework](http://i.imgur.com/ULRej3C.png)
+![MetroFramework](http://i.imgur.com/ix1FRru.jpg)
+![MetroFramework](http://i.imgur.com/YXDDMT6.jpg)
+![MetroFramework](http://i.imgur.com/S24BzrO.jpg)
+
+*MetroContext Menu*
+
+![MetroFramework](http://i.imgur.com/6k0E7yA.jpg)
+
+*MetroMessageBox*
+
+![MetroFramework](http://i.imgur.com/hGQeCAU.jpg)
+![MetroFramework](http://i.imgur.com/2o3w0sn.jpg)
+![MetroFramework](http://i.imgur.com/x6rSYmI.jpg)
+![MetroFramework](http://i.imgur.com/P7E3EPd.jpg)
+![MetroFramework](http://i.imgur.com/xem9sCO.jpg)
+![MetroFramework](http://i.imgur.com/frhc99m.jpg)
 
 *Dark*
 
-![MetroFramework](http://i.imgur.com/EddlvbX.png)
-![MetroFramework](http://i.imgur.com/Djnjkti.png)
-![MetroFramework](http://i.imgur.com/bI2c6kE.png)
-![MetroFramework](http://i.imgur.com/7cxHl1Y.png)
+![MetroFramework](http://i.imgur.com/Ho6WQpX.jpg)
+![MetroFramework](http://i.imgur.com/f0S0I0z.jpg)
+![MetroFramework](http://i.imgur.com/GkRCM09.jpg)
+
+*MetroContext Menu*
+
+![MetroFramework](http://i.imgur.com/dqOXrwR.jpg)
+
+*MetroMessageBox*
+
+![MetroFramework](http://i.imgur.com/lSyVdPg.jpg)
+![MetroFramework](http://i.imgur.com/rsNpkHP.jpg)
+![MetroFramework](http://i.imgur.com/9fMa7VI.jpg)
+![MetroFramework](http://i.imgur.com/qSzeXsw.jpg)
+![MetroFramework](http://i.imgur.com/YksXEjN.jpg)
+![MetroFramework](http://i.imgur.com/6gASnLa.jpg)
 
 License
 -------
@@ -66,6 +92,8 @@ License
 The MIT License (MIT)
 
 Copyright (c) 2011 Sven Walter, http://github.com/viperneo
+
+Copyright (c) 2013 Dennis Magno, http://github.com/dennismagno
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in the 

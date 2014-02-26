@@ -219,10 +219,10 @@ namespace MetroFramework.Controls
         public string PromptText
         {
             get { return promptText; }
-            set 
+            set
             {
                 promptText = value.Trim();
-                Invalidate();    
+                Invalidate();
             }
         }
 
@@ -346,7 +346,7 @@ namespace MetroFramework.Controls
 
             using (SolidBrush b = new SolidBrush(foreColor))
             {
-                e.Graphics.FillPolygon(b, new Point[] { new Point(Width - 20, (Height / 2) - 2), new Point(Width - 9, (Height / 2) - 2), new Point(Width - 15,  (Height / 2) + 4) });
+                e.Graphics.FillPolygon(b, new Point[] { new Point(Width - 20, (Height / 2) - 2), new Point(Width - 9, (Height / 2) - 2), new Point(Width - 15, (Height / 2) + 4) });
             }
 
             Rectangle textRect = new Rectangle(2, 2, Width - 20, Height - 4);
@@ -369,10 +369,16 @@ namespace MetroFramework.Controls
             if (e.Index >= 0)
             {
                 Color foreColor;
+                Color backColor = BackColor;
+
+                if (!useCustomBackColor)
+                {
+                    backColor = MetroPaint.BackColor.Form(Theme);
+                }
 
                 if (e.State == (DrawItemState.NoAccelerator | DrawItemState.NoFocusRect) || e.State == DrawItemState.None)
                 {
-                    using (SolidBrush b = new SolidBrush(this.BackColor))
+                    using (SolidBrush b = new SolidBrush(backColor))
                     {
                         e.Graphics.FillRectangle(b, new Rectangle(e.Bounds.Left, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height));
                     }
@@ -426,6 +432,7 @@ namespace MetroFramework.Controls
         protected override void OnGotFocus(EventArgs e)
         {
             isFocused = true;
+            isHovered = true;
             Invalidate();
 
             base.OnGotFocus(e);
@@ -444,6 +451,7 @@ namespace MetroFramework.Controls
         protected override void OnEnter(EventArgs e)
         {
             isFocused = true;
+            isHovered = true;
             Invalidate();
 
             base.OnEnter(e);
@@ -477,8 +485,8 @@ namespace MetroFramework.Controls
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            isHovered = false;
-            isPressed = false;
+            //isHovered = false;
+            //isPressed = false;
             Invalidate();
 
             base.OnKeyUp(e);
@@ -517,7 +525,13 @@ namespace MetroFramework.Controls
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            isHovered = false;
+            //This will check if control got the focus
+            //If not thats the only it will remove the focus color
+            if (!isFocused)
+            {
+                isHovered = false;
+            }
+
             Invalidate();
 
             base.OnMouseLeave(e);

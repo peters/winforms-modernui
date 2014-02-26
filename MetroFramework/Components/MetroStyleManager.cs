@@ -25,7 +25,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
-
+using MetroFramework.Controls;
 using MetroFramework.Interfaces;
 
 namespace MetroFramework.Components
@@ -195,6 +195,11 @@ namespace MetroFramework.Components
                 if (obj is IMetroComponent)
                 {
                     ApplyTheme((IMetroComponent)obj);
+                }
+
+                if (obj.GetType() == typeof(MetroContextMenu))
+                {
+                    ApplyTheme((MetroContextMenu)obj);
                 }
             }
         }

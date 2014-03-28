@@ -597,43 +597,46 @@ namespace MetroFramework.Controls
         [SecuritySafeCritical]
         private void FindUpDown()
         {
-            bool bFound = false;
-
-            IntPtr pWnd = WinApi.GetWindow(Handle, WinApi.GW_CHILD);
-
-            while (pWnd != IntPtr.Zero)
+            if (!DesignMode)
             {
-                char[] className = new char[33];
+                bool bFound = false;
 
-                int length = WinApi.GetClassName(pWnd, className, 32);
+                IntPtr pWnd = WinApi.GetWindow(Handle, WinApi.GW_CHILD);
 
-                string s = new string(className, 0, length);
-
-                if (s == "msctls_updown32")
+                while (pWnd != IntPtr.Zero)
                 {
-                    bFound = true;
+                    char[] className = new char[33];
 
-                    if (!bUpDown)
+                    int length = WinApi.GetClassName(pWnd, className, 32);
+
+                    string s = new string(className, 0, length);
+
+                    if (s == "msctls_updown32")
                     {
-                        this.scUpDown = new SubClass(pWnd, true);
-                        this.scUpDown.SubClassedWndProc += new SubClass.SubClassWndProcEventHandler(scUpDown_SubClassedWndProc);
+                        bFound = true;
 
-                        bUpDown = true;
+                        if (!bUpDown)
+                        {
+                            this.scUpDown = new SubClass(pWnd, true);
+                            this.scUpDown.SubClassedWndProc += new SubClass.SubClassWndProcEventHandler(scUpDown_SubClassedWndProc);
+
+                            bUpDown = true;
+                        }
+                        break;
                     }
-                    break;
+
+                    pWnd = WinApi.GetWindow(pWnd, WinApi.GW_HWNDNEXT);
                 }
 
-                pWnd = WinApi.GetWindow(pWnd, WinApi.GW_HWNDNEXT);
+                if ((!bFound) && (bUpDown))
+                    bUpDown = false;
             }
-
-            if ((!bFound) && (bUpDown))
-                bUpDown = false;
         }
 
         [SecuritySafeCritical]
         private void UpdateUpDown()
         {
-            if (bUpDown)
+            if (bUpDown && !DesignMode)
             {
                 if (WinApi.IsWindowVisible(scUpDown.Handle))
                 {

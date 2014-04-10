@@ -414,7 +414,13 @@ namespace MetroFramework.Controls
         #region Private Methods
 
         private Timer marqueeTimer;
-        private bool marqueeTimerEnabled = false;
+        private bool marqueeTimerEnabled
+        {
+            get
+            {
+                return marqueeTimer != null && marqueeTimer.Enabled;
+            }
+        }
 
         private void StartTimer()
         {
@@ -422,9 +428,8 @@ namespace MetroFramework.Controls
 
             if (marqueeTimer == null)
             {
-                marqueeTimer = new Timer();
-                marqueeTimer.Interval = 10;
-                marqueeTimer.Tick += new EventHandler(marqueeTimer_Tick);
+                marqueeTimer = new Timer {Interval = 10};
+                marqueeTimer.Tick += marqueeTimer_Tick;
             }
 
             marqueeX = -ProgressBarMarqueeWidth;
@@ -432,11 +437,10 @@ namespace MetroFramework.Controls
             marqueeTimer.Stop();
             marqueeTimer.Start();
 
-            marqueeTimerEnabled = true;
+            marqueeTimer.Enabled = true;
 
             Invalidate();
         }
-
         private void StopTimer()
         {
             if (marqueeTimer == null) return;

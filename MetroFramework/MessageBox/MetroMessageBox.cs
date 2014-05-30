@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Media;
@@ -75,23 +75,36 @@ namespace MetroFramework
             {
                 Form _owner = (Form)owner;
                 
-                int _minWidth = 500;
-                int _minHeight = 350;
+                //int _minWidth = 500;
+                //int _minHeight = 350;
 
-                if (_owner.Size.Width < _minWidth ||
-                    _owner.Size.Height < _minHeight)
+                //if (_owner.Size.Width < _minWidth ||
+                //    _owner.Size.Height < _minHeight)
+                //{
+                //    if (_owner.Size.Width < _minWidth && _owner.Size.Height < _minHeight) {
+                //            _owner.Size = new Size(_minWidth, _minHeight);
+                //    }
+                //    else
+                //    {
+                //        if (_owner.Size.Width < _minWidth) _owner.Size = new Size(_minWidth, _owner.Size.Height);
+                //        else _owner.Size = new Size(_owner.Size.Width, _minHeight);
+                //    }
+
+                //    int x = Convert.ToInt32(Math.Ceiling((decimal)(Screen.PrimaryScreen.WorkingArea.Size.Width / 2) - (_owner.Size.Width / 2)));
+                //    int y = Convert.ToInt32(Math.Ceiling((decimal)(Screen.PrimaryScreen.WorkingArea.Size.Height / 2) - (_owner.Size.Height / 2)));
+                //    _owner.Location = new Point(x, y);
+                //}
+
+                switch (icon)
                 {
-                    if (_owner.Size.Width < _minWidth &&
-                        _owner.Size.Height < _minHeight) _owner.Size = new Size(_minWidth, _minHeight);
-                    else
-                    {
-                        if (_owner.Size.Width < _minWidth) _owner.Size = new Size(_minWidth, _owner.Size.Height);
-                        else _owner.Size = new Size(_owner.Size.Width, _minHeight);
-                    }
-
-                    int x = Convert.ToInt32(Math.Ceiling((decimal)(Screen.PrimaryScreen.WorkingArea.Size.Width / 2) - (_owner.Size.Width / 2)));
-                    int y = Convert.ToInt32(Math.Ceiling((decimal)(Screen.PrimaryScreen.WorkingArea.Size.Height / 2) - (_owner.Size.Height / 2)));
-                    _owner.Location = new Point(x, y);
+                    case MessageBoxIcon.Error:
+                        SystemSounds.Hand.Play(); break;
+                    case MessageBoxIcon.Exclamation:
+                        SystemSounds.Exclamation.Play(); break;
+                    case MessageBoxIcon.Question:
+                        SystemSounds.Beep.Play(); break;
+                    default:
+                        SystemSounds.Asterisk.Play(); break;
                 }
 
                 MetroMessageBoxControl _control = new MetroMessageBoxControl();
@@ -122,20 +135,9 @@ namespace MetroFramework
                 //_control.OverlayPanelTop.Size = new Size(_control.Size.Width, _overlaySizes - 30);
                 //_control.OverlayPanelBottom.Size = new Size(_control.Size.Width, _overlaySizes);
 
-                _control.ShowDialog(); _control.BringToFront();
+                _control.ShowDialog();
+                _control.BringToFront();
                 _control.SetDefaultButton();
-
-                switch (icon)
-                {
-                    case MessageBoxIcon.Error:
-                        SystemSounds.Hand.Play(); break;
-                    case MessageBoxIcon.Exclamation:
-                        SystemSounds.Exclamation.Play(); break;
-                    case MessageBoxIcon.Question:
-                        SystemSounds.Beep.Play(); break;
-                    default:
-                        SystemSounds.Asterisk.Play(); break;
-                }
 
                 Action<MetroMessageBoxControl> _delegate = new Action<MetroMessageBoxControl>(ModalState);
                 IAsyncResult _asyncresult = _delegate.BeginInvoke(_control, null, _delegate);

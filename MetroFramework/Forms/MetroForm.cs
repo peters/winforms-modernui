@@ -235,7 +235,7 @@ namespace MetroFramework.Forms
             set
             {
                 backImage = value;
-                _image = ApplyInvert(new Bitmap(value));
+                if(value != null) _image = ApplyInvert(new Bitmap(value));
                 Refresh();
             }
         }

@@ -290,6 +290,13 @@ namespace MetroFramework.Controls
             set { baseTextBox.Multiline = value; }
         }
 
+         [DefaultValue(true)]
+        public bool WordWrap
+        {
+            get { return baseTextBox.WordWrap; }
+            set { baseTextBox.WordWrap = value; }
+        }
+
         public override string Text
         {
             get { return baseTextBox.Text; }

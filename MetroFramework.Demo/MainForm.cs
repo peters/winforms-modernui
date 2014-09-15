@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Windows.Forms;
 
 using MetroFramework.Forms;
+using System.Data;
 
 namespace MetroFramework.Demo
 {
@@ -11,7 +12,15 @@ namespace MetroFramework.Demo
     {
         public MainForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
+
+            DataTable _table = new DataTable();
+            _table.ReadXml(Application.StartupPath + @"\Data\Books.xml");
+            metroGrid1.DataSource = _table;
+
+            metroGrid1.Font = new Font("Segoe UI", 11f, FontStyle.Regular, GraphicsUnit.Pixel);
+            metroGrid1.AllowUserToAddRows = false;
+
         }
 
         private void metroTileSwitch_Click(object sender, EventArgs e)

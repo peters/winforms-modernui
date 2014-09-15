@@ -39,6 +39,8 @@ Controls supported
 * Custom User Control
 * ContextMenu
 * MessageBox
+* DateTimePicker
+* Grid
 
 Components supported
 ------------------
@@ -46,17 +48,21 @@ Components supported
 * StyleManager (Auto inherit a default style to all used controls)
 * ToolTip
 
+Watch it in Action
+----------
+[![MetroFramework](http://i.imgur.com/PigyRpU.jpg)](http://youtu.be/2aR0OPzn1p0)
+
 Screenshots
 ----------
 *Light*
 
 ![MetroFramework](http://i.imgur.com/ix1FRru.jpg)
 ![MetroFramework](http://i.imgur.com/YXDDMT6.jpg)
-![MetroFramework](http://i.imgur.com/S24BzrO.jpg)
+![MetroFramework](http://i.imgur.com/2lsnqT4.jpg)
 
 *MetroContext Menu*
 
-![MetroFramework](http://i.imgur.com/6k0E7yA.jpg)
+![MetroContext](http://i.imgur.com/6k0E7yA.jpg)
 
 *MetroMessageBox*
 
@@ -67,15 +73,23 @@ Screenshots
 ![MetroFramework](http://i.imgur.com/xem9sCO.jpg)
 ![MetroFramework](http://i.imgur.com/frhc99m.jpg)
 
+*DateTimePicker*
+
+![MetroDateTime](http://i.imgur.com/IPTQPBS.jpg)
+
+*Grid*
+
+![MetroGrid](http://i.imgur.com/MxP97bj.jpg)
+
 *Dark*
 
 ![MetroFramework](http://i.imgur.com/Ho6WQpX.jpg)
 ![MetroFramework](http://i.imgur.com/f0S0I0z.jpg)
-![MetroFramework](http://i.imgur.com/GkRCM09.jpg)
+![MetroFramework](http://i.imgur.com/tYwfeq8.jpg)
 
 *MetroContext Menu*
 
-![MetroFramework](http://i.imgur.com/dqOXrwR.jpg)
+![MetroContext](http://i.imgur.com/dqOXrwR.jpg)
 
 *MetroMessageBox*
 
@@ -85,6 +99,14 @@ Screenshots
 ![MetroFramework](http://i.imgur.com/qSzeXsw.jpg)
 ![MetroFramework](http://i.imgur.com/YksXEjN.jpg)
 ![MetroFramework](http://i.imgur.com/6gASnLa.jpg)
+
+*DateTimePicker*
+
+![MetroDateTime](http://i.imgur.com/Y5eNKqj.jpg)
+
+*Grid*
+
+![MetroGrid](http://i.imgur.com/9LrswVO.jpg)
 
 License
 -------

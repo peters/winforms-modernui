@@ -87,6 +87,20 @@ namespace MetroFramework
         Bold
     }
 
+    public enum MetroDateTimeSize
+    {
+        Small,
+        Medium,
+        Tall
+    }
+
+    public enum MetroDateTimeWeight
+    {
+        Light,
+        Regular,
+        Bold
+    }
+
     public enum MetroTextBoxSize
     {
         Small,
@@ -325,6 +339,39 @@ namespace MetroFramework
                 if (linkWeight == MetroComboBoxWeight.Regular)
                     return Default(18f);
                 if (linkWeight == MetroComboBoxWeight.Bold)
+                    return DefaultBold(18f);
+            }
+
+            return Default(12f);
+        }
+
+        public static Font DateTime(MetroDateTimeSize linkSize, MetroDateTimeWeight linkWeight)
+        {
+            if (linkSize == MetroDateTimeSize.Small)
+            {
+                if (linkWeight == MetroDateTimeWeight.Light)
+                    return DefaultLight(12f);
+                if (linkWeight == MetroDateTimeWeight.Regular)
+                    return Default(12f);
+                if (linkWeight == MetroDateTimeWeight.Bold)
+                    return DefaultBold(12f);
+            }
+            else if (linkSize == MetroDateTimeSize.Medium)
+            {
+                if (linkWeight == MetroDateTimeWeight.Light)
+                    return DefaultLight(14f);
+                if (linkWeight == MetroDateTimeWeight.Regular)
+                    return Default(14f);
+                if (linkWeight == MetroDateTimeWeight.Bold)
+                    return DefaultBold(14f);
+            }
+            else if (linkSize == MetroDateTimeSize.Tall)
+            {
+                if (linkWeight == MetroDateTimeWeight.Light)
+                    return DefaultLight(18f);
+                if (linkWeight == MetroDateTimeWeight.Regular)
+                    return Default(18f);
+                if (linkWeight == MetroDateTimeWeight.Bold)
                     return DefaultBold(18f);
             }
 

@@ -7,7 +7,7 @@ Install via NuGet
 ------------------
     Install-Package ModernUI
 
-Link: http://nuget.org/packages/ModernUI/
+Link: https://www.nuget.org/packages/MetroModernUI/
 
 Supported platforms
 -------------------

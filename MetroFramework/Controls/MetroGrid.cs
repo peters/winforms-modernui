@@ -144,6 +144,12 @@ namespace MetroFramework.Controls
         }
         #endregion
 
+        #region Properties
+        float _offset = 0.2F;
+        [DefaultValue(0.2F)]
+        public float HighLightPercentage { get { return _offset; } set { _offset = value; } }
+        #endregion
+
         MetroDataGridHelper scrollhelper = null;
         MetroDataGridHelper scrollhelperH = null;
 
@@ -206,17 +212,17 @@ namespace MetroFramework.Controls
 
             this.DefaultCellStyle.BackColor = MetroPaint.BackColor.Form(Theme);
 
-            this.DefaultCellStyle.SelectionBackColor = MetroPaint.GetStyleColor(Style);
-            this.DefaultCellStyle.SelectionForeColor = (Theme == MetroThemeStyle.Light) ? Color.FromArgb(17, 17, 17) : Color.FromArgb(255, 255, 255);
+            this.DefaultCellStyle.SelectionBackColor = ControlPaint.Light(MetroPaint.GetStyleColor(Style), _offset);
+            this.DefaultCellStyle.SelectionForeColor = Color.FromArgb(17, 17, 17);
 
-            this.DefaultCellStyle.SelectionBackColor = MetroPaint.GetStyleColor(Style);
-            this.DefaultCellStyle.SelectionForeColor = (Theme == MetroThemeStyle.Light) ? Color.FromArgb(17, 17, 17) : Color.FromArgb(255, 255, 255);
+            this.DefaultCellStyle.SelectionBackColor = ControlPaint.Light(MetroPaint.GetStyleColor(Style), _offset);
+            this.DefaultCellStyle.SelectionForeColor = Color.FromArgb(17, 17, 17);
 
-            this.RowHeadersDefaultCellStyle.SelectionBackColor = MetroPaint.GetStyleColor(Style);
-            this.RowHeadersDefaultCellStyle.SelectionForeColor = (Theme == MetroThemeStyle.Light) ? Color.FromArgb(17, 17, 17) : Color.FromArgb(255, 255, 255);
+            this.RowHeadersDefaultCellStyle.SelectionBackColor = ControlPaint.Light(MetroPaint.GetStyleColor(Style), _offset);
+            this.RowHeadersDefaultCellStyle.SelectionForeColor = Color.FromArgb(17, 17, 17);
 
-            this.ColumnHeadersDefaultCellStyle.SelectionBackColor = MetroPaint.GetStyleColor(Style);
-            this.ColumnHeadersDefaultCellStyle.SelectionForeColor = (Theme == MetroThemeStyle.Light) ? Color.FromArgb(17, 17, 17) : Color.FromArgb(255, 255, 255);
+            this.ColumnHeadersDefaultCellStyle.SelectionBackColor = ControlPaint.Light(MetroPaint.GetStyleColor(Style), _offset);
+            this.ColumnHeadersDefaultCellStyle.SelectionForeColor = Color.FromArgb(17, 17, 17);
         }
     }
 

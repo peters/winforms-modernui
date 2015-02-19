@@ -20,6 +20,7 @@ namespace MetroFramework
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="message"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
         public static DialogResult Show(IWin32Window owner, String message,int height=211)
         { return Show(owner, message, "Notification", height); }
@@ -30,6 +31,7 @@ namespace MetroFramework
         /// <param name="owner"></param>
         /// <param name="message"></param>
         /// <param name="title"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
         public static DialogResult Show(IWin32Window owner, String message, String title, int height = 211)
         { return Show(owner, message, title, MessageBoxButtons.OK, height); }
@@ -41,6 +43,7 @@ namespace MetroFramework
         /// <param name="message"></param>
         /// <param name="title"></param>
         /// <param name="buttons"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
         public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, int height = 211)
         { return Show(owner, message, title, buttons, MessageBoxIcon.None, height); }
@@ -53,6 +56,7 @@ namespace MetroFramework
         /// <param name="title"></param>
         /// <param name="buttons"></param>
         /// <param name="icon"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
         public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, int height = 211)
         { return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1, height); }
@@ -66,6 +70,7 @@ namespace MetroFramework
         /// <param name="buttons"></param>
         /// <param name="icon"></param>
         /// <param name="defaultbutton"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
         public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, int height = 211)
         {

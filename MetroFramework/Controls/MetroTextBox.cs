@@ -374,7 +374,19 @@ namespace MetroFramework.Controls
             base.GotFocus += MetroTextBox_GotFocus;
             CreateBaseTextBox();
             UpdateBaseTextBox();
+            baseTextBox.LostFocus += baseTextBox_LostFocus;
+            baseTextBox.GotFocus += baseTextBox_GotFocus;
             AddEventHandler();       
+        }
+
+        void baseTextBox_GotFocus(object sender, EventArgs e)
+        {
+            base.OnGotFocus(e);
+        }
+
+        void baseTextBox_LostFocus(object sender, EventArgs e)
+        {
+            base.OnLostFocus(e);
         }
 
         void MetroTextBox_GotFocus(object sender, EventArgs e)

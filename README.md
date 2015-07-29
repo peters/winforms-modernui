@@ -8,7 +8,8 @@ Install via NuGet
     Install-Package ModernUI
 
 Link: https://www.nuget.org/packages/MetroModernUI/
-[Read more words!](http://denricdenise.info/2015/07/metroframework-modern-ui-metroform-properties/)
+
+MetroForm Properties : [Documentation](http://denricdenise.info/2015/07/metroframework-modern-ui-metroform-properties/)
 
 Supported platforms
 -------------------

@@ -20,9 +20,10 @@ namespace MetroFramework
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="message"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message)
-        { return Show(owner, message, "Notification"); }
+        public static DialogResult Show(IWin32Window owner, String message,int height=211)
+        { return Show(owner, message, "Notification", height); }
 
         /// <summary>
         /// Shows a metro-styles message notification into the specified owner window.
@@ -30,9 +31,10 @@ namespace MetroFramework
         /// <param name="owner"></param>
         /// <param name="message"></param>
         /// <param name="title"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title)
-        { return Show(owner, message, title, MessageBoxButtons.OK); }
+        public static DialogResult Show(IWin32Window owner, String message, String title, int height = 211)
+        { return Show(owner, message, title, MessageBoxButtons.OK, height); }
 
         /// <summary>
         /// Shows a metro-styles message notification into the specified owner window.
@@ -41,9 +43,10 @@ namespace MetroFramework
         /// <param name="message"></param>
         /// <param name="title"></param>
         /// <param name="buttons"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons)
-        { return Show(owner, message, title, buttons, MessageBoxIcon.None); }
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, int height = 211)
+        { return Show(owner, message, title, buttons, MessageBoxIcon.None, height); }
 
         /// <summary>
         /// Shows a metro-styles message notification into the specified owner window.
@@ -53,9 +56,10 @@ namespace MetroFramework
         /// <param name="title"></param>
         /// <param name="buttons"></param>
         /// <param name="icon"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon)
-        { return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1); }
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, int height = 211)
+        { return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1, height); }
 
         /// <summary>
         /// Shows a metro-styles message notification into the specified owner window.
@@ -66,8 +70,9 @@ namespace MetroFramework
         /// <param name="buttons"></param>
         /// <param name="icon"></param>
         /// <param name="defaultbutton"></param>
+        /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton)
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, int height = 211)
         {
             DialogResult _result = DialogResult.None;
 
@@ -128,7 +133,7 @@ namespace MetroFramework
                 //    _control.Style = ((MetroForm)_owner).Style;
                 //}
 
-                _control.Size = new Size(_owner.Size.Width, _control.Height);
+                _control.Size = new Size(_owner.Size.Width, height);
                 _control.Location = new Point(_owner.Location.X, _owner.Location.Y + (_owner.Height - _control.Height) / 2);
                 _control.ArrangeApperance();
                 int _overlaySizes = Convert.ToInt32(Math.Floor(_control.Size.Height * 0.28));

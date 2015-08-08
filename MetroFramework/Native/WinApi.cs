@@ -79,10 +79,23 @@ namespace MetroFramework.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
+            public RECT(Rectangle rc)
+            {
+                this.Left = rc.Left;
+                this.Top = rc.Top;
+                this.Right = rc.Right;
+                this.Bottom = rc.Bottom;
+            }
+
             public int Left;
             public int Top;
             public int Right;
             public int Bottom;
+
+            public Rectangle ToRectangle()
+            {
+                return Rectangle.FromLTRB(Left, Top, Right, Bottom);
+            }
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -485,6 +498,9 @@ namespace MetroFramework.Native
 
         [DllImport("user32.dll")]
         public static extern int SetWindowLong(IntPtr hWnd, int nIndex, UInt32 dwNewLong);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int W, int H, uint uFlags);
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);

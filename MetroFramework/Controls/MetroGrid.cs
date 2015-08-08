@@ -153,6 +153,7 @@ namespace MetroFramework.Controls
         MetroDataGridHelper scrollhelper = null;
         MetroDataGridHelper scrollhelperH = null;
 
+
         public MetroGrid()
         {
             InitializeComponent();
@@ -170,20 +171,24 @@ namespace MetroFramework.Controls
 
             scrollhelper = new MetroDataGridHelper(_vertical, this);
             scrollhelperH = new MetroDataGridHelper(_horizontal, this, false);
+
+            this.DoubleBuffered = true;
         }
 
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
-
-            if (e.Delta > 0 && this.FirstDisplayedScrollingRowIndex > 0)
+            if (this.RowCount > 1)
             {
-                this.FirstDisplayedScrollingRowIndex--;
-            }
-            else if (e.Delta < 0)
-            {
-                this.FirstDisplayedScrollingRowIndex++;
+                if (e.Delta > 0 && this.FirstDisplayedScrollingRowIndex > 0)
+                {
+                    this.FirstDisplayedScrollingRowIndex--;
+                }
+                else if (e.Delta < 0)
+                {
+                    this.FirstDisplayedScrollingRowIndex++;
+                }
             }
         }
 
@@ -312,7 +317,12 @@ namespace MetroFramework.Controls
             else
             {
                 if (_scrollbar.Value >= 0 && _scrollbar.Value < _grid.Rows.Count)
-                    _grid.FirstDisplayedScrollingRowIndex = _scrollbar.Value + (_scrollbar.Value == 1 ? -1 : 1);
+                {
+                    _grid.FirstDisplayedScrollingRowIndex = _scrollbar.Value + (_scrollbar.Value == 1 ? -1 : 1) >= _grid.Rows.Count ? _grid.Rows.Count - 1 : _scrollbar.Value + (_scrollbar.Value == 1 ? -1 : 1);
+                }  else
+                {
+                    _grid.FirstDisplayedScrollingRowIndex = _scrollbar.Value -1;
+                }
             }
 
             _grid.Invalidate();
@@ -359,7 +369,10 @@ namespace MetroFramework.Controls
                     _scrollbar.SmallChange = 1;
                     _scrollbar.LargeChange = Math.Max(1, visibleRows - 1);
                     _scrollbar.Value = _grid.FirstDisplayedScrollingRowIndex;
-
+                    if (_grid.RowCount > 0 && _grid.Rows[_grid.RowCount - 1].Cells[0].Displayed)
+                    {
+                        _scrollbar.Value =  _grid.RowCount;
+                    }
                     _scrollbar.Location = new Point(_grid.Width - _scrollbar.ScrollbarSize, 0);
                     _scrollbar.Height = _grid.Height - (hScrollbar.Visible ? _scrollbar.ScrollbarSize : 0);
                     _scrollbar.BringToFront();

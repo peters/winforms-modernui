@@ -78,7 +78,7 @@ namespace MetroFramework
 
             if (owner != null)
             {
-                Form _owner = (Form)owner;
+                Form _owner = (owner as Form == null) ? ((UserControl)owner).ParentForm : (Form)owner;
                 
                 //int _minWidth = 500;
                 //int _minHeight = 350;

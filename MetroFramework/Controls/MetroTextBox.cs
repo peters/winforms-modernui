@@ -498,8 +498,8 @@ namespace MetroFramework.Controls
 
                 if (!useCustomBackColor)
                 {
-                    backColor = MetroPaint.BackColor.Button.Normal(Theme);
-                    baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
+                    backColor = MetroPaint.BackColor.Form(Theme);
+                    baseTextBox.BackColor = MetroPaint.BackColor.Form(Theme);
                 }
 
                 if (backColor.A == 255)

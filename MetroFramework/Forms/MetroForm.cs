@@ -451,6 +451,8 @@ namespace MetroFramework.Forms
 
         protected override void OnClosed(EventArgs e)
         {
+            if (this.Owner != null) this.Owner = null;
+
             RemoveShadow();
 
             base.OnClosed(e);

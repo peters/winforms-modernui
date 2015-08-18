@@ -205,8 +205,8 @@ namespace MetroFramework.Controls
         public Image Icon
         {
             get { return textBoxIcon; }
-            set 
-            { 
+            set
+            {
                 textBoxIcon = value;
                 Refresh();
             }
@@ -235,16 +235,16 @@ namespace MetroFramework.Controls
         public bool DisplayIcon
         {
             get { return displayIcon; }
-            set 
-            { 
+            set
+            {
                 displayIcon = value;
                 Refresh();
             }
         }
 
-        protected Size iconSize 
+        protected Size iconSize
         {
-            get 
+            get
             {
                 if (displayIcon && textBoxIcon != null)
                 {
@@ -256,7 +256,7 @@ namespace MetroFramework.Controls
                 }
 
                 return new Size(-1, -1);
-            }   
+            }
         }
 
         #endregion
@@ -266,12 +266,14 @@ namespace MetroFramework.Controls
         public override ContextMenu ContextMenu
         {
             get { return baseTextBox.ContextMenu; }
-            set 
+            set
             {
                 ContextMenu = value;
-                baseTextBox.ContextMenu = value; 
+                baseTextBox.ContextMenu = value;
+
             }
         }
+
 
         public override ContextMenuStrip ContextMenuStrip
         {
@@ -283,6 +285,16 @@ namespace MetroFramework.Controls
             }
         }
 
+        [DefaultValue(CharacterCasing.Normal)]
+        public CharacterCasing CharacterCasing
+        {
+            get { return baseTextBox.CharacterCasing; }
+            set
+            {
+                baseTextBox.CharacterCasing = value;
+            }
+        }
+
         [DefaultValue(false)]
         public bool Multiline
         {
@@ -290,7 +302,7 @@ namespace MetroFramework.Controls
             set { baseTextBox.Multiline = value; }
         }
 
-         [DefaultValue(true)]
+        [DefaultValue(true)]
         public bool WordWrap
         {
             get { return baseTextBox.WordWrap; }
@@ -302,7 +314,7 @@ namespace MetroFramework.Controls
             get { return baseTextBox.Text; }
             set { baseTextBox.Text = value; }
         }
-        
+
         public string[] Lines
         {
             get { return baseTextBox.Lines; }
@@ -312,7 +324,7 @@ namespace MetroFramework.Controls
         [Browsable(false)]
         public string SelectedText
         {
-            get { return baseTextBox.SelectedText;  }
+            get { return baseTextBox.SelectedText; }
             set { baseTextBox.Text = value; }
         }
 
@@ -376,7 +388,7 @@ namespace MetroFramework.Controls
             UpdateBaseTextBox();
             baseTextBox.LostFocus += baseTextBox_LostFocus;
             baseTextBox.GotFocus += baseTextBox_GotFocus;
-            AddEventHandler();       
+            AddEventHandler();
         }
 
         void baseTextBox_GotFocus(object sender, EventArgs e)
@@ -404,7 +416,7 @@ namespace MetroFramework.Controls
             if (AcceptsTabChanged != null)
                 AcceptsTabChanged(this, e);
         }
-        
+
         private void BaseTextBoxSizeChanged(object sender, EventArgs e)
         {
             base.OnSizeChanged(e);

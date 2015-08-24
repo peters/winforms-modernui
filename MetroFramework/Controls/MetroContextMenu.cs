@@ -103,7 +103,8 @@ namespace MetroFramework.Controls
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
-            set { 
+            set
+            {
                 metroStyleManager = value;
                 settheme();
             }
@@ -147,9 +148,10 @@ namespace MetroFramework.Controls
 
         #endregion
 
-        
-        public MetroContextMenu(IContainer Container) {
-             if (Container != null)
+
+        public MetroContextMenu(IContainer Container)
+        {
+            if (Container != null)
             {
                 Container.Add(this);
             }
@@ -158,13 +160,23 @@ namespace MetroFramework.Controls
         private void settheme()
         {
             this.BackColor = MetroPaint.BackColor.Form(Theme);
-            this.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);            
-            this.Renderer = new MetroCTXRenderer(Theme, Style);     
+            this.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
+            this.Renderer = new MetroCTXRenderer(Theme, Style);
         }
 
         private class MetroCTXRenderer : ToolStripProfessionalRenderer
         {
-            public MetroCTXRenderer(MetroFramework.MetroThemeStyle Theme, MetroColorStyle Style) : base(new contextcolors(Theme, Style)) { }
+            MetroFramework.MetroThemeStyle _theme;
+            public MetroCTXRenderer(MetroFramework.MetroThemeStyle Theme, MetroColorStyle Style) : base(new contextcolors(Theme, Style)) 
+            {
+                _theme = Theme;
+            }
+
+            protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+            {
+                e.TextColor = MetroPaint.ForeColor.Button.Normal(_theme);
+                base.OnRenderItemText(e);
+            }
         }
 
         private class contextcolors : ProfessionalColorTable
@@ -188,9 +200,19 @@ namespace MetroFramework.Controls
                 get { return MetroPaint.BackColor.Form(_theme); }
             }
 
+            public override Color ToolStripBorder
+            {
+                get { return MetroPaint.GetStyleColor(_style); }
+            }
+
             public override Color MenuItemBorder
             {
                 get { return MetroPaint.GetStyleColor(_style); }
+            }
+
+            public override Color ToolStripDropDownBackground
+            {
+                get { return MetroPaint.BackColor.Form(_theme); }
             }
 
             public override Color ImageMarginGradientBegin

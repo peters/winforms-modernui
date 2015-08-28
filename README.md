@@ -9,9 +9,10 @@ Install via NuGet
 
 Link: https://www.nuget.org/packages/MetroModernUI/
 
-MetroForm Properties : [Documentation](http://denricdenise.info/2015/07/metroframework-modern-ui-metroform-properties/)
-
-MetroLink Properties : [Documentation](http://denricdenise.info/2015/08/metrolink-properties-metroframework-modern-ui/)
+Documentation
+-------------------
+* [MetroForm Properties](http://denricdenise.info/2015/07/metroframework-modern-ui-metroform-properties/)
+* [MetroLink Properties](http://denricdenise.info/2015/08/metrolink-properties-metroframework-modern-ui/)
 
 Supported platforms
 -------------------

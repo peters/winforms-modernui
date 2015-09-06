@@ -43,6 +43,8 @@ using MetroFramework.Components;
 using MetroFramework.Drawing;
 using MetroFramework.Interfaces;
 using MetroFramework.Native;
+using System.Collections.Generic;
+using MetroFramework.Controls;
 
 namespace MetroFramework.Controls
 {
@@ -52,18 +54,36 @@ namespace MetroFramework.Controls
     [Editor("MetroFramework.Design.MetroTabPageCollectionEditor, " + AssemblyRef.MetroFrameworkDesignSN, typeof(UITypeEditor))]
     public class MetroTabPageCollection : TabControl.TabPageCollection
     {
-        public MetroTabPageCollection(MetroTabControl owner) : base(owner)
+        public MetroTabPageCollection(MetroTabControl owner)
+            : base(owner)
         { }
     }
 
     #endregion
+
+    #region HiddenTabClass
+    public class HiddenTabs
+    {
+        public HiddenTabs(int id, string page)
+        {
+            _index = id;
+            _tabpage = page;
+        }
+
+        private int _index;
+        private string _tabpage;
+
+        public int index { get { return _index; } }
+
+        public string tabpage { get { return _tabpage; } }
+    }
+    #endregion HiddenTabClass
 
     [Designer("MetroFramework.Design.Controls.MetroTabControlDesigner, " + AssemblyRef.MetroFrameworkDesignSN)]
     [ToolboxBitmap(typeof(TabControl))]
     public class MetroTabControl : TabControl, IMetroControl
     {
         #region Interface
-
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public event EventHandler<MetroPaintEventArgs> CustomPaintBackground;
         protected virtual void OnCustomPaintBackground(MetroPaintEventArgs e)
@@ -194,6 +214,10 @@ namespace MetroFramework.Controls
         #endregion
 
         #region Fields
+        //Additional variables to be used by HideTab and ShowTab
+        private List<string> tabDisable = new List<string>();
+        private List<string> tabOrder = new List<string>();
+        private List<HiddenTabs> hidTabs = new List<HiddenTabs>();
 
         private SubClass scUpDown = null;
         private bool bUpDown = false;
@@ -276,6 +300,7 @@ namespace MetroFramework.Controls
                      ControlStyles.SupportsTransparentBackColor, true);
 
             Padding = new Point(6, 8);
+            this.Selecting += MetroTabControl_Selecting;
         }
 
         #endregion
@@ -394,7 +419,7 @@ namespace MetroFramework.Controls
             TabPage tabPage = TabPages[index];
             Rectangle tabRect = GetTabRect(index);
 
-            if (!Enabled)
+            if (!Enabled || tabDisable.Contains(tabPage.Name))
             {
                 foreColor = MetroPaint.ForeColor.Label.Disabled(Theme);
             }
@@ -541,7 +566,7 @@ namespace MetroFramework.Controls
                     }
                 }
             }
-            
+
             base.OnMouseWheel(e);
         }
 
@@ -554,21 +579,21 @@ namespace MetroFramework.Controls
 
         protected override void OnControlAdded(ControlEventArgs e)
         {
- 	         base.OnControlAdded(e);
-             FindUpDown();
-             UpdateUpDown();
-        }
-
-        protected override void OnControlRemoved(ControlEventArgs e)
-        {
- 	        base.OnControlRemoved(e);
+            base.OnControlAdded(e);
             FindUpDown();
             UpdateUpDown();
         }
 
-        protected override void  OnSelectedIndexChanged(EventArgs e)
+        protected override void OnControlRemoved(ControlEventArgs e)
         {
- 	        base.OnSelectedIndexChanged(e);
+            base.OnControlRemoved(e);
+            FindUpDown();
+            UpdateUpDown();
+        }
+
+        protected override void OnSelectedIndexChanged(EventArgs e)
+        {
+            base.OnSelectedIndexChanged(e);
             UpdateUpDown();
             Invalidate();
         }
@@ -589,6 +614,14 @@ namespace MetroFramework.Controls
             SendMessage(this.Handle, WM_SETFONT, hFont, (IntPtr)(-1));
             SendMessage(this.Handle, WM_FONTCHANGE, IntPtr.Zero, IntPtr.Zero);
             this.UpdateStyles();
+        }
+
+        void MetroTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (tabDisable.Count > 0 && tabDisable.Contains(e.TabPage.Name))
+            {
+                e.Cancel = true;
+            }
         }
         #endregion
 
@@ -658,9 +691,9 @@ namespace MetroFramework.Controls
 
                     Graphics g = Graphics.FromHdc(hDC);
 
-					DrawUpDown(g);
+                    DrawUpDown(g);
 
-					g.Dispose();
+                    g.Dispose();
 
                     WinApi.ReleaseDC(scUpDown.Handle, hDC);
 
@@ -679,5 +712,113 @@ namespace MetroFramework.Controls
 
         #endregion
 
+        #region Additional functions by DenRic Denise
+        /// <summary>
+        /// This will hide MetroTabPage from MetroTabControl
+        /// Hidden MetroTabPage can be displayed by calling ShowTab functions
+        /// </summary>
+        /// <param name="tabpage"></param>
+        public void HideTab(MetroTabPage tabpage)
+        {
+            if (this.TabPages.Contains(tabpage))
+            {
+                int _tabid = this.TabPages.IndexOf(tabpage);
+
+                hidTabs.Add(new HiddenTabs(_tabid, tabpage.Name));
+                this.TabPages.Remove(tabpage);
+            }
+        }
+
+        /// <summary>
+        /// This will show hiddent MetroTabPage from MetroTabControl
+        /// </summary>
+        /// <param name="tabpage"></param>
+        public void ShowTab(MetroTabPage tabpage)
+        {
+            HiddenTabs result = hidTabs.Find(
+                 delegate(HiddenTabs bk)
+                 {
+                     return bk.tabpage == tabpage.Name;
+                 }
+             );
+
+            if (result != null)
+            {
+                this.TabPages.Insert(result.index,tabpage);
+                hidTabs.Remove(result);
+            }
+        }
+
+        /// <summary>
+        /// This will disable a MetroTabPage from MetroTabControl
+        /// </summary>
+        /// <param name="tabpage"></param>
+        public void DisableTab(MetroTabPage tabpage)
+        {
+            if (!tabDisable.Contains(tabpage.Name))
+            {
+                if (this.SelectedTab == tabpage && this.TabCount == 1) return;
+                if (this.SelectedTab == tabpage)
+                {
+                    if (SelectedIndex == this.TabCount - 1)
+                    { SelectedIndex = 0; }
+                    else { SelectedIndex++; }
+                }
+              
+                int _tabid = this.TabPages.IndexOf(tabpage);
+
+                tabDisable.Add(tabpage.Name);
+                Graphics e = this.CreateGraphics();
+                DrawTab(_tabid, e);
+                DrawTabBottomBorder(SelectedIndex, e);
+                DrawTabSelected(SelectedIndex, e);
+            }
+        }
+
+        /// <summary>
+        /// This will enable a MetroTabPage from MetroTabControl
+        /// </summary>
+        /// <param name="tabpage"></param>
+        public void EnableTab(MetroTabPage tabpage)
+        {
+            if (tabDisable.Contains(tabpage.Name))
+            {
+                tabDisable.Remove(tabpage.Name);
+                int _tabid = this.TabPages.IndexOf(tabpage);
+
+                Graphics e = this.CreateGraphics();
+                DrawTab(_tabid, e);
+                DrawTabBottomBorder(SelectedIndex, e);
+                DrawTabSelected(SelectedIndex, e);
+            }
+        }
+
+        /// <summary>
+        /// This will check if MetroTabPage is enable or not
+        /// true if enable otherwise false
+        /// </summary>
+        /// <param name="tabpage"></param>
+        /// <returns></returns>
+        public bool IsTabEnable(MetroTabPage tabpage)
+        {
+            return tabDisable.Contains(tabpage.Name);
+        }
+
+        /// <summary>
+        /// This will check if MetroTabPage is hidden or not
+        /// true if hidden otherwise false
+        /// </summary>
+        public bool IsTabHidden(MetroTabPage tabpage)
+        {
+            HiddenTabs result = hidTabs.Find(
+                delegate(HiddenTabs bk)
+                {
+                    return bk.tabpage == tabpage.Name;
+                }
+            );
+
+            return (result != null);
+        }
+        #endregion
     }
 }

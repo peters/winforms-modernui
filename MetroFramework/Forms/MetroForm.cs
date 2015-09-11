@@ -592,6 +592,7 @@ namespace MetroFramework.Forms
                     {
                         MetroFormButton btn;
                         windowButtonList.TryGetValue(WindowButtons.Maximize, out btn);
+                        if (btn == null) return;
                         if (WindowState == FormWindowState.Normal)
                         {
                             if (shadowForm != null) shadowForm.Visible = true;

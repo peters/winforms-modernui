@@ -45,6 +45,14 @@ namespace MetroFramework
         Bold
     }
 
+    public enum MetroWaterMarkWeight
+    {
+        Light,
+        Regular,
+        Bold,
+        Italic
+    }
+
     public enum MetroTileTextSize
     {
         Small,
@@ -229,6 +237,11 @@ namespace MetroFramework
         public static Font DefaultBold(float size)
         {
             return FontResolver.ResolveFont("Segoe UI", size, FontStyle.Bold, GraphicsUnit.Pixel);
+        }
+
+        public static Font DefaultItalic(float size)
+        {
+            return FontResolver.ResolveFont("Segoe UI", size, FontStyle.Italic, GraphicsUnit.Pixel);
         }
 
         public static Font Title
@@ -541,6 +554,45 @@ namespace MetroFramework
             }
 
             return Default(12f);
+        }
+
+        public static Font WaterMark(MetroLabelSize labelSize, MetroWaterMarkWeight labelWeight)
+        {
+            if (labelSize == MetroLabelSize.Small)
+            {
+                if (labelWeight == MetroWaterMarkWeight.Light)
+                    return DefaultLight(12f);
+                if (labelWeight == MetroWaterMarkWeight.Regular)
+                    return Default(12f);
+                if (labelWeight == MetroWaterMarkWeight.Bold)
+                    return DefaultBold(12f);
+                if (labelWeight == MetroWaterMarkWeight.Italic)
+                    return DefaultItalic(12f);
+            }
+            else if (labelSize == MetroLabelSize.Medium)
+            {
+                if (labelWeight == MetroWaterMarkWeight.Light)
+                    return DefaultLight(14f);
+                if (labelWeight == MetroWaterMarkWeight.Regular)
+                    return Default(14f);
+                if (labelWeight == MetroWaterMarkWeight.Bold)
+                    return DefaultBold(14f);
+                if (labelWeight == MetroWaterMarkWeight.Italic)
+                    return DefaultItalic(14f);
+            }
+            else if (labelSize == MetroLabelSize.Tall)
+            {
+                if (labelWeight == MetroWaterMarkWeight.Light)
+                    return DefaultLight(18f);
+                if (labelWeight == MetroWaterMarkWeight.Regular)
+                    return Default(18f);
+                if (labelWeight == MetroWaterMarkWeight.Bold)
+                    return DefaultBold(18f);
+                if (labelWeight == MetroWaterMarkWeight.Italic)
+                    return DefaultItalic(18f);
+            }
+
+            return DefaultLight(14f);
         }
 
         public static Font Button(MetroButtonSize linkSize, MetroButtonWeight linkWeight)

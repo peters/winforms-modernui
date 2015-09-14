@@ -189,7 +189,7 @@ namespace MetroFramework.Controls
                 {
                     this.FirstDisplayedScrollingRowIndex++;
                 }
-            }
+            }       
         }
 
         private void StyleGrid()
@@ -255,7 +255,12 @@ namespace MetroFramework.Controls
         private HScrollBar hScrollbar = null;
         private VScrollBar vScrollbar = null;
 
-        public MetroDataGridHelper(MetroScrollBar scrollbar, DataGridView grid, bool vertical = true)
+        public MetroDataGridHelper(MetroScrollBar scrollbar, DataGridView grid)
+        {
+            new MetroDataGridHelper(scrollbar, grid,true);
+        }
+
+        public MetroDataGridHelper(MetroScrollBar scrollbar, DataGridView grid, bool vertical)
         {
             _scrollbar = scrollbar;
             _scrollbar.UseBarColor = true;

@@ -22,7 +22,17 @@ namespace MetroFramework
         /// <param name="message"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message,int height=211)
+        public static DialogResult Show(IWin32Window owner, String message)
+        { return Show(owner, message, "Notification", 211); }
+
+        /// <summary>
+        /// Shows a metro-styles message notification into the specified owner window.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="message"></param>
+        /// <param name="height" optional=211></param>
+        /// <returns></returns>
+        public static DialogResult Show(IWin32Window owner, String message,int height)
         { return Show(owner, message, "Notification", height); }
 
         /// <summary>
@@ -33,7 +43,18 @@ namespace MetroFramework
         /// <param name="title"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, int height = 211)
+        public static DialogResult Show(IWin32Window owner, String message, String title)
+        { return Show(owner, message, title, MessageBoxButtons.OK, 211); }
+
+        /// <summary>
+        /// Shows a metro-styles message notification into the specified owner window.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="message"></param>
+        /// <param name="title"></param>
+        /// <param name="height" optional=211></param>
+        /// <returns></returns>
+        public static DialogResult Show(IWin32Window owner, String message, String title, int height)
         { return Show(owner, message, title, MessageBoxButtons.OK, height); }
 
         /// <summary>
@@ -45,7 +66,19 @@ namespace MetroFramework
         /// <param name="buttons"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, int height = 211)
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons)
+        { return Show(owner, message, title, buttons, MessageBoxIcon.None, 211); }
+
+        /// <summary>
+        /// Shows a metro-styles message notification into the specified owner window.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="message"></param>
+        /// <param name="title"></param>
+        /// <param name="buttons"></param>
+        /// <param name="height" optional=211></param>
+        /// <returns></returns>
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, int height)
         { return Show(owner, message, title, buttons, MessageBoxIcon.None, height); }
 
         /// <summary>
@@ -58,8 +91,37 @@ namespace MetroFramework
         /// <param name="icon"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, int height = 211)
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon)
+        { return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1, 211); }
+
+        /// <summary>
+        /// Shows a metro-styles message notification into the specified owner window.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="message"></param>
+        /// <param name="title"></param>
+        /// <param name="buttons"></param>
+        /// <param name="icon"></param>
+        /// <param name="height" optional=211></param>
+        /// <returns></returns>
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, int height)
         { return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1, height); }
+
+           /// <summary>
+        /// Shows a metro-styles message notification into the specified owner window.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="message"></param>
+        /// <param name="title"></param>
+        /// <param name="buttons"></param>
+        /// <param name="icon"></param>
+        /// <param name="defaultbutton"></param>
+        /// <param name="height" optional=211></param>
+        /// <returns></returns>
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton)
+        {
+            return Show(owner, message, title, buttons, icon, defaultbutton, 211);
+        }
 
         /// <summary>
         /// Shows a metro-styles message notification into the specified owner window.
@@ -72,7 +134,7 @@ namespace MetroFramework
         /// <param name="defaultbutton"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, int height = 211)
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, int height)
         {
             DialogResult _result = DialogResult.None;
 

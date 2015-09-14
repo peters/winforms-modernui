@@ -373,12 +373,14 @@ namespace MetroFramework.Controls
             set { baseTextBox.Text = value; }
         }
 
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public Color WaterMarkColor
         {
             get { return baseTextBox.WaterMarkColor; }
             set { baseTextBox.WaterMarkColor = value; }
         }
 
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
         public Font WaterMarkFont
         {
             get { return baseTextBox.WaterMarkFont; }

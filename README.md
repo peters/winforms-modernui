@@ -7,7 +7,7 @@ Install via NuGet
 ------------------
     Install-Package MetroModernUI
 
-Updated to Version 1.3.5
+[Updated to Version 1.3.5](http://denricdenise.info/2015/09/metroframework-modern-ui-version-1-3-5/)
 Link: https://www.nuget.org/packages/MetroModernUI/
 
 Documentation

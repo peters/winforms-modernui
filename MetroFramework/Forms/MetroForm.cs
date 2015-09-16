@@ -1077,6 +1077,10 @@ namespace MetroFramework.Forms
                 case MetroFormShadowType.DropShadow:
                     shadowForm = new MetroRealisticDropShadow(this);
                     return;
+
+                case MetroFormShadowType.None:
+                    return;
+
                 default:
                     shadowForm = new MetroFlatDropShadow(this);
                     return;

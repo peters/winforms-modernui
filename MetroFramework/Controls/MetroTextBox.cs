@@ -1239,7 +1239,7 @@ namespace MetroFramework.Controls
                     int _g = backColor.G;
                     int _b = backColor.B;
 
-                    backColor = ControlPaint.Light(backColor, float.Parse("0.25"));
+                    backColor = ControlPaint.Light(backColor, 0.25f);
                 }
                 else if (isHovered && isPressed && Enabled)
                 {

@@ -1081,9 +1081,9 @@ namespace MetroFramework.Forms
                 case MetroFormShadowType.None:
                     return;
 
-                default:
-                    shadowForm = new MetroFlatDropShadow(this);
-                    return;
+                //default:
+                //    shadowForm = new MetroFlatDropShadow(this);
+                //    return;
             }
         }
 

@@ -183,7 +183,8 @@ namespace MetroFramework
                 _control.Properties.Title = title;
                 _control.Padding = new Padding(0, 0, 0, 0);
                 _control.ControlBox = false;
-                _control.ShowInTaskbar = false;                
+                _control.ShowInTaskbar = false;
+                _control.TopMost = true;
                 //_owner.Controls.Add(_control);
                 //if (_owner is IMetroForm)
                 //{

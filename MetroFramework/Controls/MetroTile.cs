@@ -328,7 +328,9 @@ namespace MetroFramework.Controls
 
         protected virtual void OnPaintForeground(PaintEventArgs e)
         {
-            Color foreColor;
+            Color foreColor, borderColor;
+
+            borderColor = MetroPaint.BorderColor.Button.Normal(Theme);
 
             if (isHovered && !isPressed && Enabled)
             {
@@ -352,9 +354,14 @@ namespace MetroFramework.Controls
                 foreColor = ForeColor;
             }
 
-            if (isPressed)
+            if (isPressed || isHovered || isFocused)
             {
-
+                using (Pen p = new Pen(borderColor))
+                {
+                    p.Width = 3;
+                    Rectangle borderRect = new Rectangle(1, 1, Width - 3, Height - 3);
+                    e.Graphics.DrawRectangle(p, borderRect);
+                }
             }
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -425,9 +432,14 @@ namespace MetroFramework.Controls
 
             TextFormatFlags flags = MetroPaint.GetTextFormatFlags(TextAlign) | TextFormatFlags.LeftAndRightPadding | TextFormatFlags.EndEllipsis;
             Rectangle textRectangle = ClientRectangle;
+
             if (isPressed)
             {
-                textRectangle.Inflate(-2, -2);
+                textRectangle.Inflate(-4, -12);
+            }
+            else
+            {
+                textRectangle.Inflate(-2, -10);
             }
 
             TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Tile(tileTextFontSize, tileTextFontWeight), textRectangle, foreColor, flags);

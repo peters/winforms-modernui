@@ -152,6 +152,8 @@ namespace MetroFramework.Components
                 BindingFlags.Instance |
                      BindingFlags.NonPublic);
                 IContainer mother = (IContainer)fieldInfo.GetValue(owner);
+                if (mother == null) return clonedManager;
+
                 // Check for a helper component
                 foreach (Component obj in mother.Components)
                 {

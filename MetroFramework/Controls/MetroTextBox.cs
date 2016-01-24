@@ -491,6 +491,12 @@ namespace MetroFramework.Controls
             get { return baseTextBox.AutoCompleteCustomSource; }
             set { baseTextBox.AutoCompleteCustomSource = value; }
         }
+
+        public bool ShortcutsEnabled
+        {
+            get { return baseTextBox.ShortcutsEnabled; }
+            set { baseTextBox.ShortcutsEnabled = value; }
+        }
         #endregion
 
         #region Constructor

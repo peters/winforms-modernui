@@ -151,6 +151,9 @@ namespace MetroFramework.Components
                 FieldInfo fieldInfo = parentForm.GetField("components",
                 BindingFlags.Instance |
                      BindingFlags.NonPublic);
+
+                if (fieldInfo == null) return clonedManager;
+
                 IContainer mother = (IContainer)fieldInfo.GetValue(owner);
                 if (mother == null) return clonedManager;
 

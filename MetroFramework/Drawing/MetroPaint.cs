@@ -364,7 +364,7 @@ namespace MetroFramework.Drawing
                         if (theme == MetroThemeStyle.Dark)
                             return Color.FromArgb(204, 204, 204);
 
-                        return Color.FromArgb(17, 17, 17);
+                        return Color.FromArgb(96, 96, 96);
                     }
 
                     public static Color Press(MetroThemeStyle theme)
@@ -372,7 +372,7 @@ namespace MetroFramework.Drawing
                         if (theme == MetroThemeStyle.Dark)
                             return Color.FromArgb(204, 204, 204);
 
-                        return Color.FromArgb(17, 17, 17);
+                        return Color.FromArgb(96, 96, 96);
                     }
 
                     public static Color Disabled(MetroThemeStyle theme)

@@ -189,6 +189,12 @@ namespace MetroFramework.Controls
 
         private void OnScroll(ScrollEventType type, int oldValue, int newValue, ScrollOrientation orientation)
         {
+            if (oldValue != newValue)
+            {
+                if (ValueChanged != null)
+                    ValueChanged(this, curValue);
+            }
+
             if (Scroll == null) return;
 
             if (orientation == ScrollOrientation.HorizontalScroll)
@@ -439,6 +445,13 @@ namespace MetroFramework.Controls
                 SetupScrollBar();
             }
         }
+
+        #region ValueChangeEvent
+        // Declare a delegate
+        public delegate void ScrollValueChangedDelegate(object sender, int newValue);
+
+        public event ScrollValueChangedDelegate ValueChanged;
+        #endregion
 
         private bool dontUpdateColor = false;
 

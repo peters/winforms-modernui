@@ -7,13 +7,15 @@ Install via NuGet
 ------------------
     Install-Package MetroModernUI
 
-[Updated to Version 1.3.5](http://denricdenise.info/2015/09/metroframework-modern-ui-version-1-3-5/)
+[Updated to Version 1.4.0](http://denricdenise.info/2016/07/metroframework-modern-ui-version-1-4-0/)
 Link: https://www.nuget.org/packages/MetroModernUI/
 
 Documentation
 -------------------
 * [MetroForm Properties](http://denricdenise.info/2015/07/metroframework-modern-ui-metroform-properties/)
 * [MetroLink Properties](http://denricdenise.info/2015/08/metrolink-properties-metroframework-modern-ui/)
+* [MetroListView](http://denricdenise.info/2016/01/metrolistview-is-coming-in-metroframework/)
+* [Localization for MetroMessageBox and MetroToggle](http://denricdenise.info/2016/06/metromessagebox-localized-preview/)
 
 Supported platforms
 -------------------
@@ -21,6 +23,7 @@ Supported platforms
 * Windows Vista
 * Windows 7
 * Windows 8
+* Windows 10
 
 Requirements
 ------------

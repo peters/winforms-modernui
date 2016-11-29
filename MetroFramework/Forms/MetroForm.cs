@@ -609,9 +609,19 @@ namespace MetroFramework.Forms
         {
             WinApi.MINMAXINFO* pmmi = (WinApi.MINMAXINFO*)lParam;
 
+            //YOROCA MDI PARENT
             Screen s = Screen.FromHandle(hwnd);
-            pmmi->ptMaxSize.x = s.WorkingArea.Width;
-            pmmi->ptMaxSize.y = s.WorkingArea.Height;
+            //if (IsMdiChild)
+            if(this.Parent != null)
+            {
+                pmmi->ptMaxSize.x = this.Parent.ClientRectangle.Size.Width;
+                pmmi->ptMaxSize.y = this.Parent.ClientRectangle.Size.Height;
+            }
+            else
+            {
+                pmmi->ptMaxSize.x = s.WorkingArea.Width;
+                pmmi->ptMaxSize.y = s.WorkingArea.Height;
+            }
             pmmi->ptMaxPosition.x = Math.Abs(s.WorkingArea.Left - s.Bounds.Left);
             pmmi->ptMaxPosition.y = Math.Abs(s.WorkingArea.Top - s.Bounds.Top);
 

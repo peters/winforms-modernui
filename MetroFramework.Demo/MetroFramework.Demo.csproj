@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Localization\MetroLocalize.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,10 +115,21 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\GitHub-Mark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\Books.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Localization\de\MetroToggle.xml" />
+    <EmbeddedResource Include="Localization\en\MetroToggle.xml" />
+    <EmbeddedResource Include="Localization\de\MetroMessageBoxControl.xml" />
+    <Content Include="Localization\tr\MetroToggle.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MetroFramework.Design\MetroFramework.Design.csproj">
       <Project>{7316584d-9a16-4280-a8ab-6d45198c6e4d}</Project>
       <Name>MetroFramework.Design</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\MetroFramework.Fonts\MetroFramework.Fonts.csproj">
       <Project>{5a2fcae8-c2fa-41bd-90ea-16103ea07b26}</Project>
@@ -127,14 +139,6 @@
       <Project>{bb41ac8b-cbed-4387-a7e0-4567edb3f57f}</Project>
       <Name>MetroFramework</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GitHub-Mark.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Data\Books.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

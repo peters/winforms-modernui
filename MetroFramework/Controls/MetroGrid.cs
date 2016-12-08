@@ -175,6 +175,15 @@ namespace MetroFramework.Controls
             this.DoubleBuffered = true;
         }
 
+        protected override void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
+        {
+            base.OnColumnStateChanged(e);
+            if (e.StateChanged == DataGridViewElementStates.Visible)
+            {
+                scrollhelper.UpdateScrollbar();
+                scrollhelperH.UpdateScrollbar();
+            }
+        }
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
@@ -311,10 +320,9 @@ namespace MetroFramework.Controls
 
             if (_ishorizontal)
             {
-                hScrollbar.Value = _scrollbar.Value;
-
                 try
                 {
+                    hScrollbar.Value = _scrollbar.Value;
                     _grid.HorizontalScrollingOffset = _scrollbar.Value;
                 }
                 catch { }
@@ -349,6 +357,7 @@ namespace MetroFramework.Controls
         /// </summary>
         public void UpdateScrollbar()
         {
+            if (_grid == null) return;
             try
             {
                 BeginIgnoreScrollbarChangeEvents();

@@ -40,8 +40,7 @@ namespace MetroFramework.Localization
 
         public string CurrentLanguage()
         {
-            string language = Application.CurrentCulture.TwoLetterISOLanguageName;
-            //string language = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+            string language = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
             if (language.Length == 0)
             {
                 language = DefaultLanguage();
@@ -62,27 +61,17 @@ namespace MetroFramework.Localization
 
         private void importManifestResource(string ctrlName)
         {
-            Assembly callingAssembly = Assembly.GetEntryAssembly();
-            string localizationFilename = "";
-            Stream xmlStream = null;
-            if (callingAssembly != null)
-            {
-                localizationFilename = callingAssembly.GetName().Name + ".Localization." + CurrentLanguage() + "." + ctrlName + ".xml";
-                xmlStream = callingAssembly.GetManifestResourceStream(localizationFilename);            
-            }
-            
+            Assembly callingAssembly = Assembly.GetCallingAssembly();
+
+            string localizationFilename = callingAssembly.GetName().Name + ".Localization." + CurrentLanguage()  + "." + ctrlName + ".xml";
+            Stream xmlStream = callingAssembly.GetManifestResourceStream(localizationFilename);
+
             if (xmlStream == null)
             {
-                callingAssembly = Assembly.GetCallingAssembly();
-                localizationFilename = callingAssembly.GetName().Name + ".Localization." + CurrentLanguage() + "." + ctrlName + ".xml";
+                localizationFilename = callingAssembly.GetName().Name + ".Localization." + DefaultLanguage() + "." + ctrlName + ".xml";
                 xmlStream = callingAssembly.GetManifestResourceStream(localizationFilename);
-
-                if (xmlStream == null)
-                {
-                    localizationFilename = callingAssembly.GetName().Name + ".Localization." + DefaultLanguage() + "." + ctrlName + ".xml";
-                    xmlStream = callingAssembly.GetManifestResourceStream(localizationFilename);
-                }
             }
+
 
             if (languageDataset == null)
                 languageDataset = new DataSet();
@@ -112,11 +101,11 @@ namespace MetroFramework.Localization
             }
 
             if (languageDataset == null) {
-                return "&" + key;
+                return "~" + key;
             }
 
             if (languageDataset.Tables["Localization"] == null) {
-                return "&" + key;
+                return "~" + key;
             }
 
             DataRow[] languageRows = languageDataset.Tables["Localization"].Select("Key='" + key + "'");

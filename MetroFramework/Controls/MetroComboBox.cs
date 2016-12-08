@@ -368,7 +368,7 @@ namespace MetroFramework.Controls
         {
             if (e.Index >= 0)
             {
-                Color foreColor;
+                Color foreColor = MetroPaint.ForeColor.Link.Normal(Theme);
                 Color backColor = BackColor;
 
                 if (!useCustomBackColor)
@@ -376,16 +376,7 @@ namespace MetroFramework.Controls
                     backColor = MetroPaint.BackColor.Form(Theme);
                 }
 
-                if (e.State == (DrawItemState.NoAccelerator | DrawItemState.NoFocusRect) || e.State == DrawItemState.None)
-                {
-                    using (SolidBrush b = new SolidBrush(backColor))
-                    {
-                        e.Graphics.FillRectangle(b, new Rectangle(e.Bounds.Left, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height));
-                    }
-
-                    foreColor = MetroPaint.ForeColor.Link.Normal(Theme);
-                }
-                else
+                if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
                 {
                     using (SolidBrush b = new SolidBrush(MetroPaint.GetStyleColor(Style)))
                     {
@@ -393,6 +384,13 @@ namespace MetroFramework.Controls
                     }
 
                     foreColor = MetroPaint.ForeColor.Tile.Normal(Theme);
+                }
+                else
+                {
+                    using (SolidBrush b = new SolidBrush(backColor))
+                    {
+                        e.Graphics.FillRectangle(b, new Rectangle(e.Bounds.Left, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height));
+                    }
                 }
 
                 Rectangle textRect = new Rectangle(0, e.Bounds.Top, e.Bounds.Width, e.Bounds.Height);

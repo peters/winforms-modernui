@@ -497,6 +497,7 @@ namespace MetroFramework.Controls
             get { return baseTextBox.ShortcutsEnabled; }
             set { baseTextBox.ShortcutsEnabled = value; }
         }
+
         #endregion
 
         #region Constructor

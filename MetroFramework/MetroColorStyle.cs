@@ -39,6 +39,7 @@ namespace MetroFramework
         Magenta,
         Purple,
         Red,
-        Yellow
+        Yellow,
+        Custom
     }
 }

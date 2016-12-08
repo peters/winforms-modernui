@@ -9,11 +9,14 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using MetroFramework.Localization;
 
 namespace MetroFramework
 {
     public partial class MetroMessageBoxControl : Form
     {
+        private MetroLocalize metroLocalize = null;
+
         public MetroMessageBoxControl()
         {
             InitializeComponent();
@@ -27,6 +30,8 @@ namespace MetroFramework
             metroButton1.Click += new EventHandler(button_Click);
             metroButton2.Click += new EventHandler(button_Click);
             metroButton3.Click += new EventHandler(button_Click);
+
+            metroLocalize = new MetroLocalize(this);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -96,7 +101,7 @@ namespace MetroFramework
                 case MessageBoxButtons.OK:
                     EnableButton(metroButton1);
 
-                    metroButton1.Text = "&OK";
+                    metroButton1.Text = metroLocalize.translate("Ok");
                     metroButton1.Location = metroButton3.Location;
                     metroButton1.Tag = DialogResult.OK;
 
@@ -106,13 +111,13 @@ namespace MetroFramework
                 case MessageBoxButtons.OKCancel:
                     EnableButton(metroButton1);
 
-                    metroButton1.Text = "&OK";
+                    metroButton1.Text = metroLocalize.translate("Ok");
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.OK;
 
                     EnableButton(metroButton2);
 
-                    metroButton2.Text = "&Cancel";
+                    metroButton2.Text = metroLocalize.translate("Cancel");
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.Cancel;
 
@@ -121,13 +126,13 @@ namespace MetroFramework
                 case MessageBoxButtons.RetryCancel:
                     EnableButton(metroButton1);
 
-                    metroButton1.Text = "&Retry";
+                    metroButton1.Text = metroLocalize.translate("Retry");
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.Retry;
 
                     EnableButton(metroButton2);
 
-                    metroButton2.Text = "&Cancel";
+                    metroButton2.Text = metroLocalize.translate("Cancel");
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.Cancel;
 
@@ -136,13 +141,13 @@ namespace MetroFramework
                 case MessageBoxButtons.YesNo:
                     EnableButton(metroButton1);
 
-                    metroButton1.Text = "&Yes";
+                    metroButton1.Text = metroLocalize.translate("Yes");
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.Yes;
 
                     EnableButton(metroButton2);
 
-                    metroButton2.Text = "&No";
+                    metroButton2.Text = metroLocalize.translate("No");
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.No;
 
@@ -151,34 +156,34 @@ namespace MetroFramework
                 case MessageBoxButtons.YesNoCancel:
                     EnableButton(metroButton1);
 
-                    metroButton1.Text = "&Yes";
+                    metroButton1.Text = metroLocalize.translate("Yes");
                     metroButton1.Tag = DialogResult.Yes;
 
                     EnableButton(metroButton2);
 
-                    metroButton2.Text = "&No";
+                    metroButton2.Text = metroLocalize.translate("No");
                     metroButton2.Tag = DialogResult.No;
 
                     EnableButton(metroButton3);
 
-                    metroButton3.Text = "&Cancel";
+                    metroButton3.Text = metroLocalize.translate("Cancel");
                     metroButton3.Tag = DialogResult.Cancel;
 
                     break;
                 case MessageBoxButtons.AbortRetryIgnore:
                     EnableButton(metroButton1);
 
-                    metroButton1.Text = "&Abort";
+                    metroButton1.Text = metroLocalize.translate("Abort");
                     metroButton1.Tag = DialogResult.Abort;
 
                     EnableButton(metroButton2);
 
-                    metroButton2.Text = "&Retry";
+                    metroButton2.Text = metroLocalize.translate("Retry");
                     metroButton2.Tag = DialogResult.Retry;
 
                     EnableButton(metroButton3);
 
-                    metroButton3.Text = "&Ignore";
+                    metroButton3.Text = metroLocalize.translate("Ignore");
                     metroButton3.Tag = DialogResult.Ignore;
 
                     break;

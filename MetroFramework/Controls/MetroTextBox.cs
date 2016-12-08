@@ -337,7 +337,7 @@ namespace MetroFramework.Controls
         private bool _witherror = false;
 
         [DefaultValue(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(False)]
         public bool WithError
         {
             get { return _witherror; }

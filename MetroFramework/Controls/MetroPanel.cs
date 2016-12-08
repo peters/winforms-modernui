@@ -39,6 +39,12 @@ namespace MetroFramework.Controls
     {
         #region Interface
 
+        [Category("Action")]
+        public event EventHandler<ScrollEventArgs> VerticalScrolled;
+
+        [Category("Action")]
+        public event EventHandler<ScrollEventArgs> HorizontalScrolled;
+
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public event EventHandler<MetroPaintEventArgs> CustomPaintBackground;
         protected virtual void OnCustomPaintBackground(MetroPaintEventArgs e)
@@ -170,8 +176,8 @@ namespace MetroFramework.Controls
 
         #region Fields
 
-        private MetroScrollBar verticalScrollbar = new MetroScrollBar(MetroScrollOrientation.Vertical);
-        private MetroScrollBar horizontalScrollbar = new MetroScrollBar(MetroScrollOrientation.Horizontal);
+        public MetroScrollBar VerticalMetroScrollbar = new MetroScrollBar(MetroScrollOrientation.Vertical);
+        private MetroScrollBar HorizontalMetroScrollbar = new MetroScrollBar(MetroScrollOrientation.Horizontal);
 
         private bool showHorizontalScrollbar = false;
         [DefaultValue(false)]
@@ -185,22 +191,22 @@ namespace MetroFramework.Controls
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public int HorizontalScrollbarSize
         {
-            get { return horizontalScrollbar.ScrollbarSize; }
-            set { horizontalScrollbar.ScrollbarSize = value; }
+            get { return HorizontalMetroScrollbar.ScrollbarSize; }
+            set { HorizontalMetroScrollbar.ScrollbarSize = value; }
         }
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool HorizontalScrollbarBarColor
         {
-            get { return horizontalScrollbar.UseBarColor; }
-            set { horizontalScrollbar.UseBarColor = value; }
+            get { return HorizontalMetroScrollbar.UseBarColor; }
+            set { HorizontalMetroScrollbar.UseBarColor = value; }
         }
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool HorizontalScrollbarHighlightOnWheel
         {
-            get { return horizontalScrollbar.HighlightOnWheel; }
-            set { horizontalScrollbar.HighlightOnWheel = value; }
+            get { return HorizontalMetroScrollbar.HighlightOnWheel; }
+            set { HorizontalMetroScrollbar.HighlightOnWheel = value; }
         }
 
         private bool showVerticalScrollbar = false;
@@ -215,22 +221,22 @@ namespace MetroFramework.Controls
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public int VerticalScrollbarSize
         {
-            get { return verticalScrollbar.ScrollbarSize; }
-            set { verticalScrollbar.ScrollbarSize = value; }
+            get { return VerticalMetroScrollbar.ScrollbarSize; }
+            set { VerticalMetroScrollbar.ScrollbarSize = value; }
         }
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool VerticalScrollbarBarColor
         {
-            get { return verticalScrollbar.UseBarColor; }
-            set { verticalScrollbar.UseBarColor = value; }
+            get { return VerticalMetroScrollbar.UseBarColor; }
+            set { VerticalMetroScrollbar.UseBarColor = value; }
         }
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool VerticalScrollbarHighlightOnWheel
         {
-            get { return verticalScrollbar.HighlightOnWheel; }
-            set { verticalScrollbar.HighlightOnWheel = value; }
+            get { return VerticalMetroScrollbar.HighlightOnWheel; }
+            set { VerticalMetroScrollbar.HighlightOnWheel = value; }
         }
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
@@ -260,17 +266,17 @@ namespace MetroFramework.Controls
                      ControlStyles.ResizeRedraw |
                      ControlStyles.UserPaint, true);
 
-            Controls.Add(verticalScrollbar);
-            Controls.Add(horizontalScrollbar);
+            Controls.Add(VerticalMetroScrollbar);
+            Controls.Add(HorizontalMetroScrollbar);
 
-            verticalScrollbar.UseBarColor = true;
-            horizontalScrollbar.UseBarColor = true;
+            VerticalMetroScrollbar.UseBarColor = true;
+            HorizontalMetroScrollbar.UseBarColor = true;
 
-            verticalScrollbar.Visible = false;
-            horizontalScrollbar.Visible = false;
+            VerticalMetroScrollbar.Visible = false;
+            HorizontalMetroScrollbar.Visible = false;
 
-            verticalScrollbar.Scroll += VerticalScrollbarScroll;
-            horizontalScrollbar.Scroll += HorizontalScrollbarScroll;
+            VerticalMetroScrollbar.Scroll += VerticalScrollbarScroll;
+            HorizontalMetroScrollbar.Scroll += HorizontalScrollbarScroll;
         }
 
         #endregion
@@ -279,14 +285,16 @@ namespace MetroFramework.Controls
 
         private void HorizontalScrollbarScroll(object sender, ScrollEventArgs e)
         {
-            AutoScrollPosition = new Point(e.NewValue, verticalScrollbar.Value);
+            AutoScrollPosition = new Point(e.NewValue, VerticalMetroScrollbar.Value);
             UpdateScrollBarPositions();
+            HorizontalScrolled(this, e);
         }
 
         private void VerticalScrollbarScroll(object sender, ScrollEventArgs e)
         {
-            AutoScrollPosition = new Point(horizontalScrollbar.Value, e.NewValue);
+            AutoScrollPosition = new Point(HorizontalMetroScrollbar.Value, e.NewValue);
             UpdateScrollBarPositions();
+            VerticalScrolled(this, e);
         }
 
         #endregion
@@ -342,8 +350,8 @@ namespace MetroFramework.Controls
         {
             if (DesignMode)
             {
-                horizontalScrollbar.Visible = false;
-                verticalScrollbar.Visible = false;
+                HorizontalMetroScrollbar.Visible = false;
+                VerticalMetroScrollbar.Visible = false;
                 return;
             }
 
@@ -351,26 +359,26 @@ namespace MetroFramework.Controls
 
             if (HorizontalScrollbar)
             {
-                horizontalScrollbar.Visible = HorizontalScroll.Visible;
+                HorizontalMetroScrollbar.Visible = HorizontalScroll.Visible;
             }
             if (HorizontalScroll.Visible)
             {
-                horizontalScrollbar.Minimum = HorizontalScroll.Minimum;
-                horizontalScrollbar.Maximum = HorizontalScroll.Maximum;
-                horizontalScrollbar.SmallChange = HorizontalScroll.SmallChange;
-                horizontalScrollbar.LargeChange = HorizontalScroll.LargeChange;
+                HorizontalMetroScrollbar.Minimum = HorizontalScroll.Minimum;
+                HorizontalMetroScrollbar.Maximum = HorizontalScroll.Maximum;
+                HorizontalMetroScrollbar.SmallChange = HorizontalScroll.SmallChange;
+                HorizontalMetroScrollbar.LargeChange = HorizontalScroll.LargeChange;
             }
 
             if (VerticalScrollbar)
             {
-                verticalScrollbar.Visible = VerticalScroll.Visible;
+                VerticalMetroScrollbar.Visible = VerticalScroll.Visible;
             }
             if (VerticalScroll.Visible)
             {
-                verticalScrollbar.Minimum = VerticalScroll.Minimum;
-                verticalScrollbar.Maximum = VerticalScroll.Maximum;
-                verticalScrollbar.SmallChange = VerticalScroll.SmallChange;
-                verticalScrollbar.LargeChange = VerticalScroll.LargeChange;
+                VerticalMetroScrollbar.Minimum = VerticalScroll.Minimum;
+                VerticalMetroScrollbar.Maximum = VerticalScroll.Maximum;
+                VerticalMetroScrollbar.SmallChange = VerticalScroll.SmallChange;
+                VerticalMetroScrollbar.LargeChange = VerticalScroll.LargeChange;
             }
 
             OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, Color.Empty, e.Graphics));
@@ -380,8 +388,8 @@ namespace MetroFramework.Controls
         {
             base.OnMouseWheel(e);
 
-            verticalScrollbar.Value = Math.Abs(VerticalScroll.Value);
-            horizontalScrollbar.Value = Math.Abs(HorizontalScroll.Value);
+            VerticalMetroScrollbar.Value = Math.Abs(VerticalScroll.Value);
+            HorizontalMetroScrollbar.Value = Math.Abs(HorizontalScroll.Value);
         }
 
         [SecuritySafeCritical]
@@ -408,25 +416,25 @@ namespace MetroFramework.Controls
 
             if (!AutoScroll)
             {
-                verticalScrollbar.Visible = false;
-                horizontalScrollbar.Visible = false;
+                VerticalMetroScrollbar.Visible = false;
+                HorizontalMetroScrollbar.Visible = false;
                 return;
             }
 
-            verticalScrollbar.Location = new Point(ClientRectangle.Width - verticalScrollbar.Width, ClientRectangle.Y);
-            verticalScrollbar.Height = ClientRectangle.Height - horizontalScrollbar.Height;
+            VerticalMetroScrollbar.Location = new Point(ClientRectangle.Width - VerticalMetroScrollbar.Width, ClientRectangle.Y);
+            VerticalMetroScrollbar.Height = ClientRectangle.Height - HorizontalMetroScrollbar.Height;
 
             if (!VerticalScrollbar)
             {
-                verticalScrollbar.Visible = false;
+                VerticalMetroScrollbar.Visible = false;
             }
 
-            horizontalScrollbar.Location = new Point(ClientRectangle.X, ClientRectangle.Height - horizontalScrollbar.Height);
-            horizontalScrollbar.Width = ClientRectangle.Width - verticalScrollbar.Width;
+            HorizontalMetroScrollbar.Location = new Point(ClientRectangle.X, ClientRectangle.Height - HorizontalMetroScrollbar.Height);
+            HorizontalMetroScrollbar.Width = ClientRectangle.Width - VerticalMetroScrollbar.Width;
 
             if (!HorizontalScrollbar)
             {
-                horizontalScrollbar.Visible = false;
+                HorizontalMetroScrollbar.Visible = false;
             }
         }
 

@@ -287,14 +287,15 @@ namespace MetroFramework.Controls
         {
             AutoScrollPosition = new Point(e.NewValue, VerticalMetroScrollbar.Value);
             UpdateScrollBarPositions();
-            HorizontalScrolled(this, e);
+            if (HorizontalScrolled != null) HorizontalScrolled(this, e);
+            
         }
 
         private void VerticalScrollbarScroll(object sender, ScrollEventArgs e)
         {
             AutoScrollPosition = new Point(HorizontalMetroScrollbar.Value, e.NewValue);
             UpdateScrollBarPositions();
-            VerticalScrolled(this, e);
+            if (VerticalScrolled != null) VerticalScrolled(this, e);
         }
 
         #endregion
@@ -421,21 +422,27 @@ namespace MetroFramework.Controls
                 return;
             }
 
-            VerticalMetroScrollbar.Location = new Point(ClientRectangle.Width - VerticalMetroScrollbar.Width, ClientRectangle.Y);
-            VerticalMetroScrollbar.Height = ClientRectangle.Height - HorizontalMetroScrollbar.Height;
+            int _horizontalScrollHeight = HorizontalMetroScrollbar.Height;
+            int _verticalScrollWidth = VerticalMetroScrollbar.Width;
 
-            if (!VerticalScrollbar)
+            VerticalMetroScrollbar.Location = new Point(ClientRectangle.Width - VerticalMetroScrollbar.Width, ClientRectangle.Y);
+
+            if (!VerticalScrollbar || !this.VerticalScroll.Visible)
             {
                 VerticalMetroScrollbar.Visible = false;
+                _verticalScrollWidth = 0;
             }
 
             HorizontalMetroScrollbar.Location = new Point(ClientRectangle.X, ClientRectangle.Height - HorizontalMetroScrollbar.Height);
-            HorizontalMetroScrollbar.Width = ClientRectangle.Width - VerticalMetroScrollbar.Width;
 
-            if (!HorizontalScrollbar)
+            if (!HorizontalScrollbar || !this.HorizontalScroll.Visible)
             {
                 HorizontalMetroScrollbar.Visible = false;
+                _horizontalScrollHeight = 0;
             }
+
+            VerticalMetroScrollbar.Height = ClientRectangle.Height - _horizontalScrollHeight;
+            HorizontalMetroScrollbar.Width = ClientRectangle.Width - _verticalScrollWidth;
         }
 
         #endregion

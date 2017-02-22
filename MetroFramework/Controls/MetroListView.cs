@@ -591,7 +591,7 @@ namespace MetroFramework.Controls
                 }
 
                 int _colWidth = e.Item.Bounds.Width;
-                if (this.View == View.Details) _colWidth = this.Columns[0].Width;
+                if (this.View == View.Details) _colWidth = this.Columns[e.ColumnIndex].Width;
 
                 using (StringFormat sf = new StringFormat())
                 {

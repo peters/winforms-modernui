@@ -259,6 +259,15 @@ namespace MetroFramework.Controls
             set { tileTextFontWeight = value; Refresh(); }
         }
 
+        private bool displayFocusBorder = true;
+        [DefaultValue(true)]
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public bool DisplayFocusBorder
+        {
+            get { return displayFocusBorder; }
+            set { displayFocusBorder = value; }
+        }
+
         private bool isHovered = false;
         private bool isPressed = false;
         private bool isFocused = false;
@@ -354,7 +363,7 @@ namespace MetroFramework.Controls
                 foreColor = ForeColor;
             }
 
-            if (isPressed || isHovered || isFocused)
+            if (isPressed || ((isHovered || isFocused) && displayFocusBorder))
             {
                 using (Pen p = new Pen(borderColor))
                 {

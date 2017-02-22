@@ -315,12 +315,12 @@ namespace MetroFramework.Controls
                 GetScrollPosition(out min, out max, out pos, out smallchange, out largechange);
 
                 BeginDisableChangeEvents();
-                _vScrollbar.Value = pos;
-                _vScrollbar.Maximum = max - largechange + 1;
+                _vScrollbar.Value = pos == 1 ? 0 : pos;
+                _vScrollbar.Maximum = max;// -largechange < largechange ? largechange : max - largechange;
                 _vScrollbar.Minimum = min;
                 _vScrollbar.SmallChange = smallchange;
                 _vScrollbar.LargeChange = largechange;
-                _vScrollbar.Visible = _vScrollbar.Maximum != 101;
+                _vScrollbar.Visible = max > largechange;
                 EndDisableChangeEvents();
             }
         }
@@ -539,41 +539,7 @@ namespace MetroFramework.Controls
             Color itemForeColor = MetroPaint.ForeColor.Button.Disabled(Theme);
             if (this.View == View.Details)
             {
-                //if (e.Item.Selected)
-                //{
-                //    e.Graphics.FillRectangle(new SolidBrush(ControlPaint.Light(MetroPaint.GetStyleColor(Style), _offset)), e.Bounds);
-                //    itemForeColor = Color.White;
-                //}
-
-                //using (StringFormat sf = new StringFormat())
-                //{
-                //    TextFormatFlags flags = TextFormatFlags.Left;
-
-                //    switch(e.Header.TextAlign)
-                //    {
-                //        case HorizontalAlignment.Center:
-                //            sf.Alignment = StringAlignment.Center;
-                //            flags = TextFormatFlags.HorizontalCenter;
-                //            break;
-                //        case HorizontalAlignment.Right:
-                //            sf.Alignment = StringAlignment.Far;
-                //            flags = TextFormatFlags.Right;
-                //            break;
-                //    }
-
-                //    double subItemValue;
-                //    if (e.ColumnIndex > 0 && Double.TryParse(e.SubItem.Text,NumberStyles.Currency,NumberFormatInfo.CurrentInfo, out subItemValue))
-                //    {
-                //        sf.Alignment = StringAlignment.Far;
-                //        flags = TextFormatFlags.Right;
-                //    }
-
-                //    if (e.ColumnIndex > 0 || e.Item.Selected)
-                //    {
-                //        TextFormatFlags align = TextFormatFlags.Left;
-                //        TextRenderer.DrawText(e.Graphics, e.SubItem.Text, stdFont, e.Bounds, itemForeColor, align | TextFormatFlags.SingleLine | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.VerticalCenter | TextFormatFlags.WordEllipsis);
-                //    }
-                //}
+             
                 if (e.Item.Selected)
                 {
                     e.Graphics.FillRectangle(new SolidBrush(ControlPaint.Light(MetroPaint.GetStyleColor(Style), _offset)), e.Bounds);
@@ -640,6 +606,10 @@ namespace MetroFramework.Controls
                         case HorizontalAlignment.Right:
                             sf.Alignment = StringAlignment.Far;
                             flags = TextFormatFlags.Right;
+                            break;
+                        default:
+                            sf.Alignment = StringAlignment.Near;
+                            flags = TextFormatFlags.Left;
                             break;
                     }
 

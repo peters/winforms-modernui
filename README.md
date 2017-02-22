@@ -12,6 +12,8 @@ Link: https://www.nuget.org/packages/MetroModernUI/
 
 Documentation
 -------------------
+* [MetroFramework Modern UI Frequently Ask Questions](http://denricdenise.info/metroframework-faq/)
+
 * [MetroForm Properties](http://denricdenise.info/2015/07/metroframework-modern-ui-metroform-properties/)
 * [MetroLink Properties](http://denricdenise.info/2015/08/metrolink-properties-metroframework-modern-ui/)
 * [MetroListView](http://denricdenise.info/2016/01/metrolistview-is-coming-in-metroframework/)

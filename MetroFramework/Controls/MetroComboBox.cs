@@ -304,18 +304,12 @@ namespace MetroFramework.Controls
             }
         }
 
-        /// <summary>
-        /// Hide the AutoCompleteSource since it isn't applicable here
-        /// </summary>
         [Browsable(false)]
         public new AutoCompleteSource AutoCompleteSource
         {
-            get { return AutoCompleteSource.None; } set { base.AutoCompleteSource = AutoCompleteSource.None; }
+            get { return base.AutoCompleteSource; } set { base.AutoCompleteSource = value; }
         }
 
-        /// <summary>
-        /// Hide the AutoCompleteCustomSource since it isn't applicable here
-        /// </summary>
         [Browsable(false)]
         public new AutoCompleteStringCollection AutoCompleteCustomSource
         {

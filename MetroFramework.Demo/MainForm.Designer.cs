@@ -1,5 +1,4 @@
-﻿using MetroFramework.Extensions;
-
+﻿
 namespace MetroFramework.Demo
 {
     partial class MainForm
@@ -58,7 +57,6 @@ namespace MetroFramework.Demo
             this.metroTile1 = new MetroFramework.Controls.MetroTile();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
             this.metroComboBox4 = new MetroFramework.Controls.MetroComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.metroComboBox3 = new MetroFramework.Controls.MetroComboBox();
             this.metroDateTime2 = new MetroFramework.Controls.MetroDateTime();
             this.metroLabel20 = new MetroFramework.Controls.MetroLabel();
@@ -439,7 +437,6 @@ namespace MetroFramework.Demo
             // metroTabPage2
             // 
             this.metroTabPage2.Controls.Add(this.metroComboBox4);
-            this.metroTabPage2.Controls.Add(this.textBox1);
             this.metroTabPage2.Controls.Add(this.metroComboBox3);
             this.metroTabPage2.Controls.Add(this.metroDateTime2);
             this.metroTabPage2.Controls.Add(this.metroLabel20);
@@ -492,13 +489,6 @@ namespace MetroFramework.Demo
             this.metroToolTip.SetToolTip(this.metroComboBox4, "ComboBox Tooltip");
             this.metroComboBox4.UseSelectable = true;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(604, 291);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(258, 22);
-            this.textBox1.TabIndex = 22;
-            // 
             // metroComboBox3
             // 
             this.metroComboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -520,7 +510,6 @@ namespace MetroFramework.Demo
             this.metroComboBox3.TabIndex = 21;
             this.metroToolTip.SetToolTip(this.metroComboBox3, "ComboBox Tooltip");
             this.metroComboBox3.UseSelectable = true;
-            this.metroComboBox3.TextChanged += new System.EventHandler(this.metroComboBox3_TextChanged);
             // 
             // metroDateTime2
             // 
@@ -1454,41 +1443,41 @@ namespace MetroFramework.Demo
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.metroContextMenu1.Name = "metroContextMenu1";
-            this.metroContextMenu1.Size = new System.Drawing.Size(164, 130);
+            this.metroContextMenu1.Size = new System.Drawing.Size(170, 140);
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // maintenanceToolStripMenuItem
             // 
             this.maintenanceToolStripMenuItem.Name = "maintenanceToolStripMenuItem";
-            this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.maintenanceToolStripMenuItem.Text = "&Maintenance";
             // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.settingsToolStripMenuItem.Text = "&Settings";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(166, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
             // MainForm
@@ -1625,7 +1614,6 @@ namespace MetroFramework.Demo
         private Controls.MetroRadioButton metroRadioButton6;
         private Controls.MetroCheckBox metroCheckBox6;
         private Controls.MetroComboBox metroComboBox3;
-        private System.Windows.Forms.TextBox textBox1;
         private Controls.MetroComboBox metroComboBox4;
     }
 }

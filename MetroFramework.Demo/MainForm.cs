@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 using MetroFramework.Forms;
 using System.Data;
-using MetroFramework.Extensions;
 
 namespace MetroFramework.Demo
 {
@@ -97,9 +96,5 @@ namespace MetroFramework.Demo
             metroTextBox2.Focus();
         }
 
-        private void metroComboBox3_TextChanged(object sender, EventArgs e)
-        {
-            textBox1.Text = metroComboBox3.Text;
-        }
-    }
+     }
 }

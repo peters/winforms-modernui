@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using MetroFramework.Forms;
 using System.Data;
+using MetroFramework.Extensions;
 
 namespace MetroFramework.Demo
 {
@@ -14,12 +15,19 @@ namespace MetroFramework.Demo
         {
             InitializeComponent();
 
+            this.BorderStyle = MetroFormBorderStyle.FixedSingle;
+            this.ShadowType = MetroFormShadowType.AeroShadow;
+
             DataTable _table = new DataTable();
             _table.ReadXml(Application.StartupPath + @"\Data\Books.xml");
             metroGrid1.DataSource = _table;
 
             metroGrid1.Font = new Font("Segoe UI", 11f, FontStyle.Regular, GraphicsUnit.Pixel);
             metroGrid1.AllowUserToAddRows = false;
+
+            this.metroComboBox4.DataSource = _table;
+            metroComboBox4.ValueMember = "Id";
+            metroComboBox4.DisplayMember = "title";
         }
 
         private void metroTileSwitch_Click(object sender, EventArgs e)
@@ -87,6 +95,11 @@ namespace MetroFramework.Demo
         private void metroButton4_Click(object sender, EventArgs e)
         {
             metroTextBox2.Focus();
+        }
+
+        private void metroComboBox3_TextChanged(object sender, EventArgs e)
+        {
+            textBox1.Text = metroComboBox3.Text;
         }
     }
 }

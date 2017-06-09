@@ -32,10 +32,10 @@
             this.tlpBody = new System.Windows.Forms.TableLayoutPanel();
             this.messageLabel = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.metroButton3 = new MetroFramework.Controls.MetroButton();
-            this.metroButton2 = new MetroFramework.Controls.MetroButton();
-            this.pnlBottom = new System.Windows.Forms.Panel();
             this.panelbody.SuspendLayout();
             this.tlpBody.SuspendLayout();
             this.pnlBottom.SuspendLayout();
@@ -66,7 +66,7 @@
             this.tlpBody.Name = "tlpBody";
             this.tlpBody.RowCount = 4;
             this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpBody.Size = new System.Drawing.Size(804, 211);
@@ -79,10 +79,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.messageLabel.BackColor = System.Drawing.Color.Transparent;
             this.messageLabel.ForeColor = System.Drawing.Color.White;
-            this.messageLabel.Location = new System.Drawing.Point(83, 30);
+            this.messageLabel.Location = new System.Drawing.Point(83, 37);
             this.messageLabel.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.messageLabel.Name = "messageLabel";
-            this.messageLabel.Size = new System.Drawing.Size(640, 141);
+            this.messageLabel.Size = new System.Drawing.Size(640, 134);
             this.messageLabel.TabIndex = 0;
             this.messageLabel.Text = "message here";
             // 
@@ -95,43 +95,9 @@
             this.titleLabel.Location = new System.Drawing.Point(80, 5);
             this.titleLabel.Margin = new System.Windows.Forms.Padding(0);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(125, 25);
+            this.titleLabel.Size = new System.Drawing.Size(159, 32);
             this.titleLabel.TabIndex = 1;
             this.titleLabel.Text = "message title";
-            // 
-            // metroButton1
-            // 
-            this.metroButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroButton1.BackColor = System.Drawing.Color.ForestGreen;
-            this.metroButton1.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.metroButton1.Location = new System.Drawing.Point(357, 1);
-            this.metroButton1.Name = "metroButton1";
-            this.metroButton1.Size = new System.Drawing.Size(90, 26);
-            this.metroButton1.TabIndex = 3;
-            this.metroButton1.Text = "button 1";
-            this.metroButton1.UseSelectable = true;
-            // 
-            // metroButton3
-            // 
-            this.metroButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroButton3.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.metroButton3.Location = new System.Drawing.Point(553, 1);
-            this.metroButton3.Name = "metroButton3";
-            this.metroButton3.Size = new System.Drawing.Size(90, 26);
-            this.metroButton3.TabIndex = 5;
-            this.metroButton3.Text = "button 3";
-            this.metroButton3.UseSelectable = true;
-            // 
-            // metroButton2
-            // 
-            this.metroButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroButton2.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.metroButton2.Location = new System.Drawing.Point(455, 1);
-            this.metroButton2.Name = "metroButton2";
-            this.metroButton2.Size = new System.Drawing.Size(90, 26);
-            this.metroButton2.TabIndex = 4;
-            this.metroButton2.Text = "button 2";
-            this.metroButton2.UseSelectable = true;
             // 
             // pnlBottom
             // 
@@ -146,9 +112,44 @@
             this.pnlBottom.Size = new System.Drawing.Size(643, 40);
             this.pnlBottom.TabIndex = 2;
             // 
+            // metroButton2
+            // 
+            this.metroButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroButton2.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.metroButton2.Location = new System.Drawing.Point(455, 1);
+            this.metroButton2.Name = "metroButton2";
+            this.metroButton2.Size = new System.Drawing.Size(90, 26);
+            this.metroButton2.TabIndex = 4;
+            this.metroButton2.Text = "button 2";
+            this.metroButton2.UseSelectable = true;
+            // 
+            // metroButton1
+            // 
+            this.metroButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroButton1.BackColor = System.Drawing.Color.ForestGreen;
+            this.metroButton1.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.metroButton1.Location = new System.Drawing.Point(357, 1);
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.Size = new System.Drawing.Size(90, 26);
+            this.metroButton1.TabIndex = 3;
+            this.metroButton1.Text = "button 1";
+            this.metroButton1.UseSelectable = true;
+            this.metroButton1.UseVisualStyleBackColor = false;
+            // 
+            // metroButton3
+            // 
+            this.metroButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroButton3.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.metroButton3.Location = new System.Drawing.Point(553, 1);
+            this.metroButton3.Name = "metroButton3";
+            this.metroButton3.Size = new System.Drawing.Size(90, 26);
+            this.metroButton3.TabIndex = 5;
+            this.metroButton3.Text = "button 3";
+            this.metroButton3.UseSelectable = true;
+            // 
             // MetroMessageBoxControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 211);
             this.ControlBox = false;

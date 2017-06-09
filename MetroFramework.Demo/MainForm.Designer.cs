@@ -1,4 +1,5 @@
-﻿namespace MetroFramework.Demo
+﻿
+namespace MetroFramework.Demo
 {
     partial class MainForm
     {
@@ -56,6 +57,8 @@
             this.metroTile2 = new MetroFramework.Controls.MetroTile();
             this.metroTile1 = new MetroFramework.Controls.MetroTile();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+            this.metroComboBox4 = new MetroFramework.Controls.MetroComboBox();
+            this.metroComboBox3 = new MetroFramework.Controls.MetroComboBox();
             this.metroDateTime2 = new MetroFramework.Controls.MetroDateTime();
             this.metroLabel20 = new MetroFramework.Controls.MetroLabel();
             this.metroDateTime1 = new MetroFramework.Controls.MetroDateTime();
@@ -449,6 +452,8 @@
             // 
             // metroTabPage2
             // 
+            this.metroTabPage2.Controls.Add(this.metroComboBox4);
+            this.metroTabPage2.Controls.Add(this.metroComboBox3);
             this.metroTabPage2.Controls.Add(this.metroDateTime2);
             this.metroTabPage2.Controls.Add(this.metroLabel20);
             this.metroTabPage2.Controls.Add(this.metroDateTime1);
@@ -482,6 +487,45 @@
             this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.VerticalScrollbarSize = 13;
             this.metroTabPage2.Visible = false;
+            // 
+            // metroComboBox4
+            // 
+            this.metroComboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroComboBox4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.metroComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.metroComboBox4.FormattingEnabled = true;
+            this.metroComboBox4.ItemHeight = 24;
+            this.metroComboBox4.Location = new System.Drawing.Point(268, 295);
+            this.metroComboBox4.Margin = new System.Windows.Forms.Padding(4);
+            this.metroComboBox4.Name = "metroComboBox4";
+            this.metroComboBox4.PromptText = "DataBound ComboBox";
+            this.metroComboBox4.Size = new System.Drawing.Size(283, 30);
+            this.metroComboBox4.TabIndex = 23;
+            this.metroToolTip.SetToolTip(this.metroComboBox4, "ComboBox Tooltip");
+            this.metroComboBox4.UseSelectable = true;
+            // 
+            // metroComboBox3
+            // 
+            this.metroComboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroComboBox3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.metroComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.metroComboBox3.FormattingEnabled = true;
+            this.metroComboBox3.ItemHeight = 24;
+            this.metroComboBox3.Items.AddRange(new object[] {
+            "Normal Combobox 1",
+            "Normal Combobox 2",
+            "Normal Combobox 3",
+            "Normal Combobox 4"});
+            this.metroComboBox3.Location = new System.Drawing.Point(268, 260);
+            this.metroComboBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.metroComboBox3.Name = "metroComboBox3";
+            this.metroComboBox3.PromptText = "Prompted ComboBox";
+            this.metroComboBox3.Size = new System.Drawing.Size(283, 30);
+            this.metroComboBox3.TabIndex = 21;
+            this.metroToolTip.SetToolTip(this.metroComboBox3, "ComboBox Tooltip");
+            this.metroComboBox3.UseSelectable = true;
             // 
             // metroDateTime2
             // 
@@ -525,6 +569,7 @@
             // 
             // metroComboBox2
             // 
+            this.metroComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.metroComboBox2.Enabled = false;
             this.metroComboBox2.FormattingEnabled = true;
             this.metroComboBox2.ItemHeight = 23;
@@ -656,9 +701,9 @@
             // metroComboBox1
             // 
             this.metroComboBox1.FormattingEnabled = true;
-            this.metroComboBox1.ItemHeight = 23;
+            this.metroComboBox1.ItemHeight = 24;
             this.metroComboBox1.Items.AddRange(new object[] {
-            "Normal Combobox 1",
+            "Normal Combobox 1Normal Combobox 1Normal Combobox 1",
             "Normal Combobox 2",
             "Normal Combobox 3",
             "Normal Combobox 4"});

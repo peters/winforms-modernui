@@ -94,7 +94,6 @@ namespace MetroFramework.Demo
         private void metroButton4_Click(object sender, EventArgs e)
         {
             metroTextBox2.Focus();
-        }
-
-     }
+        } 
+    }
 }

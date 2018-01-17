@@ -1575,6 +1575,8 @@ namespace MetroFramework.Demo
         private Controls.MetroTextBox metroTextBox1;
         private Controls.MetroLabel metroLabel2;
         private Controls.MetroComboBox metroComboBox1;
+        private Controls.MetroComboBox metroComboBox3;
+        private Controls.MetroComboBox metroComboBox4;
         private Controls.MetroTextBox metroTextBox4;
         private Controls.MetroTextBox metroTextBox3;
         private Controls.MetroTextBox metroTextBox2;

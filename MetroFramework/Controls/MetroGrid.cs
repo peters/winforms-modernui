@@ -264,10 +264,8 @@ namespace MetroFramework.Controls
         private HScrollBar hScrollbar = null;
         private VScrollBar vScrollbar = null;
 
-        public MetroDataGridHelper(MetroScrollBar scrollbar, DataGridView grid)
-        {
-            new MetroDataGridHelper(scrollbar, grid,true);
-        }
+        public MetroDataGridHelper(MetroScrollBar scrollbar, DataGridView grid) : this(scrollbar, grid, true)
+        {}
 
         public MetroDataGridHelper(MetroScrollBar scrollbar, DataGridView grid, bool vertical)
         {
@@ -294,7 +292,7 @@ namespace MetroFramework.Controls
             _grid.Scroll += new ScrollEventHandler(_grid_Scroll);
             _grid.Resize += new EventHandler(_grid_Resize);
             _scrollbar.Scroll += _scrollbar_Scroll;
-            _scrollbar.ScrollbarSize = 17;
+            _scrollbar.ScrollbarSize = 21;
 
             UpdateScrollbar();
         }

@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace MetroFramework.Demo
 {
     partial class MainForm
@@ -555,6 +557,7 @@ namespace MetroFramework.Demo
             // 
             this.metroComboBox3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.metroComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.metroComboBox3.Cursor = Cursors.Hand;
             this.metroComboBox3.FormattingEnabled = true;
             this.metroComboBox3.ItemHeight = 24;
             this.metroComboBox3.Items.AddRange(new object[] {

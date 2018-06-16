@@ -529,11 +529,6 @@ namespace MetroFramework.Controls
             base.OnSizeChanged(e);
         }
 
-        private void BaseTextBoxCursorChanged(object sender, EventArgs e)
-        {
-            base.OnCursorChanged(e);
-        }
-
         private void BaseTextBoxContextMenuStripChanged(object sender, EventArgs e)
         {
             base.OnContextMenuStripChanged(e);
@@ -833,7 +828,6 @@ namespace MetroFramework.Controls
             baseTextBox.ClientSizeChanged += BaseTextBoxClientSizeChanged;
             baseTextBox.ContextMenuChanged += BaseTextBoxContextMenuChanged;
             baseTextBox.ContextMenuStripChanged += BaseTextBoxContextMenuStripChanged;
-            baseTextBox.CursorChanged += BaseTextBoxCursorChanged;
 
             baseTextBox.KeyDown += BaseTextBoxKeyDown;
             baseTextBox.KeyPress += BaseTextBoxKeyPress;

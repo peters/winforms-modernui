@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace MetroFramework.Demo
 {
     partial class MainForm
@@ -36,6 +38,13 @@ namespace MetroFramework.Demo
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.metroDropDownButton1 = new MetroFramework.Controls.MetroDropDownButton();
+            this.metroContextMenu1 = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.maintenanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metroRadioButton4 = new MetroFramework.Controls.MetroRadioButton();
             this.metroRadioButton5 = new MetroFramework.Controls.MetroRadioButton();
             this.metroCheckBox4 = new MetroFramework.Controls.MetroCheckBox();
@@ -63,7 +72,6 @@ namespace MetroFramework.Demo
             this.metroLabel20 = new MetroFramework.Controls.MetroLabel();
             this.metroDateTime1 = new MetroFramework.Controls.MetroDateTime();
             this.metroButton5 = new MetroFramework.Controls.MetroButton();
-            this.metroComboBox2 = new MetroFramework.Controls.MetroComboBox();
             this.metroToggle3 = new MetroFramework.Controls.MetroToggle();
             this.metroToggle2 = new MetroFramework.Controls.MetroToggle();
             this.metroRadioButton3 = new MetroFramework.Controls.MetroRadioButton();
@@ -124,15 +132,9 @@ namespace MetroFramework.Demo
             this.metroStyleManager = new MetroFramework.Components.MetroStyleManager(this.components);
             this.metroToolTip = new MetroFramework.Components.MetroToolTip();
             this.metroStyleExtender = new MetroFramework.Components.MetroStyleExtender(this.components);
-            this.metroContextMenu1 = new MetroFramework.Controls.MetroContextMenu(this.components);
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.maintenanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
+            this.metroContextMenu1.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
             this.metroTabPage3.SuspendLayout();
             this.metroTabPage4.SuspendLayout();
@@ -141,7 +143,6 @@ namespace MetroFramework.Demo
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).BeginInit();
             this.metroTabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
-            this.metroContextMenu1.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroTabControl1
@@ -157,7 +158,7 @@ namespace MetroFramework.Demo
             this.metroTabControl1.Location = new System.Drawing.Point(27, 74);
             this.metroTabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 0;
+            this.metroTabControl1.SelectedIndex = 1;
             this.metroTabControl1.Size = new System.Drawing.Size(906, 371);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
@@ -215,6 +216,56 @@ namespace MetroFramework.Demo
             this.metroDropDownButton1.TabIndex = 24;
             this.metroDropDownButton1.Text = "DropDownButton";
             this.metroDropDownButton1.UseSelectable = true;
+            // 
+            // metroContextMenu1
+            // 
+            this.metroContextMenu1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.metroContextMenu1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.metroContextMenu1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.metroContextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.maintenanceToolStripMenuItem,
+            this.toolsToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.exitToolStripMenuItem});
+            this.metroContextMenu1.Name = "metroContextMenu1";
+            this.metroContextMenu1.Size = new System.Drawing.Size(164, 130);
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // maintenanceToolStripMenuItem
+            // 
+            this.maintenanceToolStripMenuItem.Name = "maintenanceToolStripMenuItem";
+            this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.maintenanceToolStripMenuItem.Text = "&Maintenance";
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.settingsToolStripMenuItem.Text = "&Settings";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.exitToolStripMenuItem.Text = "E&xit";
             // 
             // metroRadioButton4
             // 
@@ -458,7 +509,6 @@ namespace MetroFramework.Demo
             this.metroTabPage2.Controls.Add(this.metroLabel20);
             this.metroTabPage2.Controls.Add(this.metroDateTime1);
             this.metroTabPage2.Controls.Add(this.metroButton5);
-            this.metroTabPage2.Controls.Add(this.metroComboBox2);
             this.metroTabPage2.Controls.Add(this.metroToggle3);
             this.metroTabPage2.Controls.Add(this.metroToggle2);
             this.metroTabPage2.Controls.Add(this.metroRadioButton3);
@@ -490,13 +540,11 @@ namespace MetroFramework.Demo
             // 
             // metroComboBox4
             // 
-            this.metroComboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.metroComboBox4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.metroComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.metroComboBox4.FormattingEnabled = true;
             this.metroComboBox4.ItemHeight = 24;
-            this.metroComboBox4.Location = new System.Drawing.Point(268, 295);
+            this.metroComboBox4.Location = new System.Drawing.Point(268, 279);
             this.metroComboBox4.Margin = new System.Windows.Forms.Padding(4);
             this.metroComboBox4.Name = "metroComboBox4";
             this.metroComboBox4.PromptText = "DataBound ComboBox";
@@ -507,10 +555,9 @@ namespace MetroFramework.Demo
             // 
             // metroComboBox3
             // 
-            this.metroComboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.metroComboBox3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.metroComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.metroComboBox3.Cursor = Cursors.Hand;
             this.metroComboBox3.FormattingEnabled = true;
             this.metroComboBox3.ItemHeight = 24;
             this.metroComboBox3.Items.AddRange(new object[] {
@@ -518,7 +565,7 @@ namespace MetroFramework.Demo
             "Normal Combobox 2",
             "Normal Combobox 3",
             "Normal Combobox 4"});
-            this.metroComboBox3.Location = new System.Drawing.Point(268, 260);
+            this.metroComboBox3.Location = new System.Drawing.Point(268, 241);
             this.metroComboBox3.Margin = new System.Windows.Forms.Padding(4);
             this.metroComboBox3.Name = "metroComboBox3";
             this.metroComboBox3.PromptText = "Prompted ComboBox";
@@ -532,9 +579,9 @@ namespace MetroFramework.Demo
             this.metroDateTime2.Enabled = false;
             this.metroDateTime2.Location = new System.Drawing.Point(268, 107);
             this.metroDateTime2.Margin = new System.Windows.Forms.Padding(4);
-            this.metroDateTime2.MinimumSize = new System.Drawing.Size(4, 29);
+            this.metroDateTime2.MinimumSize = new System.Drawing.Size(0, 30);
             this.metroDateTime2.Name = "metroDateTime2";
-            this.metroDateTime2.Size = new System.Drawing.Size(283, 29);
+            this.metroDateTime2.Size = new System.Drawing.Size(283, 30);
             this.metroDateTime2.TabIndex = 20;
             // 
             // metroLabel20
@@ -551,9 +598,9 @@ namespace MetroFramework.Demo
             // 
             this.metroDateTime1.Location = new System.Drawing.Point(268, 63);
             this.metroDateTime1.Margin = new System.Windows.Forms.Padding(4);
-            this.metroDateTime1.MinimumSize = new System.Drawing.Size(4, 29);
+            this.metroDateTime1.MinimumSize = new System.Drawing.Size(0, 30);
             this.metroDateTime1.Name = "metroDateTime1";
-            this.metroDateTime1.Size = new System.Drawing.Size(283, 29);
+            this.metroDateTime1.Size = new System.Drawing.Size(283, 30);
             this.metroDateTime1.TabIndex = 18;
             // 
             // metroButton5
@@ -566,21 +613,6 @@ namespace MetroFramework.Demo
             this.metroButton5.Text = "&Show Context Menu";
             this.metroButton5.UseSelectable = true;
             this.metroButton5.Click += new System.EventHandler(this.metroButton5_Click);
-            // 
-            // metroComboBox2
-            // 
-            this.metroComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.metroComboBox2.Enabled = false;
-            this.metroComboBox2.FormattingEnabled = true;
-            this.metroComboBox2.ItemHeight = 23;
-            this.metroComboBox2.Items.AddRange(new object[] {
-            "Normal Combobox"});
-            this.metroComboBox2.Location = new System.Drawing.Point(268, 246);
-            this.metroComboBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.metroComboBox2.Name = "metroComboBox2";
-            this.metroComboBox2.Size = new System.Drawing.Size(283, 29);
-            this.metroComboBox2.TabIndex = 16;
-            this.metroComboBox2.UseSelectable = true;
             // 
             // metroToggle3
             // 
@@ -664,7 +696,7 @@ namespace MetroFramework.Demo
             this.metroLabel19.Location = new System.Drawing.Point(604, 171);
             this.metroLabel19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.metroLabel19.Name = "metroLabel19";
-            this.metroLabel19.Size = new System.Drawing.Size(89, 20);
+            this.metroLabel19.Size = new System.Drawing.Size(87, 20);
             this.metroLabel19.TabIndex = 9;
             this.metroLabel19.Text = "MetroToggle";
             // 
@@ -711,7 +743,7 @@ namespace MetroFramework.Demo
             this.metroComboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.metroComboBox1.Name = "metroComboBox1";
             this.metroComboBox1.PromptText = "Prompted ComboBox";
-            this.metroComboBox1.Size = new System.Drawing.Size(283, 29);
+            this.metroComboBox1.Size = new System.Drawing.Size(283, 30);
             this.metroComboBox1.TabIndex = 5;
             this.metroToolTip.SetToolTip(this.metroComboBox1, "ComboBox Tooltip");
             this.metroComboBox1.UseSelectable = true;
@@ -831,7 +863,7 @@ namespace MetroFramework.Demo
             this.metroLabel5.Location = new System.Drawing.Point(37, 153);
             this.metroLabel5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.metroLabel5.Name = "metroLabel5";
-            this.metroLabel5.Size = new System.Drawing.Size(100, 20);
+            this.metroLabel5.Size = new System.Drawing.Size(98, 20);
             this.metroLabel5.TabIndex = 8;
             this.metroLabel5.Text = "MetroTrackBar";
             // 
@@ -1055,7 +1087,7 @@ namespace MetroFramework.Demo
             this.metroLabel15.Location = new System.Drawing.Point(456, 31);
             this.metroLabel15.Margin = new System.Windows.Forms.Padding(4);
             this.metroLabel15.Name = "metroLabel15";
-            this.metroLabel15.Size = new System.Drawing.Size(94, 20);
+            this.metroLabel15.Size = new System.Drawing.Size(92, 20);
             this.metroLabel15.TabIndex = 10;
             this.metroLabel15.Text = "MetroTextBox";
             // 
@@ -1450,54 +1482,6 @@ namespace MetroFramework.Demo
             this.metroToolTip.StyleManager = null;
             this.metroToolTip.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
-            // metroContextMenu1
-            // 
-            this.metroContextMenu1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.metroContextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.maintenanceToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.settingsToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.exitToolStripMenuItem});
-            this.metroContextMenu1.Name = "metroContextMenu1";
-            this.metroContextMenu1.Size = new System.Drawing.Size(170, 140);
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // maintenanceToolStripMenuItem
-            // 
-            this.maintenanceToolStripMenuItem.Name = "maintenanceToolStripMenuItem";
-            this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.maintenanceToolStripMenuItem.Text = "&Maintenance";
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.toolsToolStripMenuItem.Text = "&Tools";
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.settingsToolStripMenuItem.Text = "&Settings";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(166, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            // 
             // MainForm
             // 
             this.ApplyImageInvert = true;
@@ -1517,6 +1501,7 @@ namespace MetroFramework.Demo
             this.metroTabControl1.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);
             this.metroTabPage1.PerformLayout();
+            this.metroContextMenu1.ResumeLayout(false);
             this.metroTabPage2.ResumeLayout(false);
             this.metroTabPage2.PerformLayout();
             this.metroTabPage3.ResumeLayout(false);
@@ -1529,7 +1514,6 @@ namespace MetroFramework.Demo
             this.metroTabPage5.ResumeLayout(false);
             this.metroTabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
-            this.metroContextMenu1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1594,7 +1578,6 @@ namespace MetroFramework.Demo
         private Controls.MetroRadioButton metroRadioButton2;
         private Controls.MetroCheckBox metroCheckBox3;
         private Controls.MetroCheckBox metroCheckBox2;
-        private Controls.MetroComboBox metroComboBox2;
         private Controls.MetroTabPage metroTabPage5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * MetroFramework - Modern UI for WinForms
  * 
  * The MIT License (MIT)
@@ -383,7 +383,7 @@ namespace MetroFramework.Controls
             }
 
            
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.CheckBox(metroCheckBoxSize, metroCheckBoxWeight), textRect, foreColor, MetroPaint.GetTextFormatFlags(TextAlign));
+            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.CheckBox(metroCheckBoxSize, metroCheckBoxWeight), textRect, foreColor, MetroPaint.GetTextFormatFlags(TextAlign, !this.AutoSize));
 
             OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, foreColor, e.Graphics));
 

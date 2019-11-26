@@ -1,4 +1,4 @@
-﻿/**
+/**
  * MetroFramework - Modern UI for WinForms
  * 
  * The MIT License (MIT)
@@ -102,7 +102,12 @@ namespace MetroFramework.Controls
 
                 return metroStyle;
             }
-            set { metroStyle = value; }
+            set
+            {
+                metroStyle = value;
+                if (DesignMode)
+                    Invalidate();
+            }
         }
 
         private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
@@ -128,7 +133,12 @@ namespace MetroFramework.Controls
 
                 return metroTheme;
             }
-            set { metroTheme = value; }
+            set
+            {
+                metroTheme = value;
+                if (DesignMode)
+                    Invalidate();
+            }
         }
 
         private MetroStyleManager metroStyleManager = null;
@@ -164,7 +174,12 @@ namespace MetroFramework.Controls
         public bool UseStyleColors
         {
             get { return useStyleColors; }
-            set { useStyleColors = value; }
+            set
+            {
+                useStyleColors = value;
+                if (DesignMode)
+                    Invalidate();
+            }
         }
 
         [Browsable(false)]
@@ -242,7 +257,12 @@ public Int32 ImageSize
         public MetroLinkSize FontSize
         {
             get { return metroLinkSize; }
-            set { metroLinkSize = value; }
+            set
+            {
+                metroLinkSize = value;
+                if (DesignMode)
+                    Invalidate();
+            }
         }
 
         private MetroLinkWeight metroLinkWeight = MetroLinkWeight.Bold;
@@ -251,7 +271,12 @@ public Int32 ImageSize
         public MetroLinkWeight FontWeight
         {
             get { return metroLinkWeight; }
-            set { metroLinkWeight = value; }
+            set
+            {
+                metroLinkWeight = value;
+                if (DesignMode)
+                    Invalidate();
+            }
         }
 
         [Browsable(false)]
@@ -358,7 +383,7 @@ public Int32 ImageSize
                 }
             }
 
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), ClientRectangle, foreColor, MetroPaint.GetTextFormatFlags(TextAlign));
+            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Link(metroLinkSize, metroLinkWeight), ClientRectangle, foreColor, MetroPaint.GetTextFormatFlags(TextAlign, !this.AutoSize));
 
             OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, foreColor, e.Graphics));
 

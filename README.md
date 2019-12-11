@@ -13,6 +13,11 @@ Supported platforms
 * Windows 8 .NET FRAMEWORK 2.0 / .NET CORE
 * Windows 10 .NET FRAMEWORK 2.0 / .NET CORE
 
+Building
+-------------------
+
+Modernui requires at least Visual Studio 2019 (16.4) and .NET Core SDK 3.1 to build on Windows.
+
 Controls supported
 ------------------
 * Button

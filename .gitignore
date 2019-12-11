@@ -1,4 +1,5 @@
 bin/
 obj/
 .vs/
+nupkgs/
 *.csproj.user

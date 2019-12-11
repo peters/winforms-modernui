@@ -11,14 +11,11 @@ Link: http://nuget.org/packages/ModernUI/
 
 Supported platforms
 -------------------
-* Windows XP SP1/SP2/SP3 (without Aero Glass)
-* Windows Vista
-* Windows 7
-* Windows 8
-
-Requirements
-------------
-* .NET Framework 2.0 and above.
+* Windows XP SP1/SP2/SP3 (without Aero Glass) .NET Framework 2.0
+* Windows Vista .NET Framework 2.0 
+* Windows 7 .NET FRAMEWORK 2.0 / .NET CORE  
+* Windows 8 .NET FRAMEWORK 2.0 / .NET CORE
+* Windows 10 .NET FRAMEWORK 2.0 / .NET CORE
 
 Controls supported
 ------------------
@@ -41,7 +38,7 @@ Controls supported
 Components supported
 ------------------
 * StyleManager (Auto inherit a default style to all used controls)
-* ToolTip
+* ToolTip (.NET FRAMEWORK 2.0 AND .NET CORE 3.0 only)
 
 Screenshots
 ----------

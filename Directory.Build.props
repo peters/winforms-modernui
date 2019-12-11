@@ -1,0 +1,36 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsNetCoreApp Condition="$(TargetFramework.StartsWith('netcoreapp'))">true</IsNetCoreApp>
+    <IsNetCoreApp Condition="'$(IsNetCoreApp)' == ''">false</IsNetCoreApp>
+    <IsNetFullFramework Condition="'$(IsNetCoreApp)' == 'false'">true</IsNetFullFramework>
+    <IsNetFullFramework Condition="'$(IsNetFullFramework)' == ''">false</IsNetFullFramework>
+    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)nupkgs</PackageOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsNetCoreApp)">
+    <DefineConstants>$(DefineConstants);NETCOREAPP;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsNetCoreApp) AND $(TargetFramework) == 'netcoreapp3.0'">
+    <DefineConstants>$(DefineConstants);NETCOREAPP30;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsNetCoreApp) AND $(TargetFramework) == 'netcoreapp3.1'">
+    <DefineConstants>$(DefineConstants);NETCOREAPP31;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsNetFullFramework)">
+    <DefineConstants>$(DefineConstants);NETFULLFRAMEWORK;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsNetFullFramework) AND '$(TargetFramework)' == 'net20'">
+    <DefineConstants>$(DefineConstants);NET20;</DefineConstants>
+  </PropertyGroup>
+
+</Project>

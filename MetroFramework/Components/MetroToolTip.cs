@@ -21,14 +21,13 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System;
-using System.Collections.Generic;
+
+#if NETFULLFRAMEWORK || NETCOREAPP30
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
 using MetroFramework.Interfaces;
-using MetroFramework.Design;
 using MetroFramework.Drawing;
 
 namespace MetroFramework.Components
@@ -201,3 +200,4 @@ namespace MetroFramework.Components
         #endregion
     }
 }
+#endif

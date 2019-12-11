@@ -84,7 +84,9 @@
             this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
             this.metroProgressBar = new MetroFramework.Controls.MetroProgressBar();
             this.metroStyleManager = new MetroFramework.Components.MetroStyleManager();
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip = new MetroFramework.Components.MetroToolTip();
+#endif
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroTabPage4.SuspendLayout();
@@ -228,7 +230,9 @@
             this.metroLink1.Text = "Normal Link";
             this.metroLink1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.metroLink1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroLink1, "Link Tooltip");
+#endif
             this.metroLink1.UseStyleColors = false;
             // 
             // metroLabel1
@@ -284,7 +288,9 @@
             this.metroButton1.TabIndex = 5;
             this.metroButton1.Text = "Normal Button";
             this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroButton1, "Button Tooltip");
+#endif
             // 
             // metroTileSwitch
             // 
@@ -326,7 +332,9 @@
             this.metroTile1.Text = "Switch Theme";
             this.metroTile1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTile1.TileCount = 0;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroTile1, "Tile Tooltip");
+#endif
             this.metroTile1.Click += new System.EventHandler(this.metroTile1_Click);
             // 
             // metroTabPage4
@@ -482,7 +490,9 @@
             this.metroLabel14.TabIndex = 7;
             this.metroLabel14.Text = "Normal Selectable Label";
             this.metroLabel14.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroLabel14, "Label Tooltip");
+#endif
             this.metroLabel14.UseStyleColors = false;
             // 
             // metroLabel11
@@ -538,7 +548,9 @@
             this.metroLabel3.TabIndex = 4;
             this.metroLabel3.Text = "Normal Label";
             this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroLabel3, "Label Tooltip");
+#endif
             this.metroLabel3.UseStyleColors = false;
             // 
             // metroTextBox1
@@ -555,7 +567,9 @@
             this.metroTextBox1.TabIndex = 3;
             this.metroTextBox1.Text = "Normal Textbox";
             this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroTextBox1, "Textbox Tooltip");
+#endif
             this.metroTextBox1.UseStyleColors = false;
             // 
             // metroLabel2
@@ -825,7 +839,9 @@
             this.metroComboBox1.StyleManager = null;
             this.metroComboBox1.TabIndex = 5;
             this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroComboBox1, "ComboBox Tooltip");
+#endif
             // 
             // metroRadioButton1
             // 
@@ -842,7 +858,9 @@
             this.metroRadioButton1.TabStop = true;
             this.metroRadioButton1.Text = "Normal Radiobutton";
             this.metroRadioButton1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroRadioButton1, "RadioButton Tooltip");
+#endif
             this.metroRadioButton1.UseStyleColors = false;
             this.metroRadioButton1.UseVisualStyleBackColor = true;
             // 
@@ -861,7 +879,9 @@
             this.metroToggle1.TabIndex = 3;
             this.metroToggle1.Text = "Aus";
             this.metroToggle1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroToggle1, "Toggle Tooltip");
+#endif
             this.metroToggle1.UseStyleColors = false;
             this.metroToggle1.UseVisualStyleBackColor = true;
             // 
@@ -879,7 +899,9 @@
             this.metroCheckBox1.TabIndex = 2;
             this.metroCheckBox1.Text = "Normal Checkbox";
             this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroCheckBox1, "Checkbox Tooltip");
+#endif
             this.metroCheckBox1.UseStyleColors = false;
             this.metroCheckBox1.UseVisualStyleBackColor = true;
             // 
@@ -1044,7 +1066,9 @@
             this.metroScrollBar1.StyleManager = null;
             this.metroScrollBar1.TabIndex = 5;
             this.metroScrollBar1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroScrollBar1, "Scrollbar Tooltip");
+#endif
             this.metroScrollBar1.UseBarColor = true;
             // 
             // metroTrackBar1
@@ -1064,7 +1088,9 @@
             this.metroTrackBar1.TabIndex = 4;
             this.metroTrackBar1.Text = "metroTrackBar1";
             this.metroTrackBar1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroTrackBar1, "TrackBar Tooltip");
+#endif
             this.metroTrackBar1.Value = 50;
             // 
             // metroProgressSpinner1
@@ -1078,7 +1104,9 @@
             this.metroProgressSpinner1.StyleManager = null;
             this.metroProgressSpinner1.TabIndex = 3;
             this.metroProgressSpinner1.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroProgressSpinner1, "Spinner Tooltip");
+#endif
             // 
             // metroProgressBar
             // 
@@ -1097,7 +1125,9 @@
             this.metroProgressBar.TabIndex = 2;
             this.metroProgressBar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.metroProgressBar.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             this.metroToolTip.SetToolTip(this.metroProgressBar, "ProgressBar Tooltip");
+#endif
             this.metroProgressBar.Value = 25;
             // 
             // metroStyleManager
@@ -1105,12 +1135,14 @@
             this.metroStyleManager.OwnerForm = this;
             this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroStyleManager.Theme = MetroFramework.MetroThemeStyle.Light;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
             // 
             // metroToolTip
             // 
             this.metroToolTip.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroToolTip.StyleManager = null;
             this.metroToolTip.Theme = MetroFramework.MetroThemeStyle.Light;
+#endif
             // 
             // MainForm
             // 
@@ -1143,7 +1175,9 @@
         private Controls.MetroTile metroTileSwitch;
         private Controls.MetroTile metroTile2;
         private Controls.MetroTile metroTile1;
+#if NETFULLFRAMEWORK || NETCOREAPP3_0
         private Components.MetroToolTip metroToolTip;
+#endif
         private Controls.MetroButton metroButton3;
         private Controls.MetroButton metroButton2;
         private Controls.MetroButton metroButton1;
